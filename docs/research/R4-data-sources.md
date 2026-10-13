@@ -56,12 +56,12 @@ Primary and fallback below assume the low-volume personal-use posture; the "Stri
 | Schedule | stats.nba.com `ScheduleLeagueV2` (VERIFIED). Terms: NBA Section 9 | ESPN scoreboard by date (VERIFIED). Terms: Disney ban on bots | The Odds API events list (free, no quota cost, SUPPORTED) or sportsdataverse schedules | One request a day keeps the schedule current, including NBA Cup games added in December. |
 | Box-score history | stats.nba.com `PlayerGameLogs` plus `BoxScore*V3` (VERIFIED). Terms: NBA Section 9 | sportsdataverse ESPN box-score parquet files (VERIFIED). Terms: CC BY 4.0, ESPN-derived | sportsdataverse files | A full season of player games is one request (26,651 rows in 0.4 s), so nightly updates take seconds. |
 | Injuries and status | Official NBA injury report PDF (VERIFIED on archived reports). Terms: NBA, no bot clause | ESPN injuries JSON (VERIFIED). Terms: Disney ban; text is RotoWire's | Official PDF | The PDF is ground truth for Out, Doubtful, Questionable, Probable and Available, refreshed every 15 minutes. |
-| Starting lineups | RotoWire lineups page, "Expected" then "Confirmed" (VERIFIED reachable). Terms: bans scraping | Basketball Monster lineups page (VERIFIED reachable). Terms: bans scraping | None confirmed (Daily Fantasy Fuel's "START" column, BET) | Starters are confirmed close to tip (timing in 4.9), so the engine must re-run in the final half hour. |
+| Starting lineups | RotoWire lineups page, "Expected" then "Confirmed" (VERIFIED reachable). Terms: bans scraping | Basketball Monster lineups page (VERIFIED reachable). Terms: bans scraping | None confirmed (Daily Fantasy Fuel's "START" column, BET) | Tonight, starters were confirmed 0 to 75 minutes before tip, and one team's confirmed five differed from its expected five by 3 players (4.9), so the engine must re-run in the final 15 to 30 minutes. |
 | Game lines (spread, total) | ESPN scoreboard and core odds, DraftKings lines with open and current (VERIFIED). Terms: Disney ban | The Odds API free key, 3 credits per pull (SUPPORTED; user must sign up). Terms: permits | The Odds API | Team totals for the projection model come free either way. |
 | Player props | ESPN core `propBets`: DraftKings milestone ladders for points, rebounds, assists, threes (VERIFIED tonight). Terms: Disney ban | The Odds API free key: about 12 nights a month of props (SUPPORTED) | The Odds API, about 12 nights a month | Props are free only as same-day snapshots (ESPN deletes them after the game, VERIFIED), so archive a copy nightly from opening night. |
 | Minutes and rotations | stats.nba.com `PlayByPlayV3` substitutions rebuilt into on-court stretches, plus box-score minutes (VERIFIED). Terms: NBA Section 9 | sportsdataverse ESPN play-by-play parquet (VERIFIED) | sportsdataverse files | The ready-made `GameRotation` endpoint is failing, so plan to compute rotations ourselves. |
 | Priors (starting player ratings before data accumulates) | stats.nba.com season stats plus pbpstats.com possession data (VERIFIED). Terms: NBA Section 9; pbpstats silent | DARKO public ratings (VERIFIED page). Terms: no commercial use without permission | sportsdataverse history (compute our own) | Priors can be computed from free history; outside ratings are a cross-check, not a dependency. |
-| Late news | ESPN injuries JSON (RotoWire blurbs, visible 0 to 18 minutes after the blurb's own timestamp, usually 5 to 12, VERIFIED on 10 updates tonight) plus the official PDF. Terms: Disney ban | RotoWire RSS, newest 5 items with minute timestamps (VERIFIED). Terms: RotoWire bans scraping (BET whether its RSS counts as an interface it offers) | Bluesky public API plus the official PDF | News that breaks 30 minutes before tip will usually reach the engine 5 to 20 minutes later through these free channels, so it can make lock most nights but not every night; X would be faster but is paid. |
+| Late news | ESPN injuries JSON (RotoWire blurbs, visible 0 to 18 minutes after the blurb's own timestamp, usually 5 to 12, VERIFIED on 10 updates tonight) plus the official PDF. Terms: Disney ban | RotoWire RSS, newest 5 items with minute timestamps (VERIFIED). Terms: RotoWire bans scraping (BET whether its RSS counts as an interface it offers) | Bluesky public API plus the official PDF | News that breaks 30 minutes before tip will usually reach the engine 5 to 20 minutes later through these free channels, so it can make lock most nights but not every night (BET); X would be faster but is paid. |
 
 ---
 
@@ -71,11 +71,11 @@ Evidence files are in `spikes\data\out\`; saved terms in `out\downloads\terms\`.
 
 | Source | Provides | Cost | Access | Freshness | Terms | Verified (Y/N + evidence file) |
 |---|---|---|---|---|---|---|
-| stats.nba.com via nba_api | Schedule, game logs, box scores, PBP, rosters, lineups, on/off, play types, scoreboard | Free | `nba_api`, browser-like headers, no key | Last night's games present by afternoon; tonight in 4.9 | Restricts: no fantasy use; private non-commercial only | Y: `20261013-1632_nba_api.json`, `20261013-1635_nba_api_live_alternatives.json` |
+| stats.nba.com via nba_api | Schedule, game logs, box scores, PBP, rosters, lineups, on/off, play types, scoreboard | Free | `nba_api`, browser-like headers, no key | Not live: in-game box score empty, scoreboard 5+ min behind ESPN; last night's games complete by afternoon | Restricts: no fantasy use; private non-commercial only | Y: `20261013-1632_nba_api.json`, `20261013-1635_nba_api_live_alternatives.json` |
 | stats.nba.com GameRotation | Player on-court stints | Free | `stats/gamerotation` | n/a | as above | N: HTTP 500, `20261013-1636_gamerotation_raw.json` |
 | cdn.nba.com JSON | Live scoreboard, box score, PBP, odds, schedule | Free | `cdn.nba.com/static/json/...` | Live | as NBA.com | N for scripts: Akamai 403, `20261013-1633_cdn_nba.json`; browser-only, `20261013-1636_cdn_nba_browser_context.json` |
 | NBA official injury report | Official statuses and reasons, all games | Free | PDF, `ak-static.cms.nba.com/referee/injury/Injury-Report_<date>_<time>.pdf` | Every 15 min; file live about 4 s after slot | NBA terms, no bot clause | Y (archived): `20261013-1637_injury_cadence_probe*.json`, `20261013-1655_injury_pdf_parse_v3_*.json`. N for preseason (none exist) |
-| ESPN site and core JSON | DK odds, injuries with blurbs, rosters, depth charts, news, props, historical lines | Free | `site.api.espn.com/...`, `sports.core.api.espn.com/...` | Injuries within minutes; cache 1 to 900 s | Prohibits bots and commercial use | Y: `20261013-1640_espn.json`, `20261013-1641_espn_props.json`, `20261013-1651_history_sources.json`, `20261013-1657_espn_vs_rotowire_text.json` |
+| ESPN site and core JSON | DK odds, injuries with blurbs, rosters, depth charts, news, props, historical lines | Free | `site.api.espn.com/...`, `sports.core.api.espn.com/...` | Injuries appear 0 to 18 min after ESPN's own timestamp; cache 1 to 900 s | Prohibits bots and commercial use | Y: `20261013-1640_espn.json`, `20261013-1641_espn_props.json`, `20261013-1651_history_sources.json`, `20261013-1657_espn_vs_rotowire_text.json` |
 | The Odds API | Lines and props, many US books | Free tier, 500 credits a month | REST API with key (user signs up) | Near real time | Permits (no resale of raw data) | N: docs only; `oddsapi_*.txt` |
 | DraftKings Sportsbook JSON | Lines, props | Free | `sportsbook-nash.draftkings.com/api/...` | Live | Personal non-commercial only (SUPPORTED) | N: Akamai 403, `20261013-1648_sportsbooks_props.json` |
 | FanDuel Sportsbook JSON | Lines, props | Free | `sbapi.<state>.sportsbook.fanduel.com/api/...` | Live | Odds use limited to using FanDuel itself | N: 400 without app key, same file |
@@ -118,7 +118,7 @@ Evidence files are in `spikes\data\out\`; saved terms in `out\downloads\terms\`.
 | ScheduleLeagueV2 2026-27 | 1,274 games: 67 preseason, 1,206 regular season (6 are NBA Cup knockout games with teams blank). First regular-season games Oct 20: BOS at DET 19:00 UTC, PHI at NYK 23:00 UTC, OKC at SAS 01:30 UTC | 2.4 s |
 | LeagueGameLog, 2026-27 Pre Season | 41 completed games, Oct 3 to Oct 12, so last night's games were present this afternoon | 0.1 s |
 | PlayerGameLogs, 2025-26 regular season | 26,651 player-game rows, 582 players, Oct 21 2025 to Apr 12 2026, with minutes and `NBA_FANTASY_PTS` | 0.4 s |
-| BoxScoreTraditionalV3 | Player rows with minutes, box stats, `position` (filled only for starters) and `comment` (why a player sat) | 0.1 s |
+| BoxScoreTraditionalV3 | Player rows with minutes, box stats, `position` and `comment` (why a player sat). `position` was filled for 12 of 42 players in last night's game, more than the 10 starters, so it is not a clean starter flag (`s09c_boxscore_parser_check.py`, `20261013-1836_boxscore_parser_check.json`); ESPN and sportsdataverse box scores carry an explicit `starter` field | 0.1 s |
 | BoxScoreAdvancedV3, BoxScoreUsageV3 | Usage rate, pace, possessions, ratings per player | 0.1 to 0.4 s |
 | BoxScoreSummaryV3 | `inactives` list per team (for example Towns, Anunoby, Hart in a 2025-26 Knicks game) | 0.2 s |
 | ScoreboardV3, today | Tonight's 5 preseason games with status text | 0.4 s |
@@ -141,7 +141,7 @@ GameRotation 0022501190: ok=False latency=30.01s ReadTimeout ...
 
 **Blocking and rate limits.** Not blocked from this laptop: every request except GameRotation succeeded, plus the scoreboard and box-score polls in 4.9. No published rate limit; I kept to one request every 1.6 seconds or slower. BET: stats.nba.com is widely reported to refuse cloud data-center addresses, a reason to keep the nightly run on this laptop.
 
-**Freshness.** Last night's preseason games were complete this afternoon; tonight's timing is in 4.9. The post-game lag (how soon after the final buzzer the full box score is complete) was not measured.
+**Freshness.** Last night's preseason games were complete this afternoon. Tonight (4.9) the in-game box score stayed empty and the scoreboard still showed the game as not started at least 5 minutes after ESPN showed it live, so stats.nba.com is a history source, not a live one. The post-game lag (how soon after the final buzzer the full box score is complete) was not measured.
 
 **Rotations.** Rebuild each player's on-court stretches from PlayByPlayV3 substitution events. This is ordinary data processing, not a workaround of any block.
 
@@ -280,7 +280,7 @@ Fetched once each after checking robots.txt (`s06_projection_pages.py`, `2026101
 
 | Channel | VERIFIED result | Speed |
 |---|---|---|
-| ESPN injuries JSON | RotoWire's blurbs verbatim, each stamped with RotoWire's publish minute. Tonight, 10 new or updated entries for tonight's teams appeared between 0 and 18 minutes after their stamp (Vucevic 0 to 4, Holmgren 1 to 6, Topic 7 to 12, Jaylin Williams 13 to 18), measured with 5-minute polls. Players cleared to play are removed (five OKC players including Shai Gilgeous-Alexander dropped off at 22:53 UTC) | Usually 5 to 12 minutes behind RotoWire, worst case seen 18 |
+| ESPN injuries JSON | RotoWire's blurbs verbatim; ESPN's timestamp matched RotoWire's publish minute in the one case checked. Tonight, 10 new or updated entries for tonight's teams appeared between 0 and 18 minutes after their stamp (Vucevic 0 to 4, Holmgren 1 to 6, Topic 7 to 12, Jaylin Williams 13 to 18), measured with 5-minute polls. Players cleared to play are removed (five OKC players including Shai Gilgeous-Alexander dropped off at 22:53 UTC) | Usually 5 to 12 minutes after ESPN's own timestamp, worst case seen 18 |
 | ESPN news JSON | Headlines with publish times | Slower: the Pritchard extension at 20:35 to 20:42 UTC, versus a Shams mirror post at 19:50 and RotoWire RSS at 19:58 |
 | RotoWire RSS | Newest 5 items, minute timestamps | Same minute RotoWire publishes; only 5 items, so poll often |
 | RotoWire news page | 25 items, dates only | Same as RSS |
@@ -292,7 +292,34 @@ Terms: Bluesky's developer guidelines target spam ("Generating automated or bulk
 
 ### 4.9 Tonight's timing test (one preseason game, first tips 7:00 PM ET)
 
-TIMING-PENDING
+**Setup.** A background poller (`s09_pretip_poller.py`, log `20261013-1646_pretip_poller.jsonl`) checked, every 5 minutes from 5:47 PM to 7:15 PM ET: ESPN injuries, the ESPN summary for CLE at ORL, and stats.nba.com ScoreboardV3 and BoxScoreTraditionalV3 for the same game. It read the RotoWire lineups page every 15 minutes, then switched to every 15 minutes for stats.nba.com and ESPN only. By 7:34 PM ET it had made 84 requests, all answered with HTTP 200 and no blocks. It is set to stop by itself at 9:45 PM ET. Its later records are not analyzed here, so **the post-game box-score delay was not measured**. To read it later: in the log, compare the first `nba_scoreboardv3` record with `gameStatus` 3 (final) with the first `nba_boxscore` record whose `n_players` is above 0.
+
+Resolution matters when reading the table below: the RotoWire times are known only to within 15 minutes, and the ESPN and stats.nba.com times to within 5. This is one preseason night and essentially one game.
+
+**Results (VERIFIED):**
+
+| Time ET (UTC) | What changed |
+|---|---|
+| 5:47 PM (21:47) | RotoWire: all 10 teams tonight "Expected Lineup" |
+| 5:47 to 6:02 PM (22:02) | RotoWire: CLE flips to "Confirmed Lineup", 58 to 73 minutes before the 7:00 PM listed tip |
+| 6:32 to 6:48 PM (22:48) | ORL and NYK confirmed, 12 to 28 minutes before 7:00 PM |
+| 6:48 to 7:03 PM (23:03) | TOR confirmed, between 12 minutes before and 3 minutes after 7:00 PM. Teams with 8:00 PM and 10:00 PM tips were still "Expected", as they should be |
+| Before tip | The ESPN summary had no starters, and the stats.nba.com box score returned 0 players |
+| 7:08 to 7:13 PM (23:13) | ESPN summary flips to "In Progress" and lists all 10 starters |
+| 7:13 and 7:18 PM | stats.nba.com ScoreboardV3 still said "7:00 pm ET", not started, at least 5 minutes after ESPN showed the game live (the next poll was 7:33) |
+| 7:33 PM (23:33) | ScoreboardV3: 1st quarter, 3:32 left, CLE 15, ORL 24. The BoxScoreTraditionalV3 call still returned 0 players in the middle of the game. The same request and parser returned 42 players for last night's finished game, so the empty result was real, not a parsing bug (`s09c_boxscore_parser_check.py`) |
+
+**Were RotoWire's lineups right?**
+
+* For CLE and ORL, RotoWire's "Expected" five at 5:47 PM, its "Confirmed" five, and ESPN's actual starters were the same 10 players.
+* For NYK, the confirmed five replaced 3 of the 5 expected players: McBride and Diawara stayed, and Alvarado, Brown and Wiseman came in. This was a preseason rest-day lineup.
+* So "Expected" is a good first guess, but only "Confirmed" is safe.
+
+**What it means:**
+
+* **Confirmed starters arrive 0 to 75 minutes before tip.** That falls mostly inside the last half hour on this sample, so the engine's final re-run must happen in the last 15 to 30 minutes before lock.
+* **stats.nba.com is not a live source** (one game observed). Its in-game box score was empty and its scoreboard lagged ESPN by at least 5 minutes. Use it for the nightly history refresh, not for in-game or at-tip checks.
+* **ESPN's summary is the earliest free way to see who actually started**, but only from tip-off. That is after lock for that game, though still useful for later games on the same slate.
 
 ### 4.10 Opening night and the rest of the preseason (for the runbook)
 

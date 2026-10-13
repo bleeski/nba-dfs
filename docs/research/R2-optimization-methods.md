@@ -18,7 +18,7 @@ Evidence labels used on every claim:
 4. **Duplication does not lower the probability of a top-1% finish; it lowers what that finish pays.** A lineup tied with field copies still ranks in the top 1%; the prize is split. So duplication belongs in a payout-weighted tie-breaker, not in the probability itself. How much weight to give it is a user decision (see Open questions). **BET** (reasoning from the stated rules); tie splitting as modeled by Haugh and Singal is **VERIFIED** (MS e-companion EC.1.4.2).
 5. **Formulation matters more than the solver.** On a synthetic 120-player Classic slate, modeling each player as one yes/no variable plus "Hall's theorem" position rows was 5x (HiGHS) to 25x (GLPK) faster than the common "player-in-slot" model, with identical optimal lineups. **VERIFIED** (spike, Section 7.3).
 6. **Showdown does not need a solver.** All 440,121 legal lineups of a 22-player Showdown pool can be listed in 0.015 seconds, and the best one matches the solver's optimum exactly. **VERIFIED** (`spikes/solvers/enumerate_showdown_spike.py`, output in `spikes/solvers/out/20261013-1700_enumerate_showdown.json`).
-7. **Solver recommendation:** see Section 7.5 (filled from the benchmark). Short version: [[SOLVER_SHORT]]
+7. **Solver recommendation: OR-Tools (in-process CBC for Classic, CP-SAT available for complex rules), HiGHS as fallback, single-threaded, version-pinned, with a deterministic tie-break.** All five free solvers found identical optimal values on thousands of solves; the differences were speed, licensing and repeatability. GLPK was the fastest by far on independent solves (6x to 16x faster than CBC) but is GPL-3.0 and unchanged since 2020. PuLP 2.4 (what pydfs uses) pays 35 to 50 ms of file-and-process overhead on every solve. CP-SAT with 8 threads was not repeatable. **VERIFIED** (measurements, Section 7.4); the pick itself is **BET** (Section 7.5).
 8. **No open-source tool computes either of our goal metrics.** pydfs-lineup-optimizer (MIT) is a useful reference for rules and late swap but is frozen since Sept 2021 and pins PuLP 2.4 (which ships a 2015 build of CBC). chanzer0/NBA-DFS-Tools has the most complete NBA field and contest simulator but has no license (learn only) and has scoring bugs that would distort top-1% estimates. **VERIFIED** (Section 6).
 9. **The literature has no NBA portfolio study and nothing on cross-contest washout.** The best methods were validated on NHL, MLB (Hunter et al.) and NFL (Haugh and Singal), on small samples, and Haugh and Singal's model was optimistic versus realized results. **VERIFIED** (Section 5).
 
@@ -194,7 +194,20 @@ Details that matter:
 ## 7. Solvers
 
 ### 7.1 What the candidates are
-[[SOLVER_TABLE]]
+| | HiGHS | CBC via PuLP 2.4 | CBC via OR-Tools | CP-SAT (OR-Tools) | SCIP | GLPK |
+|---|---|---|---|---|---|---|
+| Python package tested | highspy 1.15.1 (July 2026) | pulp 2.4 (Dec 2020) with bundled cbc.exe 2.9.0 (built Feb 2015) | ortools 9.15 (Jan 2026), `pywraplp` | ortools 9.15, `cp_model` | PySCIPOpt 6.3.0 (Oct 11, 2026) bundling SCIP 10.0 | swiglpk 5.0.13 (Feb 2026) bundling GLPK 5.0 (Dec 2020) |
+| License | MIT | PuLP MIT; CBC EPL (1.0 in this bundle) | Apache-2.0; CBC EPL-2.0 | Apache-2.0 | PySCIPOpt MIT; SCIP Apache-2.0 since 8.0.3 | GPL-3.0 (copyleft) |
+| Windows wheel, Python 3.13 | Yes | Yes (pure Python + exe) | Yes | Yes | Yes (46 MB, includes SCIP) | Yes |
+| How the solver is called | In-process | New file + new `cbc.exe` process for every solve | In-process | In-process | In-process | In-process |
+| API ergonomics | Low-level arrays or a newer modeling layer; fine | Easiest to read | Verbose but simple | Clean; whole-number coefficients only | Pythonic; must call `freeTransform()` before every change | Raw C calls, 1-indexed arrays; awkward |
+| Change model between solves | Yes, in place (`addRow`, `changeColsCost`) | Python-side edits; full re-solve in a new process | Python-side edits; re-sent to CBC each solve | Python-side edits; each solve starts from scratch | Yes after `freeTransform()` | Yes, in place |
+| Warm start | `setSolution` (did not help in a spot test) | `.mst` file | hints | hints | solutions and a "reoptimization" mode (not tested) | not tested |
+| Seeds and determinism | `random_seed`; repeat runs identical | randomCbcSeed; repeat runs identical | repeat runs identical | `random_seed`; identical with 1 worker; **not** identical with 8 workers | `randomseedshift`; repeat runs identical | no seed needed; identical |
+| Threads | `threads` option; the MIP log reports "Parallel search off" | `threads` | `SetNumThreads` | `num_workers` (default all cores) | single thread | single thread |
+| Maintenance | Active | PuLP active (4.0.0 Sept 2026 has breaking changes and makes CBC an optional extra); the 2.4 pin is frozen | Active (Google) | Active (Google) | Active | GLPK itself unchanged since 5.0 (2020) |
+
+Sources: PyPI JSON for each package (version, date, license, wheel list), **VERIFIED** (`curl https://pypi.org/pypi/<pkg>/json`, Oct 13, 2026); `cbc.exe` version, **VERIFIED** (ran it); bundled license files, **VERIFIED** (read in `site-packages`); SCIP license history, **SUPPORTED** (scipopt.org); HiGHS options, **SUPPORTED** (HiGHS options reference); CP-SAT `interleave_search` "deterministic (independently of num_workers!)", **SUPPORTED** (sat_parameters.proto); determinism results, **VERIFIED** (Section 7.4).
 
 ### 7.2 Benchmark design
 All numbers are **INDICATIVE, not final**: other agents were running on this laptop (Intel Core Ultra 7 258V, 8 cores, 32 GB RAM, about 6 GB free during the runs). CPU load from other work, sampled before each run, ranged from about 5% to 60% and is recorded per run in the raw file.
@@ -215,13 +228,78 @@ All numbers are **INDICATIVE, not final**: other agents were running on this lap
 - **Determinism:** most configurations were run twice with the same seed, comparing a hash of the ordered lineup list.
 
 ### 7.3 Formulation result
-[[FORM_RESULT]]
+Time for the first 20 lineups of the overlap sequence on the 120-player Classic slate, "slot" model versus "hall" model (seconds, single thread):
+
+| Solver | slot model | hall model | Speed-up |
+|---|---|---|---|
+| HiGHS | 95.4 | 18.5 | 5.2x |
+| GLPK | 20.0 | 0.82 | 24.5x |
+| CP-SAT | 68.3 | 3.5 | 19x |
+| CBC (OR-Tools) | 30.5 | 4.5 | 6.8x |
+| SCIP | 81.8 | 5.7 | 14x |
+| CBC (PuLP 2.4) | 27.9 | 6.2 | 4.5x |
+
+- All 12 runs produced the same 20 optimal objective values (sum 6,154.75), so the faster model loses nothing. **VERIFIED** (`spikes/solvers/out/20261013-1656_bench_raw.jsonl`, phase A; summary in `20261013-1656_bench_summary.txt`).
+- Why: in the slot model the same 8 players can be arranged across PG/SG/G/UTIL (and so on) in many equivalent ways, and the solver wastes effort proving that each arrangement is no better. The player-only model removes that symmetry. **BET** (standard explanation; consistent with the solver logs).
+- The hall model is exact, not a shortcut: by Hall's marriage theorem, a valid slot assignment exists if and only if every group of slots has at least as many eligible chosen players as slots in the group. UTIL accepts anyone, so only the 127 groups of the other 7 slots matter, and after removing duplicates and dominated rows 31 rows remain. Every lineup was then assigned to slots by a matching routine and re-checked; zero failures. **VERIFIED** (`hall_rows`, `assign_slots`, `validate`; `n_problems` = 0 in every run).
+- pydfs-lineup-optimizer uses a similar aggregated-count idea, but builds its position groups from the multi-position combinations present in the pool rather than from all slot groups. Whether that is always exact was not tested. **VERIFIED** (code read), exactness **BET**.
 
 ### 7.4 Results
-[[BENCH_RESULTS]]
+Raw data: `spikes/solvers/out/20261013-1656_bench_raw.jsonl` (phases A to E) and `spikes/solvers/out/[[F_RAW]]` (phase F); tables: the matching `_summary.txt` files. Everything below is **VERIFIED** (measured) and **INDICATIVE** (shared machine).
+
+**Classic, 120 players, hall model.** Times in seconds unless marked ms (milliseconds). "Median solve" is for the perturbed-projection task.
+
+| Solver | 1 lineup (ms) | 150 overlap lineups | Median solve (ms) | 5,000 perturbed, 1 process | 5,000 perturbed, 4 processes | Peak memory per process |
+|---|---|---|---|---|---|---|
+| GLPK | 3.5 | 30.8 | 2.2 | 21.8 | 7.6 | 43 MB |
+| CBC (OR-Tools) | 39 | 74.4 | 23.5 | 131 | 37.7 | 63 MB |
+| SCIP | 52 | 229 | 26.7 | 286 | not run | 124 MB |
+| CP-SAT, 1 worker | 36 | 68.8 | 42 | 267 | 78.7 | 105 MB |
+| CP-SAT, 8 workers | 54 | 75.1 | 49 | not run | not run | 134 MB |
+| HiGHS, tuned | 99 | 227 | 47 | 403 | 124 | 93 MB |
+| HiGHS, default | 132 | 369 | 66 | about 430 (extrapolated from 500 in 42.6) | not run | 84 MB |
+| CBC (PuLP 2.4) | 119 | 108 | 76 | about 480 (extrapolated from 500 in 47.9) | not run | 51 MB + 21 MB for cbc.exe |
+
+**Showdown, 22 players.**
+
+| Solver | 1 lineup (ms) | 150 overlap lineups | Median solve (ms) | 5,000 perturbed, 1 process |
+|---|---|---|---|---|
+| Enumeration (no solver) | 15 for all 440,121 lineups | 1.3 | not needed | not needed |
+| GLPK | 1.0 | 9.5 | 0.23 | 4.5 |
+| CP-SAT, 1 worker | 23 | 16.9 | 7.5 | 64 |
+| CP-SAT, 8 workers | 38 | 11.8 | 21 | not run |
+| CBC (OR-Tools) | 25 | 55.1 | 8.7 | 70.5 |
+| SCIP | 31 | 57.6 | 3.7 | not run |
+| HiGHS, tuned | 37 | 50.6 | 20 | 116 |
+| HiGHS, default | 74 | 159 | 28 | not run |
+| CBC (PuLP 2.4) | 44 | 82.9 | 43 | not run |
+
+What the numbers say:
+1. **Every solver found the same optimal value on every one of the thousands of solves** (maximum difference 0.0000 against GLPK, solve by solve). **VERIFIED** (cross-solver section of the summary file).
+2. **But they often returned different lineups with that same value.** Ties are common with 2-decimal projections, and each solver breaks them its own way. Switching solvers (or possibly upgrading one) silently changes the lineups. **VERIFIED** (`identical_lineups=False` while `max_abs_diff=0.0000`).
+3. **Single-thread runs were repeatable for every solver.** CP-SAT with 8 workers was not: 3 of 4 repeat checks produced different lineup lists. **VERIFIED** (determinism section of the summary file).
+4. **Splitting work across processes did not change results.** The 4-process runs returned exactly the same lineup lists as the 1-process runs for GLPK, CBC, CP-SAT and HiGHS, because each draw is seeded by its own index. **VERIFIED** (identical hashes).
+5. **PuLP's file-and-process round trip costs about 35 to 50 ms per solve** (PuLP CBC versus in-process CBC: 76 versus 23.5 ms Classic, 43 versus 8.7 ms Showdown). That is the pydfs-lineup-optimizer path. **VERIFIED**.
+6. **Sequences with many overlap rules get slower every step**, because each "share at most K players" rule weakens what the solver can prove quickly. HiGHS took 0.13 s for the first Classic lineup but a median of 2.6 s per lineup (maximum 4.5 s) across the 150-lineup sequence. **VERIFIED**. This is another reason to generate candidates by independent perturbed solves (no accumulating rules) and handle diversity in the selection step.
+7. **Perturbation gives diversity cheaply on Classic, less so on Showdown.** 5,000 perturbed Classic solves produced 5,000 different lineups; 5,000 Showdown solves produced only about 1,150. **VERIFIED**. For Showdown, enumeration covers everything anyway.
+8. **Showdown overlap rules bite hard.** With at most 4 shared players, the 150th Showdown lineup projected 228.2 versus 267.0 for the best, a 15% drop. **VERIFIED**. Real Showdown portfolios will need looser overlap or none (let the coverage objective decide). **BET**.
+9. **Enumeration reproduced the solvers' 150-lineup Showdown sequence exactly** (same objective sum, 36,226.67) in 1.3 s, versus 9.5 s for the fastest solver and 159 s for the slowest. **VERIFIED** (`spikes/solvers/out/20261013-1835_enumerate_showdown_seq150.json`).
+10. **Memory is a non-issue for solvers:** under 135 MB per process for all of them. **VERIFIED**.
+
+[[F_RESULTS]]
 
 ### 7.5 Recommendation
-[[SOLVER_REC]]
+**Recommendation: OR-Tools as the one solver dependency, using its in-process CBC backend for the Classic lineup model, with HiGHS as the tested fallback and cross-check. No solver for Showdown (enumerate). Do not use PuLP 2.4 or pydfs-lineup-optimizer.** **BET** (judgment), resting on the **VERIFIED** measurements above.
+
+Why:
+- **Fast enough by a wide margin.** CBC through OR-Tools made 5,000 Classic candidates in 131 s on one process, or 38 s on four. Meaning for the user: solver time is about a minute of the nightly run; the simulator, not the solver, will set the schedule.
+- **Repeatable.** Single-thread CBC gave identical lineups on every repeat, and splitting across processes did not change results. Meaning: re-running a night reproduces it exactly, which makes bugs findable.
+- **Permissive license, maintained, Windows wheels for Python 3.13.** Apache-2.0 (OR-Tools) and EPL-2.0 (CBC). Meaning: no licensing constraint on how the engine is used later.
+- **One package, two engines.** The same install gives CP-SAT, which handles "if this player then that player" style rules naturally, should stacking or exposure rules get complicated. Meaning: no second dependency if the rule set grows.
+- **HiGHS as fallback.** It is MIT, very active, and has the cleanest in-place model editing. It was the slowest in-process solver here (on the 5,000 Classic run, about 1.5x slower than CP-SAT and 3x slower than CBC), which matters little at these sizes. Meaning: if a future OR-Tools release drops CBC (a risk, not a known plan; **BET**), switching costs one adapter.
+- **GLPK is the speed outlier, with caveats.** On independent solves (the workload recommended here) it was 6x to 16x faster than CBC, and on long overlap sequences 1.2x to 2.4x faster than the next-best solver. [[GLPK_F]] But it is GPL-3.0, GLPK itself has not changed since 2020, and its Python binding is a raw C interface. Meaning: worth keeping as an optional fast path for time-critical late swap if the user accepts GPL; not the default.
+- **Avoid:** PuLP 2.4's bundled CBC (2015 build, 35 to 50 ms of file and process overhead per solve, and pinned by pydfs so it blocks newer PuLP); CP-SAT with more than 1 worker unless its deterministic mode is turned on and re-tested; the slot-assignment model on any solver.
+- **Whatever the solver:** pin its exact version, add a deterministic tie-break (for example, a tiny bonus by player ID, or a second pass that picks the lexicographically smallest optimal lineup), and keep the solver-independent rule checker.
 
 ---
 
@@ -238,7 +316,19 @@ All numbers are **INDICATIVE, not final**: other agents were running on this lap
 
 ## 9. Recommendations
 
-[[RECS]]
+Each recommendation ends with what it means for results, cost, or the user's nightly workload.
+
+1. **Optimize the two goals directly with scenario coverage** (Section 3): per-contest P(at least one top-1%) plus a weighted night-wide cash coverage term, tuned so P(washout) stays under a target. *Meaning:* the engine chases the user's actual goals instead of proxies like "highest projection", at the cost of needing per-scenario cut lines from the field simulator.
+2. **Use one shared scenario set for every contest on the night.** *Meaning:* the washout number the user sees is honest about correlated bad nights; it costs nothing extra (one simulation instead of several).
+3. **Select entries with lazy greedy over a fixed candidate pool, not with one giant optimization.** *Meaning:* selection takes seconds and has a proven quality floor (at least 63% of the best possible per contest, 50% across contests, usually far better).
+4. **Generate Classic candidates from many independent solves on scenario draws and leverage variants, not from long overlap sequences.** *Meaning:* 5,000 distinct candidates in about 40 s on 4 processes (CBC), and no slowdown from accumulating overlap rules.
+5. **Generate Showdown candidates by enumerating every legal lineup.** *Meaning:* no solver and no missed lineups; listing takes a fraction of a second per game, and the real cost moves to scoring the screened survivors against all scenarios.
+6. **Model Classic positions with one variable per player plus Hall's-theorem rows, and assign slots afterward.** *Meaning:* 5x to 25x faster solves with identical answers; late-swap slot ordering (later games in G/F/UTIL) is handled in the assignment step.
+7. **Use OR-Tools (CBC backend) single-threaded behind a thin solver interface, with HiGHS as tested fallback** (Section 7.5). *Meaning:* about a minute of solver time per night, reproducible runs, permissive licenses.
+8. **Add a deterministic tie-break and a solver-independent rule checker.** *Meaning:* re-running a night gives the same lineups, and no illegal lineup can reach DraftKings even if a solver or formulation has a bug.
+9. **Do not build on pydfs-lineup-optimizer or chanzer0's code; borrow ideas (with attribution) only from MIT-licensed code.** *Meaning:* avoids a 2015 CBC build, a frozen dependency pin and unlicensed code, at the cost of writing about the same amount of rule code ourselves.
+10. **Treat duplication as a payout weight, pending the user's decision** (Open question 1). *Meaning:* the engine will avoid chalky Showdown lineups only as much as the user wants it to.
+11. **Keep an overlap cap as an optional pool-shaping knob, tuned by slate size in backtests.** Start from Hunter et al.'s finding (more overlap on small slates, less on large) and Haugh and Singal's 6-of-9. *Meaning:* one setting to test in backtests rather than a fixed rule; Showdown likely needs a loose cap or none.
 
 ---
 
