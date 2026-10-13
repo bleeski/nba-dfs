@@ -94,7 +94,7 @@ Why one shared scenario set is required: if Classic and Showdown were simulated 
 - Showdown has a much smaller lineup space (Section 7.4), so duplication is far more common there. **BET** (industry lore, plus the arithmetic of 440,000 legal lineups versus contests with hundreds of thousands of entries).
 
 ### 3.8 How the spike behaved (synthetic data, cost and shape only)
-See Section 8.2: [[PORTFOLIO_SHORT]]
+See Section 8.2 for numbers. In short, on synthetic data: greedy coverage beat "take the top-projected lineups" at every portfolio size (for example 48% versus 35% chance of at least one top-1% finish with 20 entries), adding cash coverage to the objective lowered the no-cash probability at a visible cost in top-1% probability on small portfolios (3 entries: 26% to 15% no-cash, 11.3% to 9.9% top-1%), and the whole selection step ran in seconds to a minute with under 1 GB of memory. **VERIFIED** (spike), but the absolute levels are meaningless because the field is synthetic.
 
 ---
 
@@ -245,7 +245,7 @@ Time for the first 20 lineups of the overlap sequence on the 120-player Classic 
 - pydfs-lineup-optimizer uses a similar aggregated-count idea, but builds its position groups from the multi-position combinations present in the pool rather than from all slot groups. Whether that is always exact was not tested. **VERIFIED** (code read), exactness **BET**.
 
 ### 7.4 Results
-Raw data: `spikes/solvers/out/20261013-1656_bench_raw.jsonl` (phases A to E) and `spikes/solvers/out/[[F_RAW]]` (phase F); tables: the matching `_summary.txt` files. Everything below is **VERIFIED** (measured) and **INDICATIVE** (shared machine).
+Raw data: `spikes/solvers/out/20261013-1656_bench_raw.jsonl` (phases A to E) and `spikes/solvers/out/20261013-1834_bench_F_raw.jsonl` (phase F, rerun with a trimmed list after the first run was stopped; the first run's one completed phase F item, GLPK 150 lineups on 240 players in 63.9 s, agrees with the rerun's 61.6 s); tables: the matching `_summary.txt` files. Everything below is **VERIFIED** (measured) and **INDICATIVE** (shared machine).
 
 **Classic, 120 players, hall model.** Times in seconds unless marked ms (milliseconds). "Median solve" is for the perturbed-projection task.
 
@@ -286,7 +286,17 @@ What the numbers say:
 9. **Enumeration reproduced the solvers' 150-lineup Showdown sequence exactly** (same objective sum, 36,226.67) in 1.3 s, versus 9.5 s for the fastest solver and 159 s for the slowest. **VERIFIED** (`spikes/solvers/out/20261013-1835_enumerate_showdown_seq150.json`).
 10. **Memory is a non-issue for solvers:** under 135 MB per process for all of them. **VERIFIED**.
 
-[[F_RESULTS]]
+**Bigger Classic slate (12 games, 240 players), phase F.**
+
+| Solver | 150 overlap lineups | Median solve, perturbed (ms) | 500 perturbed solves |
+|---|---|---|---|
+| GLPK | 61.6 | 4.9 | 4.5 |
+| CBC (OR-Tools) | 94.4 | 36.8 | 17.8 |
+| CP-SAT, 1 worker | 87.4 | 65.1 | 37.1 |
+| SCIP | not run | 65.7 | 56.4 |
+| HiGHS, tuned | not run | 79.7 | 60.4 |
+
+Doubling the pool size raised per-solve time by roughly 1.4x to 2.2x, with the same solver ranking and the same agreement on optimal values. Extrapolating, 5,000 candidates on a 240-player slate would take about 3 minutes on one process with CBC, or under a minute on four. **VERIFIED** (measured), extrapolation **BET**.
 
 ### 7.5 Recommendation
 **Recommendation: OR-Tools as the one solver dependency, using its in-process CBC backend for the Classic lineup model, with HiGHS as the tested fallback and cross-check. No solver for Showdown (enumerate). Do not use PuLP 2.4 or pydfs-lineup-optimizer.** **BET** (judgment), resting on the **VERIFIED** measurements above.
@@ -297,7 +307,7 @@ Why:
 - **Permissive license, maintained, Windows wheels for Python 3.13.** Apache-2.0 (OR-Tools) and EPL-2.0 (CBC). Meaning: no licensing constraint on how the engine is used later.
 - **One package, two engines.** The same install gives CP-SAT, which handles "if this player then that player" style rules naturally, should stacking or exposure rules get complicated. Meaning: no second dependency if the rule set grows.
 - **HiGHS as fallback.** It is MIT, very active, and has the cleanest in-place model editing. It was the slowest in-process solver here (on the 5,000 Classic run, about 1.5x slower than CP-SAT and 3x slower than CBC), which matters little at these sizes. Meaning: if a future OR-Tools release drops CBC (a risk, not a known plan; **BET**), switching costs one adapter.
-- **GLPK is the speed outlier, with caveats.** On independent solves (the workload recommended here) it was 6x to 16x faster than CBC, and on long overlap sequences 1.2x to 2.4x faster than the next-best solver. [[GLPK_F]] But it is GPL-3.0, GLPK itself has not changed since 2020, and its Python binding is a raw C interface. Meaning: worth keeping as an optional fast path for time-critical late swap if the user accepts GPL; not the default.
+- **GLPK is the speed outlier, with caveats.** On independent solves (the workload recommended here) it was 6x to 16x faster than CBC, and on long overlap sequences 1.2x to 2.4x faster than the next-best solver. It kept that lead on the 240-player slate (4.9 ms versus 36.8 ms per solve). But it is GPL-3.0, GLPK itself has not changed since 2020, and its Python binding is a raw C interface. Meaning: worth keeping as an optional fast path for time-critical late swap if the user accepts GPL; not the default.
 - **Avoid:** PuLP 2.4's bundled CBC (2015 build, 35 to 50 ms of file and process overhead per solve, and pinned by pydfs so it blocks newer PuLP); CP-SAT with more than 1 worker unless its deterministic mode is turned on and re-tested; the slot-assignment model on any solver.
 - **Whatever the solver:** pin its exact version, add a deterministic tie-break (for example, a tiny bonus by player ID, or a second pass that picks the lexicographically smallest optimal lineup), and keep the solver-independent rule checker.
 
@@ -310,7 +320,36 @@ Why:
 - Meaning: Showdown candidate generation is a filter, not an optimization. **BET** that this holds for real pools (real pools are similar in size; salary scale differs).
 
 ### 8.2 Portfolio selection cost on synthetic data
-[[PORTFOLIO_RESULTS]]
+Spike: `spikes/solvers/portfolio_select_spike.py`; output `spikes/solvers/out/20261013-1847_portfolio_select_N20000.json` and `20261013-1849_portfolio_select_N100000.json`. Synthetic 120-player slate, 10,000 scenarios (game factor, team factor, individual noise), 5,000 GLPK candidate solves (4,998 unique), and a synthetic field: 60% optimizer lineups built from different noise and sampled with replacement (this creates duplicates; the most-copied lineup had 46 copies in 20,000 and 266 in 100,000), 40% ownership-weighted random lineups projecting at least 85% of the optimum. Cash line = top 20%. **VERIFIED** (code and output). The field is not realistic, so only cost and the direction of the trade-offs mean anything.
+
+Cost (seconds, one process):
+
+| Step | Field of 20,000 | Field of 100,000 |
+|---|---|---|
+| 10,000 scenarios | 0.05 | 0.05 |
+| 5,000 candidate solves (GLPK) | 16.2 | 16.4 |
+| Build the synthetic field | 14.8 | 36.8 |
+| Top-1% and cash lines for all 10,000 scenarios (streamed, 500 scenarios at a time) | 3.8 | 12.3 |
+| Hit matrices for all candidates | 0.7 | 0.8 |
+| All greedy selections (5 strategies x 4 portfolio sizes) | 50.2 | 51.4 |
+| Peak memory | 645 MB | 815 MB |
+
+- **Memory trap found and fixed:** the first version scored lineups with a three-way array lookup and peaked at 3.5 GB (about 60% of the free RAM) on the 20,000-entry case. Rewriting scoring as a matrix multiply (scenarios x players times players x lineups) cut the peak to 645 MB. **VERIFIED** (console output from the first run; that output file was replaced when the spike was reworked, so the 3.5 GB figure survives only in this memo and the session log). Meaning: the engine must score lineups by matrix multiplication in chunks, never by building a scenarios x lineups x players array.
+- **Hit matrices are small:** 5,000 candidates x 10,000 scenarios is 47.7 MB as true/false values and 6.0 MB bit-packed. **VERIFIED**.
+
+Trade-off shape (field of 20,000; columns are P(at least one top-1%) / P(no entry cashes) for one contest):
+
+| Entries | Top projection | Greedy top-1% | Greedy cash | Greedy blend (cash weight 0.5) |
+|---|---|---|---|---|
+| 1 | 3.3% / 56% | 4.4% / 63% | 3.3% / 56% | 3.3% / 56% |
+| 3 | 8.2% / 18% | 11.3% / 26% | 9.9% / 15% | 9.9% / 15% |
+| 20 | 35% / 0.7% | 48% / 0.01% | 28% / 0% | 47% / 0% |
+| 150 | 90% / 0% | 98.8% / 0% | 51% / 0% | 98.8% / 0% |
+
+What this shows (direction only):
+- Greedy coverage beats "top projection" on the top-1% goal at every size. **VERIFIED** (synthetic).
+- With one or three entries, chasing top-1% raises the no-cash risk; the blend recovers most of the cash safety while keeping more top-1% chance than top projection. **VERIFIED** (synthetic).
+- With 20 or more entries in one contest, no-cash risk nearly vanishes in this synthetic field, so night-wide washout risk will come mostly from nights with few total entries and from player outcomes that sink every contest at once. That is exactly why the washout term must use the shared scenario set. **BET**.
 
 ---
 

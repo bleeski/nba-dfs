@@ -680,7 +680,7 @@ Each level ships if the one above cannot finish in time. Only DraftKings validit
 
 ### The "if the engine is down" card
 
-The top of every brief carries four lines: the latest validated upload file for each slate (with path), the if-out file for each questionable player, the fallback file for each slate, and "run `dfs status` from the desktop launcher". If a new export will not parse at 5:40 pm, these files were validated at build time and still work for every entry they cover (RT1 walkthrough 6.3).
+A one-page mock of the whole brief, in opening night's shape, is in `docs/SLATE-BRIEF-MOCK.md` (numbers invented to show the layout). The top of every brief carries four lines: the latest validated upload file for each slate (with path), the if-out file for each questionable player, the fallback file for each slate, and "run `dfs status` from the desktop launcher". If a new export will not parse at 5:40 pm, these files were validated at build time and still work for every entry they cover (RT1 walkthrough 6.3).
 
 ### Your time, honestly
 
