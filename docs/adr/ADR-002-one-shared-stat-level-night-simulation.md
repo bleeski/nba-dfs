@@ -15,7 +15,7 @@ Goal 1 needs each contest's top-1% line and Goal 2 needs the joint chance that e
 
 ## Decision
 
-Option 4. Per scenario: game pace, final margin around the spread, and overtime; team efficiency centered on the implied team total; availability draws for questionable players; minutes with blowout trims and early exits, reconciled to 240 per team; a per-player shared "big night" factor; negative binomial counts; rebounds and assists allocated from team totals; DraftKings scoring with exact bonuses. Captain points are 1.5x the same scenario's total. 10,000 scenarios to screen, 30,000 to finalize, with common random numbers. Every draw is keyed by stable identifiers (ADR-021).
+Option 4, with a **model-error layer** added after red-team round 1 (RT1 rank 1): each scenario also draws shifts in each team's and player's expected production (sized from our own past projection errors, wider in October and for rookies), a slate-wide scoring shift, and one ownership shock per slate shared by every contest on it. Without it, the simulation treats our projections as truth and reports washout as essentially zero at the user's volume. Per scenario, in addition: game pace, final margin around the spread, and overtime; team efficiency centered on the implied team total; availability draws for questionable players; minutes with blowout trims and early exits, reconciled to 240 per team; a per-player shared "big night" factor; negative binomial counts; rebounds and assists allocated from team totals; DraftKings scoring with exact bonuses. Captain points are 1.5x the same scenario's total. 10,000 scenarios to screen, 30,000 to finalize, with common random numbers. Every draw is keyed by stable identifiers (ADR-021).
 
 ## Consequences
 

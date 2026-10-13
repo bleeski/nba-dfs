@@ -23,9 +23,22 @@ A source layer where every adapter declares its terms status, and a `posture` se
 - News: Bluesky public API and the LLM researcher's web searches.
 - Never, in any posture: anything that defeats a technical block (bot protection, CAPTCHA, app keys), and anything on DraftKings.
 
+### The two terms bets inside the permissive posture (stated plainly, per red-team round 1, RT1 rank 12)
+
+1. The official injury report has no bot clause, but NBA.com's Section 9 bars using "the NBA Statistics" with any fantasy game; whether statuses count as statistics is a BET.
+2. sportsdataverse files are CC BY 4.0, but the underlying box scores are ESPN's, whose terms ban automated access; whether that reaches republished data is a BET.
+
+The user accepts or rejects each (Decision D1). If either is rejected, the engine runs without it.
+
+### Other details
+
+- The researcher fetches pages only through `dfs research fetch`, which enforces an allowlist (official.nba.com, nba.com team news, team and league press releases, bsky.app reporter posts, major news outlets) and saves each page for the quote check.
+- DraftKings `Status` and `Starting` are BET for NBA until the user's first NBA salary export (they appear in 2026 exports for other sports).
+- `nba_api` can be approved by the user as a backup history source if sportsdataverse's daily job stalls.
+
 ## Consequences
 
-- **Results:** opening-night projections rest on last season's box scores, market lines, and official statuses, which covers the essentials; the permissive posture gives up nightly props on about half the nights and richer play-by-play detail.
-- **Cost:** free; the user signs up for a free The Odds API key (one-time, about 2 minutes).
-- **Workload:** the near-lock salary re-export (about 1 minute per lock wave) replaces a scraped lineups feed.
-- **Flagged uncertainty:** whether NBA.com's fantasy clause covers injury statuses, and whether ESPN's terms reach data republished under CC BY 4.0, are BETs, not legal advice.
+- **Results:** opening-night projections rest on last season's box scores, market lines, and official statuses; the permissive posture gives up nightly props on about half the nights and richer play-by-play detail.
+- **Cost:** free; the user creates a free The Odds API key (about 2 minutes, on Oct 14).
+- **Workload:** none beyond the manual DraftKings downloads; occasionally a manual Daily Fantasy Fuel CSV download.
+- **Not legal advice:** both bets are judgment calls the user makes.

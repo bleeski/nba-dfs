@@ -16,11 +16,11 @@ The engine must choose 1 to 150 entries per contest across about 10 contests so 
 
 Option 3.
 
-- Per contest, lazy greedy on the duplication-adjusted top-1% objective, using per-scenario hit bits for every candidate. The objective has diminishing returns, so greedy is guaranteed at least about 63% of the best set from the same pool (R2, VERIFIED theorems).
-- Night pass: greedy on `sum_c G1_c / G1*_c + lambda x (1 - P(W))`, sweeping `lambda` and keeping the largest value that leaves every contest at least `(1 - epsilon) x G1*_c`.
-- A deterministic local-improvement pass tries single-player swaps and keeps those that beat simulation noise.
+- Three independent scenario sets (revised after red-team round 1, RT1 rank 18): candidates are shortlisted on a screening set, re-scored on a selection set, and every reported number and insurance guarantee comes from a reporting and validation set.
+- Per contest, lazy greedy on the top-1% objective (raw probability in Phase 1; duplicate-adjusted after calibration, ADR-009), storing per-scenario results as bits for big fields and 8-bit probabilities for fields under about 1,000. Each scenario's value is the best of our entries, so adding a lineup never lowers it and greedy is guaranteed at least about 63% of the best set from the same pool (R2, VERIFIED theorems).
+- Night insurance search (replacing a single-weight sweep, which did not enforce per-contest guarantees, RT1 rank 7): starting from each contest's greedy portfolio, accept single-lineup swaps that lower washout while every contest keeps at least `(1 - epsilon) x G1*_c` on the validation set; skipped when washout at 0% is under 1%.
+- A deterministic local-improvement pass tries single-player swaps and keeps those that beat noise without breaking a guarantee.
 - Guardrails in code: no repeated lineup within a contest; a 60% cap on any one player's share of the night's entries.
-- Reported probabilities come from fresh scenarios not used for selection.
 
 ## Consequences
 

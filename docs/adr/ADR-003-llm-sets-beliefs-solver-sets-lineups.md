@@ -1,29 +1,30 @@
 # ADR-003: The LLM sets beliefs; code sets lineups
 
-**Status:** Accepted (design). **Date:** 2026-10-13.
+**Status:** Accepted (design), revised after red-team round 1. **Date:** 2026-10-13.
 
 ## Context
 
-The brief asks where judgment ends and arithmetic begins: should the LLM pick players for lineups, or set theses, player pools, and constraints that a solver turns into lineups? The objective (Goal 1 per contest, Goal 2 across the night) is a probability over thousands of simulated nights and simulated opponents. The LLM runs inside a Pro-sized Claude budget, has no seed or temperature control (R7), and its contributions must be measurable for the learning loop.
+The brief asks where judgment ends and arithmetic begins: should the LLM pick players for lineups, or set theses, player pools and constraints that a solver turns into lineups? The objective is a probability over thousands of simulated nights and opponents. The LLM runs inside a Pro-sized budget, has no seed or temperature control (R7), and its contributions must be measurable. The red team added three requirements: overrides must be checked against their sources (RT1 rank 15), role changes must not be averaged into impossible values (rank 16), and public news must reach the field model (rank 4).
 
 ## Options considered
 
-1. **LLM builds lineups** (picks players, applies stacking judgment). Flexible, but it cannot evaluate the objective, its choices cannot be replayed, and it costs the most tokens.
-2. **LLM sets theses and constraints** (for example "stack game 3", "fade player X", exposure targets). Cheaper, but theses are untested opinions that move every lineup, and there is no model-only baseline to score them against.
-3. **LLM files structured beliefs about the world; code does everything that follows.** Beliefs are availability probabilities, minutes ranges, usage shifts, and data-quality flags, each with evidence and a confidence, in the override schema from R3 section 10.
+1. **The LLM builds lineups.** Cannot evaluate the objective; not replayable; the most expensive.
+2. **The LLM sets theses and constraints.** Untested opinions move every lineup; no baseline to score them against.
+3. **The LLM files structured beliefs about the world; code does everything that follows.**
 
 ## Decision
 
-Option 3, with a narrow exception for player-pool exclusions.
+Option 3, with player-pool exclusions allowed with a reason.
 
-- The LLM's output types are fixed: `availability` (probability of playing), `role` (probability of starting, minutes q10/q50/q90, optional hard cap), `usage_multiplier` and optional per-stat multipliers (quantiles), `redistribution_hint`, `condition` (applies only in scenarios where another player is out), `data_flag` (stale or conflicting input), and `pool_exclusion` (remove a player, with a stated reason, for example "not with team"). Each record carries evidence links and short quotes.
-- Code validates every record (known player, game not locked, quantiles ordered, minutes 0 to 48, multipliers 0.5 to 2.0, evidence present, not expired) and rejects bad ones with a logged reason.
-- Code blends overrides with the model by precision weighting after inflating the LLM's stated variance by a coverage factor fitted from its track record (starting at 1.5). Official OUT designations beat everything; the user's overrides beat the LLM's.
-- The LLM never writes lineups, exposures, or numbers into upload files. Game-level "theses" are not accepted as constraints; if the LLM believes a game is mispriced, it must say why in terms of a belief the model can use (for example "starter X is out, pace will rise") or leave it to the brief.
+- Output types: `availability`, `role` (probability of starting; minutes q10/q50/q90; optional hard cap), `usage_multiplier` and per-stat multipliers (percentiles), `redistribution_hint`, `condition`, `no_history_prior`, `data_flag`, `pool_exclusion`, each with evidence and a `visibility` tag (public or private).
+- **Checks before use:** schema and ranges; the quoted words must appear in the page the researcher fetched through `dfs research fetch`, which saves it; the page must be no older than 24 hours. Failing records are dropped and listed.
+- **Blending:** role changes (a different probability of starting, or a condition) become mixtures drawn per scenario; within the same role, precision weighting after inflating the LLM's stated uncertainty by a coverage factor fitted from its track record (starting at 1.5). Official OUT beats everything; the user's overrides beat the LLM's. One override moves a teammate's minutes by at most 8 unless the evidence is an official status change.
+- The LLM never writes lineups, exposures, or numbers into upload files; game "theses" are not accepted as constraints.
+- Every override is one line in the brief with a one-command veto.
 
 ## Consequences
 
-- **Results:** the LLM's edge (reading news faster and more completely than a feed) reaches every lineup through the simulation, and its errors are caught by validation and down-weighted by its own track record.
-- **Cost:** the smallest LLM footprint of the three options; research reads a diff of news, not the whole slate.
-- **Workload:** the user can skim a nightly list of overrides (one line each with the evidence) and veto any of them; there is nothing to approve by default.
-- **Measurement:** every override is stored with its model-only twin, so a weekly report answers "did the LLM help?" with minutes and points error, interval coverage, and Brier score for availability.
+- **Results:** the LLM's edge (reading news faster and more completely than a feed) reaches every lineup through the simulation; fabricated or stale evidence is rejected; public news also reaches the simulated field.
+- **Cost:** the smallest LLM footprint of the three options.
+- **Workload:** skim the override list; veto when needed.
+- **Measurement:** every override is stored with its model-only twin; the weekly scorecard answers "did the LLM help?"

@@ -1,28 +1,29 @@
-# ADR-009: Duplication counts a top-1% finish at the share of prize money it keeps
+# ADR-009: Duplication counts a top-1% finish at the expected share of prize it keeps, switched on after calibration
 
-**Status:** Proposed; needs the user's confirmation (Decision D2 in ARCHITECTURE.md). **Date:** 2026-10-13.
+**Status:** Proposed; needs the user's confirmation (Decision D2). Revised after red-team round 1. **Date:** 2026-10-13.
 
 ## Context
 
-A lineup tied with opponent copies still finishes in the top 1%, so duplication does not change the raw probability of a top-1% finish. It changes the money: DraftKings pools the prizes for tied places and splits them evenly (terms, R6). Showdown makes this acute: one 2020 NBA Showdown ended in a 19-way tie for first (R5, SUPPORTED), and an NFL Showdown lineup built about 500 times turned a $500,000 first prize into about $1,559 each (R5, VERIFIED for NFL). Every vendor ranks lineups by ROI, which penalizes duplicates (R1).
+A lineup tied with opponent copies still finishes in the top 1%, so duplication does not change the raw probability; it changes the money. DraftKings pools tied places' prizes and splits them evenly (terms, R6). In the user's NFL data, 83% to 98% of top-1% Showdown entries were shared by six or more players, a 23-way tie for first paid each entry 5.4% of the advertised prize, and unique Showdown lineups were the worst performers (RR2). The red team found three problems with the first version: taking the share from the highest-scoring entry broke the "adding a lineup never hurts" property the greedy guarantee needs; the share must be averaged over the number of copies (not computed at the average number); and duplicate rates are unfitted guesses until real NBA standings exist (RT1 rank 8).
 
 ## Options considered
 
-1. **Pure probability.** Count a tied finish as a full finish. Matches the brief's literal wording. Pushes the optimizer toward the chalkiest version of a good lineup, especially in Showdown.
-2. **Flat penalty 1/(1 + D)**, where D is the expected number of opponent copies. Simple, but overcharges ties deep in the top 1%, where neighboring prizes are nearly equal and a tie barely changes the payout.
-3. **Prize-share factor.** Count a tied finish at (pooled prize for the tied places, split evenly) divided by (the prize for that place alone), using the contest's payout table and the field model's duplicate estimate.
+1. **Pure probability.** Matches the brief's literal wording; favors the chalkiest version of a good lineup.
+2. **Flat penalty 1/(1 + D).** Overcharges ties deep in the top 1%.
+3. **Expected prize share,** per lineup, from the payout table and the distribution of opponent copies.
 
 ## Decision
 
-Option 3, reported side by side with option 1.
+Option 3, staged:
 
-- For each candidate lineup, the field model estimates opponent copies (exact-match frequency in the simulated field for Showdown and for chalky Classic lineups; ownership product times a fitted factor for rare Classic lineups).
-- In each scenario where our best entry is top 1%, the engine computes the expected share of prize kept given its rank and the copies, from the contest's payout table (or the class default when no table was pasted).
-- Goal 1 is the average of that share; the raw probability is shown next to it in the brief.
+- Each scenario's value for a contest is the **maximum over our entries of P(top 1% | s, L) x share(L, s)**, which keeps the objective's diminishing-returns property and the greedy method's guarantee.
+- `share(L, s)` is the expected fraction of the prize kept, averaged over the number of copies (drawn from the field model's copy rate for that lineup), using the contest's payout table: near 1 deep in the top 1%, much lower for ties at the top of a top-heavy payout.
+- **Phase 1:** selection uses the raw probability; the brief shows the duplicate-adjusted number beside it.
+- **Switch-on:** after at least five NBA Showdown standings files have fitted the duplicate rate, selection uses the adjusted version.
 
 ## Consequences
 
-- **Results:** in Showdown and in fields under 200 (where top 1% means first place), the engine avoids lineups whose top-1% finishes would be split many ways; elsewhere the penalty is small because ties deep in the top 1% cost little.
-- **Cost:** duplicate estimates come from the field model the engine needs anyway; the payout lookup is cheap.
-- **Workload:** none, beyond the optional payout pastes that improve every contest estimate.
-- **If the user prefers option 1:** a single setting switches Goal 1 to the raw probability; the duplicate estimates are still reported.
+- **Results:** in Showdown and in fields under 200, the engine stops favoring lineups whose wins would be split many ways, once its duplicate estimates are trustworthy; elsewhere the effect is small.
+- **Cost:** duplicate estimates come from the field model the engine needs anyway.
+- **Workload:** none beyond the morning standings downloads.
+- **If the user prefers pure probability:** one setting keeps option 1 permanently; duplicate estimates are still reported.

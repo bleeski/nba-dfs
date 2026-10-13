@@ -16,7 +16,7 @@ Opening week brings new rosters, rookies, coaching changes, and no current-seaso
 
 Option 3, with DARKO used only as a methodological reference.
 
-- Rookies: a prior from draft slot, age and height, with heavily discounted college or international per-minute stats (BET).
+- Players with no NBA history (rookies, two-way players): in Phase 1, salary-implied production plus the researcher's `no_history_prior` (a comparable role and a minutes range), because no permissive free source of draft slot and college statistics was verified (RT1 rank 12). A draft-slot prior is a Phase 3 candidate if a permissive source is found.
 - Team changes: moved through the usage share model.
 - Coaching changes: pace shrunk toward league average.
 - The LLM researcher's role overrides carry the most current information about rotations, with evidence, and are scored.
