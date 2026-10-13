@@ -43,6 +43,8 @@ Jargon, defined once: an **endpoint** is one web address that returns data. **JS
 
 **1d. Preseason is only partly representative.** Schedules, box scores, ESPN odds and injuries, and RotoWire lineups behave now as they will in the regular season. The official injury report, Pinnacle and Bovada lines, and most projection sites do not cover preseason, so their regular-season behavior is SUPPORTED or BET. The first chance to see the 2026-27 injury report is Monday Oct 19, because teams must file by 5 p.m. local time the day before a game.
 
+**1e. Calendar facts for the runbook (VERIFIED, section 4.10).** Opening night, Tuesday Oct 20, has three games: BOS at DET 3:00 PM ET, PHI at NYK 7:00 PM ET, OKC at SAS 9:30 PM ET. A slate with the 3:00 PM game means the opening-night build must finish by early afternoon. The last preseason game is Friday Oct 16 (DEN at LAL, 10:30 PM ET); Oct 14 has 7 games, Oct 15 has 2, Oct 16 has 12, and Oct 17 to 19 have none.
+
 ---
 
 ## 2. Primary and fallback for each need
@@ -291,6 +293,38 @@ Terms: Bluesky's developer guidelines target spam ("Generating automated or bulk
 ### 4.9 Tonight's timing test (one preseason game, first tips 7:00 PM ET)
 
 TIMING-PENDING
+
+### 4.10 Opening night and the rest of the preseason (for the runbook)
+
+VERIFIED with one ScheduleLeagueV2 request at 23:10 UTC today (`s01d_schedule_facts.py`, `20261013-1810_schedule_facts.json`). ET times come from the schedule's own `gameStatusText` and `gameDateTimeEst`, and match `gameDateTimeUTC` minus 4 hours (Eastern Daylight Time runs until Nov 1).
+
+**Tuesday Oct 20, 2026 has three games, and the first tips at 3:00 PM ET:**
+
+| Game id | Matchup | Tip (ET) | Tip (UTC) | Arena |
+|---|---|---|---|---|
+| 0022600001 | BOS at DET | 3:00 PM | 19:00 | Little Caesars Arena, Detroit |
+| 0022600002 | PHI at NYK | 7:00 PM | 23:00 | Madison Square Garden, New York |
+| 0022600003 | OKC at SAS | 9:30 PM | 01:30 (Oct 21) | Frost Bank Center, San Antonio |
+
+This confirms the DraftKings lobby's order and times. Basketball Monster's lineups page also lists "BOS @ DET 3:00 PM ET" (VERIFIED, `20261013-1650_parse_saved_pages.json`). The next games are Wednesday Oct 21 from 7:00 PM ET.
+
+What it means for opening night (BET unless marked):
+
+* A slate that includes BOS at DET locks at 3:00 PM ET, which is 2:00 PM on the laptop's Central time. The full build (projections, then lineups) must finish by early afternoon, and the late-news loop must run from about 1:30 PM ET.
+* Because that tip is at or before 5 p.m., the league rule moves both teams' game-day injury report into the 8 to 10 a.m. local window (VERIFIED rule text, 4.3), so the official report for BOS and DET should be final by about 10 a.m. ET; the day-before reports are due by 5 p.m. local on Monday Oct 19.
+* Tonight's preseason data point (4.9) suggests confirmed starters for BOS and DET will appear on RotoWire between about an hour and a few minutes before 3:00 PM ET.
+
+**Remaining preseason (ET dates):**
+
+| Date | Games | First and last tip (ET) |
+|---|---|---|
+| Tue Oct 13 (tonight) | 5 | 7:00 PM to 10:00 PM |
+| Wed Oct 14 | 7 | 7:30 PM to 10:30 PM |
+| Thu Oct 15 | 2 | 7:30 PM (TOR at NYK), 8:30 PM (OKC at HOU) |
+| Fri Oct 16 | 12 | 7:00 PM to 10:30 PM |
+| Sat Oct 17, Sun Oct 18, Mon Oct 19 | 0 | none |
+
+**The last preseason game is Friday Oct 16: DEN at LAL, 10:30 PM ET (game 0012600063).** The dry-run window for live data therefore ends Friday night; Saturday to Monday have no NBA games, so any weekend rehearsal has to replay saved data (for example tonight's poller log and the archived injury PDFs). The 67 preseason games ran from Oct 3 to Oct 16.
 
 ---
 
