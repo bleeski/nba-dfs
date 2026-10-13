@@ -1,0 +1,18 @@
+PART 1: Monte Carlo standard error of an estimated probability p from n sims
+SE = sqrt(p(1-p)/n); relative SE = SE/p
+p=0.005  n=  1000: SE=0.0022 (rel 44.6%) | n=  5000: SE=0.0010 (rel 19.9%) | n= 10000: SE=0.0007 (rel 14.1%) | n= 30000: SE=0.0004 (rel  8.1%) | n=100000: SE=0.0002 (rel  4.5%)
+p=0.01   n=  1000: SE=0.0031 (rel 31.5%) | n=  5000: SE=0.0014 (rel 14.1%) | n= 10000: SE=0.0010 (rel  9.9%) | n= 30000: SE=0.0006 (rel  5.7%) | n=100000: SE=0.0003 (rel  3.1%)
+p=0.02   n=  1000: SE=0.0044 (rel 22.1%) | n=  5000: SE=0.0020 (rel  9.9%) | n= 10000: SE=0.0014 (rel  7.0%) | n= 30000: SE=0.0008 (rel  4.0%) | n=100000: SE=0.0004 (rel  2.2%)
+p=0.05   n=  1000: SE=0.0069 (rel 13.8%) | n=  5000: SE=0.0031 (rel  6.2%) | n= 10000: SE=0.0022 (rel  4.4%) | n= 30000: SE=0.0013 (rel  2.5%) | n=100000: SE=0.0007 (rel  1.4%)
+p=0.25   n=  1000: SE=0.0137 (rel  5.5%) | n=  5000: SE=0.0061 (rel  2.4%) | n= 10000: SE=0.0043 (rel  1.7%) | n= 30000: SE=0.0025 (rel  1.0%) | n=100000: SE=0.0014 (rel  0.5%)
+
+PART 1b: comparing two similar lineups, independent sims vs common random numbers (CRN)
+mean P(top1%) lineup A ~ 0.0104
+SD of estimated difference (B-A) across 300 repeats, n=10000: CRN=0.00115, independent=0.00145
+variance reduction factor from CRN: 1.6x
+
+PART 2: synthetic starting big man, 32 projected minutes. DK scoring with DD/TD (TD assumed to also earn DD: unverified rule).
+A fixed 32 min, independent Poisson          mean= 42.9 sd= 7.7 skew=+0.14 p01= 26.0 p10= 33.2 p50= 42.8 p90= 52.8 p99= 61.5 P(DD)=0.642 P(TD)=0.0005 min_sd=0.0
+B minutes mixture, Poisson given minutes     mean= 41.4 sd=11.0 skew=-0.30 p01= 10.0 p10= 28.0 p50= 41.8 p90= 54.8 p99= 66.0 P(DD)=0.587 P(TD)=0.0008 min_sd=5.9
+C = B + shared game factor + NB overdispersion mean= 41.3 sd=13.1 skew=+0.15 p01=  9.5 p10= 25.2 p50= 41.0 p90= 58.0 p99= 74.2 P(DD)=0.536 P(TD)=0.0020 min_sd=5.9
+D normal matched to C mean and sd            mean= 41.3 sd=13.1 skew=+0.00 p01= 10.8 p10= 24.5 p50= 41.3 p90= 58.1 p99= 71.6

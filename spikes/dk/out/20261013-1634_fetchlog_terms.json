@@ -1,0 +1,29 @@
+[
+ {
+  "name": "terms",
+  "url": "https://www.draftkings.com/help/terms",
+  "status": 200,
+  "ctype": "text/html; charset=utf-8",
+  "bytes": 390353,
+  "saved": "C:\\Users\\benja\\Documents\\Claude\\nba-dfs\\spikes\\dk\\out\\downloads\\draftkings\\20261013-1634_terms.html",
+  "ratelimit_headers": {}
+ },
+ {
+  "name": "robots",
+  "url": "https://www.draftkings.com/robots.txt",
+  "status": 200,
+  "ctype": "text/plain",
+  "bytes": 357,
+  "saved": "C:\\Users\\benja\\Documents\\Claude\\nba-dfs\\spikes\\dk\\out\\downloads\\draftkings\\20261013-1634_robots.txt",
+  "ratelimit_headers": {}
+ },
+ {
+  "name": "robots_api",
+  "url": "https://api.draftkings.com/robots.txt",
+  "status": 404,
+  "ctype": "text/plain",
+  "bytes": 9,
+  "saved": "C:\\Users\\benja\\Documents\\Claude\\nba-dfs\\spikes\\dk\\out\\downloads\\draftkings\\20261013-1634_robots_api.txt",
+  "ratelimit_headers": {}
+ }
+]

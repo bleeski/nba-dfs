@@ -1,0 +1,75 @@
+start None poller started
+espn_injuries 200 {'n_all': 135, 'n_tonight': 45, 'newest_date': '2026-10-13T21:28Z', 'changes': [("Nae'Qwan Tomlin", None, 'Day-To-Day', '2026-10-11T21:41Z'), ('Khalifa Diop', N
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+rotowire_lineups 200 {'n_games': 7, 'games': [{'teams': ['CLE', 'ORL'], 'sides': [{'status': 'Expected Lineup', 'status_class': 'lineup__status is-expected', 'first5': ['James Harde
+espn_injuries 200 {'n_all': 136, 'n_tonight': 46, 'newest_date': '2026-10-13T21:48Z', 'changes': [('Nikola Vucevic', None, 'Day-To-Day', '2026-10-13T21:48Z'), ('Nate Bittle', 'Da
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_injuries 200 {'n_all': 136, 'n_tonight': 46, 'newest_date': '2026-10-13T21:48Z', 'changes': [], 'removed': []}
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_injuries 200 {'n_all': 136, 'n_tonight': 46, 'newest_date': '2026-10-13T21:48Z', 'changes': [], 'removed': []}
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+rotowire_lineups 200 {'n_games': 7, 'games': [{'teams': ['CLE', 'ORL'], 'sides': [{'status': 'Confirmed Lineup', 'status_class': 'lineup__status is-confirmed', 'first5': ['James Har
+espn_injuries 200 {'n_all': 136, 'n_tonight': 46, 'newest_date': '2026-10-13T21:48Z', 'changes': [], 'removed': []}
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_injuries 200 {'n_all': 136, 'n_tonight': 46, 'newest_date': '2026-10-13T21:48Z', 'changes': [], 'removed': []}
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_injuries 200 {'n_all': 137, 'n_tonight': 47, 'newest_date': '2026-10-13T22:09Z', 'changes': [("Nae'Qwan Tomlin", 'Day-To-Day', 'Day-To-Day', '2026-10-13T22:09Z'), ('Sam Merr
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+rotowire_lineups 200 {'n_games': 7, 'games': [{'teams': ['CLE', 'ORL'], 'sides': [{'status': 'Confirmed Lineup', 'status_class': 'lineup__status is-confirmed', 'first5': ['James Har
+espn_injuries 200 {'n_all': 137, 'n_tonight': 47, 'newest_date': '2026-10-13T22:09Z', 'changes': [], 'removed': []}
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_injuries 200 {'n_all': 137, 'n_tonight': 47, 'newest_date': '2026-10-13T22:09Z', 'changes': [], 'removed': []}
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_injuries 200 {'n_all': 137, 'n_tonight': 47, 'newest_date': '2026-10-13T22:09Z', 'changes': [], 'removed': []}
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+rotowire_lineups 200 {'n_games': 7, 'games': [{'teams': ['CLE', 'ORL'], 'sides': [{'status': 'Confirmed Lineup', 'status_class': 'lineup__status is-confirmed', 'first5': ['James Har
+espn_injuries 200 {'n_all': 137, 'n_tonight': 47, 'newest_date': '2026-10-13T22:32Z', 'changes': [('Chet Holmgren', 'Day-To-Day', 'Day-To-Day', '2026-10-13T22:32Z'), ('Ajay Mitch
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_injuries 200 {'n_all': 137, 'n_tonight': 47, 'newest_date': '2026-10-13T22:32Z', 'changes': [], 'removed': []}
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_injuries 200 {'n_all': 137, 'n_tonight': 47, 'newest_date': '2026-10-13T22:32Z', 'changes': [], 'removed': []}
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+rotowire_lineups 200 {'n_games': 7, 'games': [{'teams': ['CLE', 'ORL'], 'sides': [{'status': 'Confirmed Lineup', 'status_class': 'lineup__status is-confirmed', 'first5': ['James Har
+espn_injuries 200 {'n_all': 132, 'n_tonight': 42, 'newest_date': '2026-10-13T22:35Z', 'changes': [('Jaylin Williams', 'Day-To-Day', 'Day-To-Day', '2026-10-13T22:35Z')], 'removed'
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_injuries 200 {'n_all': 132, 'n_tonight': 42, 'newest_date': '2026-10-13T22:35Z', 'changes': [], 'removed': []}
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_injuries 200 {'n_all': 132, 'n_tonight': 42, 'newest_date': '2026-10-13T22:35Z', 'changes': [], 'removed': []}
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+rotowire_lineups 200 {'n_games': 7, 'games': [{'teams': ['CLE', 'ORL'], 'sides': [{'status': 'Confirmed Lineup', 'status_class': 'lineup__status is-confirmed', 'first5': ['James Har
+espn_injuries 200 {'n_all': 130, 'n_tonight': 40, 'newest_date': '2026-10-13T22:56Z', 'changes': [('Trey Jemison III', None, 'Day-To-Day', '2026-10-13T22:56Z'), ('Jamison Battle'
+espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}

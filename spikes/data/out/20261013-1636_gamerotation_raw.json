@@ -1,0 +1,18 @@
+[
+ {
+  "gid": "0022501190",
+  "status": 500,
+  "latency_s": 0.56,
+  "bytes": 0,
+  "ctype": null,
+  "head": ""
+ },
+ {
+  "gid": "0012600044",
+  "status": 500,
+  "latency_s": 0.45,
+  "bytes": 0,
+  "ctype": null,
+  "head": ""
+ }
+]

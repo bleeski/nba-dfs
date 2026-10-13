@@ -1,0 +1,30 @@
+=== 1. BOM and line endings
+DKEntries (6).csv: BOM=False CRLF=379 LF=379
+DKEntries_showdown.csv: BOM=False CRLF=166 LF=166
+DKSalaries_showdown.csv: BOM=True CRLF=159 LF=159
+DKSalaries_Classic.csv: BOM=True CRLF=309 LF=309
+contest-standings-196048725.csv: BOM=True CRLF=0 LF=714
+
+=== 2. LOCKED cells in DKEntries (5).csv (downloaded mid-slate)
+slots per row=10, entries=15, cell formats={'Name (ID) (LOCKED)': 87, 'Name (ID)': 63}
+example cell: Gerrit Cole (43828848) (LOCKED)
+
+=== 3. Standings: Points vs sum of FPTS, and row widths
+contest-standings-194542293.zip: lineups checked=85, Points != sum(FPTS)=0, row widths={11: 81, 9: 92}
+contest-standings-196048727.zip: lineups checked=105, Points != sum(FPTS)=0, row widths={11: 57, 9: 50}
+contest-standings-195958188.zip: lineups checked=224, Points != sum(FPTS)=0, row widths={11: 190, 9: 39}
+
+=== 5. Salary files: accented names, salary increments
+files=63, files with accented names={'DKSalaries - soccer.csv': 2, 'DKSalaries - UEFA.csv': 3, 'DKSalaries starting XI.csv': 2, 'DKSalaries_2026_09_08_Soccer_UEFA.csv': 1, 'DKSalaries_Starting_XI.csv': 3, 'DKSalaries_UEFA.csv': 1}
+   ('classic', 'mult100', 'mult200') 6567
+   ('classic', 'mult100', 'not200') 3587
+   ('showdown CPT', 'mult100', 'mult200') 1431
+   ('showdown CPT', 'mult100', 'not200') 1010
+   ('showdown FLEX', 'mult100', 'mult200') 370
+   ('showdown G', 'mult100', 'mult200') 18
+   ('showdown UTIL', 'mult100', 'mult200') 2053
+
+=== 6. DKEntries_showdown.csv embedded player list vs DKSalaries_showdown.csv
+embedded players=158, salary-file players=158, IDs only in entries=0, only in salaries=0
+IDs whose (Roster Position, Salary, Name) differ: 0 []
+embedded player-list header: ['Position', 'Name + ID', 'Name', 'ID', 'Roster Position', 'Salary', 'Game Info', 'TeamAbbrev', 'AvgPointsPerGame']

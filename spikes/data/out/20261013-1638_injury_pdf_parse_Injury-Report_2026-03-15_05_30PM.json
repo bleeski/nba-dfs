@@ -1,0 +1,113 @@
+{
+ "file": "Injury-Report_2026-03-15_05_30PM.pdf",
+ "pages": 10,
+ "page0_text_head": "Injury Report: 03/15/26 05:30 PM\nGameDate GameTime Matchup Team PlayerName CurrentStatus Reason\n03/15/2026 01:00(ET) MIN@OKC MinnesotaTimberwolves Beringer,Joan Out GLeague-OnAssignment\nEdwards,Anthony Available Injury/Illness-RightKnee;Soreness\nFreeman,Enrique Out GLeague-Two-Way\nPhillips,Julian Out GLeague-OnAssignment\nPullin,Zyon Out GLeague-Two-Way\nOklahomaCityThunder Barnhizer,Brooks Out GLeague-Two-Way\nCarlson,Branden Out Injury/Illness-LowBack;Strain\nHartenstein,Isaiah Available -\nInjury/Illness-RightACL;Surgical\nSorber,Thomas Out\nRecovery\nTopic,Nikola Out GLeague-OnAssignment\nInjury/Il",
+ "page0_n_tables_lines_strategy": 2,
+ "page0_text_strategy_tables": 1,
+ "page0_text_strategy_sample": [
+  [
+   "GameTime",
+   "Matchup",
+   "Team",
+   "PlayerName",
+   "CurrentStatus",
+   "Reason"
+  ],
+  [
+   "",
+   "",
+   "",
+   "",
+   "",
+   ""
+  ],
+  [
+   "01:00(ET)",
+   "MIN@OKC",
+   "MinnesotaTimberwolves",
+   "Beringer,Joan",
+   "Out",
+   "GLeague-OnAssignment"
+  ],
+  [
+   "",
+   "",
+   "",
+   "",
+   "",
+   ""
+  ],
+  [
+   "",
+   "",
+   "",
+   "Edwards,Anthony",
+   "Available",
+   "Injury/Illness-RightKnee;Soreness"
+  ],
+  [
+   "",
+   "",
+   "",
+   "",
+   "",
+   ""
+  ]
+ ],
+ "n_raw_rows": 11,
+ "header_row": [
+  "Injury Report: 03/15/26 05:30 PM",
+  "Injury Report: 03/15/26 05:30 PM"
+ ],
+ "sample_rows": [
+  [
+   "GameDate",
+   "GameTime",
+   "Matchup",
+   "Team",
+   "PlayerName",
+   "CurrentStatus",
+   "Reason"
+  ],
+  [
+   "Injury Report: 03/15/26 05:30 PM",
+   "Injury Report: 03/15/26 05:30 PM"
+  ],
+  [
+   "Injury Report: 03/15/26 05:30 PM",
+   "Injury Report: 03/15/26 05:30 PM"
+  ],
+  [
+   "Injury Report: 03/15/26 05:30 PM",
+   "Injury Report: 03/15/26 05:30 PM"
+  ],
+  [
+   "Injury Report: 03/15/26 05:30 PM",
+   "Injury Report: 03/15/26 05:30 PM"
+  ],
+  [
+   "Injury Report: 03/15/26 05:30 PM",
+   "Injury Report: 03/15/26 05:30 PM"
+  ],
+  [
+   "Injury Report: 03/15/26 05:30 PM",
+   "Injury Report: 03/15/26 05:30 PM"
+  ],
+  [
+   "Injury Report: 03/15/26 05:30 PM",
+   "Injury Report: 03/15/26 05:30 PM"
+  ],
+  [
+   "Injury Report: 03/15/26 05:30 PM",
+   "Injury Report: 03/15/26 05:30 PM"
+  ],
+  [
+   "Injury Report: 03/15/26 05:30 PM",
+   "Injury Report: 03/15/26 05:30 PM"
+  ]
+ ],
+ "n_clean_rows": 0,
+ "clean_sample": [],
+ "status_counts": {},
+ "not_yet_submitted_rows": 0
+}

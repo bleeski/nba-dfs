@@ -1,0 +1,43 @@
+source: 20261013-1633_lobby_nba.json contests: 1852
+all contest keys: ['a', 'attr', 'crownAmount', 'crownsAwarded', 'cs', 'cso', 'dg', 'ec', 'fpp', 'freeWithCrownCash', 'freeWithCrowns', 'fwt', 'gameType', 'gameTypeId', 'id', 'ir', 'isBonusFinalized', 'isOwner', 'isSnakeDraft', 'm', 'mec', 'n', 'nt', 'payoutDescriptionMetadata', 'pd', 'po', 'pt', 'rl', 'rlc', 'rll', 's', 'sa', 'sd', 'sdstring', 'so', 'ssd', 'startTimeType', 'tix', 'tmpl', 'uc', 'ulc']
+example: {'n': 'NBA $1K Fadeaway', 'id': 196711168, 'dg': 154934, 'gameType': 'Classic', 'm': 78, 'mec': 2, 'a': 15, 'po': 1000.0, 'nt': 7, 'ec': 0, 'uc': 0, 'tmpl': 341563, 'sdstring': 'Tue 7:00PM', 'attr': {'IsGuaranteed': 'true', 'IsStarred': 'true'}, 'pd': {'Cash': '$1,000'}}
+example: {'n': ' NBA $600K Opening Tip Off [$200K to 1st]', 'id': 196456057, 'dg': 154575, 'gameType': 'Classic', 'm': 35294, 'mec': 150, 'a': 20, 'po': 600000.0, 'nt': 752, 'ec': 0, 'uc': 0, 'tmpl': 972196, 'sdstring': 'Tue 3:00PM', 'attr': {'IsGuaranteed': 'true', 'IsStarred': 'true'}, 'pd': {'Cash': '$600,000'}}
+example: {'n': 'NBA $5.7K Courtside Special [Single Entry] (Must Fill)', 'id': 196683741, 'dg': 154934, 'gameType': 'Classic', 'm': 4, 'mec': 1, 'a': 1500, 'po': 5700.0, 'nt': 0, 'ec': 0, 'uc': 0, 'tmpl': 341652, 'sdstring': 'Tue 7:00PM', 'attr': {'IsStarred': 'true'}, 'pd': {'Cash': '$5,700'}}
+payoutDescriptionMetadata list lengths: {1: 1846, 0: 6}
+longest payoutDescriptionMetadata example: NBA $1K Fadeaway [{"PayoutDescriptionType": 1, "Order": 1, "PayoutDescription": "$1,000", "Quantity": 1, "Value": 0}]
+
+=== Classic(70) and Showdown(81) contests by entry-limit bucket: count | field size m (min/median/max) | entry fee a (min/median/max) | implied rake 1-po/(m*a) median (only cash prize pools, a>0)
+('Classic', '3-max') 32 | m 67 105 3963 | a 0.25 1.5 200 | rake med 0.153 | rake min/max (0.098, 0.159)
+('Classic', '<=150-max') 10 | m 875 8380 71343 | a 0.5 5.0 444 | rake med 0.159 | rake min/max (0.099, 0.159)
+('Classic', '<=20-max') 37 | m 140 297 35671 | a 0.1 0.25 222 | rake med 0.156 | rake min/max (0.099, 0.159)
+('Classic', 'single-entry') 196 | m 22 23 5945 | a 0 3.0 333 | rake med 0.13 | rake min/max (0.091, 0.159)
+('Classic', 'small SE (<=20)') 473 | m 3 5 20 | a 1 10 26200 | rake med 0.1 | rake min/max (0.046, 0.148)
+('Showdown Captain Mode', '3-max') 10 | m 67 112 118 | a 0.25 1.0 180 | rake med 0.153 | rake min/max (0.096, 0.158)
+('Showdown Captain Mode', '<=150-max') 9 | m 1176 5112 13071 | a 0.5 5 20 | rake med 0.159 | rake min/max (0.15, 0.159)
+('Showdown Captain Mode', '<=20-max') 24 | m 200 1189 8917 | a 0.1 0.25 222 | rake med 0.159 | rake min/max (0.099, 0.159)
+('Showdown Captain Mode', 'single-entry') 101 | m 22 23 594 | a 0 3 180 | rake med 0.13 | rake min/max (0.091, 0.158)
+('Showdown Captain Mode', 'small SE (<=20)') 582 | m 3 5 20 | a 1 10.0 26200 | rake med 0.1 | rake min/max (0.046, 0.134)
+
+=== Largest Classic and Showdown GPPs (by prize pool), per draft group
+70 154575 Tue 3:00PM |  NBA $600K Opening Tip Off [$200K to 1st] | m 35294 mec 150 a 20 po 600000.0 | top prize: $600,000
+70 154575 Tue 3:00PM | NBA $350K Power Dunk [$100K to 1st] | m 875 mec 26 a 444 po 350000.0 | top prize: $350,000
+70 154827 Tue 7:00PM | NBA $120K Fadeaway [$30K to 1st] (Night) | m 7843 mec 150 a 18 po 120000.0 | top prize: $120,000
+70 154575 Tue 3:00PM | NBA $100K Four Point Play [20 Entry Max] | m 29726 mec 20 a 4 po 100000.0 | top prize: $100,000
+70 154575 Tue 3:00PM | NBA $100K Heavy Hitter [Must Fill] | m 4 mec 1 a 26200 po 100000.0 | top prize: $100,000
+70 154575 Tue 3:00PM | NBA $75K Heavy Hitter [Must Fill] | m 3 mec 1 a 26200 po 75000.0 | top prize: $75,000
+70 154575 Tue 3:00PM | NBA $60K Zone [$10K to 1st] | m 14268 mec 150 a 5 po 60000.0 | top prize: $60,000
+70 154575 Tue 3:00PM | NBA $40K Showtime [Single Entry] | m 444 mec 1 a 100 po 40000.0 | top prize: $40,000
+81 154829 Tue 9:30PM | NBA Showdown $200K Fadeaway [$50K to 1st] (OKC @ SAS) | m 13071 mec 150 a 18 po 200000.0 | top prize: $200,000
+81 154829 Tue 9:30PM | NBA Showdown $100K Heavy Hitter [Must Fill] (OKC @ SAS) | m 4 mec 1 a 26200 po 100000.0 | top prize: $100,000
+81 154829 Tue 9:30PM | NBA Showdown $75K Heavy Hitter [Must Fill] (OKC @ SAS) | m 3 mec 1 a 26200 po 75000.0 | top prize: $75,000
+81 154825 Tue 3:00PM | NBA Showdown $50K Fadeaway [$10K to 1st]  (BOS @ DET) | m 3921 mec 117 a 15 po 50000.0 | top prize: $50,000
+81 154829 Tue 9:30PM | NBA Showdown $40K Zone [$10K to 1st] (OKC @ SAS) | m 9512 mec 150 a 5 po 40000.0 | top prize: $40,000
+81 154829 Tue 9:30PM | NBA Showdown $40K SLAM Jam [$10K to 1st] (OKC @ SAS) | m 200 mec 6 a 222 po 40000.0 | top prize: $40,000
+81 154826 Tue 7:00PM | NBA Showdown $40K Fadeaway [$10K to 1st]  (PHI @ NYK) | m 3137 mec 94 a 15 po 40000.0 | top prize: $40,000
+81 154825 Tue 3:00PM | NBA Showdown $10,600 4-Player (Winner Takes All) (BOS @ DET) | m 4 mec 1 a 10600 po 40000.0 | top prize: $40,000
+
+=== Opening-night related contest names (contain 'Opening' or '10-20')
+196456057 154575 Classic  NBA $600K Opening Tip Off [$200K to 1st] m 35294 mec 150 a 20 po 600000.0 nt 752
+
+=== attr keys seen: {'IsGuaranteed': 603, 'IsStarred': 340, 'IsWinnerTakeAll': 188, 'IsQualifier': 121, 'League': 931, 'IsNighttime': 2, 'IsDoubleUp': 699, 'IsFiftyfifty': 699, 'IsHeadliner': 1, 'Multiplier': 77, 'IsCasual': 113, 'IsBeginner': 166, 'HideBrandedLogo': 144, 'DraftSpeed': 23, 'IsCombinable': 3}
+=== WNBA contests in sport=NBA lobby: 118

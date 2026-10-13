@@ -1,0 +1,648 @@
+{
+ "run_started_local": "2026-10-13T16:35:50.292792",
+ "calls": [
+  {
+   "name": "ScoreboardV3 today (stats.nba.com)",
+   "latency_s": 0.44,
+   "ok": true,
+   "top_keys": [
+    "meta",
+    "scoreboard"
+   ],
+   "frames": [
+    {
+     "rows": 1,
+     "cols": [
+      "gameDate",
+      "leagueId",
+      "leagueName"
+     ]
+    },
+    {
+     "rows": 5,
+     "cols": [
+      "gameId",
+      "gameCode",
+      "gameStatus",
+      "gameStatusText",
+      "period",
+      "gameClock",
+      "gameTimeUTC",
+      "gameEt",
+      "regulationPeriods",
+      "seriesGameNumber",
+      "gameLabel",
+      "gameSubLabel",
+      "seriesText",
+      "ifNecessary",
+      "seriesConference",
+      "poRoundDesc",
+      "gameSubtype",
+      "isNeutral"
+     ]
+    },
+    {
+     "rows": 10,
+     "cols": [
+      "gameId",
+      "teamId",
+      "teamCity",
+      "teamName",
+      "teamTricode",
+      "teamSlug",
+      "wins",
+      "losses",
+      "score",
+      "seed",
+      "inBonus",
+      "timeoutsRemaining"
+     ]
+    },
+    {
+     "rows": 10,
+     "cols": [
+      "gameId",
+      "teamId",
+      "leaderType",
+      "personId",
+      "name",
+      "playerSlug",
+      "jerseyNum",
+      "position",
+      "teamTricode",
+      "points",
+      "rebounds",
+      "assists"
+     ]
+    },
+    {
+     "rows": 10,
+     "cols": [
+      "gameId",
+      "teamId",
+      "leaderType",
+      "personId",
+      "name",
+      "playerSlug",
+      "jerseyNum",
+      "position",
+      "teamTricode",
+      "points",
+      "rebounds",
+      "assists",
+      "seasonLeadersFlag"
+     ]
+    },
+    {
+     "rows": 28,
+     "cols": [
+      "gameId",
+      "broadcasterType",
+      "broadcasterId",
+      "broadcastDisplay",
+      "broadcasterTeamId",
+      "broadcasterDescription"
+     ]
+    }
+   ],
+   "detail": {
+    "gameDate": "2026-10-13",
+    "games": [
+     [
+      "0012600045",
+      "7:00 pm ET",
+      "CLE",
+      "ORL"
+     ],
+     [
+      "0012600046",
+      "7:00 pm ET",
+      "NYK",
+      "TOR"
+     ],
+     [
+      "0012600047",
+      "8:00 pm ET",
+      "IND",
+      "OKC"
+     ],
+     [
+      "0012600048",
+      "10:00 pm ET",
+      "GSW",
+      "LAL"
+     ],
+     [
+      "0012600049",
+      "10:00 pm ET",
+      "POR",
+      "SAC"
+     ]
+    ],
+    "game_keys": [
+     "gameId",
+     "gameCode",
+     "gameStatus",
+     "gameStatusText",
+     "period",
+     "gameClock",
+     "gameTimeUTC",
+     "gameEt",
+     "regulationPeriods",
+     "seriesGameNumber",
+     "gameLabel",
+     "gameSubLabel",
+     "seriesText",
+     "ifNecessary",
+     "seriesConference",
+     "poRoundDesc",
+     "gameSubtype",
+     "isNeutral",
+     "gameLeaders",
+     "teamLeaders",
+     "broadcasters",
+     "homeTeam",
+     "awayTeam"
+    ]
+   }
+  },
+  {
+   "name": "PlayByPlayV3 preseason 0012600044",
+   "latency_s": 0.24,
+   "ok": true,
+   "top_keys": [
+    "meta",
+    "game"
+   ],
+   "frames": [
+    {
+     "rows": 552,
+     "cols": [
+      "gameId",
+      "actionNumber",
+      "clock",
+      "period",
+      "teamId",
+      "teamTricode",
+      "personId",
+      "playerName",
+      "playerNameI",
+      "xLegacy",
+      "yLegacy",
+      "shotDistance",
+      "shotResult",
+      "isFieldGoal",
+      "scoreHome",
+      "scoreAway",
+      "pointsTotal",
+      "location",
+      "description",
+      "actionType",
+      "subType",
+      "videoAvailable",
+      "shotValue",
+      "actionId"
+     ]
+    },
+    {
+     "rows": 1,
+     "cols": [
+      "videoAvailable"
+     ]
+    }
+   ],
+   "detail": {
+    "n_actions": 552,
+    "n_subs": 54,
+    "sample_sub": [
+     {
+      "gameId": "0012600044",
+      "actionNumber": 56,
+      "clock": "PT07M24.00S",
+      "period": 1,
+      "teamId": 1610612762,
+      "teamTricode": "UTA",
+      "personId": 1629637,
+      "playerName": "Hayes",
+      "playerNameI": "J. Hayes",
+      "xLegacy": 0,
+      "yLegacy": 0,
+      "shotDistance": 0,
+      "shotResult": "",
+      "isFieldGoal": 0,
+      "scoreHome": "",
+      "scoreAway": "",
+      "pointsTotal": 0,
+      "location": "h",
+      "description": "SUB: Bailey FOR Hayes",
+      "actionType": "Substitution",
+      "subType": "",
+      "videoAvailable": 0,
+      "shotValue": 0,
+      "actionId": 40
+     },
+     {
+      "gameId": "0012600044",
+      "actionNumber": 59,
+      "clock": "PT07M24.00S",
+      "period": 1,
+      "teamId": 1610612759,
+      "teamTricode": "SAS",
+      "personId": 1628436,
+      "playerName": "Kornet",
+      "playerNameI": "L. Kornet",
+      "xLegacy": 0,
+      "yLegacy": 0,
+      "shotDistance": 0,
+      "shotResult": "",
+      "isFieldGoal": 0,
+      "scoreHome": "",
+      "scoreAway": "",
+      "pointsTotal": 0,
+      "location": "v",
+      "description": "SUB: Gillespie FOR Kornet",
+      "actionType": "Substitution",
+      "subType": "",
+      "videoAvailable": 0,
+      "shotValue": 0,
+      "actionId": 41
+     }
+    ]
+   }
+  },
+  {
+   "name": "BoxScoreSummaryV3 0022501190",
+   "latency_s": 0.22,
+   "ok": true,
+   "top_keys": [
+    "meta",
+    "boxScoreSummary"
+   ],
+   "frames": [
+    {
+     "rows": 1,
+     "cols": [
+      "gameId",
+      "gameCode",
+      "gameStatus",
+      "gameStatusText",
+      "period",
+      "gameClock",
+      "gameTimeUTC",
+      "gameEt",
+      "awayTeamId",
+      "homeTeamId",
+      "duration",
+      "attendance",
+      "sellout"
+     ]
+    },
+    {
+     "rows": 1,
+     "cols": [
+      "gameId",
+      "gameDate",
+      "attendance",
+      "gameDuration"
+     ]
+    },
+    {
+     "rows": 1,
+     "cols": [
+      "gameId",
+      "arenaId",
+      "arenaName",
+      "arenaCity",
+      "arenaState",
+      "arenaCountry",
+      "arenaTimezone"
+     ]
+    },
+    {
+     "rows": 3,
+     "cols": [
+      "gameId",
+      "personId",
+      "name",
+      "nameI",
+      "firstName",
+      "familyName",
+      "jerseyNum"
+     ]
+    },
+    {
+     "rows": 2,
+     "cols": [
+      "gameId",
+      "teamId",
+      "teamCity",
+      "teamName",
+      "teamTricode",
+      "teamSlug",
+      "teamWins",
+      "teamLosses",
+      "period1Score",
+      "period2Score",
+      "period3Score",
+      "period4Score",
+      "score"
+     ]
+    },
+    {
+     "rows": 10,
+     "cols": [
+      "gameId",
+      "teamId",
+      "personId",
+      "firstName",
+      "familyName",
+      "jerseyNum"
+     ]
+    },
+    {
+     "rows": 5,
+     "cols": [
+      "recencyOrder",
+      "gameId",
+      "gameTimeUTC",
+      "gameEt",
+      "gameStatus",
+      "gameStatusText",
+      "awayTeamId",
+      "awayTeamCity",
+      "awayTeamName",
+      "awayTeamTricode",
+      "awayTeamScore",
+      "awayTeamWins",
+      "awayTeamLosses",
+      "homeTeamId",
+      "homeTeamCity",
+      "homeTeamName",
+      "homeTeamTricode",
+      "homeTeamScore",
+      "homeTeamWins",
+      "homeTeamLosses"
+     ]
+    },
+    {
+     "rows": 2,
+     "cols": [
+      "gameId",
+      "teamId",
+      "teamCity",
+      "teamName",
+      "teamTricode",
+      "points",
+      "reboundsTotal",
+      "assists",
+      "steals",
+      "blocks",
+      "turnovers",
+      "fieldGoalsPercentage",
+      "threePointersPercentage",
+      "freeThrowsPercentage",
+      "pointsInThePaint",
+      "pointsSecondChance",
+      "pointsFastBreak",
+      "biggestLead",
+      "leadChanges",
+      "timesTied",
+      "biggestScoringRun",
+      "turnoversTeam",
+      "turnoversTotal",
+      "reboundsTeam",
+      "pointsFromTurnovers",
+      "benchPoints"
+     ]
+    }
+   ],
+   "detail": {
+    "summary_keys": [
+     "gameId",
+     "gameCode",
+     "gameStatus",
+     "gameStatusText",
+     "period",
+     "gameClock",
+     "gameTimeUTC",
+     "gameEt",
+     "awayTeamId",
+     "homeTeamId",
+     "duration",
+     "attendance",
+     "sellout",
+     "seriesGameNumber",
+     "gameLabel",
+     "gameSubLabel",
+     "seriesText",
+     "ifNecessary",
+     "isNeutral",
+     "arena",
+     "officials",
+     "broadcasters",
+     "homeTeam",
+     "awayTeam",
+     "lastFiveMeetings",
+     "pregameCharts",
+     "postgameCharts",
+     "videoAvailableFlag",
+     "ptAvailable",
+     "ptXYZAvailable",
+     "whStatus",
+     "hustleStatus",
+     "historicalStatus",
+     "gameSubtype"
+    ],
+    "inactives_sample": [
+     {
+      "inactives": [
+       {
+        "personId": 1642278,
+        "firstName": "Tyler",
+        "familyName": "Kolek",
+        "jerseyNum": "13  "
+       },
+       {
+        "personId": 1626157,
+        "firstName": "Karl-Anthony",
+        "familyName": "Towns",
+        "jerseyNum": "32  "
+       },
+       {
+        "personId": 1628384,
+        "firstName": "OG",
+        "familyName": "Anunoby",
+        "jerseyNum": "8   "
+       },
+       {
+        "personId": 1628404,
+        "firstName": "Josh",
+        "familyName": "Hart",
+        "jerseyNum": "3   "
+       }
+      ]
+     },
+     {
+      "inactives": [
+       {
+        "personId": 1641787,
+        "firstName": "Tosan",
+        "familyName": "Evbuomwan",
+        "jerseyNum": "8   "
+       },
+       {
+        "personId": 1641790,
+        "firstName": "PJ",
+        "familyName": "Hall",
+        "jerseyNum": "16  "
+       },
+       {
+        "personId": 1641810,
+        "firstName": "Antonio",
+        "familyName": "Reeves",
+        "jerseyNum": "12  "
+       }
+      ]
+     }
+    ],
+    "homeTeam_keys": [
+     "teamId",
+     "teamName",
+     "teamCity",
+     "teamTricode",
+     "teamSlug",
+     "teamWins",
+     "teamLosses",
+     "score",
+     "inBonus",
+     "timeoutsRemaining",
+     "seed",
+     "statistics",
+     "periods",
+     "players",
+     "inactives"
+    ]
+   }
+  },
+  {
+   "name": "GameRotation 0022501190 retry (timeout 60)",
+   "latency_s": 0.11,
+   "ok": false,
+   "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+  },
+  {
+   "name": "ScheduleLeagueV2 2026-27 (parsed dates)",
+   "latency_s": 1.95,
+   "ok": true,
+   "top_keys": [
+    "meta",
+    "leagueSchedule"
+   ],
+   "frames": [
+    {
+     "rows": 1274,
+     "cols": [
+      "leagueId",
+      "seasonYear",
+      "gameDate",
+      "gameId",
+      "gameCode",
+      "gameStatus",
+      "gameStatusText",
+      "gameSequence",
+      "gameDateEst",
+      "gameTimeEst",
+      "gameDateTimeEst",
+      "gameDateUTC",
+      "gameTimeUTC",
+      "gameDateTimeUTC",
+      "awayTeamTime",
+      "homeTeamTime",
+      "day",
+      "monthNum",
+      "weekNumber",
+      "weekName",
+      "ifNecessary",
+      "seriesGameNumber",
+      "gameLabel",
+      "gameSubLabel",
+      "seriesText",
+      "arenaName",
+      "arenaState",
+      "arenaCity",
+      "postponedStatus",
+      "branchLink",
+      "gameSubtype",
+      "isNeutral",
+      "homeTeam_teamId",
+      "homeTeam_teamName",
+      "homeTeam_teamCity",
+      "homeTeam_teamTricode",
+      "homeTeam_teamSlug",
+      "homeTeam_wins",
+      "homeTeam_losses",
+      "homeTeam_score",
+      "homeTeam_seed",
+      "awayTeam_teamId",
+      "awayTeam_teamName",
+      "awayTeam_teamCity",
+      "awayTeam_teamTricode"
+     ]
+    },
+    {
+     "rows": 26,
+     "cols": [
+      "leagueId",
+      "seasonYear",
+      "weekNumber",
+      "weekName",
+      "startDate",
+      "endDate"
+     ]
+    }
+   ],
+   "detail": {
+    "first_regular_utc": "2026-10-20 19:00:00+00:00",
+    "last_regular_utc": "2027-04-12 00:30:00+00:00",
+    "regular_games": 1206,
+    "regular_tbd_teams": 6,
+    "preseason": 67,
+    "first_regular_games": [
+     {
+      "gameId": "0022600001",
+      "gameDateTimeUTC": "2026-10-20T19:00:00Z",
+      "awayTeam_teamTricode": "BOS",
+      "homeTeam_teamTricode": "DET"
+     },
+     {
+      "gameId": "0022600002",
+      "gameDateTimeUTC": "2026-10-20T23:00:00Z",
+      "awayTeam_teamTricode": "PHI",
+      "homeTeam_teamTricode": "NYK"
+     },
+     {
+      "gameId": "0022600003",
+      "gameDateTimeUTC": "2026-10-21T01:30:00Z",
+      "awayTeam_teamTricode": "OKC",
+      "homeTeam_teamTricode": "SAS"
+     }
+    ],
+    "gameSubtype_counts": {
+     "": 1137,
+     "in-season": 60,
+     "in-season-knockout": 6,
+     "Global Games": 3
+    },
+    "gameLabel_counts": {
+     "": 1124,
+     "Emirates NBA Cup": 66,
+     "AWS NBA Rivals Week": 12,
+     "NBA Mexico City Game": 1,
+     "NBA Paris Game": 1,
+     "NBA Manchester Game": 1,
+     "NBA Pioneers Classic": 1
+    }
+   }
+  }
+ ]
+}

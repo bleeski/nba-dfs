@@ -1,0 +1,203 @@
+{
+ "file": "Injury-Report_2026-03-15_05_30PM.pdf",
+ "n_rows": 152,
+ "status_counts": {
+  "Out": 101,
+  "Available": 26,
+  "": 10,
+  "Questionable": 12,
+  "Probable": 2,
+  "Doubtful": 1
+ },
+ "n_rows_with_unexpected_status": 10,
+ "unexpected_sample": [
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "03:30 (ET)",
+   "Matchup": "DAL@CLE",
+   "Team": "1",
+   "Player Name": "of 10",
+   "Current Status": "",
+   "Reason": ""
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "03:30 (ET)",
+   "Matchup": "DET@TOR",
+   "Team": "2",
+   "Player Name": "of 10",
+   "Current Status": "",
+   "Reason": ""
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "03:30 (ET)",
+   "Matchup": "IND@MIL",
+   "Team": "3",
+   "Player Name": "of 10",
+   "Current Status": "",
+   "Reason": ""
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "06:00 (ET)",
+   "Matchup": "POR@PHI",
+   "Team": "4",
+   "Player Name": "of 10",
+   "Current Status": "",
+   "Reason": "Recovery"
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "08:00 (ET)",
+   "Matchup": "GSW@NYK",
+   "Team": "5",
+   "Player Name": "of 10",
+   "Current Status": "",
+   "Reason": ""
+  }
+ ],
+ "games": [
+  "DAL@CLE",
+  "DET@TOR",
+  "GSW@NYK",
+  "GSW@WAS",
+  "IND@MIL",
+  "MEM@CHI",
+  "MIN@OKC",
+  "ORL@ATL",
+  "PHX@BOS",
+  "POR@BKN",
+  "POR@PHI",
+  "SAS@LAC",
+  "UTA@SAC"
+ ],
+ "sample": [
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "01:00 (ET)",
+   "Matchup": "MIN@OKC",
+   "Team": "Minnesota Timberwolves",
+   "Player Name": "Beringer, Joan",
+   "Current Status": "Out",
+   "Reason": "G League - On Assignment"
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "01:00 (ET)",
+   "Matchup": "MIN@OKC",
+   "Team": "Minnesota Timberwolves",
+   "Player Name": "Edwards, Anthony",
+   "Current Status": "Available",
+   "Reason": "Injury/Illness - Right Knee; Soreness"
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "01:00 (ET)",
+   "Matchup": "MIN@OKC",
+   "Team": "Minnesota Timberwolves",
+   "Player Name": "Freeman, Enrique",
+   "Current Status": "Out",
+   "Reason": "G League - Two-Way"
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "01:00 (ET)",
+   "Matchup": "MIN@OKC",
+   "Team": "Minnesota Timberwolves",
+   "Player Name": "Phillips, Julian",
+   "Current Status": "Out",
+   "Reason": "G League - On Assignment"
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "01:00 (ET)",
+   "Matchup": "MIN@OKC",
+   "Team": "Minnesota Timberwolves",
+   "Player Name": "Pullin, Zyon",
+   "Current Status": "Out",
+   "Reason": "G League - Two-Way"
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "01:00 (ET)",
+   "Matchup": "MIN@OKC",
+   "Team": "Oklahoma City Thunder",
+   "Player Name": "Barnhizer, Brooks",
+   "Current Status": "Out",
+   "Reason": "G League - Two-Way"
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "01:00 (ET)",
+   "Matchup": "MIN@OKC",
+   "Team": "Oklahoma City Thunder",
+   "Player Name": "Carlson, Branden",
+   "Current Status": "Out",
+   "Reason": "Injury/Illness - Low Back; Strain"
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "01:00 (ET)",
+   "Matchup": "MIN@OKC",
+   "Team": "Oklahoma City Thunder",
+   "Player Name": "Hartenstein, Isaiah",
+   "Current Status": "Available",
+   "Reason": "- Injury/Illness - Right ACL; Surgical"
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "01:00 (ET)",
+   "Matchup": "MIN@OKC",
+   "Team": "Oklahoma City Thunder",
+   "Player Name": "Sorber, Thomas",
+   "Current Status": "Out",
+   "Reason": "Recovery"
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "01:00 (ET)",
+   "Matchup": "MIN@OKC",
+   "Team": "Oklahoma City Thunder",
+   "Player Name": "Topic, Nikola",
+   "Current Status": "Out",
+   "Reason": "G League - On Assignment"
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "01:00 (ET)",
+   "Matchup": "MIN@OKC",
+   "Team": "Oklahoma City Thunder",
+   "Player Name": "Williams, Jalen",
+   "Current Status": "Out",
+   "Reason": "Injury/Illness - Right Hamstring; Strain"
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "03:30 (ET)",
+   "Matchup": "DAL@CLE",
+   "Team": "Dallas Mavericks",
+   "Player Name": "Cisse, Moussa",
+   "Current Status": "Out",
+   "Reason": "G League - Two-Way"
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "03:30 (ET)",
+   "Matchup": "DAL@CLE",
+   "Team": "Dallas Mavericks",
+   "Player Name": "Gafford, Daniel",
+   "Current Status": "Out",
+   "Reason": "Injury/Illness - Illness; Illness"
+  },
+  {
+   "Game Date": "03/15/2026",
+   "Game Time": "03:30 (ET)",
+   "Matchup": "DAL@CLE",
+   "Team": "Dallas Mavericks",
+   "Player Name": "Irving, Kyrie",
+   "Current Status": "Out",
+   "Reason": "Injury/Illness - Left Knee; Surgery"
+  }
+ ]
+}

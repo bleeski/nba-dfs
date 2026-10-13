@@ -1,0 +1,123 @@
+=== contest-standings-194022265.zip: entries=7833 right-table rows=131 names with (n/m) suffix=6145 LOCKED lineups=0 empty lineups=11
+  TimeRemaining values: {'0': 3719, '0.5': 1489, '1': 1098, '1.5': 670}
+  slot token sequence (first 200 lineups): {'1B 2B 3B C OF OF OF P P SS': 200}
+  right-table Roster Position values: {'P': 12, 'OF': 40, 'SS': 16, 'C': 17, '2B': 16, '3B': 16, '1B': 14}
+  sample row: ['1', '<ENTRYID>', '<USER> (3/3)', '0.5', '123.65', '1B Matt Olson 2B Brandon Lowe 3B Miguel Vargas C Luis Campusano OF Byron Buxton OF Kody Clemens OF Mike Yastrzemski P Taj Bradley P Michael King SS Kaelen Culpe']
+  right-table sample: ['Paul Skenes', 'P', '53.16%', '8.95'] ['Fernando Tatis Jr.', 'OF', '36.24%', '9']
+  players listed >1 time in right table: 19 ['Kevin McGonigle', 'Miguel Vargas', 'Kody Clemens']
+    ['Kevin McGonigle', 'SS', '12.84%', '9']
+    ['Kevin McGonigle', '3B', '3.56%', '9']
+  tied ranks present: True
+=== contest-standings-194542289.zip: entries=1643 right-table rows=104 names with (n/m) suffix=1223 LOCKED lineups=0 empty lineups=7
+  TimeRemaining values: {'0': 1643}
+  slot token sequence (first 200 lineups): {'D D F F GK M M UTIL': 200}
+  right-table Roster Position values: {'M': 23, 'D': 19, 'GK': 5, 'F': 16, 'UTIL': 41}
+  sample row: ['1', '<ENTRYID>', '<USER> (2/6)', '0', '103.18001', 'D James Tarkowski D Semi Ajayi F  Evanilson F Justin Kluivert GK Djordje Petrovic M Marcus Tavernier M Alex Scott UTIL Kiernan Dewsbury-Hall']
+  right-table sample: ['Marcus Tavernier', 'M', '58.49%', '11.8'] ['Ryan Giles', 'D', '42.42%', '8.84']
+  players listed >1 time in right table: 41 ['Marcus Tavernier', 'Ryan Giles', 'Kiernan Dewsbury-Hall']
+    ['Marcus Tavernier', 'M', '58.49%', '11.8']
+    ['Marcus Tavernier', 'UTIL', '14.85%', '11.8']
+  tied ranks present: True
+=== contest-standings-194542291.zip: entries=1189 right-table rows=116 names with (n/m) suffix=811 LOCKED lineups=0 empty lineups=23
+  TimeRemaining values: {'0': 1189}
+  slot token sequence (first 200 lineups): {'D D F F GK M M UTIL': 200}
+  right-table Roster Position values: {'M': 23, 'D': 24, 'GK': 6, 'F': 18, 'UTIL': 45}
+  sample row: ['1', '<ENTRYID>', '<USER> (3/10)', '0', '103.899994', 'D Adrien Truffert D Ryan Giles F  Evanilson F Justin Kluivert GK Konstantinos Tzolakis M Alex Scott M Matt Grimes UTIL Marcus Tavernier']
+  right-table sample: ['Marcus Tavernier', 'M', '53.83%', '11.8'] ['Adrien Truffert', 'D', '40.54%', '10.28']
+  players listed >1 time in right table: 43 ['Marcus Tavernier', 'Adrien Truffert', 'Kiernan Dewsbury-Hall']
+    ['Marcus Tavernier', 'M', '53.83%', '11.8']
+    ['Marcus Tavernier', 'UTIL', '16.32%', '11.8']
+  tied ranks present: True
+=== contest-standings-194542293.zip: entries=173 right-table rows=81 names with (n/m) suffix=0 LOCKED lineups=0 empty lineups=2
+  TimeRemaining values: {'0': 173}
+  slot token sequence (first 200 lineups): {'D D F F GK M M UTIL': 171, '': 2}
+  right-table Roster Position values: {'M': 19, 'D': 15, 'GK': 4, 'F': 11, 'UTIL': 32}
+  sample row: ['1', '<ENTRYID>', '<USER>', '0', '103.64001', 'D Ryan Giles D James Tarkowski F Iliman Ndiaye F Tyrique George GK Konstantinos Tzolakis M Kiernan Dewsbury-Hall M Marcus Tavernier UTIL Alex Scott']
+  right-table sample: ['Marcus Tavernier', 'M', '62.43%', '11.8'] ['Kiernan Dewsbury-Hall', 'M', '50.87%', '12.1']
+  players listed >1 time in right table: 31 ['Marcus Tavernier', 'Kiernan Dewsbury-Hall', 'Ryan Giles']
+    ['Marcus Tavernier', 'M', '62.43%', '11.8']
+    ['Marcus Tavernier', 'UTIL', '15.03%', '11.8']
+  tied ranks present: True
+=== contest-standings-195958173.zip: entries=1189 right-table rows=288 names with (n/m) suffix=0 LOCKED lineups=0 empty lineups=1
+  TimeRemaining values: {'0': 1189}
+  slot token sequence (first 200 lineups): {'C C D D G UTIL W W W': 200}
+  right-table Roster Position values: {'C': 35, 'W': 65, 'D': 52, 'G': 15, 'UTIL': 121}
+  sample row: ['1', '<ENTRYID>', '<USER>', '0', '189.5', 'C Connor McDavid C Fraser Minten D Evan Bouchard D Hampus Lindholm G Jeremy Swayman UTIL Vasily Podkolzin W Leon Draisaitl W Pavel Dorofeyev W Victor Olofsson']
+  right-table sample: ['Connor McDavid', 'C', '53.83%', '10'] ['Leon Draisaitl', 'W', '31.03%', '15.5']
+  players listed >1 time in right table: 116 ['Connor McDavid', 'Leon Draisaitl', 'Vasily Podkolzin']
+    ['Connor McDavid', 'C', '53.83%', '10']
+    ['Connor McDavid', 'UTIL', '2.69%', '10']
+  tied ranks present: True
+=== contest-standings-195958188.zip: entries=229 right-table rows=190 names with (n/m) suffix=0 LOCKED lineups=0 empty lineups=0
+  TimeRemaining values: {'0': 229}
+  slot token sequence (first 200 lineups): {'C C D D G UTIL W W W': 200}
+  right-table Roster Position values: {'C': 25, 'W': 50, 'D': 41, 'G': 11, 'UTIL': 63}
+  sample row: ['1', '<ENTRYID>', '<USER>', '0', '167.4', 'C Connor McDavid C Tomas Hertl D Evan Bouchard D Hampus Lindholm G Jakub Dobes UTIL Vasily Podkolzin W Leon Draisaitl W JJ Peterka W Victor Olofsson']
+  right-table sample: ['Connor McDavid', 'C', '83.84%', '10'] ['Vasily Podkolzin', 'W', '50.66%', '30.5']
+  players listed >1 time in right table: 59 ['Connor McDavid', 'Vasily Podkolzin', 'Leon Draisaitl']
+    ['Connor McDavid', 'C', '83.84%', '10']
+    ['Connor McDavid', 'UTIL', '3.93%', '10']
+  tied ranks present: True
+=== contest-standings-195970831.zip: entries=5251 right-table rows=34 names with (n/m) suffix=4461 LOCKED lineups=5251 empty lineups=0
+  TimeRemaining values: {'89.5': 1751, '89': 956, '88.5': 699, '90': 482}
+  slot token sequence (first 200 lineups): {'1B 2B 3B C OF OF OF P P SS': 200}
+  right-table Roster Position values: {'P': 5, 'OF': 13, '3B': 3, '2B': 2, 'C': 3, '1B': 5, 'SS': 3}
+  sample row: ['1', '<ENTRYID>', '<USER>', '88', '14.05', '1B Alec Bohm 2B LOCKED 3B LOCKED C LOCKED OF Kyle Schwarber OF LOCKED OF LOCKED P Chris Sale P LOCKED SS Ha-Seong Kim']
+  right-table sample: ['Chris Sale', 'P', '63.38%', '3.05'] ['Ronald Acuna Jr.', 'OF', '17.79%', '0']
+  players listed >1 time in right table: 4 ['Mauricio Dubon', 'Kyle Schwarber', 'Bryson Stott']
+    ['Mauricio Dubon', 'SS', '9.98%', '0']
+    ['Mauricio Dubon', 'OF', '8.70%', '0']
+  tied ranks present: True
+  LOCKED example: 1B Alec Bohm 2B LOCKED 3B LOCKED C LOCKED OF Kyle Schwarber OF LOCKED OF LOCKED P Chris Sale P LOCKED SS Ha-Seong Kim | Points: 14.05 | TimeRemaining: 88
+=== contest-standings-196048725.zip: entries=713 right-table rows=64 names with (n/m) suffix=650 LOCKED lineups=0 empty lineups=2
+  TimeRemaining values: {'0': 713}
+  slot token sequence (first 200 lineups): {'CPT FLEX FLEX FLEX FLEX FLEX': 200}
+  right-table Roster Position values: {'FLEX': 39, 'CPT': 25}
+  sample row: ['1', '<ENTRYID>', '<USER> (15/20)', '0', '101.85', 'CPT Jack Eichel FLEX Carter Hart FLEX Mitch Marner FLEX Shea Theodore FLEX Victor Olofsson FLEX Jordan Greenway']
+  right-table sample: ['Jack Eichel', 'FLEX', '45.72%', '24.5'] ['Mark Stone', 'FLEX', '33.52%', '10']
+  players listed >1 time in right table: 25 ['Jack Eichel', 'Mark Stone', 'Mitch Marner']
+    ['Jack Eichel', 'FLEX', '45.72%', '24.5']
+    ['Jack Eichel', 'CPT', '24.96%', '36.75']
+  tied ranks present: True
+=== contest-standings-196048727.zip: entries=107 right-table rows=57 names with (n/m) suffix=0 LOCKED lineups=0 empty lineups=2
+  TimeRemaining values: {'0': 107}
+  slot token sequence (first 200 lineups): {'CPT FLEX FLEX FLEX FLEX FLEX': 105, '': 2}
+  right-table Roster Position values: {'FLEX': 36, 'CPT': 21}
+  sample row: ['1', '<ENTRYID>', '<USER>', '0', '93.149994', 'CPT Jack Eichel FLEX Carter Hart FLEX Mark Stone FLEX Ivan Barbashev FLEX Victor Olofsson FLEX Wyatt Kaiser']
+  right-table sample: ['Jack Eichel', 'FLEX', '39.25%', '24.5'] ['Mark Stone', 'FLEX', '37.38%', '10']
+  players listed >1 time in right table: 20 ['Jack Eichel', 'Mark Stone', 'Mitch Marner']
+    ['Jack Eichel', 'FLEX', '39.25%', '24.5']
+    ['Jack Eichel', 'CPT', '23.36%', '36.75']
+  tied ranks present: True
+=== contest-standings-196050215.zip: entries=1164 right-table rows=81 names with (n/m) suffix=964 LOCKED lineups=0 empty lineups=10
+  TimeRemaining values: {'0': 1164}
+  slot token sequence (first 200 lineups): {'CPT FLEX FLEX FLEX FLEX FLEX': 200}
+  right-table Roster Position values: {'FLEX': 50, 'CPT': 31}
+  sample row: ['1', '<ENTRYID>', '<USER> (15/20)', '0', '101.4', 'CPT Mark Stone FLEX Jack Eichel FLEX Carter Hart FLEX Ivan Barbashev FLEX Noah Hanifin FLEX Jordan Greenway']
+  right-table sample: ['Jack Eichel', 'FLEX', '42.18%', '24.5'] ['Mark Stone', 'FLEX', '33.68%', '10']
+  players listed >1 time in right table: 30 ['Jack Eichel', 'Mark Stone', 'Carter Hart']
+    ['Jack Eichel', 'FLEX', '42.18%', '24.5']
+    ['Jack Eichel', 'CPT', '22.16%', '36.75']
+  tied ranks present: True
+=== contest-standings-196052739.zip: entries=11764 right-table rows=34 names with (n/m) suffix=8958 LOCKED lineups=11764 empty lineups=0
+  TimeRemaining values: {'89.5': 4052, '89': 2253, '88.5': 1568, '88': 1087}
+  slot token sequence (first 200 lineups): {'1B 2B 3B C OF OF OF P P SS': 200}
+  right-table Roster Position values: {'P': 4, 'OF': 12, '2B': 3, '3B': 4, 'C': 4, 'SS': 3, '1B': 4}
+  sample row: ['1', '<ENTRYID>', '<USER>', '88', '14.05', '1B Alec Bohm 2B LOCKED 3B LOCKED C LOCKED OF Kyle Schwarber OF LOCKED OF LOCKED P Chris Sale P LOCKED SS Ha-Seong Kim']
+  right-table sample: ['Chris Sale', 'P', '67.25%', '3.05'] ['Ronald Acuna Jr.', 'OF', '18.79%', '0']
+  players listed >1 time in right table: 4 ['Mauricio Dubon', 'Kyle Schwarber', 'Edmundo Sosa']
+    ['Mauricio Dubon', 'SS', '10.62%', '0']
+    ['Mauricio Dubon', 'OF', '10.33%', '0']
+  tied ranks present: True
+  LOCKED example: 1B Alec Bohm 2B LOCKED 3B LOCKED C LOCKED OF Kyle Schwarber OF LOCKED OF LOCKED P Chris Sale P LOCKED SS Ha-Seong Kim | Points: 14.05 | TimeRemaining: 88
+=== contest-standings-196208940.zip: entries=89 right-table rows=23 names with (n/m) suffix=62 LOCKED lineups=89 empty lineups=0
+  TimeRemaining values: {'83.5': 23, '57.5': 14, '70.5': 11, '90': 11}
+  slot token sequence (first 200 lineups): {'1B 2B 3B C OF OF OF P P SS': 89}
+  right-table Roster Position values: {'P': 2, 'OF': 7, '2B': 2, 'SS': 3, '1B': 3, '3B': 3, 'C': 3}
+  sample row: ['1', '<ENTRYID>', '<USER> (2/2)', '51', '46.55', '1B LOCKED 2B Ozzie Albies 3B Austin Riley C Drake Baldwin OF Ronald Acuna Jr. OF Mauricio Dubon OF LOCKED P Tyler Mahle P LOCKED SS LOCKED']
+  right-table sample: ['Cristopher Sanchez', 'P', '42.70%', '16.7'] ['Bryce Harper', 'OF', '31.46%', '5']
+  players listed >1 time in right table: 3 ['Bryson Stott', 'Kyle Schwarber', 'Edmundo Sosa']
+    ['Bryson Stott', '2B', '30.34%', '0']
+    ['Bryson Stott', '3B', '4.49%', '0']
+  tied ranks present: True
+  LOCKED example: 1B LOCKED 2B Ozzie Albies 3B Austin Riley C Drake Baldwin OF Ronald Acuna Jr. OF Mauricio Dubon OF LOCKED P Tyler Mahle P LOCKED SS LOCKED | Points: 46.55 | TimeRemaining: 51

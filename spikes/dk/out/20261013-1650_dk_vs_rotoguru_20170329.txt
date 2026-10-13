@@ -1,0 +1,11 @@
+player | DK standings FPTS | RotoGuru DK Pts | formula A (TD=+3) | formula B (TD=+4.5) | stat line
+Russell Westbrook | 99.75 | 99.75 | 98.25 | 99.75 | 57pt 13rb 11as 3st 7to 6trey 21-40fg 9-11ft
+Chris Paul | 54.25 | 54.25 | 54.25 | 54.25 | 27pt 3rb 13as 1st 1to 2trey 9-15fg 7-8ft
+Stephen Curry | 53.75 | 53.75 | 53.75 | 53.75 | 29pt 3rb 11as 1st 2to 4trey 9-20fg 7-7ft
+Isaiah Thomas | 51.25 | 51.25 | 51.25 | 51.25 | 32pt 5rb 4as 3st 3to 5trey 9-17fg 9-9ft
+Giannis Antetokounmpo | 49.75 | 49.75 | 49.75 | 49.75 | 22pt 9rb 3as 3st 3bl 2to 2trey 8-17fg 4-7ft
+DeMar DeRozan | 46.5 | 46.5 | 46.5 | 46.5 | 28pt 6rb 8as 2to 11-24fg 6-7ft
+Malcolm Brogdon | 38.5 | 38.5 | 38.5 | 38.5 | 16pt 4rb 9as 1st 1bl 7-12fg 2-2ft
+Nik Stauskas | 31.75 | 31.75 | 31.75 | 31.75 | 9pt 5rb 7as 3st 2to 2trey 3-10fg 1-2ft
+Elfrid Payton | 31.0 | 31.0 | 31.0 | 31.0 | 11pt 6rb 8as 1bl 3to 4-12fg 3-8ft
+players in DK standings right table: 57; matched to RotoGuru rows (guards only in that file): 9; DK==RotoGuru for all matched: True

@@ -1,0 +1,10 @@
+{
+ "players": 22,
+ "util_sets": 26334,
+ "legal_lineups": 440121,
+ "legal_per_captain_min": 19478,
+ "legal_per_captain_max": 20097,
+ "enumerate_and_filter_s": 0.015,
+ "best_projection_by_enumeration": 266.99,
+ "solver_optimum_from_bench": 266.99
+}

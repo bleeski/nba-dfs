@@ -1,0 +1,39 @@
+== fadcrush_22.csv rows=208 games=6 salary min=3000 max=11700 all multiples of 100=True dates=['03/01/2026']
+   Position=C        Roster Position=C/UTIL             n=44
+   Position=PF       Roster Position=PF/F/UTIL          n=17
+   Position=PF/C     Roster Position=PF/C/F/UTIL        n=14
+   Position=PG       Roster Position=PG/G/UTIL          n=30
+   Position=PG/SF    Roster Position=PG/SF/F/G/UTIL     n=2
+   Position=PG/SG    Roster Position=PG/SG/G/UTIL       n=26
+   Position=SF       Roster Position=SF/F/UTIL          n=13
+   Position=SF/PF    Roster Position=SF/PF/F/UTIL       n=21
+   Position=SG       Roster Position=SG/G/UTIL          n=16
+   Position=SG/SF    Roster Position=SG/SF/F/G/UTIL     n=25
+   names appearing more than once: []
+   AvgPointsPerGame sample: ['58.90', '51.24', '51.32']
+== jackdegen_current.csv rows=281 games=8 salary min=3000 max=12500 all multiples of 100=True dates=['01/29/2026']
+   Position=C        Roster Position=C/UTIL             n=57
+   Position=PF       Roster Position=PF/F/UTIL          n=29
+   Position=PF/C     Roster Position=PF/C/F/UTIL        n=18
+   Position=PG       Roster Position=PG/G/UTIL          n=46
+   Position=PG/SF    Roster Position=PG/SF/F/G/UTIL     n=1
+   Position=PG/SG    Roster Position=PG/SG/G/UTIL       n=26
+   Position=SF       Roster Position=SF/F/UTIL          n=20
+   Position=SF/PF    Roster Position=SF/PF/F/UTIL       n=34
+   Position=SG       Roster Position=SG/G/UTIL          n=24
+   Position=SG/SF    Roster Position=SG/SF/F/G/UTIL     n=26
+   names appearing more than once: []
+   AvgPointsPerGame sample: ['67.68', '51.61', '51.02']
+== ntran_1211.csv rows=65 games=2 salary min=3000 max=9700 all multiples of 100=True dates=['12/11/2024']
+   Position=C        Roster Position=C/UTIL             n=15
+   Position=PF       Roster Position=PF/F/UTIL          n=3
+   Position=PF/C     Roster Position=PF/C/F/UTIL        n=5
+   Position=PG       Roster Position=PG/G/UTIL          n=11
+   Position=PG/SF    Roster Position=PG/SF/F/G/UTIL     n=1
+   Position=PG/SG    Roster Position=PG/SG/G/UTIL       n=6
+   Position=SF       Roster Position=SF/F/UTIL          n=3
+   Position=SF/PF    Roster Position=SF/PF/F/UTIL       n=9
+   Position=SG       Roster Position=SG/G/UTIL          n=5
+   Position=SG/SF    Roster Position=SG/SF/F/G/UTIL     n=7
+   names appearing more than once: []
+   AvgPointsPerGame sample: ['51.40', '43.43', '47.05']

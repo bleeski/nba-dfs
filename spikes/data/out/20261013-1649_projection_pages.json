@@ -1,0 +1,113 @@
+{
+ "run_started_local": "2026-10-13T16:49:29.069751",
+ "pages": [
+  {
+   "name": "basketballmonster_lineups",
+   "url": "https://basketballmonster.com/nbalineups.aspx",
+   "robots_status": 200,
+   "robots_allows_generic_ua": true,
+   "status": 200,
+   "latency_s": 0.3,
+   "bytes": 100392,
+   "final_url": "https://basketballmonster.com/nbalineups.aspx",
+   "title": "NBA Starting Lineups - Basketball Monster",
+   "n_tables": 3,
+   "n_tr": 21,
+   "text_head": " NBA Starting Lineups - Basketball Monster Tools Player Rankings 25-26 Team Analysis Trade Analysis NBA Starting Lineups Box Scores Live Results Schedule Grid Hot Players Historical Rankings Members Projections 26-27 Draft Tracker Projected Standings Smart Tool Advanced Ownership Depth Charts Drafting Tiers Daily Projections Custom Daily Minutes Weekly Projections H2H Daily H2H Weekly Ease Rankings Schedule Analyzer Team Lineup Schedule Week Summary DvP - Defense vs Position Monster Monster Page Draft Monster Analysis Monster Trade Monster Matchup Monster Usage Monster News Content Player News Articles Draft Kit Articles Community Active Topics User Comments User Polls Chat Twitter Mail Sett",
+   "mentions_login_or_premium": false,
+   "has_next_data": false,
+   "script_json_hints": []
+  },
+  {
+   "name": "basketballmonster_injuries",
+   "url": "https://basketballmonster.com/nbainjuries.aspx",
+   "robots_status": 200,
+   "robots_allows_generic_ua": true,
+   "status": 200,
+   "latency_s": 0.16,
+   "bytes": 1646,
+   "final_url": "https://basketballmonster.com/SystemError.aspx",
+   "title": "Basketball Monster Error",
+   "n_tables": 0,
+   "n_tr": 0,
+   "text_head": " Basketball Monster Error Home A system error has occurred, and the administrator has been alerted. We apologize for the inconvenience. If you keep receiving this error, opening a new browser window may solve it. ",
+   "mentions_login_or_premium": false,
+   "has_next_data": false,
+   "script_json_hints": []
+  },
+  {
+   "name": "dff_nba_dk_projections",
+   "url": "https://www.dailyfantasyfuel.com/nba/projections/draftkings",
+   "robots_status": 200,
+   "robots_allows_generic_ua": true,
+   "status": 200,
+   "latency_s": 0.23,
+   "bytes": 329726,
+   "final_url": "https://www.dailyfantasyfuel.com/nba/projections/draftkings",
+   "title": "DraftKings NBA Projections | Daily Fantasy Fuel",
+   "n_tables": 1,
+   "n_tr": 8,
+   "text_head": " DraftKings NBA Projections | Daily Fantasy Fuel DAILY FANTASY FUEL LOG IN SIGN UP MY ACCOUNT CONTACT US LOGOUT NFL DFS LINEUP TOOLS DraftKings DFS Optimizer FanDuel DFS Optimizer DFS Player Projections PLAYER PROP TOOLS +EV Optimizer Player Prop Explorer Player Prop Trends Tool RESEARCH Matchups Team Standings Game Odds Injury News MLB DFS LINEUP TOOLS DraftKings DFS Optimizer FanDuel DFS Optimizer DFS Player Projections PLAYER PROP TOOLS +EV Optimizer Player Prop Explorer Player Prop Trends Tool RESEARCH Matchups Team Standings Game Odds Starting Lineups NBA DFS LINEUP TOOLS DraftKings DFS Optimizer FanDuel DFS Optimizer DFS Player Projections PLAYER PROP TOOLS +EV Optimizer Player Prop Ex",
+   "mentions_login_or_premium": true,
+   "has_next_data": false,
+   "script_json_hints": []
+  },
+  {
+   "name": "fantasypros_nba_dk_projections",
+   "url": "https://www.fantasypros.com/daily-fantasy/nba/draftkings-projections.php",
+   "robots_status": 200,
+   "robots_allows_generic_ua": true,
+   "status": 404,
+   "latency_s": 0.1,
+   "bytes": 221246,
+   "final_url": "https://www.fantasypros.com/daily-fantasy/nba/draftkings-projections.php"
+  },
+  {
+   "name": "darko_home",
+   "url": "https://darko.app/",
+   "robots_status": 404,
+   "robots_allows_generic_ua": true,
+   "status": 200,
+   "latency_s": 0.12,
+   "bytes": 398894,
+   "final_url": "https://www.darko.app/",
+   "title": "DARKO DPM \u00e2\u0080\u0094 NBA Player Projections",
+   "n_tables": 2,
+   "n_tr": 55,
+   "text_head": " DARKO DPM \u00e2\u0080\u0094 NBA Player Projections Skip to content DARKO DPM Active Leaderboard Active Leaderboard Career Trajectories Teams Standings WOWY RAPM Lineups Roster Lab Fantasy Lab More What's new 22 Rewind Longevity Scatterplot Compare Rate a Player Use DARKO in an assistant About Display View Modern Shiny Theme \u00e2\u009a\u00ab \u00e2\u009a\u00aa Font Inter Roboto Lato Open Sans Source Sans Nunito Sans Work Sans Raleway Outfit Jakarta Sans Space Grotesk System Ask DARKO Time Machine Time Machine Today Drag back to any week since 1996-97 Timeline Rewind What's new 22 Active Leaderboard Career Trajectories Teams Standings WOWY RAPM Lineups Roster Lab Fantasy Lab Rewind Longevity Scatterplot Compare Rate a Player Use DARK",
+   "mentions_login_or_premium": false,
+   "has_next_data": false,
+   "script_json_hints": [
+    "/api/img/logo/1610612743",
+    "/api/img/headshot/203999",
+    "/api/img/logo/1610612746",
+    "/api/img/headshot/202695",
+    "/api/img/logo/1610612750",
+    "/api/img/headshot/203497",
+    "/api/img/logo/1610612766",
+    "/api/img/headshot/1642851",
+    "/api/img/logo/1610612744",
+    "/api/img/headshot/201939"
+   ]
+  },
+  {
+   "name": "rotowire_nba_news",
+   "url": "https://www.rotowire.com/basketball/news.php",
+   "robots_status": 200,
+   "robots_allows_generic_ua": true,
+   "status": 200,
+   "latency_s": 0.55,
+   "bytes": 371331,
+   "final_url": "https://www.rotowire.com/basketball/news.php",
+   "title": "NBA Fantasy Basketball News (October 2026) | RotoWire",
+   "n_tables": 0,
+   "n_tr": 0,
+   "text_head": " NBA Fantasy Basketball News (October 2026) | RotoWire Featured Betting Prediction Markets DFS Picks & Props NFL Fantasy Top Fantasy Football News Weekly Rankings Who Should I Start? My Leagues NFL Fantasy Football Draft Kit MLB Fantasy My Leagues MLB MLB Starting Lineups MLB Closers Probable Pitchers Top 400 MLB Prospects NBA Fantasy NBA Draft Kit My Leagues NBA NBA Rankings Latest NBA News NBA Injury Report NHL Soccer Golf College FB College BB WNBA EuroLeague MMA NASCAR F1 Tennis CFL UFL eSports NFL Betting Latest NFL Odds ProBets Anytime Touchdown Prop Tool NFL Picks NFL Super Bowl Odds MLB Betting MLB Futures MLB Picks MLB Player Props MLB Historical Odds NBA Betting NBA Picks Latest NB",
+   "mentions_login_or_premium": true,
+   "has_next_data": false,
+   "script_json_hints": [
+    "/api/macro/adsm.macro.rotowire.com.js"
+   ]
+  }
+ ]
+}

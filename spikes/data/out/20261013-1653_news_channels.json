@@ -1,0 +1,274 @@
+{
+ "run_local": "2026-10-13T16:53:40.953341",
+ "calls": [
+  {
+   "name": "bluesky searchActors 'nba injury'",
+   "url": "https://public.api.bsky.app/xrpc/app.bsky.actor.searchActors",
+   "params": {
+    "q": "nba injuries",
+    "limit": 15
+   },
+   "status": 200,
+   "latency_s": 0.42,
+   "bytes": 12766,
+   "ctype": "application/json; charset=utf-8",
+   "ratelimit": [
+    null,
+    null,
+    null
+   ],
+   "actors": [
+    [
+     "howardbeck.bsky.social",
+     "Howard Beck",
+     null
+    ],
+    [
+     "shamsbot.bsky.social",
+     "Shams Charania Tweets",
+     null
+    ],
+    [
+     "nba.com",
+     "NBA",
+     null
+    ],
+    [
+     "johnhollinger.bsky.social",
+     "John Hollinger",
+     null
+    ],
+    [
+     "mikevorkunov.bsky.social",
+     "Mike Vorkunov",
+     null
+    ],
+    [
+     "yourmandevine.bsky.social",
+     "Dan Devine",
+     null
+    ],
+    [
+     "thesteinline.bsky.social",
+     "Marc Stein",
+     null
+    ],
+    [
+     "jonkrawczynski.bsky.social",
+     "Jon Krawczynski",
+     null
+    ],
+    [
+     "basketball-reference.com",
+     "Basketball Reference",
+     null
+    ],
+    [
+     "samvecenie.bsky.social",
+     "Sam Vecenie",
+     null
+    ],
+    [
+     "nbadabad.bsky.social",
+     "NBA da bad",
+     null
+    ],
+    [
+     "marcjspears.bsky.social",
+     "MarcJSpears",
+     null
+    ],
+    [
+     "nekiasnba.bsky.social",
+     "Nuh-KAI-us Duncan",
+     null
+    ],
+    [
+     "bannedmacmahon.bsky.social",
+     "Tim MacMahon",
+     null
+    ],
+    [
+     "samamick.bsky.social",
+     "Sam Amick",
+     null
+    ]
+   ]
+  },
+  {
+   "name": "bluesky profile underdognba.bsky.social",
+   "url": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile",
+   "params": {
+    "actor": "underdognba.bsky.social"
+   },
+   "status": 200,
+   "latency_s": 0.12,
+   "bytes": 585,
+   "ctype": "application/json; charset=utf-8",
+   "ratelimit": [
+    null,
+    null,
+    null
+   ],
+   "profile": {
+    "handle": "underdognba.bsky.social",
+    "displayName": "Underdog NBA",
+    "followersCount": 166,
+    "postsCount": 654
+   }
+  },
+  {
+   "name": "bluesky feed underdognba.bsky.social",
+   "url": "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed",
+   "params": {
+    "actor": "underdognba.bsky.social",
+    "limit": 5
+   },
+   "status": 200,
+   "latency_s": 0.11,
+   "bytes": 4701,
+   "ctype": "application/json; charset=utf-8",
+   "ratelimit": [
+    null,
+    null,
+    null
+   ],
+   "posts": [
+    [
+     "2026-03-04T16:10:00.139Z",
+     "Injuries 3/4\n\nOKC:\nYet to submit\n\nNYK:\nYet to submit\n\nCHA:\nYet to submit\n\nBOS:\nJayson Tatum - Out\n\nUTA:\nJaren Jackson Jr. - Out\nJusuf Nurkic"
+    ],
+    [
+     "2026-03-04T15:28:07.387Z",
+     "Amick: Aaron Gordon (hamstring) targeting return on Friday.\n\nIt \"remains to be seen\" if he will be cleared by then."
+    ],
+    [
+     "2026-03-04T06:13:03.623Z",
+     "Most games with at least 20/5/5 in NBA history:\n\nLeBron James - 966\n...\n...\n...\nOscar Robertson - 613\n\nNo one else has more than 500. https:"
+    ],
+    [
+     "2026-03-04T04:05:21.755Z",
+     "Zach Edey underwent season-ending ankle surgery."
+    ],
+    [
+     "2026-03-04T03:36:21.588Z",
+     "Lineup alert: Kings will start Westbrook, Clifford, DeRozan, Achiuwa, Raynaud on Tuesday."
+    ]
+   ]
+  },
+  {
+   "name": "bluesky profile shamscharania.bsky.social",
+   "url": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile",
+   "params": {
+    "actor": "shamscharania.bsky.social"
+   },
+   "status": 200,
+   "latency_s": 0.18,
+   "bytes": 383,
+   "ctype": "application/json; charset=utf-8",
+   "ratelimit": [
+    null,
+    null,
+    null
+   ],
+   "profile": {
+    "handle": "shamscharania.bsky.social",
+    "displayName": "Shams Charania",
+    "followersCount": 3097,
+    "postsCount": 1
+   }
+  },
+  {
+   "name": "bluesky feed shamscharania.bsky.social",
+   "url": "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed",
+   "params": {
+    "actor": "shamscharania.bsky.social",
+    "limit": 5
+   },
+   "status": 200,
+   "latency_s": 0.12,
+   "bytes": 912,
+   "ctype": "application/json; charset=utf-8",
+   "ratelimit": [
+    null,
+    null,
+    null
+   ],
+   "posts": [
+    [
+     "2024-02-13T19:40:58.995Z",
+     "\ud83d\ude10\n\nawfulannouncing.com/fanduel/kay-..."
+    ]
+   ]
+  },
+  {
+   "name": "reddit r/nba new.json (unauthenticated)",
+   "url": "https://www.reddit.com/r/nba/new.json",
+   "params": {
+    "limit": 5
+   },
+   "status": 403,
+   "latency_s": 0.42,
+   "bytes": 189908,
+   "ctype": "text/html",
+   "ratelimit": [
+    null,
+    null,
+    null
+   ],
+   "body_head": "<body class=theme-beta><div><style>.theme-light,:root{--rem360:22.5rem;--rem320:20rem;--rem192:12rem;--rem144:9rem;--rem128:8rem;--rem96:6rem;--rem90:5.625rem;--rem88:5.5rem;--rem64:4rem;--rem56:3.5rem;--rem48:3rem;--rem40:2.5rem;--rem36:2.25rem;--rem32:2rem;--rem28:1.75rem;--rem26:1.625rem;--rem24:"
+  },
+  {
+   "name": "rotowire rss nba",
+   "url": "https://www.rotowire.com/rss/news.php?sport=NBA",
+   "params": null,
+   "status": 200,
+   "latency_s": 0.38,
+   "bytes": 2962,
+   "ctype": "application/xml",
+   "ratelimit": [
+    null,
+    null,
+    null
+   ],
+   "n_items": 5,
+   "sample": [
+    [
+     "Tue, 13 Oct 2026 2:49:00 PM PDT",
+     "Desmond Bane: Will play Tuesday"
+    ],
+    [
+     "Tue, 13 Oct 2026 2:29:00 PM PDT",
+     "Anthony Black: Won't play Tuesday"
+    ],
+    [
+     "Tue, 13 Oct 2026 2:24:00 PM PDT",
+     "Jalen Suggs: Available Tuesday"
+    ],
+    [
+     "Tue, 13 Oct 2026 12:58:00 PM PDT",
+     "Payton Pritchard: Lands contract extension Tuesday"
+    ],
+    [
+     "Tue, 13 Oct 2026 12:43:00 PM PDT",
+     "Damian Lillard: Off injury report"
+    ]
+   ]
+  },
+  {
+   "name": "nba.com news rss",
+   "url": "https://www.nba.com/news/rss.xml",
+   "params": null,
+   "status": 403,
+   "latency_s": 0.35,
+   "bytes": 365,
+   "ctype": "text/html",
+   "ratelimit": [
+    null,
+    null,
+    null
+   ],
+   "body_head": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"http&#58;&#47;&#47;www&#46;nba&#46;com&#47;\" on this server.<P>\nReference&#32;&#35"
+  }
+ ]
+}

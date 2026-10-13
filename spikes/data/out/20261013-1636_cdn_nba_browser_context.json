@@ -1,0 +1,18 @@
+{
+ "note": "Manual evidence, recorded by hand from the Claude Browser pane (real Chromium) on 2026-10-13 ~16:35 CDT. Not a script.",
+ "step1_direct_navigation": {"url": "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json", "result": "page title 'Access Denied' (Akamai)"},
+ "step2_page_load": {"url": "https://www.nba.com/games", "result": "200; Akamai Bot Manager sensor scripts present (/akam/13/..., POST sensor beacons)"},
+ "step3_resources_fetched_by_nba_com_page": {
+  "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json": 200,
+  "https://cdn.nba.com/static/json/liveData/odds/odds_todaysGames.json": 200,
+  "https://cdn.nba.com/static/json/liveData/channels/v2/channels_00.json": 200,
+  "https://core-api.nba.com/cp/api/v1.9/feeds/gamecardfeed?gamedate=10/13/2026&platform=web": 200
+ },
+ "step4_in_page_fetch_excerpt": {
+  "sbDate": "2026-10-13",
+  "games": [["0012600045","7:00 pm ET","CLE","ORL"],["0012600046","7:00 pm ET","NYK","TOR"],["0012600047","8:00 pm ET","IND","OKC"],["0012600048","10:00 pm ET","GSW","LAL"],["0012600049","10:00 pm ET","POR","SAC"]],
+  "scoreboard_game_keys": ["gameId","gameCode","gameStatus","gameStatusText","period","gameClock","gameTimeUTC","gameEt","regulationPeriods","ifNecessary","seriesGameNumber","gameLabel","gameSubLabel","seriesText","seriesConference","poRoundDesc","gameSubtype","isNeutral","homeTeam","awayTeam","gameLeaders","pbOdds"],
+  "odds_feed": "11 games; markets '2way' etc.; books are Sportradar ids (sr:book:6565 Novibet GR/CY, bwin.ES ...), i.e. mostly non-US books with decimal odds and opening_odds"
+ },
+ "scripted_attempts_same_machine": "s02_cdn_nba.py (requests, browser UA + Referer + Origin): 403 x4. s02b (nba_api.live module headers): Access Denied HTML -> JSONDecodeError. curl: 403 Access Denied, Reference #18.e1ab3717.1791927220.dcd01d20"
+}

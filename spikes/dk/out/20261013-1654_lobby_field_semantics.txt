@@ -1,0 +1,4 @@
+name-tag vs mec agreement: {('Single Entry tag', True): 55, ('N Entry Max tag', True): 14}
+multi-entry contests, mec rule check: {('mec == min(150, floor(0.03*m))', True): 92, ('mec == min(150, floor(0.03*m))', False): 30}
+exceptions sample: [('NBA $100K Four Point Play [20 Entry Max]', 29726, 20), ('NBA Showdown $7.5K And-One (OKC @ SAS)', 8917, 20), ('NBA $7.5K And-One (Night)', 8917, 20), ('NBA Showdown $6K And-One (BOS @ DET)', 7134, 20), ('NBA Showdown $2K Sharpshooter [20 Entry Max] (BOS @ DET)', 792, 20), ('NBA Showdown $3K Sharpshooter (PHI @ NYK)', 1189, 20), ('NBA Showdown $4K And-One (PHI @ NYK)', 4756, 20), ('NBA Showdown $3K Sharpshooter (OKC @ SAS)', 1189, 20)]
+nt <= m for 1474 of 1474 contests (nt = entries so far)

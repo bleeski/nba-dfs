@@ -1,0 +1,98 @@
+{
+ "run_local": "2026-10-13T16:41:05.587235",
+ "url": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/events/401898403/competitions/401898403/odds/100/propBets",
+ "status": 200,
+ "count": 123,
+ "pageCount": 1,
+ "n_items": 123,
+ "type_counts": {
+  "Team Total Points": 4,
+  "Points Milestones": 37,
+  "Assists Milestones": 26,
+  "Rebounds Milestones": 39,
+  "3-Point Field Goals Milestones": 17
+ },
+ "n_with_athlete": 119,
+ "sample_player_props": [
+  {
+   "type": "Points Milestones",
+   "athlete": "/leagues/nba/seasons/2027/athletes/3908809?lang=en&region=us",
+   "target": "6+",
+   "american": {
+    "value": "-10000",
+    "open": "+121"
+   },
+   "lastUpdated": "2026-10-13T23:41Z"
+  },
+  {
+   "type": "Points Milestones",
+   "athlete": "/leagues/nba/seasons/2027/athletes/3908809?lang=en&region=us",
+   "target": "8+",
+   "american": {
+    "value": "-3400",
+    "open": "+121"
+   },
+   "lastUpdated": "2026-10-13T21:31Z"
+  },
+  {
+   "type": "Points Milestones",
+   "athlete": "/leagues/nba/seasons/2027/athletes/3908809?lang=en&region=us",
+   "target": "10+",
+   "american": {
+    "value": "-1380",
+    "open": "+121"
+   },
+   "lastUpdated": "2026-10-13T21:31Z"
+  },
+  {
+   "type": "Points Milestones",
+   "athlete": "/leagues/nba/seasons/2027/athletes/3908809?lang=en&region=us",
+   "target": "12+",
+   "american": {
+    "value": "-670",
+    "open": "+121"
+   },
+   "lastUpdated": "2026-10-13T21:31Z"
+  },
+  {
+   "type": "Points Milestones",
+   "athlete": "/leagues/nba/seasons/2027/athletes/3908809?lang=en&region=us",
+   "target": "15+",
+   "american": {
+    "value": "-280",
+    "open": "+121"
+   },
+   "lastUpdated": "2026-10-13T21:31Z"
+  },
+  {
+   "type": "Points Milestones",
+   "athlete": "/leagues/nba/seasons/2027/athletes/3908809?lang=en&region=us",
+   "target": "18+",
+   "american": {
+    "value": "-131",
+    "open": "+121"
+   },
+   "lastUpdated": "2026-10-13T21:31Z"
+  },
+  {
+   "type": "Points Milestones",
+   "athlete": "/leagues/nba/seasons/2027/athletes/3908809?lang=en&region=us",
+   "target": "20+",
+   "american": {
+    "value": "+106",
+    "open": "+121"
+   },
+   "lastUpdated": "2026-10-13T21:31Z"
+  },
+  {
+   "type": "Points Milestones",
+   "athlete": "/leagues/nba/seasons/2027/athletes/3908809?lang=en&region=us",
+   "target": "25+",
+   "american": {
+    "value": "+265",
+    "open": "+121"
+   },
+   "lastUpdated": "2026-10-13T21:31Z"
+  }
+ ]
+}

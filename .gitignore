@@ -1,0 +1,13 @@
+spikes/.venv/
+__pycache__/
+*.pyc
+.env
+
+# Raw third-party downloads captured by spikes (evidence stays local, not in git)
+spikes/**/out/downloads/
+
+# Engine runtime data (never committed: contains entries, standings with other users names)
+/inbox/
+/runs/
+/data/
+/out/

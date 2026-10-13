@@ -1,0 +1,26 @@
+target 24.5: 9 stat lines reproduce it; 0 have NO bonus
+   G=0 A=0 SOG=8 BLK=5 SHP=0 base=18.5 bonus=6  -> CPT if bonus multiplied=36.75, if not=33.75
+   G=0 A=1 SOG=11 BLK=0 SHP=0 base=21.5 bonus=3  -> CPT if bonus multiplied=36.75, if not=35.25
+   G=0 A=2 SOG=2 BLK=5 SHP=1 base=21.5 bonus=3  -> CPT if bonus multiplied=36.75, if not=35.25
+   G=0 A=2 SOG=5 BLK=0 SHP=2 base=21.5 bonus=3  -> CPT if bonus multiplied=36.75, if not=35.25
+   G=0 A=3 SOG=3 BLK=0 SHP=1 base=21.5 bonus=3  -> CPT if bonus multiplied=36.75, if not=35.25
+   G=0 A=4 SOG=1 BLK=0 SHP=0 base=21.5 bonus=3  -> CPT if bonus multiplied=36.75, if not=35.25
+   G=1 A=0 SOG=3 BLK=5 SHP=1 base=21.5 bonus=3  -> CPT if bonus multiplied=36.75, if not=35.25
+   G=1 A=1 SOG=1 BLK=5 SHP=0 base=21.5 bonus=3  -> CPT if bonus multiplied=36.75, if not=35.25
+   G=1 A=2 SOG=2 BLK=0 SHP=0 base=21.5 bonus=3  -> CPT if bonus multiplied=36.75, if not=35.25
+target 15.6: 3 stat lines reproduce it; 3 have NO bonus
+   G=0 A=1 SOG=4 BLK=2 SHP=1 base=15.6 bonus=0  -> CPT if bonus multiplied=23.40, if not=23.40
+   G=0 A=2 SOG=2 BLK=2 SHP=0 base=15.6 bonus=0  -> CPT if bonus multiplied=23.40, if not=23.40
+   G=1 A=0 SOG=3 BLK=2 SHP=0 base=15.6 bonus=0  -> CPT if bonus multiplied=23.40, if not=23.40
+target 14.5: 3 stat lines reproduce it; 2 have NO bonus
+   G=0 A=1 SOG=0 BLK=5 SHP=0 base=11.5 bonus=3  -> CPT if bonus multiplied=21.75, if not=20.25
+   G=0 A=2 SOG=3 BLK=0 SHP=0 base=14.5 bonus=0  -> CPT if bonus multiplied=21.75, if not=21.75
+   G=1 A=0 SOG=4 BLK=0 SHP=0 base=14.5 bonus=0  -> CPT if bonus multiplied=21.75, if not=21.75
+target 12.8: 3 stat lines reproduce it; 3 have NO bonus
+   G=0 A=1 SOG=3 BLK=1 SHP=1 base=12.8 bonus=0  -> CPT if bonus multiplied=19.20, if not=19.20
+   G=0 A=2 SOG=1 BLK=1 SHP=0 base=12.8 bonus=0  -> CPT if bonus multiplied=19.20, if not=19.20
+   G=1 A=0 SOG=2 BLK=1 SHP=0 base=12.8 bonus=0  -> CPT if bonus multiplied=19.20, if not=19.20
+target 11.5: 3 stat lines reproduce it; 3 have NO bonus
+   G=0 A=1 SOG=3 BLK=0 SHP=1 base=11.5 bonus=0  -> CPT if bonus multiplied=17.25, if not=17.25
+   G=0 A=2 SOG=1 BLK=0 SHP=0 base=11.5 bonus=0  -> CPT if bonus multiplied=17.25, if not=17.25
+   G=1 A=0 SOG=2 BLK=0 SHP=0 base=11.5 bonus=0  -> CPT if bonus multiplied=17.25, if not=17.25

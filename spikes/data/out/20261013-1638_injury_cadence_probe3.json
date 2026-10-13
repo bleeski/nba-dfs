@@ -1,0 +1,23 @@
+[
+ {
+  "slot_ET": "2025-11-15_05PM",
+  "status": 200,
+  "bytes": "79194",
+  "last_modified": "Sat, 15 Nov 2025 22:30:04 GMT",
+  "latency_s": 0.44
+ },
+ {
+  "slot_ET": "2025-12-20_05PM",
+  "status": 200,
+  "bytes": "88523",
+  "last_modified": "Sat, 20 Dec 2025 22:45:09 GMT",
+  "latency_s": 0.28
+ },
+ {
+  "slot_ET": "2025-12-20_05_15PM",
+  "status": 403,
+  "bytes": "1",
+  "last_modified": null,
+  "latency_s": 0.49
+ }
+]

@@ -1,0 +1,25 @@
+=== Header variants (count of files)
+6 | Position,Name + ID,Name,ID,Roster Position,Salary,Game Info,TeamAbbrev,AvgPointsPerGame
+
+=== Game Info patterns (top 15)
+378 | AAA@BBB 99/99/9999 99:99PM ET
+
+=== Status values
+{'<no col>': 378}
+
+=== Starting values
+{'<no col>': 378}
+
+=== Roster Position values (top 30)
+{'CPT': 189, 'UTIL': 189}
+
+=== Showdown files: file, roster positions, rows, CPT/UTIL pairs, pairs with same ID, CPT vs 1.5*UTIL salary, top UTIL-CPT ID gaps
+('camandrewz_nba_classic.csv', ['CPT', 'UTIL'], 66, 33, 0, {'exact': 33}, {-33: 33})
+('draftfast_nba_showdown_salaries.csv', ['CPT', 'UTIL'], 64, 32, 0, {'exact': 32}, {-32: 32})
+('fantasyfire_MIN_DEN_showdown.csv', ['CPT', 'UTIL'], 66, 33, 0, {'exact': 33}, {-33: 33})
+('rosteropt_nba_wnba_showdown.csv', ['CPT', 'UTIL'], 44, 22, 0, {'exact': 22}, {-22: 22})
+('rtelmore_DKSalaries-251018.csv', ['CPT', 'UTIL'], 66, 33, 0, {'exact': 33}, {-33: 33})
+('tmatis_rockets_lakers.csv', ['CPT', 'UTIL'], 72, 36, 0, {'exact': 36}, {-36: 36})
+
+=== UTIL salaries where 1.5x is not an integer: 0 []
+=== UTIL salaries with odd hundreds (1.5x ends in 50): 0 []

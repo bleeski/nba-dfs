@@ -1,0 +1,14 @@
+20190320 Westbrook, Russell       DD   recorded= 66.75 base= 65.25 A(TD=+3)= 66.75 B(TD=+4.5)= 66.75 match=AB | 42pt 11rb 6as 1st 8to 5trey 16-29fg 5-8ft
+20190320 Lillard, Damian          DD   recorded= 65.25 base= 63.75 A(TD=+3)= 65.25 B(TD=+4.5)= 65.25 match=AB | 33pt 5rb 12as 2st 1to 6trey 9-18fg 9-10ft
+20190320 Dunn, Kris               DD   recorded= 59.00 base= 57.50 A(TD=+3)= 59.00 B(TD=+4.5)= 59.00 match=AB | 26pt 6rb 13as 2st 2to 3trey 10-24fg 3-5ft
+20200115 Doncic, Luka             TD   recorded= 70.75 base= 66.25 A(TD=+3)= 69.25 B(TD=+4.5)= 70.75 match=B | 25pt 15rb 17as 6to 8-18fg 9-10ft
+20200115 Westbrook, Russell       TD   recorded= 69.75 base= 65.25 A(TD=+3)= 68.25 B(TD=+4.5)= 69.75 match=B | 31pt 11rb 12as 1st 1to 2trey 11-22fg 7-12ft
+20200115 Fox, De'Aaron            DD   recorded= 56.75 base= 55.25 A(TD=+3)= 56.75 B(TD=+4.5)= 56.75 match=AB | 27pt 7rb 12as 1st 3to 2trey 11-17fg 3-9ft
+20200115 Fultz, Markelle          TD   recorded= 55.75 base= 51.25 A(TD=+3)= 54.25 B(TD=+4.5)= 55.75 match=B | 21pt 11rb 10as 1st 1to 9-19fg 3-3ft
+20210510 Westbrook, Russell       TD   recorded= 80.25 base= 75.75 A(TD=+3)= 78.75 B(TD=+4.5)= 80.25 match=B | 28pt 13rb 21as 3to 3trey 10-22fg 5-5ft
+
+=== tally (category, matches formula A, matches formula B): count
+('DD', True, True) 13
+('DDshown',) 4
+('TD', False, True) 4
+('none', True, True) 63

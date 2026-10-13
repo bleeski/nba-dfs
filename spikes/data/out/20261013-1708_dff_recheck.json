@@ -1,0 +1,96 @@
+{
+ "fetched_utc": "2026-10-13T22:08:35+00:00",
+ "status": 200,
+ "bytes": 329726,
+ "n_rows": 5,
+ "n_with_projection": 0,
+ "updated": "Updated At: Tue, Oct 13, 2026, 5:57 PM ET DraftKing",
+ "data_attrs": [
+  "data-depth_rank",
+  "data-fn",
+  "data-inj",
+  "data-l10_avg",
+  "data-l5_avg",
+  "data-ln",
+  "data-loc",
+  "data-name",
+  "data-opp",
+  "data-opp_rank",
+  "data-ou",
+  "data-player_id",
+  "data-pos",
+  "data-pos_alt",
+  "data-ppg_proj",
+  "data-proj_score",
+  "data-rest",
+  "data-salary",
+  "data-spread",
+  "data-start_date",
+  "data-szn_avg",
+  "data-team",
+  "data-value_proj"
+ ],
+ "start_like": {
+  "data-depth_rank": [
+   "0"
+  ],
+  "data-inj": [
+   "O"
+  ],
+  "data-start_date": [
+   "2026-10-13"
+  ]
+ },
+ "sample": [
+  {
+   "data-name": "Jimmy Butler",
+   "data-team": "GSW",
+   "data-salary": "5700",
+   "data-ppg_proj": "0.0",
+   "data-inj": "O",
+   "data-depth_rank": "0",
+   "data-ou": "",
+   "data-spread": ""
+  },
+  {
+   "data-name": "Moses Moody",
+   "data-team": "GSW",
+   "data-salary": "4200",
+   "data-ppg_proj": "0.0",
+   "data-inj": "O",
+   "data-depth_rank": "0",
+   "data-ou": "",
+   "data-spread": ""
+  },
+  {
+   "data-name": "Johnny Furphy",
+   "data-team": "IND",
+   "data-salary": "3000",
+   "data-ppg_proj": "0.0",
+   "data-inj": "O",
+   "data-depth_rank": "0",
+   "data-ou": "",
+   "data-spread": ""
+  },
+  {
+   "data-name": "Maxime Raynaud",
+   "data-team": "SAC",
+   "data-salary": "6200",
+   "data-ppg_proj": "0.0",
+   "data-inj": "O",
+   "data-depth_rank": "0",
+   "data-ou": "",
+   "data-spread": ""
+  },
+  {
+   "data-name": "Shaedon Sharpe",
+   "data-team": "POR",
+   "data-salary": "5000",
+   "data-ppg_proj": "0.0",
+   "data-inj": "O",
+   "data-depth_rank": "0",
+   "data-ou": "",
+   "data-spread": ""
+  }
+ ]
+}

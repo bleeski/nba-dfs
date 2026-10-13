@@ -1,0 +1,647 @@
+{
+ "run_started_local": "2026-10-13T16:51:45.929502",
+ "espn_odds_coverage": [
+  {
+   "date": "20120115",
+   "n_events": 3,
+   "event": "Golden State Warriors at Detroit Pistons",
+   "providers": [],
+   "has_open_close": [],
+   "lines": []
+  },
+  {
+   "date": "20140115",
+   "n_events": 12,
+   "event": "Chicago Bulls at Orlando Magic",
+   "providers": [
+    "5Dimes.eu",
+    "BETONLINE.ag",
+    "BOVADA.lv",
+    "Fantasy911.com",
+    "Opening",
+    "SportsBetting.ag",
+    "consensus",
+    "numberfire",
+    "teamrankings"
+   ],
+   "has_open_close": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "lines": [
+    [
+     "CHI -6",
+     181.0
+    ],
+    [
+     "CHI -6",
+     181.0
+    ],
+    [
+     "CHI -6",
+     181.0
+    ]
+   ]
+  },
+  {
+   "date": "20160115",
+   "n_events": 9,
+   "event": "Washington Wizards at Indiana Pacers",
+   "providers": [
+    "5Dimes.eu",
+    "BETONLINE.ag",
+    "BOVADA.lv",
+    "Opening",
+    "PinnacleSports.com",
+    "SportsBetting.ag",
+    "Westgate",
+    "consensus",
+    "numberfire",
+    "teamrankings"
+   ],
+   "has_open_close": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "lines": [
+    [
+     "IND -7",
+     209.0
+    ],
+    [
+     "IND -7",
+     208.5
+    ],
+    [
+     "IND -7",
+     209.0
+    ]
+   ]
+  },
+  {
+   "date": "20180115",
+   "n_events": 11,
+   "event": "Charlotte Hornets at Detroit Pistons",
+   "providers": [
+    "CG Technology",
+    "Caesar's",
+    "Caesars Sportsbook",
+    "Unibet",
+    "Westgate",
+    "Wynn",
+    "accuscore",
+    "consensus",
+    "numberfire",
+    "teamrankings"
+   ],
+   "has_open_close": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "lines": [
+    [
+     "DET -2.5",
+     203.0
+    ],
+    [
+     "DET -3",
+     203.0
+    ],
+    [
+     "CHA -9.5",
+     213.5
+    ]
+   ]
+  },
+  {
+   "date": "20200115",
+   "n_events": 10,
+   "event": "Detroit Pistons at Boston Celtics",
+   "providers": [
+    "CG Technology",
+    "Caesars",
+    "Caesars Sportsbook",
+    "DraftKings",
+    "SugarHouse",
+    "Unibet",
+    "Westgate",
+    "accuscore",
+    "consensus",
+    "numberfire",
+    "teamrankings"
+   ],
+   "has_open_close": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "lines": [
+    [
+     "BOS -9",
+     218.0
+    ],
+    [
+     "BOS -9.5",
+     218.5
+    ],
+    [
+     "BOS -9",
+     218.5
+    ]
+   ]
+  },
+  {
+   "date": "20210215",
+   "n_events": 7,
+   "event": "Chicago Bulls at Indiana Pacers",
+   "providers": [
+    "BetfairSportsbook",
+    "Caesars",
+    "Caesars (New Jersey) - Live Odds",
+    "Caesars Sportsbook",
+    "Caesars Sportsbook (New Jersey)",
+    "Caesars Sportsbook (New Jersey) - Live Odds",
+    "Caesars Sportsbook (Pennsylvania)",
+    "DraftKings",
+    "MGM",
+    "Unibet",
+    "Westgate",
+    "accuscore",
+    "consensus",
+    "numberfire",
+    "teamrankings"
+   ],
+   "has_open_close": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "lines": [
+    [
+     "IND -4.5",
+     223.5
+    ],
+    [
+     "IND -4.5",
+     224.0
+    ],
+    [
+     "IND -2.5",
+     null
+    ]
+   ]
+  },
+  {
+   "date": "20220115",
+   "n_events": 10,
+   "event": "Toronto Raptors at Milwaukee Bucks",
+   "providers": [
+    "Caesars Sportsbook",
+    "Caesars Sportsbook (Colorado)",
+    "Caesars Sportsbook (New Jersey)",
+    "Caesars Sportsbook (New Jersey) - Live Odds",
+    "Caesars Sportsbook (Pennsylvania)",
+    "DraftKings",
+    "MGM",
+    "SugarHouse",
+    "Titanbets",
+    "Unibet",
+    "Westgate",
+    "accuscore",
+    "consensus",
+    "teamrankings"
+   ],
+   "has_open_close": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "lines": [
+    [
+     "MIL -7.5",
+     219.0
+    ],
+    [
+     "MIL -7.5",
+     221.5
+    ],
+    [
+     "MIL -7.5",
+     218.5
+    ]
+   ]
+  },
+  {
+   "date": "20230115",
+   "n_events": 8,
+   "event": "New York Knicks at Detroit Pistons",
+   "providers": [
+    "BetfairSportsbook",
+    "Caesars Sportsbook",
+    "Caesars Sportsbook (Colorado)",
+    "Caesars Sportsbook (New Jersey)",
+    "Caesars Sportsbook (New Jersey) - Live Odds",
+    "DraftKings",
+    "ESPN BET",
+    "Holland Casino",
+    "MGM",
+    "PointsBet",
+    "SugarHouse",
+    "Titanbets",
+    "Unibet",
+    "accuscore",
+    "consensus",
+    "teamrankings"
+   ],
+   "has_open_close": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+   ],
+   "lines": [
+    [
+     "NY -8.5",
+     225.0
+    ],
+    [
+     "NY -2.5",
+     225.0
+    ],
+    [
+     "NY -9",
+     225.0
+    ]
+   ]
+  },
+  {
+   "date": "20240115",
+   "n_events": 11,
+   "event": "Houston Rockets at Philadelphia 76ers",
+   "providers": [
+    "BetfairSportsbook",
+    "Caesars Sportsbook (Colorado)",
+    "Caesars Sportsbook (New Jersey)",
+    "Caesars Sportsbook (New Jersey) - Live Odds",
+    "Caesars Sportsbook (Tennessee)",
+    "DraftKings",
+    "ESPN BET",
+    "MGM",
+    "SugarHouse",
+    "Titanbets",
+    "Unibet",
+    "accuscore"
+   ],
+   "has_open_close": [
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "lines": [
+    [
+     "PHI -8",
+     229.0
+    ],
+    [
+     "PHI -8",
+     228.5
+    ],
+    [
+     "PHI -8",
+     228.5
+    ]
+   ]
+  },
+  {
+   "date": "20250115",
+   "n_events": 11,
+   "event": "New York Knicks at Philadelphia 76ers",
+   "providers": [
+    "ESPN BET",
+    "ESPN Bet - Live Odds"
+   ],
+   "has_open_close": [
+    true,
+    false
+   ],
+   "lines": [
+    [
+     "NY -5.5",
+     219.5
+    ],
+    [
+     "NY -7.5",
+     242.5
+    ]
+   ]
+  }
+ ],
+ "calls": [
+  {
+   "name": "pbpstats totals Player 2025-26",
+   "url": "https://api.pbpstats.com/get-totals/nba",
+   "params": {
+    "Season": "2025-26",
+    "SeasonType": "Regular Season",
+    "Type": "Player"
+   },
+   "status": 200,
+   "latency_s": 2.62,
+   "bytes": 3047026,
+   "ratelimit_remaining": null,
+   "n_rows": 500,
+   "keys_sample": [
+    "EntityId",
+    "TeamId",
+    "Name",
+    "ShortName",
+    "RowId",
+    "TeamAbbreviation",
+    "SecondsPlayed",
+    "GamesPlayed",
+    "Minutes",
+    "PlusMinus",
+    "OffPoss",
+    "DefPoss",
+    "PenaltyOffPoss",
+    "PenaltyDefPoss",
+    "SecondChanceOffPoss",
+    "TotalPoss",
+    "AtRimFGM",
+    "AtRimFGA",
+    "SecondChanceAtRimFGM",
+    "SecondChanceAtRimFGA",
+    "PenaltyAtRimFGM",
+    "PenaltyAtRimFGA",
+    "ShortMidRangeFGM",
+    "ShortMidRangeFGA",
+    "LongMidRangeFGM",
+    "LongMidRangeFGA",
+    "Corner3FGM",
+    "Corner3FGA",
+    "SecondChanceCorner3FGM",
+    "SecondChanceCorner3FGA",
+    "PenaltyCorner3FGM",
+    "PenaltyCorner3FGA",
+    "Arc3FGM",
+    "Arc3FGA",
+    "SecondChanceArc3FGM",
+    "SecondChanceArc3FGA",
+    "PenaltyArc3FGM",
+    "PenaltyArc3FGA",
+    "FG2M",
+    "FG2A",
+    "FG3M",
+    "FG3A",
+    "FtPoints",
+    "Points",
+    "OpponentPoints",
+    "SecondChanceFG2M",
+    "SecondChanceFG2A",
+    "SecondChanceFG3M",
+    "SecondChanceFG3A",
+    "SecondChanceFtPoints"
+   ]
+  },
+  {
+   "name": "pbpstats lineups BOS 2025-26",
+   "url": "https://api.pbpstats.com/get-totals/nba",
+   "params": {
+    "Season": "2025-26",
+    "SeasonType": "Regular Season",
+    "Type": "Lineup",
+    "TeamId": "1610612738"
+   },
+   "status": 200,
+   "latency_s": 1.9,
+   "bytes": 1298355,
+   "ratelimit_remaining": null,
+   "n_rows": 500,
+   "sample": {
+    "EntityId": "1627759-1628401-1629674-1630202-1630573",
+    "TeamId": "1610612738",
+    "Name": "Jaylen Brown, Derrick White, Neemias Queta, Payton Pritchard, Sam Hauser",
+    "ShortName": "Brown, White, Queta, Pritchard, Hauser",
+    "RowId": "1627759-1628401-1629674-1630202-1630573",
+    "TeamAbbreviation": "BOS",
+    "SecondsPlayed": 11976.2,
+    "GamesPlayed": 35,
+    "Minutes": 200,
+    "PlusMinus": 80,
+    "OffPoss": 391,
+    "DefPoss": 389
+   }
+  },
+  {
+   "name": "github releases sportsdataverse/sportsdataverse-data",
+   "url": "https://api.github.com/repos/sportsdataverse/sportsdataverse-data/releases",
+   "params": {
+    "per_page": 100
+   },
+   "status": 200,
+   "latency_s": 2.04,
+   "bytes": 9465399,
+   "ratelimit_remaining": "58",
+   "n_releases": 100,
+   "nba_tags": [
+    [
+     "wnba_stats_rolling_windows",
+     "2026-10-01T22:07:55Z",
+     93
+    ],
+    [
+     "wnba_stats_metric_curves",
+     "2026-10-01T12:42:54Z",
+     93
+    ],
+    [
+     "nba_stats_rolling_windows",
+     "2026-10-01T21:59:39Z",
+     92
+    ],
+    [
+     "nba_stats_metric_curves",
+     "2026-10-01T12:43:36Z",
+     92
+    ],
+    [
+     "nba_stats_game_matchups",
+     "2026-10-01T01:34:26Z",
+     31
+    ],
+    [
+     "wnba_groups",
+     "2026-09-27T04:40:10Z",
+     68
+    ],
+    [
+     "nba_groups",
+     "2026-09-27T03:31:20Z",
+     122
+    ],
+    [
+     "nba_stats_synergy",
+     "2026-09-02T19:33:37Z",
+     794
+    ],
+    [
+     "nba_stats_matchups",
+     "2026-09-02T19:52:50Z",
+     56
+    ],
+    [
+     "nba_stats_hustle",
+     "2026-09-02T19:53:51Z",
+     90
+    ],
+    [
+     "nba_stats_draft_combine",
+     "2026-09-02T19:55:08Z",
+     137
+    ],
+    [
+     "espn_wnba_injuries",
+     "2026-09-08T03:01:35Z",
+     3
+    ]
+   ]
+  },
+  {
+   "name": "github releases sportsdataverse/hoopR-nba-data",
+   "url": "https://api.github.com/repos/sportsdataverse/hoopR-nba-data/releases",
+   "params": {
+    "per_page": 100
+   },
+   "status": 200,
+   "latency_s": 0.14,
+   "bytes": 2,
+   "ratelimit_remaining": "57",
+   "n_releases": 0,
+   "nba_tags": []
+  },
+  {
+   "name": "bbref_robots",
+   "url": "https://www.basketball-reference.com/robots.txt",
+   "params": null,
+   "status": 200,
+   "latency_s": 0.51,
+   "bytes": 766,
+   "ratelimit_remaining": null,
+   "text_head": "User-agent: AhrefsBot\nDisallow: /\n\nUser-agent: GPTBot\nDisallow: /\n\nUser-agent: Twitterbot\nDisallow:\n\nUser-agent: *\nDisallow: /basketball/\nDisallow: /blazers/\nDisallow: /dump/\nDisallow: /fc/\nDisallow: /my/\nDisallow: /7103\nDisallow: /play-index/*.cgi?*\nDisallow: /play-index/plus/*.cgi?*\nDisallow: */gamelog/\nDisallow: */splits/\nDisallow: */on-off/\nDisallow: */lineups/\nDisallow: */shooting/\n\nDisallow: /req/\nDisallow: /short/\nDisallow: /nocdn/\n\nCrawl-delay: 3\n\n# Disallow the plagiarism.org robot, www"
+  },
+  {
+   "name": "sr_bot_traffic",
+   "url": "https://www.sports-reference.com/bot-traffic.html",
+   "params": null,
+   "status": 200,
+   "latency_s": 0.53,
+   "bytes": 78522,
+   "ratelimit_remaining": null,
+   "text_head": " Bot/Scraping/Crawler Traffic on Sports-Reference.com Sites | Sports-Reference.com Sports Reference \u00ae Hub Baseball Football (college) Basketball (college) Hockey Soccer Blog Stathead \u00ae Immaculate Grid \u00ae Questions or Comments? Welcome \u00b7 Your Account Logout Ad-Free Login Create Account MENU Baseball Basketball NFL Hockey CFB CBB Soccer Stathead Immaculate Grid Blog Full Site Menu Below You are here: SR Home Page > Bot/Scraping/Crawler Traffic on Sports-Reference.com Sites Welcome \u00b7 Your Account Lo"
+  },
+  {
+   "name": "sbr_nba_archive",
+   "url": "https://www.sportsbookreviewsonline.com/scoresoddsarchives/nba/nbaoddsarchives.htm",
+   "params": null,
+   "status": 200,
+   "latency_s": 0.6,
+   "bytes": 41422,
+   "ratelimit_remaining": null,
+   "text_head": " \ud83c\udfc0Historical NBA Scores and Odds Archives @ Guide to NBA Odds & Betting Lines Sportsbook Reviews Sportsbook Reviews BetAnything BetOnline BetUS Bovada Everygame Pinnacle SportsBetting.ag BUSR Sportsbook Show more... Sports Cricket Betting Esports Betting Golf Betting MLB Betting NASCAR Betting NBA Betting NFL Betting NHL Betting Soccer Betting Tennis Betting Political Betting Horse Racing Sports Betting Crypto Bookies Betting Exchanges Live Betting Free Betting Offers Sweepstakes Betting Online ",
+   "season_links": [
+    "2022-23",
+    "2021-22",
+    "2020-21",
+    "2019-20",
+    "2018-19",
+    "2017-18",
+    "2016-17",
+    "2015-16",
+    "2014-15",
+    "2013-14",
+    "2012-13",
+    "2011-12",
+    "2010-11",
+    "2009-10",
+    "2008-09",
+    "2007-08"
+   ]
+  }
+ ],
+ "blocked": []
+}

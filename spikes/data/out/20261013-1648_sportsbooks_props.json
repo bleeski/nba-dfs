@@ -1,0 +1,181 @@
+{
+ "run_started_local": "2026-10-13T16:48:10.741854",
+ "calls": [
+  {
+   "name": "dk_sportsbook_nba_league",
+   "url": "https://sportsbook-nash.draftkings.com/api/sportscontent/dkusnj/v1/leagues/42648",
+   "params": {},
+   "status": 403,
+   "latency_s": 0.33,
+   "bytes": 449,
+   "ctype": "text/html",
+   "server": "AkamaiGHost",
+   "cf": false,
+   "body_head": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"http&#58;&#47;&#47;sportsbook&#45;nash&#46;draftkings&#46;com&#47;api&#47;sportscontent&#47;dkusnj&#47;v1&#47;leagues&#47;42648\" on this server.<P>\nReference&#32;&#35;18&#46;ce952a17&#46;1791928091&#46;cb4b73d7\n<P>https&#58;&#47;&#47;errors&#46;edgesuite&#46;net&#47;18&#46;ce952a17"
+  },
+  {
+   "name": "fanduel_nba_page",
+   "url": "https://sbapi.nj.sportsbook.fanduel.com/api/content-managed-page",
+   "params": {
+    "page": "CUSTOM",
+    "customPageId": "nba",
+    "pbHorizontal": "false",
+    "timezone": "America/New_York"
+   },
+   "status": 400,
+   "latency_s": 0.32,
+   "bytes": 14,
+   "ctype": "application/json; charset=utf-8",
+   "server": "CloudFront",
+   "cf": false,
+   "body_head": "{\"error\":true}"
+  },
+  {
+   "name": "betmgm_fixtures_no_key",
+   "url": "https://sports.nj.betmgm.com/cds-api/bettingoffer/fixtures",
+   "params": {
+    "lang": "en-us",
+    "country": "US",
+    "sportIds": "7"
+   },
+   "status": 400,
+   "latency_s": 0.93,
+   "bytes": 117,
+   "ctype": "application/json; charset=utf-8",
+   "server": "cloudflare",
+   "cf": true,
+   "body_head": "{\"correlationId\":\"eb768789d2934b0fa28ca7b8b9a8e4ed\",\"message\":\"Access id missing\",\"timeStamp\":\"2026-10-13T21:48:15Z\"}"
+  },
+  {
+   "name": "caesars_schedule",
+   "url": "https://api.americanwagering.com/regions/us/locations/nj/brands/czr/sb/v4/sports/basketball/events/schedule",
+   "params": {},
+   "status": 403,
+   "latency_s": 0.45,
+   "bytes": 919,
+   "ctype": "text/html",
+   "server": "CloudFront",
+   "cf": false,
+   "body_head": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n<HTML><HEAD><META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; charset=iso-8859-1\">\n<TITLE>ERROR: The request could not be satisfied</TITLE>\n</HEAD><BODY>\n<H1>403 ERROR</H1>\n<H2>The request could not be satisfied.</H2>\n<HR noshade size=\"1px\">\nRequest blocked.\nWe can't connect to the server for t"
+  },
+  {
+   "name": "bovada_nba_coupon",
+   "url": "https://www.bovada.lv/services/sports/event/coupon/events/A/description/basketball/nba",
+   "params": {
+    "marketFilterId": "def",
+    "preMatchOnly": "true",
+    "lang": "en"
+   },
+   "status": 200,
+   "latency_s": 0.38,
+   "bytes": 49788,
+   "ctype": "application/json",
+   "server": null,
+   "cf": false,
+   "body_head": "[{\"path\":[{\"id\":\"2958468\",\"link\":\"/basketball/nba\",\"description\":\"NBA\",\"type\":\"LEAGUE\",\"sportCode\":\"BASK\",\"order\":2,\"leaf\":true,\"current\":true},{\"id\":\"227\",\"link\":\"/basketball\",\"description\":\"Basketball\",\"type\":\"SPORT\",\"sportCode\":\"BASK\",\"order\":1,\"leaf\":false,\"current\":false}],\"events\":[{\"id\":\"29468774\",\"description\":\"Boston Celtics @ Detroit Pistons\",\"type\":\"GAMEEVENT\",\"link\":\"/basketball/nba/bo",
+   "top_keys": "list[1]",
+   "n_events": 18,
+   "events_sample": [
+    "Boston Celtics @ Detroit Pistons",
+    "Philadelphia 76ers @ New York Knicks",
+    "Oklahoma City Thunder @ San Antonio Spurs",
+    "Atlanta Hawks @ Orlando Magic",
+    "Milwaukee Bucks @ Washington Wizards"
+   ]
+  },
+  {
+   "name": "pinnacle_arcadia_no_key",
+   "url": "https://guest.api.arcadia.pinnacle.com/0.1/leagues/487/matchups",
+   "params": {},
+   "status": 200,
+   "latency_s": 0.37,
+   "bytes": 225867,
+   "ctype": "application/json",
+   "server": "cloudflare",
+   "cf": true,
+   "body_head": "[\n  {\n    \"ageLimit\": 0,\n    \"altTeaser\": false,\n    \"featureOrder\": -1,\n    \"hasAltSpread\": true,\n    \"hasAltTotal\": true,\n    \"hasBetshare\": false,\n    \"hasLive\": true,\n    \"hasMarkets\": true,\n    \"id\": 1637443877,\n    \"isBetshareEnabled\": false,\n    \"isFeatured\": false,\n    \"isHighlighted\": false,\n    \"isLive\": false,\n    \"isPromoted\": false,\n    \"league\": {\n      \"ageLimit\": 0,\n      \"featureO",
+   "top_keys": "list[108]"
+  },
+  {
+   "name": "actionnetwork_scoreboard",
+   "url": "https://api.actionnetwork.com/web/v1/scoreboard/nba",
+   "params": {
+    "period": "game",
+    "date": "20261013"
+   },
+   "status": 200,
+   "latency_s": 0.36,
+   "bytes": 76731,
+   "ctype": "application/json; charset=utf-8",
+   "server": null,
+   "cf": false,
+   "body_head": "{\"league\":{\"id\":4,\"sport\":\"basketball\",\"name\":\"nba\",\"description\":\"Men's National Basketball Association\",\"logo\":\"https://static.sprtactn.co/leagues/500/nba.png\",\"current_season\":\"2026\",\"current_season_type\":\"pre\",\"pre_season_start\":\"2026-07-01T07:00:00.000Z\",\"pre_season_end\":\"2026-10-24T06:59:59.000Z\",\"reg_season_start\":\"2026-10-22T07:00:00.000Z\",\"reg_season_end\":\"2027-04-21T06:59:59.000Z\",\"post_",
+   "top_keys": [
+    "league",
+    "games",
+    "content_live_count"
+   ],
+   "n_games": 5,
+   "game0_keys": [
+    "id",
+    "league_id",
+    "status",
+    "real_status",
+    "status_display",
+    "start_time",
+    "away_team_id",
+    "home_team_id",
+    "winning_team_id",
+    "league_name",
+    "type",
+    "season",
+    "week",
+    "attendance",
+    "coverage",
+    "is_free",
+    "trending",
+    "away_rotation_number",
+    "home_rotation_number",
+    "teams",
+    "meta",
+    "num_bets",
+    "odds",
+    "broadcast"
+   ],
+   "odds_sample": "[{\"ml_away\": -125, \"ml_home\": 105, \"spread_away\": -1.5, \"spread_home\": 1.5, \"spread_away_line\": -110, \"spread_home_line\": -110, \"over\": -110, \"under\": -110, \"draw\": null, \"total\": 229.5, \"away_total\": 115, \"away_over\": -111, \"away_under\": -113, \"home_total\": 114, \"home_over\": -113, \"home_under\": -111, \"ml_home_public\": null, \"ml_away_public\": null, \"spread_home_public\": null, \"spread_away_public\": null, \"total_under_public\": null, \"total_over_public\": null, \"ml_home_money\": null, \"ml_away_money\": null, \"spread_home_money\": null, \"spread_away_money\": null, \"total_over_money\": null, \"total_under_money\": null, \"meta\": {\"draw\": null, \"over\": null, \"under\": null, \"ml_away\": null, \"ml_home\": null, \"away_over\": null, \"home_over\": null, \"away_under\": null, \"home_under\": null, \"spread_away\": null, "
+  },
+  {
+   "name": "prizepicks_projections",
+   "url": "https://api.prizepicks.com/projections",
+   "params": {
+    "league_id": "7",
+    "per_page": "250",
+    "single_stat": "true"
+   },
+   "status": 403,
+   "latency_s": 0.41,
+   "bytes": 495,
+   "ctype": "application/json;charset=utf-8",
+   "server": "cloudflare",
+   "cf": true,
+   "body_head": "{\"url\":\"https://geo.captcha-delivery.com/captcha/?initialCid=AHrlqAAAAAMAyyO4rmbM5f4AaDn6CA==&cid=Q5odzTrywYCU0miLuM_DLVz7NisBYSBevtLiP8A4f515T_Rvr_KPw9iU3gchTrE1jwTBfAaHt54HPSWitx7LfWfpAZB2wsdtDLelUgbi6lJOvflRtDHdyQxqpL4hRs8s&referer=https%3A%2F%2Fapi.prizepicks.com%2Fprojections%3Fleague_id%3D7%26per_page%3D250%26single_stat%3Dtrue&hash=61E46FF8671D8E065AE3849D7398C0&t=bv&s=58973&e=f45398601d0c3"
+  },
+  {
+   "name": "underdog_over_under_v5",
+   "url": "https://api.underdogfantasy.com/beta/v5/over_under_lines",
+   "params": {},
+   "status": 426,
+   "latency_s": 0.42,
+   "bytes": 222,
+   "ctype": "application/json; charset=utf-8",
+   "server": "cloudflare",
+   "cf": true,
+   "body_head": "{\"error\":{\"api_code\":\"upgrade_required\",\"cta_text\":null,\"cta_url\":null,\"detail\":\"A new version is required to continue\",\"http_status_code\":426,\"secondary_cta_text\":null,\"secondary_cta_url\":null,\"title\":\"Upgrade required\"}}"
+  }
+ ],
+ "blocked_hosts": [
+  "api.americanwagering.com",
+  "api.prizepicks.com",
+  "sportsbook-nash.draftkings.com"
+ ]
+}

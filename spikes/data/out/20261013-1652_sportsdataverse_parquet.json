@@ -1,0 +1,310 @@
+{
+ "run_local": "2026-10-13T16:52:58.266077",
+ "tags": {
+  "espn_nba_player_boxscores": {
+   "status": 200,
+   "ratelimit_remaining": "56",
+   "n_assets": 103,
+   "first": [
+    "package_function.json",
+    "package_function.txt",
+    "player_box_1994.csv"
+   ],
+   "last": [
+    [
+     "player_box_2026.csv",
+     17.73,
+     "2026-09-09T05:17:39Z"
+    ],
+    [
+     "player_box_2026.parquet",
+     0.61,
+     "2026-09-09T05:17:36Z"
+    ],
+    [
+     "player_box_2026.rds",
+     0.83,
+     "2026-09-09T05:17:37Z"
+    ],
+    [
+     "timestamp.json",
+     0.0,
+     "2026-10-12T21:27:59Z"
+    ],
+    [
+     "timestamp.txt",
+     0.0,
+     "2026-10-12T21:27:57Z"
+    ]
+   ]
+  },
+  "espn_nba_pbp": {
+   "status": 200,
+   "ratelimit_remaining": "55",
+   "n_assets": 79,
+   "first": [
+    "package_function.json",
+    "package_function.txt",
+    "play_by_play_2002.csv"
+   ],
+   "last": [
+    [
+     "play_by_play_2026.csv",
+     281.36,
+     "2026-09-09T05:16:45Z"
+    ],
+    [
+     "play_by_play_2026.parquet",
+     22.44,
+     "2026-09-09T05:16:34Z"
+    ],
+    [
+     "play_by_play_2026.rds",
+     24.26,
+     "2026-09-09T05:16:37Z"
+    ],
+    [
+     "timestamp.json",
+     0.0,
+     "2026-09-09T05:16:47Z"
+    ],
+    [
+     "timestamp.txt",
+     0.0,
+     "2026-09-09T05:16:46Z"
+    ]
+   ]
+  },
+  "espn_nba_schedules": {
+   "status": 200,
+   "ratelimit_remaining": "54",
+   "n_assets": 112,
+   "first": [
+    "nba_games_in_data_repo.csv",
+    "nba_games_in_data_repo.parquet",
+    "nba_games_in_data_repo.rds"
+   ],
+   "last": [
+    [
+     "nba_schedule_master.rds",
+     2.65,
+     "2026-06-03T03:10:15Z"
+    ],
+    [
+     "package_function.json",
+     0.0,
+     "2026-10-12T21:28:40Z"
+    ],
+    [
+     "package_function.txt",
+     0.0,
+     "2026-10-12T21:28:38Z"
+    ],
+    [
+     "timestamp.json",
+     0.0,
+     "2026-10-12T21:28:37Z"
+    ],
+    [
+     "timestamp.txt",
+     0.0,
+     "2026-10-12T21:28:35Z"
+    ]
+   ]
+  }
+ },
+ "parquet": {
+  "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_nba_player_boxscores/player_box_2026.parquet",
+  "status": 200,
+  "mb": 0.61,
+  "rows": 34883,
+  "columns": [
+   "game_id",
+   "season",
+   "season_type",
+   "game_date",
+   "game_date_time",
+   "athlete_id",
+   "athlete_display_name",
+   "team_id",
+   "team_name",
+   "team_location",
+   "team_short_display_name",
+   "minutes",
+   "field_goals_made",
+   "field_goals_attempted",
+   "three_point_field_goals_made",
+   "three_point_field_goals_attempted",
+   "free_throws_made",
+   "free_throws_attempted",
+   "offensive_rebounds",
+   "defensive_rebounds",
+   "rebounds",
+   "assists",
+   "steals",
+   "blocks",
+   "turnovers",
+   "fouls",
+   "plus_minus",
+   "points",
+   "starter",
+   "ejected",
+   "did_not_play",
+   "reason",
+   "active",
+   "athlete_jersey",
+   "athlete_short_name",
+   "athlete_headshot_href",
+   "athlete_position_name",
+   "athlete_position_abbreviation",
+   "team_display_name",
+   "team_uid",
+   "team_slug",
+   "team_logo",
+   "team_abbreviation",
+   "team_color",
+   "team_alternate_color",
+   "home_away",
+   "team_winner",
+   "team_score",
+   "opponent_team_id",
+   "opponent_team_name",
+   "opponent_team_location",
+   "opponent_team_display_name",
+   "opponent_team_abbreviation",
+   "opponent_team_logo",
+   "opponent_team_color",
+   "opponent_team_alternate_color",
+   "opponent_team_score"
+  ],
+  "date_min": "2025-10-21",
+  "date_max": "2026-06-13",
+  "season_types": {
+   "2": 32294,
+   "3": 2419,
+   "5": 170
+  },
+  "has_starter": true,
+  "has_minutes": true,
+  "sample": [
+   {
+    "game_id": 401859967,
+    "season": 2026,
+    "season_type": 3,
+    "game_date": 1781308800000,
+    "game_date_time": 1781397000000,
+    "athlete_id": 3934719.0,
+    "athlete_display_name": "OG Anunoby",
+    "team_id": 18,
+    "team_name": "Knicks",
+    "team_location": "New York",
+    "team_short_display_name": "Knicks",
+    "minutes": 33.0,
+    "field_goals_made": 3.0,
+    "field_goals_attempted": 11.0,
+    "three_point_field_goals_made": 1.0,
+    "three_point_field_goals_attempted": 5.0,
+    "free_throws_made": 4.0,
+    "free_throws_attempted": 6.0,
+    "offensive_rebounds": 0.0,
+    "defensive_rebounds": 8.0,
+    "rebounds": 8.0,
+    "assists": 0.0,
+    "steals": 3.0,
+    "blocks": 1.0,
+    "turnovers": 1.0,
+    "fouls": 5.0,
+    "plus_minus": "+2",
+    "points": 11.0,
+    "starter": true,
+    "ejected": false,
+    "did_not_play": false,
+    "reason": "COACH'S DECISION",
+    "active": true,
+    "athlete_jersey": "8",
+    "athlete_short_name": "O. Anunoby",
+    "athlete_headshot_href": "https://a.espncdn.com/i/headshots/nba/players/full/3934719.png",
+    "athlete_position_name": "Forward",
+    "athlete_position_abbreviation": "F",
+    "team_display_name": "New York Knicks",
+    "team_uid": "s:40~l:46~t:18",
+    "team_slug": "new-york-knicks",
+    "team_logo": "https://a.espncdn.com/i/teamlogos/nba/500/ny.png",
+    "team_abbreviation": "NY",
+    "team_color": "1d428a",
+    "team_alternate_color": "f58426",
+    "home_away": "away",
+    "team_winner": true,
+    "team_score": 94,
+    "opponent_team_id": 24,
+    "opponent_team_name": "Spurs",
+    "opponent_team_location": "San Antonio",
+    "opponent_team_display_name": "San Antonio Spurs",
+    "opponent_team_abbreviation": "SA",
+    "opponent_team_logo": "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
+    "opponent_team_color": "000000",
+    "opponent_team_alternate_color": "c4ced4",
+    "opponent_team_score": 90
+   },
+   {
+    "game_id": 401859967,
+    "season": 2026,
+    "season_type": 3,
+    "game_date": 1781308800000,
+    "game_date_time": 1781397000000,
+    "athlete_id": 3136195.0,
+    "athlete_display_name": "Karl-Anthony Towns",
+    "team_id": 18,
+    "team_name": "Knicks",
+    "team_location": "New York",
+    "team_short_display_name": "Knicks",
+    "minutes": 23.0,
+    "field_goals_made": 1.0,
+    "field_goals_attempted": 7.0,
+    "three_point_field_goals_made": 0.0,
+    "three_point_field_goals_attempted": 2.0,
+    "free_throws_made": 0.0,
+    "free_throws_attempted": 0.0,
+    "offensive_rebounds": 1.0,
+    "defensive_rebounds": 9.0,
+    "rebounds": 10.0,
+    "assists": 1.0,
+    "steals": 3.0,
+    "blocks": 1.0,
+    "turnovers": 5.0,
+    "fouls": 6.0,
+    "plus_minus": "-4",
+    "points": 2.0,
+    "starter": true,
+    "ejected": false,
+    "did_not_play": false,
+    "reason": "COACH'S DECISION",
+    "active": false,
+    "athlete_jersey": "32",
+    "athlete_short_name": "K. Towns",
+    "athlete_headshot_href": "https://a.espncdn.com/i/headshots/nba/players/full/3136195.png",
+    "athlete_position_name": "Center",
+    "athlete_position_abbreviation": "C",
+    "team_display_name": "New York Knicks",
+    "team_uid": "s:40~l:46~t:18",
+    "team_slug": "new-york-knicks",
+    "team_logo": "https://a.espncdn.com/i/teamlogos/nba/500/ny.png",
+    "team_abbreviation": "NY",
+    "team_color": "1d428a",
+    "team_alternate_color": "f58426",
+    "home_away": "away",
+    "team_winner": true,
+    "team_score": 94,
+    "opponent_team_id": 24,
+    "opponent_team_name": "Spurs",
+    "opponent_team_location": "San Antonio",
+    "opponent_team_display_name": "San Antonio Spurs",
+    "opponent_team_abbreviation": "SA",
+    "opponent_team_logo": "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
+    "opponent_team_color": "000000",
+    "opponent_team_alternate_color": "c4ced4",
+    "opponent_team_score": 90
+   }
+  ]
+ }
+}

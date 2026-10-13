@@ -1,0 +1,106 @@
+source rows total=10048  NBA rows=432
+NBA date range: 2023-10-29 to 2026-07-02  nights=263
+
+Game_Type counts:
+Game_Type
+Classic                  394
+Showdown Captain Mode     25
+WNBA                       5
+Tiers                      4
+Starting 5                 2
+Best Ball                  1
+Snake                      1
+
+Contest_Entries (field size) quantiles:
+count      432.0
+mean      3806.2
+std       7814.9
+min          3.0
+10%        118.0
+25%        257.0
+50%       2972.0
+75%       3567.0
+90%       4756.0
+max      86215.0
+
+Entry_Fee quantiles:
+count    432.00
+mean       0.31
+std        0.68
+min        0.00
+10%        0.10
+25%        0.10
+50%        0.10
+75%        0.25
+90%        1.00
+max        5.00
+
+Places_Paid / Contest_Entries (payout depth) by Game_Type:
+                       count   mean    std    min    10%    50%    90%    max
+Game_Type                                                                    
+Best Ball                1.0  0.000    NaN  0.000  0.000  0.000  0.000  0.000
+Classic                394.0  0.198  0.129  0.001  0.004  0.233  0.278  1.021
+Showdown Captain Mode   25.0  0.214  0.066  0.007  0.154  0.225  0.233  0.367
+Snake                    1.0  0.333    NaN  0.333  0.333  0.333  0.333  0.333
+Starting 5               2.0  0.230  0.003  0.228  0.228  0.230  0.232  0.232
+Tiers                    4.0  0.235  0.005  0.230  0.230  0.236  0.239  0.239
+WNBA                     5.0  0.115  0.109  0.018  0.030  0.093  0.225  0.297
+
+Rake check (1 - prize_pool / (fee x entries)), median by Game_Type:
+Game_Type
+Best Ball                0.100
+Classic                  0.158
+Showdown Captain Mode    0.159
+Snake                    0.100
+Starting 5               0.159
+Tiers                    0.159
+WNBA                      -inf
+
+Per-entry cash rate and top-1% rate by Game_Type:
+                       entries  cash_rate  top1_rate  median_pct_rank
+Game_Type                                                            
+Best Ball                    1      1.000      0.000            0.250
+Classic                    394      0.132      0.003            0.590
+Showdown Captain Mode       25      0.160      0.000            0.584
+Snake                        1      1.000      1.000            0.333
+Starting 5                   2      0.500      0.000            0.249
+Tiers                        4      0.000      0.000            0.783
+WNBA                         5      0.000      0.000            0.642
+
+Nights: 263  washout nights (zero cashes): 209  rate=0.795
+Entries per night quantiles:
+count    263.0
+mean       1.6
+std        1.5
+min        1.0
+10%        1.0
+50%        1.0
+90%        3.0
+max       10.0
+Contests per night quantiles:
+count    263.0
+mean       1.3
+std        0.8
+min        1.0
+10%        1.0
+50%        1.0
+90%        2.0
+max        5.0
+
+Washout rate by entries-per-night bucket:
+         size   mean
+bucket              
+(0, 2]    226  0.827
+(2, 5]     28  0.536
+(5, 10]     9  0.778
+
+Nights with at least one top-1% finish: 2 of 263
+
+Entries per contest (our multi-entry depth) quantiles:
+count    352.0
+mean       1.2
+std        1.0
+min        1.0
+50%        1.0
+90%        1.0
+max        8.0

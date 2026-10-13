@@ -1,0 +1,61 @@
+=== Header variants (count of files)
+43 | Position,Name + ID,Name,ID,Roster Position,Salary,Game Info,TeamAbbrev,AvgPointsPerGame,Status,Starting
+11 | Position,Name + ID,Name,ID,Roster Position,Salary,Game Info,TeamAbbrev,AvgPointsPerGame,Status
+
+=== Game Info patterns (top 15)
+12828 | AAA@BBB 99/99/9999 99:99PM ET
+128 | COV vs HUL 99/99/9999 99:99AM ET
+126 | SCP vs GAL 99/99/9999 99:99PM ET
+126 | RMA vs INT 99/99/9999 99:99PM ET
+122 | PSG vs SLO 99/99/9999 99:99PM ET
+118 | POR vs MCI 99/99/9999 99:99PM ET
+118 | BVB vs VIL 99/99/9999 99:99PM ET
+114 | LIV vs ATL 99/99/9999 99:99PM ET
+110 | BOU vs EVE 99/99/9999 99:99AM ET
+108 | LIL vs BET 99/99/9999 99:99PM ET
+102 | NAP vs ARS 99/99/9999 99:99PM ET
+48 | TOUR Championship
+36 | BMW Championship
+2 | de Minaur@Guerrieri 99/99/9999 99:99PM ET
+2 | Gauff@Sonmez 99/99/9999 99:99PM ET
+
+=== Status values
+{'': 11269, 'IL': 2061, 'OUT': 413, 'Q': 142, 'IR': 127, 'DTD': 88, 'D': 3, 'WD': 1}
+
+=== Starting values
+{'': 9842, '<no col>': 2151, 'Starter': 198, '2': 187, '1': 187, '4': 187, '3': 187, '5': 187, '6': 187, '7': 187, '9': 187, '8': 186, 'SP': 177, 'P': 32, 'PLR': 11, 'PO': 11}
+
+=== Roster Position values (top 30)
+{'P': 3723, 'CPT': 2252, 'UTIL': 1864, 'OF': 1041, 'WR/FLEX': 595, 'D/UTIL': 468, 'C': 464, 'FLEX': 370, 'M/UTIL': 364, 'TE/FLEX': 324, 'RB/FLEX': 315, 'F/UTIL': 254, '1B': 223, 'SS': 210, '3B': 201, '2B': 187, 'QB': 183, 'GK': 152, '2B/3B': 120, 'W/UTIL': 107, 'G': 102, '1B/OF': 77, '2B/SS': 73, '2B/OF': 68, 'C/UTIL': 65, '3B/SS': 55, '1B/3B': 55, '3B/OF': 49, 'DST': 48, 'M/F/UTIL': 34}
+
+=== Showdown files: file, roster positions, rows, CPT/UTIL pairs, pairs with same ID, CPT vs 1.5*UTIL salary, top UTIL-CPT ID gaps
+('DKSalaries - NFL.csv', ['CPT', 'FLEX'], 110, 55, 0, {'exact': 55}, {-55: 55})
+('DKSalaries - TB_TEX.csv', ['CPT', 'UTIL'], 186, 93, 0, {'exact': 93}, {-93: 93})
+('DKSalaries - early showdown.csv', ['CPT', 'UTIL'], 190, 95, 0, {'exact': 95}, {-95: 95})
+('DKSalaries - extra late showdown.csv', ['CPT', 'UTIL'], 190, 95, 0, {'exact': 95}, {-95: 95})
+('DKSalaries - golf.csv', ['CPT', 'G'], 36, 0, 0, {}, {})
+('DKSalaries - late showdown.csv', ['CPT', 'UTIL'], 184, 92, 0, {'exact': 92}, {-92: 92})
+('DKSalaries - late slate showdown.csv', ['CPT', 'UTIL'], 188, 94, 0, {'exact': 94}, {-94: 94})
+('DKSalaries - main slate showdown.csv', ['CPT', 'UTIL'], 188, 94, 0, {'exact': 94}, {-94: 94})
+('DKSalaries - showdown late.csv', ['CPT', 'UTIL'], 194, 97, 0, {'exact': 97}, {-97: 97})
+('DKSalaries - showdown.csv', ['CPT', 'UTIL'], 196, 98, 0, {'exact': 98}, {-98: 98})
+('DKSalaries - sunday night showdown.csv', ['CPT', 'UTIL'], 180, 90, 0, {'exact': 90}, {-90: 90})
+('DKSalaries - super late showdown.csv', ['CPT', 'UTIL'], 176, 88, 0, {'exact': 88}, {-88: 88})
+('DKSalaries Salary CSV Showdown.csv', ['CPT', 'FLEX'], 126, 63, 0, {'exact': 63}, {-63: 63})
+('DKSalaries_ATH_SEA.csv', ['CPT', 'UTIL'], 198, 99, 0, {'exact': 99}, {-99: 99})
+('DKSalaries_BAL_NYY.csv', ['CPT', 'UTIL'], 180, 90, 0, {'exact': 90}, {-90: 90})
+('DKSalaries_BOS_BAL.csv', ['CPT', 'UTIL'], 190, 95, 0, {'exact': 95}, {-95: 95})
+('DKSalaries_CIN_ATL.csv', ['CPT', 'UTIL'], 182, 91, 0, {'exact': 91}, {-91: 91})
+('DKSalaries_DAL_NYG.csv', ['CPT', 'FLEX'], 102, 51, 0, {'exact': 51}, {-51: 51})
+('DKSalaries_HOU_PHI.csv', ['CPT', 'UTIL'], 182, 91, 0, {'exact': 91}, {-91: 91})
+('DKSalaries_LAD_ATL.csv', ['CPT', 'UTIL'], 192, 96, 0, {'exact': 96}, {-96: 96})
+('DKSalaries_NE_SEA.csv', ['CPT', 'FLEX'], 136, 68, 0, {'exact': 68}, {-63: 63, -5: 5})
+('DKSalaries_PIT_CHW.csv', ['CPT', 'UTIL'], 184, 92, 0, {'exact': 92}, {-92: 92})
+('DKSalaries_SF_LAR.csv', ['CPT', 'FLEX'], 108, 54, 0, {'exact': 54}, {-54: 54})
+('DKSalaries_STL_COL.csv', ['CPT', 'UTIL'], 174, 87, 0, {'exact': 87}, {-87: 87})
+('DKSalaries_STL_LAD.csv', ['CPT', 'UTIL'], 180, 90, 0, {'exact': 90}, {-90: 90})
+('DKSalaries_WSH_DET.csv', ['CPT', 'UTIL'], 194, 97, 0, {'exact': 97}, {-97: 97})
+('DKSalaries_showdown.csv', ['CPT', 'FLEX'], 158, 79, 0, {'exact': 79}, {-79: 79})
+
+=== UTIL salaries where 1.5x is not an integer: 0 []
+=== UTIL salaries with odd hundreds (1.5x ends in 50): 0 []

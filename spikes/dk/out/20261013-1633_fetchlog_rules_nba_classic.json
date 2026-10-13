@@ -1,0 +1,20 @@
+[
+ {
+  "name": "rules_nba_classic",
+  "url": "https://www.draftkings.com/help/rules/4/70",
+  "status": 200,
+  "ctype": "text/html; charset=utf-8",
+  "bytes": 306227,
+  "saved": "C:\\Users\\benja\\Documents\\Claude\\nba-dfs\\spikes\\dk\\out\\downloads\\draftkings\\20261013-1633_rules_nba_classic.html",
+  "ratelimit_headers": {}
+ },
+ {
+  "name": "lobby_nba",
+  "url": "https://www.draftkings.com/lobby/getcontests?sport=NBA",
+  "status": 200,
+  "ctype": "application/json; charset=utf-8",
+  "bytes": 1435195,
+  "saved": "C:\\Users\\benja\\Documents\\Claude\\nba-dfs\\spikes\\dk\\out\\downloads\\draftkings\\20261013-1633_lobby_nba.json",
+  "ratelimit_headers": {}
+ }
+]

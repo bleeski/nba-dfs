@@ -1,0 +1,466 @@
+{
+ "basketballmonster_lineups": {
+  "tables": [
+   {
+    "n_rows": 7,
+    "rows": [
+     [
+      "BOS @ DET\n\n                                3:00 PM ET\n\n                                    \n\n                                    in 6.9d"
+     ],
+     [
+      "",
+      "BOS",
+      "@ DET"
+     ],
+     [
+      "PG",
+      "Derrick White",
+      "Cade Cunningham"
+     ],
+     [
+      "SG",
+      "Baylor Scheierman",
+      "Duncan Robinson"
+     ],
+     [
+      "SF",
+      "Jayson Tatum",
+      "Ausar Thompson"
+     ],
+     [
+      "PF",
+      "Paul George",
+      "John Collins"
+     ],
+     [
+      "C",
+      "Neemias Queta",
+      "Jalen Duren"
+     ]
+    ]
+   },
+   {
+    "n_rows": 7,
+    "rows": [
+     [
+      "PHI @ NYK\n\n                                7:00 PM ET\n\n                                    \n\n                                    in 10/6/26"
+     ],
+     [
+      "",
+      "PHI",
+      "@ NYK"
+     ],
+     [
+      "PG",
+      "Tyrese Maxey",
+      "Jalen Brunson"
+     ],
+     [
+      "SG",
+      "VJ Edgecombe",
+      "Mikal Bridges"
+     ],
+     [
+      "SF",
+      "Jaylen Brown",
+      "Josh Hart"
+     ],
+     [
+      "PF",
+      "LeBron James",
+      "O.G. Anunoby"
+     ],
+     [
+      "C",
+      "Joel Embiid",
+      "Karl-Anthony Towns"
+     ]
+    ]
+   },
+   {
+    "n_rows": 7,
+    "rows": [
+     [
+      "OKC @ SAS\n\n                                9:30 PM ET\n\n                                    \n\n                                    in 10/6/26"
+     ],
+     [
+      "",
+      "OKC",
+      "@ SAS"
+     ],
+     [
+      "PG",
+      "Shai Gilgeous-Alexander",
+      "De'Aaron Fox P"
+     ],
+     [
+      "SG",
+      "Cason Wallace",
+      "Stephon Castle"
+     ],
+     [
+      "SF",
+      "Jalen Williams",
+      "Devin Vassell"
+     ],
+     [
+      "PF",
+      "Chet Holmgren",
+      "Tobias Harris Q"
+     ],
+     [
+      "C",
+      "Isaiah Hartenstein",
+      "Victor Wembanyama"
+     ]
+    ]
+   }
+  ],
+  "status_words": [
+   "Projected"
+  ],
+  "text_mid": "Lineups - Basketball Monster Tools Player Rankings 25-26 Team Analysis Trade Analysis NBA Starting Lineups Box Scores Live Results Schedule Grid Hot Players Historical Rankings Members Projections 26-27 Draft Tracker Projected Standings Smart Tool Advanced Ownership Depth Charts Drafting Tiers Daily Projections Custom Daily Minutes Weekly Projections H2H Daily H2H Weekly Ease Rankings Schedule Analyzer Team Lineup Schedule Week Summary DvP - Defense vs Position Monster Monster Page Draft Monster Analysis Monster Trade Monster Matchup Monster Usage Monster News Content Player News Articles Draft Kit Articles Community Active Topics User Comments User Polls Chat Twitter Mail Settings League Settings Team Players League Schedule User Settings Authentication Alert Settings Watch List Custom Projections Custom Positions Custom Comments Custom Ranks Custom Auction Prices Import Bulk Projection"
+ },
+ "dff": {
+  "rows": [
+   [
+    "PLAYER",
+    "MATCHUP",
+    "PROJECTIONS",
+    "FANTASY POINTS TREND",
+    "VEGAS"
+   ],
+   [
+    "POS",
+    "NAME",
+    "SALARY",
+    "START",
+    "TEAM",
+    "OPP",
+    "DvP",
+    "DK FP PROJECTED",
+    "VALUE PROJECTED",
+    "OWN",
+    "L5 AVG",
+    "L10 AVG",
+    "SZN AVG",
+    "O/U",
+    "TM PTS"
+   ],
+   [
+    "Projections"
+   ],
+   [
+    "J. Butler O SF · $5700 FPTS 0.0 VALUE 0.0x",
+    "SF",
+    "Jimmy Butler O",
+    "$ 5.7k",
+    "",
+    "GSW",
+    "LAL",
+    "14",
+    "0.0",
+    "0.00",
+    "--",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "M. Moody O SG · $4200 FPTS 0.0 VALUE 0.0x",
+    "SG",
+    "Moses Moody O",
+    "$ 4.2k",
+    "",
+    "GSW",
+    "LAL",
+    "7",
+    "0.0",
+    "0.00",
+    "--",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "J. Furphy O SG/SF · $3000 FPTS 0.0 VALUE 0.0x",
+    "SG/SF",
+    "Johnny Furphy O",
+    "$ 3.0k",
+    "",
+    "IND",
+    "OKC",
+    "2",
+    "0.0",
+    "0.00",
+    "--",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "M. Raynaud O C · $6200 FPTS 0.0 VALUE 0.0x",
+    "C",
+    "Maxime Raynaud O",
+    "$ 6.2k",
+    "",
+    "SAC",
+    "POR",
+    "10",
+    "0.0",
+    "0.00",
+    "--",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ],
+   [
+    "S. Sharpe O SG · $5000 FPTS 0.0 VALUE 0.0x",
+    "SG",
+    "Shaedon Sharpe O",
+    "$ 5.0k",
+    "",
+    "POR",
+    "SAC",
+    "6",
+    "0.0",
+    "0.00",
+    "--",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ]
+  ],
+  "tr_attrs_sample": [
+   {
+    "class": [
+     "proj-groupings",
+     "hidden-xs"
+    ]
+   },
+   {
+    "class": [
+     "proj-labels",
+     "hidden-xs"
+    ]
+   },
+   {
+    "class": [
+     "hidden-sm",
+     "hidden-md",
+     "hidden-lg"
+    ]
+   },
+   {
+    "class": [
+     "hidden",
+     "projections-listing"
+    ],
+    "data-start_date": "2026-10-13",
+    "data-name": "Jimmy Butler",
+    "data-fn": "Jimmy",
+    "data-ln": "Butler",
+    "data-pos": "SF",
+    "data-pos_alt": "",
+    "data-spread": "",
+    "data-ou": "",
+    "data-rest": "",
+    "data-inj": "O",
+    "data-team": "GSW",
+    "data-opp": "LAL",
+    "data-loc": "@",
+    "data-proj_score": "",
+    "data-salary": "5700",
+    "data-opp_rank": "14",
+    "data-l5_avg": "",
+    "data-l10_avg": "",
+    "data-szn_avg": "",
+    "data-ppg_proj": "0.0",
+    "data-value_proj": "0.00",
+    "data-player_id": "6FFEA",
+    "data-depth_rank": "0"
+   }
+  ],
+  "slate_text": [],
+  "text_mid": "Projections | Daily Fantasy Fuel DAILY FANTASY FUEL LOG IN SIGN UP MY ACCOUNT CONTACT US LOGOUT NFL DFS LINEUP TOOLS DraftKings DFS Optimizer FanDuel DFS Optimizer DFS Player Projections PLAYER PROP TOOLS +EV Optimizer Player Prop Explorer Player Prop Trends Tool RESEARCH Matchups Team Standings Game Odds Injury News MLB DFS LINEUP TOOLS DraftKings DFS Optimizer FanDuel DFS Optimizer DFS Player Projections PLAYER PROP TOOLS +EV Optimizer Player Prop Explorer Player Prop Trends Tool RESEARCH Matchups Team Standings Game Odds Starting Lineups NBA DFS LINEUP TOOLS DraftKings DFS Optimizer FanDuel"
+ },
+ "darko": {
+  "header_and_rows": [
+   [
+    "",
+    "",
+    "",
+    "Impact",
+    "Role",
+    "Per 100",
+    "Shooting",
+    "Value"
+   ],
+   [
+    "# â",
+    "Player â",
+    "Team â",
+    "DPM â",
+    "Off â",
+    "Def â",
+    "Box â",
+    "On/Off â",
+    "MPG â",
+    "Pace â",
+    "Pts/100 â",
+    "Ast/100 â",
+    "FG% â",
+    "3P% â",
+    "FT% â",
+    "$ Value â",
+    "Salary â",
+    "Surplus â"
+   ],
+   [
+    "#",
+    "Player",
+    "Team",
+    "DPM",
+    "Off",
+    "Def",
+    "Box",
+    "On/Off",
+    "MPG",
+    "Pace",
+    "Pts/100",
+    "Ast/100",
+    "FG%",
+    "3P%",
+    "FT%",
+    "$ Value",
+    "Salary",
+    "Surplus"
+   ],
+   [
+    "",
+    "",
+    "",
+    "Impact",
+    "Role",
+    "Per 100",
+    "Shooting",
+    "Value"
+   ],
+   [
+    "# â",
+    "Player â",
+    "Team â",
+    "DPM â",
+    "Off â",
+    "Def â",
+    "Box â",
+    "On/Off â",
+    "MPG â",
+    "Pace â",
+    "Pts/100 â",
+    "Ast/100 â",
+    "FG% â",
+    "3P% â",
+    "FT% â",
+    "$ Value â",
+    "Salary â",
+    "Surplus â"
+   ]
+  ],
+  "n_rows": 55,
+  "links": [
+   "/",
+   "/about",
+   "/about/fair-salary",
+   "/assistant",
+   "/compare",
+   "/lab",
+   "/lineups",
+   "/longevity",
+   "/new",
+   "/player/1626157",
+   "/player/1626164",
+   "/player/1627750",
+   "/player/1627751",
+   "/player/1627759",
+   "/player/1627936",
+   "/player/1628368",
+   "/player/1628369",
+   "/player/1628378",
+   "/player/1628384",
+   "/player/1628386",
+   "/player/1628389",
+   "/player/1628392",
+   "/player/1628401",
+   "/player/1628973",
+   "/player/1628983",
+   "/player/1629011",
+   "/player/1629029",
+   "/player/1629057",
+   "/player/1629660",
+   "/player/1630162",
+   "/player/1630163",
+   "/player/1630168",
+   "/player/1630169",
+   "/player/1630178",
+   "/player/1630194",
+   "/player/1630567",
+   "/player/1630572",
+   "/player/1630577",
+   "/player/1630578",
+   "/player/1630591",
+   "/player/1630595",
+   "/player/1630596",
+   "/player/1631096",
+   "/player/1631105",
+   "/player/1631114",
+   "/player/1641705",
+   "/player/1641717",
+   "/player/1642264",
+   "/player/1642843",
+   "/player/1642844",
+   "/player/1642851",
+   "/player/1642867",
+   "/player/1642907",
+   "/player/201142",
+   "/player/201935",
+   "/player/201939",
+   "/player/202695",
+   "/player/202710",
+   "/player/203497",
+   "/player/203500"
+  ],
+  "mentions": {
+   "download": true,
+   "csv": true,
+   "api": false,
+   "terms": false,
+   "license": false,
+   "daily": true,
+   "minutes": false,
+   "projection": true
+  }
+ },
+ "rotowire_news": {
+  "n_items": 25,
+  "sample": [
+   " Desmond Bane Will play Tuesday G Orlando Magic October 13, 2026 Bane (rest) is available for Tuesday's preseason game against the Cavaliers. ANALYSIS Subscribe now to instantly reveal our take on this news. ",
+   " Nikola Vucevic Sitting out Tuesday C Orlando Magic Rest October 13, 2026 Vucevic (rest) is out for Tuesday's preseason game against the Cavaliers. ANALYSIS Subscribe now to instantly reveal our take on this news. ",
+   " Nate Bittle Still in walking boot C Toronto Raptors Foot October 13, 2026 Bittle (foot) is still in a walking boot, but he has a follow-up appointment Wednesday and could ditch the boot if all goes well, Blake Murphy of Sportsnet.ca reports. ANALYSIS Subscrib",
+   " Allen Graves Available Tuesday F Toronto Raptors October 13, 2026 Graves (groin) is available for Tuesday's preseason game against the Knicks, Michael Grange of Sportsnet.ca reports. ANALYSIS Subscribe now to instantly reveal our take on this news. ",
+   " Anthony Black Won't play Tuesday G Orlando Magic Ankle October 13, 2026 Black (ankle) has been ruled out for Tuesday's preseason game against Cleveland, Jason Beede of the Orlando Sentinel reports. ANALYSIS Subscribe now to instantly reveal our take on this n",
+   " Jonathan Isaac Won't play Tuesday F Orlando Magic Knee October 13, 2026 Isaac (knee) won't play in Tuesday's preseason game against Cleveland, Jason Beede of the Orlando Sentinel reports. ANALYSIS Subscribe now to instantly reveal our take on this news. "
+  ],
+  "time_strings": []
+ }
+}

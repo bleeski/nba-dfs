@@ -1,0 +1,86 @@
+
+=== Top-prize share of prize pool, from names containing '[$X to 1st]' (Classic=70, Showdown=81)
+70 | NBA $600K Opening Tip Off [$200K to 1st]                               | m= 35294 mec=150 fee=    20 pool=   600000 | 1st=  200000 = 33.3% of pool, 10000x fee
+70 | NBA $350K Power Dunk [$100K to 1st]                                    | m=   875 mec= 26 fee=   444 pool=   350000 | 1st=  100000 = 28.6% of pool, 225x fee
+81 | NBA Showdown $200K Fadeaway [$50K to 1st] (OKC @ SAS)                  | m= 13071 mec=150 fee=    18 pool=   200000 | 1st=   50000 = 25.0% of pool, 2778x fee
+70 | NBA $120K Fadeaway [$30K to 1st] (Night)                               | m=  7843 mec=150 fee=    18 pool=   120000 | 1st=   30000 = 25.0% of pool, 1667x fee
+70 | NBA $60K Zone [$10K to 1st]                                            | m= 14268 mec=150 fee=     5 pool=    60000 | 1st=   10000 = 16.7% of pool, 2000x fee
+81 | NBA Showdown $50K Fadeaway [$10K to 1st]  (BOS @ DET)                  | m=  3921 mec=117 fee=    15 pool=    50000 | 1st=   10000 = 20.0% of pool, 667x fee
+81 | NBA Showdown $40K Zone [$10K to 1st] (OKC @ SAS)                       | m=  9512 mec=150 fee=     5 pool=    40000 | 1st=   10000 = 25.0% of pool, 2000x fee
+81 | NBA Showdown $40K SLAM Jam [$10K to 1st] (OKC @ SAS)                   | m=   200 mec=  6 fee=   222 pool=    40000 | 1st=   10000 = 25.0% of pool, 45x fee
+81 | NBA Showdown $40K Fadeaway [$10K to 1st]  (PHI @ NYK)                  | m=  3137 mec= 94 fee=    15 pool=    40000 | 1st=   10000 = 25.0% of pool, 667x fee
+70 | NBA $36K Hall of Famer [$15K to 1st]                                   | m=    18 mec=  1 fee=  2120 pool=    36000 | 1st=   15000 = 41.7% of pool, 7x fee
+70 | NBA $33.4K SLAM Jam [$10K to 1st] (Night)                              | m=   167 mec=  5 fee=   222 pool=    33400 | 1st=   10000 = 29.9% of pool, 45x fee
+70 | NBA $26K Jab Step [$5K to 1st]                                         | m=  5098 mec=150 fee=     6 pool=    26000 | 1st=    5000 = 19.2% of pool, 833x fee
+70 | NBA $25K Finger Wag [$5K to 1st]                                       | m=   516 mec= 15 fee=    55 pool=    25000 | 1st=    5000 = 20.0% of pool, 91x fee
+70 | NBA $22K Zone [$5K to 1st] (Night)                                     | m=  5231 mec=150 fee=     5 pool=    22000 | 1st=    5000 = 22.7% of pool, 1000x fee
+81 | WNBA Showdown $20K Shootaround [$5K to 1st] (ATL @ GSV)                | m=  1176 mec= 35 fee=    20 pool=    20000 | 1st=    5000 = 25.0% of pool, 250x fee
+81 | NBA Showdown $10.9K Windmill [$3K to 1st] (BOS @ DET)                  | m=    67 mec=  2 fee=   180 pool=    10900 | 1st=    3000 = 27.5% of pool, 17x fee
+81 | WNBA Showdown $10K Zone [$2K to 1st] (ATL @ GSV)                       | m=  2378 mec= 71 fee=     5 pool=    10000 | 1st=    2000 = 20.0% of pool, 400x fee
+70 | NBA $267 Winner Take All [$1K to 1st] (Must Fill)                      | m=     4 mec=  1 fee=   267 pool=     1000 | 1st=    1000 = 100.0% of pool, 4x fee
+81 | NBA Showdown $267 Winner Take All [$1K to 1st] (Must Fill) (GSW @ LAL) | m=     4 mec=  1 fee=   267 pool=     1000 | 1st=    1000 = 100.0% of pool, 4x fee
+81 | WNBA Showdown $267 Winner Take All [$1K to 1st] (Must Fill) (ATL @ GSV | m=     4 mec=  1 fee=   267 pool=     1000 | 1st=    1000 = 100.0% of pool, 4x fee
+70 | NBA $267 Winner Take All [$1K to 1st] (Must Fill)                      | m=     4 mec=  1 fee=   267 pool=     1000 | 1st=    1000 = 100.0% of pool, 4x fee
+81 | NBA Showdown $267 Winner Take All [$1K to 1st] (Must Fill) (BOS @ DET) | m=     4 mec=  1 fee=   267 pool=     1000 | 1st=    1000 = 100.0% of pool, 4x fee
+81 | NBA Showdown $267 Winner Take All [$1K to 1st] (Must Fill) (OKC @ SAS) | m=     4 mec=  1 fee=   267 pool=     1000 | 1st=    1000 = 100.0% of pool, 4x fee
+81 | NBA Showdown $267 Winner Take All [$1K to 1st] (Must Fill) (PHI @ NYK) | m=     4 mec=  1 fee=   267 pool=     1000 | 1st=    1000 = 100.0% of pool, 4x fee
+70 | NBA $267 Winner Take All [$1K to 1st] (Must Fill) (Night)              | m=     4 mec=  1 fee=   267 pool=     1000 | 1st=    1000 = 100.0% of pool, 4x fee
+70 | NBA $267 Winner Take All [$1K to 1st]                                  | m=     4 mec=  1 fee=   267 pool=     1000 | 1st=    1000 = 100.0% of pool, 4x fee
+70 | NBA $267 Winner Take All [$1K to 1st]                                  | m=     4 mec=  1 fee=   267 pool=     1000 | 1st=    1000 = 100.0% of pool, 4x fee
+70 | NBA $50 Winner Take All [$500 to 1st]                                  | m=    11 mec=  1 fee=    50 pool=      500 | 1st=     500 = 100.0% of pool, 10x fee
+70 | NBA $50 Winner Take All [$500 to 1st]                                  | m=    11 mec=  1 fee=    50 pool=      500 | 1st=     500 = 100.0% of pool, 10x fee
+70 | NBA $100 Winner Take All [$460 to 1st] (Must Fill)                     | m=     5 mec=  1 fee=   100 pool=      460 | 1st=     460 = 100.0% of pool, 5x fee
+81 | NBA Showdown $100 Winner Take All [$460 to 1st] (Must Fill) (GSW @ LAL | m=     5 mec=  1 fee=   100 pool=      460 | 1st=     460 = 100.0% of pool, 5x fee
+81 | WNBA Showdown $100 Winner Take All [$460 to 1st] (Must Fill) (ATL @ GS | m=     5 mec=  1 fee=   100 pool=      460 | 1st=     460 = 100.0% of pool, 5x fee
+70 | NBA $100 Winner Take All [$460 to 1st] (Must Fill)                     | m=     5 mec=  1 fee=   100 pool=      460 | 1st=     460 = 100.0% of pool, 5x fee
+70 | NBA $85 Winner Take All [$300 to 1st] (Night)                          | m=     4 mec=  1 fee=    85 pool=      300 | 1st=     300 = 100.0% of pool, 4x fee
+81 | NBA Showdown $85 Winner Take All [$300 to 1st] (OKC @ SAS)             | m=     4 mec=  1 fee=    85 pool=      300 | 1st=     300 = 100.0% of pool, 4x fee
+81 | NBA Showdown $85 Winner Take All [$300 to 1st] (OKC @ SAS)             | m=     4 mec=  1 fee=    85 pool=      300 | 1st=     300 = 100.0% of pool, 4x fee
+81 | NBA Showdown $85 Winner Take All [$300 to 1st] (OKC @ SAS)             | m=     4 mec=  1 fee=    85 pool=      300 | 1st=     300 = 100.0% of pool, 4x fee
+81 | NBA Showdown $85 Winner Take All [$300 to 1st] (OKC @ SAS)             | m=     4 mec=  1 fee=    85 pool=      300 | 1st=     300 = 100.0% of pool, 4x fee
+81 | NBA Showdown $85 Winner Take All [$300 to 1st] (BOS @ DET)             | m=     4 mec=  1 fee=    85 pool=      300 | 1st=     300 = 100.0% of pool, 4x fee
+81 | NBA Showdown $85 Winner Take All [$300 to 1st] (BOS @ DET)             | m=     4 mec=  1 fee=    85 pool=      300 | 1st=     300 = 100.0% of pool, 4x fee
+81 | NBA Showdown $85 Winner Take All [$300 to 1st] (PHI @ NYK)             | m=     4 mec=  1 fee=    85 pool=      300 | 1st=     300 = 100.0% of pool, 4x fee
+81 | NBA Showdown $85 Winner Take All [$300 to 1st] (PHI @ NYK)             | m=     4 mec=  1 fee=    85 pool=      300 | 1st=     300 = 100.0% of pool, 4x fee
+81 | WNBA Showdown $50 Winner Take All [$220 to 1st] (ATL @ GSV)            | m=     5 mec=  1 fee=    50 pool=      220 | 1st=     220 = 100.0% of pool, 4x fee
+81 | WNBA Showdown $50 Winner Take All [$220 to 1st] (ATL @ GSV)            | m=     5 mec=  1 fee=    50 pool=      220 | 1st=     220 = 100.0% of pool, 4x fee
+70 | NBA $20 Winner Take All [$175 to 1st]                                  | m=    10 mec=  1 fee=    20 pool=      175 | 1st=     175 = 100.0% of pool, 9x fee
+70 | NBA $20 Winner Take All [$175 to 1st]                                  | m=    10 mec=  1 fee=    20 pool=      175 | 1st=     175 = 100.0% of pool, 9x fee
+70 | NBA $2 Winner Take All [$120 to 1st]                                   | m=    71 mec=  2 fee=     2 pool=      120 | 1st=     120 = 100.0% of pool, 60x fee
+70 | NBA $2 Winner Take All [$120 to 1st]                                   | m=    71 mec=  2 fee=     2 pool=      120 | 1st=     120 = 100.0% of pool, 60x fee
+81 | NBA Showdown $25 Winner Take All [$110 to 1st] (OKC @ SAS)             | m=     5 mec=  1 fee=    25 pool=      110 | 1st=     110 = 100.0% of pool, 4x fee
+81 | NBA Showdown $25 Winner Take All [$110 to 1st] (OKC @ SAS)             | m=     5 mec=  1 fee=    25 pool=      110 | 1st=     110 = 100.0% of pool, 4x fee
+81 | NBA Showdown $25 Winner Take All [$110 to 1st] (OKC @ SAS)             | m=     5 mec=  1 fee=    25 pool=      110 | 1st=     110 = 100.0% of pool, 4x fee
+81 | NBA Showdown $25 Winner Take All [$110 to 1st] (PHI @ NYK)             | m=     5 mec=  1 fee=    25 pool=      110 | 1st=     110 = 100.0% of pool, 4x fee
+81 | NBA Showdown $25 Winner Take All [$110 to 1st] (PHI @ NYK)             | m=     5 mec=  1 fee=    25 pool=      110 | 1st=     110 = 100.0% of pool, 4x fee
+81 | NBA Showdown $25 Winner Take All [$110 to 1st] (PHI @ NYK)             | m=     5 mec=  1 fee=    25 pool=      110 | 1st=     110 = 100.0% of pool, 4x fee
+70 | NBA $25 Winner Take All [$110 to 1st] (Night)                          | m=     5 mec=  1 fee=    25 pool=      110 | 1st=     110 = 100.0% of pool, 4x fee
+81 | NBA Showdown $25 Winner Take All [$110 to 1st] (BOS @ DET)             | m=     5 mec=  1 fee=    25 pool=      110 | 1st=     110 = 100.0% of pool, 4x fee
+81 | NBA Showdown $25 Winner Take All [$110 to 1st] (BOS @ DET)             | m=     5 mec=  1 fee=    25 pool=      110 | 1st=     110 = 100.0% of pool, 4x fee
+81 | NBA Showdown $25 Winner Take All [$110 to 1st] (BOS @ DET)             | m=     5 mec=  1 fee=    25 pool=      110 | 1st=     110 = 100.0% of pool, 4x fee
+81 | WNBA Showdown $38 Winner Take All [$100 to 1st] (ATL @ GSV)            | m=     3 mec=  1 fee=    38 pool=      100 | 1st=     100 = 100.0% of pool, 3x fee
+81 | WNBA Showdown $38 Winner Take All [$100 to 1st] (ATL @ GSV)            | m=     3 mec=  1 fee=    38 pool=      100 | 1st=     100 = 100.0% of pool, 3x fee
+70 | NBA $5 Winner Take All [$100 to 1st]                                   | m=    23 mec=  1 fee=     5 pool=      100 | 1st=     100 = 100.0% of pool, 20x fee
+70 | NBA $5 Winner Take All [$100 to 1st]                                   | m=    23 mec=  1 fee=     5 pool=      100 | 1st=     100 = 100.0% of pool, 20x fee
+70 | NBA $5 Winner Take All [$100 to 1st]                                   | m=    23 mec=  1 fee=     5 pool=      100 | 1st=     100 = 100.0% of pool, 20x fee
+70 | NBA $3 Winner Take All [$100 to 1st]                                   | m=    39 mec=  1 fee=     3 pool=      100 | 1st=     100 = 100.0% of pool, 33x fee
+70 | NBA $3 Winner Take All [$100 to 1st]                                   | m=    39 mec=  1 fee=     3 pool=      100 | 1st=     100 = 100.0% of pool, 33x fee
+70 | NBA $1 Winner Take All [$100 to 1st]                                   | m=   118 mec=  3 fee=     1 pool=      100 | 1st=     100 = 100.0% of pool, 100x fee
+70 | NBA $1 Winner Take All [$100 to 1st]                                   | m=   118 mec=  3 fee=     1 pool=      100 | 1st=     100 = 100.0% of pool, 100x fee
+70 | NBA $1 Winner Take All [$100 to 1st]                                   | m=   118 mec=  3 fee=     1 pool=      100 | 1st=     100 = 100.0% of pool, 100x fee
+70 | NBA $1 Winner Take All [$100 to 1st]                                   | m=   118 mec=  3 fee=     1 pool=      100 | 1st=     100 = 100.0% of pool, 100x fee
+70 | NBA $1 Winner Take All [$100 to 1st]                                   | m=   118 mec=  3 fee=     1 pool=      100 | 1st=     100 = 100.0% of pool, 100x fee
+70 | NBA $5 Winner Take All [$100 to 1st] (Night)                           | m=    23 mec=  1 fee=     5 pool=      100 | 1st=     100 = 100.0% of pool, 20x fee
+70 | NBA $1 Winner Take All [$100 to 1st] (Night)                           | m=   118 mec=  3 fee=     1 pool=      100 | 1st=     100 = 100.0% of pool, 100x fee
+81 | NBA Showdown $5 Winner Take All [$100 to 1st] (OKC @ SAS)              | m=    23 mec=  1 fee=     5 pool=      100 | 1st=     100 = 100.0% of pool, 20x fee
+81 | NBA Showdown $1 Winner Take All [$100 to 1st] (OKC @ SAS)              | m=   118 mec=  3 fee=     1 pool=      100 | 1st=     100 = 100.0% of pool, 100x fee
+81 | NBA Showdown $1 Winner Take All [$100 to 1st] (OKC @ SAS)              | m=   118 mec=  3 fee=     1 pool=      100 | 1st=     100 = 100.0% of pool, 100x fee
+81 | NBA Showdown $1 Winner Take All [$100 to 1st] (OKC @ SAS)              | m=   118 mec=  3 fee=     1 pool=      100 | 1st=     100 = 100.0% of pool, 100x fee
+70 | NBA $0.25 Winner Take All [$50 to 1st]                                 | m=   237 mec=  7 fee=  0.25 pool=       50 | 1st=      50 = 100.0% of pool, 200x fee
+70 | NBA $0.25 Winner Take All [$50 to 1st]                                 | m=   237 mec=  7 fee=  0.25 pool=       50 | 1st=      50 = 100.0% of pool, 200x fee
+70 | NBA $0.25 Winner Take All [$50 to 1st]                                 | m=   237 mec=  7 fee=  0.25 pool=       50 | 1st=      50 = 100.0% of pool, 200x fee
+70 | NBA $0.25 Winner Take All [$50 to 1st]                                 | m=   237 mec=  7 fee=  0.25 pool=       50 | 1st=      50 = 100.0% of pool, 200x fee
+70 | NBA $0.25 Winner Take All [$50 to 1st]                                 | m=   237 mec=  7 fee=  0.25 pool=       50 | 1st=      50 = 100.0% of pool, 200x fee
+81 | NBA Showdown $0.25 Winner Take All [$50 to 1st] (OKC @ SAS)            | m=   237 mec=  7 fee=  0.25 pool=       50 | 1st=      50 = 100.0% of pool, 200x fee
+81 | NBA Showdown $0.25 Winner Take All [$50 to 1st] (OKC @ SAS)            | m=   237 mec=  7 fee=  0.25 pool=       50 | 1st=      50 = 100.0% of pool, 200x fee
+81 | NBA Showdown $0.25 Winner Take All [$50 to 1st] (OKC @ SAS)            | m=   237 mec=  7 fee=  0.25 pool=       50 | 1st=      50 = 100.0% of pool, 200x fee

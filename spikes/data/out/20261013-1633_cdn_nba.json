@@ -1,0 +1,50 @@
+{
+ "run_started_local": "2026-10-13T16:33:00.369815",
+ "calls": [
+  {
+   "name": "scheduleLeagueV2",
+   "url": "https://cdn.nba.com/static/json/staticData/scheduleLeagueV2.json",
+   "status": 403,
+   "latency_s": 0.34,
+   "bytes": 425,
+   "last_modified": null,
+   "cache_control": null,
+   "age": null,
+   "date": "Tue, 13 Oct 2026 21:33:00 GMT"
+  },
+  {
+   "name": "todaysScoreboard_00",
+   "url": "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json",
+   "status": 403,
+   "latency_s": 0.42,
+   "bytes": 445,
+   "last_modified": null,
+   "cache_control": null,
+   "age": null,
+   "date": "Tue, 13 Oct 2026 21:33:02 GMT"
+  },
+  {
+   "name": "odds_todaysGames",
+   "url": "https://cdn.nba.com/static/json/liveData/odds/odds_todaysGames.json",
+   "status": 403,
+   "latency_s": 0.32,
+   "bytes": 436,
+   "last_modified": null,
+   "cache_control": null,
+   "age": null,
+   "date": "Tue, 13 Oct 2026 21:33:04 GMT"
+  },
+  {
+   "name": "boxscore_0022501230 (2025-26 last regular)",
+   "url": "https://cdn.nba.com/static/json/liveData/boxscore/boxscore_0022501230.json",
+   "status": 403,
+   "latency_s": 0.36,
+   "bytes": 443,
+   "last_modified": null,
+   "cache_control": null,
+   "age": null,
+   "date": "Tue, 13 Oct 2026 21:33:05 GMT"
+  }
+ ],
+ "run_finished_local": "2026-10-13T16:33:06.615912"
+}

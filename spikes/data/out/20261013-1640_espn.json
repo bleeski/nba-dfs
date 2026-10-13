@@ -1,0 +1,1257 @@
+{
+ "run_started_local": "2026-10-13T16:40:29.721481",
+ "calls": [
+  {
+   "name": "scoreboard today",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+   "params": {
+    "dates": "20261013"
+   },
+   "status": 200,
+   "latency_s": 0.42,
+   "bytes": 63897,
+   "cache_control": "max-age=6",
+   "age": null,
+   "season": {
+    "year": 2027,
+    "startDate": "2026-09-30T07:00Z",
+    "endDate": "2027-06-26T06:59Z",
+    "displayName": "2026-27",
+    "type": {
+     "id": "1",
+     "type": 1,
+     "name": "Preseason",
+     "abbreviation": "pre"
+    }
+   },
+   "n_events": 5,
+   "event0": {
+    "id": "401898403",
+    "name": "Cleveland Cavaliers at Orlando Magic",
+    "date": "2026-10-13T23:00Z",
+    "seasonType": 1
+   },
+   "event0_odds": [
+    {
+     "provider": {
+      "id": "100",
+      "name": "DraftKings",
+      "priority": 1,
+      "logos": [
+       {
+        "href": "https://a.espncdn.com/i/betting/Draftkings_Light.svg",
+        "rel": [
+         "light"
+        ]
+       },
+       {
+        "href": "https://a.espncdn.com/i/betting/Draftkings_Dark.svg",
+        "rel": [
+         "dark"
+        ]
+       }
+      ],
+      "displayName": "DraftKings"
+     },
+     "details": "CLE -1.5",
+     "overUnder": 228.5,
+     "spread": 1.5,
+     "awayTeamOdds": {
+      "favorite": true,
+      "underdog": false,
+      "team": {
+       "id": "5",
+       "uid": "s:40~l:46~t:5",
+       "abbreviation": "CLE",
+       "name": "Cavaliers",
+       "displayName": "Cleveland Cavaliers",
+       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/cle.png"
+      },
+      "favoriteAtOpen": true
+     },
+     "homeTeamOdds": {
+      "favorite": false,
+      "underdog": true,
+      "team": {
+       "id": "19",
+       "uid": "s:40~l:46~t:19",
+       "abbreviation": "ORL",
+       "name": "Magic",
+       "displayName": "Orlando Magic",
+       "logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/orl.png"
+      },
+      "favoriteAtOpen": false
+     },
+     "moneyline": {
+      "displayName": "Moneyline",
+      "shortDisplayName": "ML",
+      "home": {
+       "close": {
+        "odds": "+102",
+        "link": {
+         "language": "en-US",
+         "rel": [
+          "home",
+          "desktop",
+          "bets",
+          "draftkings"
+         ],
+         "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0ML86703512_1",
+         "text": "Home Bet",
+         "shortText": "Home Bet",
+         "isExternal": true,
+         "isPremium": false,
+         "tracking": {
+          "campaign": "betting-integrations",
+          "tags": {
+           "league": "nba",
+           "sport": "basketball",
+           "gameId": 401898403,
+           "betSide": "home",
+           "betType": "straight"
+          }
+         }
+        }
+       },
+       "open": {
+        "odds": "-110"
+       }
+      },
+      "away": {
+       "close": {
+        "odds": "-122",
+        "link": {
+         "language": "en-US",
+         "rel": [
+          "away",
+          "desktop",
+          "bets",
+          "draftkings"
+         ],
+         "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0ML86703512_3",
+         "text": "Away Bet",
+         "shortText": "Away Bet",
+         "isExternal": true,
+         "isPremium": false,
+         "tracking": {
+          "campaign": "betting-integrations",
+          "tags": {
+           "league": "nba",
+           "sport": "basketball",
+           "gameId": 401898403,
+           "betSide": "away",
+           "betType": "straight"
+          }
+         }
+        }
+       },
+       "open": {
+        "odds": "-110"
+       }
+      }
+     },
+     "pointSpread": {
+      "displayName": "Spread",
+      "shortDisplayName": "Spread",
+      "home": {
+       "close": {
+        "line": "+1.5",
+        "odds": "-110",
+        "link": {
+         "language": "en-US",
+         "rel": [
+          "homeSpread",
+          "desktop",
+          "bets"
+         ],
+         "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0HC86703512P150_1",
+         "text": "Home Point Spread",
+         "shortText": "Home Point Spread",
+         "isExternal": true,
+         "isPremium": false,
+         "tracking": {
+          "campaign": "betting-integrations",
+          "tags": {
+           "league": "nba",
+           "sport": "basketball",
+           "gameId": 401898403,
+           "betSide": "none",
+           "betType": "straight",
+           "betDetails": "Spread:ORL+1.5"
+          }
+         }
+        }
+       },
+       "open": {
+        "line": "+1.5",
+        "odds": "-122"
+       }
+      },
+      "away": {
+       "close": {
+        "line": "-1.5",
+        "odds": "-110",
+        "link": {
+         "language": "en-US",
+         "rel": [
+          "awaySpread",
+          "desktop",
+          "bets"
+         ],
+         "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0HC86703512N150_3",
+         "text": "Away Point Spread",
+         "shortText": "Away Point Spread",
+         "isExternal": true,
+         "isPremium": false,
+         "tracking": {
+          "campaign": "betting-integrations",
+          "tags": {
+           "league": "nba",
+           "sport": "basketball",
+           "gameId": 401898403,
+           "betSide": "none",
+           "betType": "straight",
+           "betDetails": "Spread:CLE-1.5"
+          }
+         }
+        }
+       },
+       "open": {
+        "line": "-1.5",
+        "odds": "+102"
+       }
+      }
+     },
+     "total": {
+      "displayName": "Total",
+      "shortDisplayName": "Total",
+      "over": {
+       "close": {
+        "line": "o228.5",
+        "odds": "-110",
+        "link": {
+         "language": "en-US",
+         "rel": [
+          "over",
+          "desktop",
+          "bets"
+         ],
+         "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0OU86703512O22850_1",
+         "text": "Over Odds",
+         "shortText": "Over Odds",
+         "isExternal": true,
+         "isPremium": false,
+         "tracking": {
+          "campaign": "betting-integrations",
+          "tags": {
+           "league": "nba",
+           "sport": "basketball",
+           "gameId": 401898403,
+           "betSide": "over",
+           "betType": "straight",
+           "betDetails": "Over:228.5"
+          }
+         }
+        }
+       },
+       "open": {
+        "line": "o230.5",
+        "odds": "-110"
+       }
+      },
+      "under": {
+       "close": {
+        "line": "u228.5",
+        "odds": "-110",
+        "link": {
+         "language": "en-US",
+         "rel": [
+          "under",
+          "desktop",
+          "bets"
+         ],
+         "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0OU86703512U22850_3",
+         "text": "Under Odds",
+         "shortText": "Under Odds",
+         "isExternal": true,
+         "isPremium": false,
+         "tracking": {
+          "campaign": "betting-integrations",
+          "tags": {
+           "league": "nba",
+           "sport": "basketball",
+           "gameId": 401898403,
+           "betSide": "under",
+           "betType": "straight",
+           "betDetails": "Under:228.5"
+          }
+         }
+        }
+       },
+       "open": {
+        "line": "u230.5",
+        "odds": "-110"
+       }
+      }
+     },
+     "link": {
+      "language": "en-US",
+      "rel": [
+       "game",
+       "desktop",
+       "bets"
+      ],
+      "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234",
+      "text": "See More Odds",
+      "shortText": "Game",
+      "isExternal": true,
+      "isPremium": false,
+      "tracking": {
+       "campaign": "betting-integrations",
+       "tags": {
+        "league": "nba",
+        "sport": "basketball",
+        "gameId": 401898403,
+        "betSide": "none",
+        "betType": "straight"
+       }
+      }
+     },
+     "header": {
+      "logo": {
+       "dark": "https://a.espncdn.com/i/espnbet/dark/espn-bet-square-off.svg",
+       "light": "https://a.espncdn.com/i/espnbet/espn-bet-square-off.svg",
+       "exclusivesLogoDark": "https://a.espncdn.com/i/espnbet/espn-bet-square-mint.svg",
+       "exclusivesLogoLight": "https://a.espncdn.com/i/espnbet/espn-bet-square-mint.svg"
+      },
+      "text": "Game Odds"
+     },
+     "footer": {
+      "disclaimer": "GAMBLING PROBLEM? CALL 1-800-GAMBLER or 1-800-MY-RESET, (800) 327-5050 or visit gamblinghelplinema.org (MA). Call 877-8-HOPENY/text HOPENY (467369) (NY). Call 888-789-7777/visit ccpg.org (CT), or visit www.mdgamblinghelp.org (MD), 1-800-981-0023 (PR). 21+ and present in most states. (18+ DC/KY/NH/PR/WY). Void in ONT. Eligibility restrictions apply. Terms: draftkings.com/sportsbook. On behalf of Boot Hill Casino (KS). Pass-thru of per wager tax may apply in IL."
+     }
+    }
+   ],
+   "competitor_keys": [
+    "id",
+    "uid",
+    "type",
+    "order",
+    "homeAway",
+    "team",
+    "score",
+    "statistics",
+    "records"
+   ],
+   "n_events_with_odds": 5
+  },
+  {
+   "name": "injuries",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
+   "params": null,
+   "status": 200,
+   "latency_s": 0.15,
+   "bytes": 1514628,
+   "cache_control": "max-age=3",
+   "age": null,
+   "n_teams": 30,
+   "n_injuries": 135,
+   "sample": {
+    "team": "Atlanta Hawks",
+    "status": "Day-To-Day",
+    "date": "2026-10-12T21:36Z",
+    "shortComment": "Gilbert (knee) won't play in Monday's preseason game against the Thunder, per Brad Rowland of the Locked On Podcast Network.",
+    "longComment": "Gilbert continues to deal with patella tendinitis. His last chance to appear this preseason is Friday against the Mavericks.",
+    "type": {
+     "id": "6",
+     "name": "INJURY_STATUS_DAYTODAY",
+     "description": "day-to-day",
+     "abbreviation": "DD"
+    },
+    "details": {
+     "fantasyStatus": {
+      "description": "GTD",
+      "abbreviation": "GTD"
+     },
+     "type": "Knee",
+     "location": "Leg",
+     "detail": "Tendinitis",
+     "side": "Left",
+     "returnDate": "2026-10-16"
+    },
+    "athlete": "Keshon Gilbert"
+   },
+   "status_values": [
+    "Day-To-Day",
+    "Out"
+   ],
+   "latest_dates": [
+    "2026-10-13T20:57Z",
+    "2026-10-13T21:27Z",
+    "2026-10-13T21:28Z"
+   ]
+  },
+  {
+   "name": "roster BOS",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/2/roster",
+   "params": null,
+   "status": 200,
+   "latency_s": 0.07,
+   "bytes": 102164,
+   "cache_control": "max-age=1",
+   "age": null,
+   "n_athletes": 21,
+   "athlete_keys": [
+    "id",
+    "uid",
+    "guid",
+    "alternateIds",
+    "firstName",
+    "lastName",
+    "fullName",
+    "displayName",
+    "shortName",
+    "weight",
+    "displayWeight",
+    "height",
+    "displayHeight",
+    "age",
+    "dateOfBirth",
+    "links",
+    "birthPlace",
+    "college",
+    "slug",
+    "headshot",
+    "jersey",
+    "position",
+    "injuries",
+    "contracts",
+    "experience",
+    "contract",
+    "status"
+   ],
+   "sample": {
+    "id": "4433188",
+    "displayName": "Devin Carter",
+    "position": {
+     "id": "3",
+     "name": "Guard",
+     "displayName": "Guard",
+     "abbreviation": "G",
+     "leaf": false
+    },
+    "status": {
+     "id": "1",
+     "name": "Active",
+     "type": "active",
+     "abbreviation": "Active"
+    },
+    "injuries": [
+     {
+      "status": "Day-To-Day",
+      "date": "2026-10-10T23:58Z"
+     }
+    ]
+   }
+  },
+  {
+   "name": "depthchart BOS (core)",
+   "url": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/teams/2/depthcharts",
+   "params": null,
+   "status": 200,
+   "latency_s": 0.59,
+   "bytes": 6049,
+   "cache_control": "max-age=66, stale-while-revalidate=7200",
+   "age": null,
+   "count": 1,
+   "positions": [
+    "pg",
+    "sg",
+    "sf",
+    "pf",
+    "c"
+   ],
+   "sample_pos": {
+    "pg": [
+     [
+      1,
+      "/2027/athletes/3078576?lang=en&region=us"
+     ],
+     [
+      2,
+      "/2027/athletes/4066354?lang=en&region=us"
+     ],
+     [
+      3,
+      "ons/2027/athletes/3195?lang=en&region=us"
+     ]
+    ]
+   }
+  },
+  {
+   "name": "news",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
+   "params": {
+    "limit": 10
+   },
+   "status": 200,
+   "latency_s": 0.09,
+   "bytes": 80862,
+   "cache_control": "max-age=1",
+   "age": null,
+   "n": 10,
+   "sample": [
+    [
+     "2026-10-13T21:22:39Z",
+     "Story",
+     "2026 NBA free agency: Grades for offseason signings, extensions"
+    ],
+    [
+     "2026-10-13T20:35:01Z",
+     "Media",
+     "Celtics, Payton Pritchard agree to two-year extension"
+    ],
+    [
+     "2026-10-13T20:42:33Z",
+     "HeadlineNews",
+     "Celtics to extend guard Payton Pritchard on 2-year, $44.2M deal"
+    ],
+    [
+     "2026-10-13T19:51:07Z",
+     "Story",
+     "Which NBA deals will get done? Bobby Marks' biggest extension decisions to watch"
+    ],
+    [
+     "2026-10-13T20:24:57Z",
+     "Story",
+     "NBA preseason buzz: Latest on trades, news and intel"
+    ],
+    [
+     "2026-10-13T19:34:34Z",
+     "Story",
+     "Fantasy basketball: The rookies you should be targeting in drafts"
+    ]
+   ]
+  },
+  {
+   "name": "summary today event0",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary",
+   "params": {
+    "event": "401898403"
+   },
+   "status": 200,
+   "latency_s": 0.06,
+   "bytes": 138581,
+   "cache_control": "max-age=8",
+   "age": null,
+   "keys": [
+    "boxscore",
+    "format",
+    "gameInfo",
+    "lastFiveGames",
+    "leaders",
+    "seasonseries",
+    "injuries",
+    "broadcasts",
+    "pickcenter",
+    "odds",
+    "againstTheSpread",
+    "winprobability",
+    "news",
+    "header",
+    "videos",
+    "wallclockAvailable",
+    "ticketsInfo",
+    "meta",
+    "standings"
+   ],
+   "pickcenter": [
+    {
+     "provider": {
+      "id": "100",
+      "name": "DraftKings",
+      "priority": 1,
+      "logos": [
+       {
+        "href": "https://a.espncdn.com/i/betting/Draftkings_Light.svg",
+        "rel": [
+         "light"
+        ]
+       },
+       {
+        "href": "https://a.espncdn.com/i/betting/Draftkings_Dark.svg",
+        "rel": [
+         "dark"
+        ]
+       }
+      ]
+     },
+     "details": "CLE -1.5",
+     "overUnder": 228.5,
+     "spread": 1.5,
+     "overOdds": -110.0,
+     "underOdds": -110.0,
+     "awayTeamOdds": {
+      "favorite": true,
+      "underdog": false,
+      "moneyLine": -122,
+      "spreadOdds": -110.0,
+      "team": {
+       "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/5?lang=en&region=us"
+      },
+      "teamId": "5",
+      "favoriteAtOpen": true
+     },
+     "homeTeamOdds": {
+      "favorite": false,
+      "underdog": true,
+      "moneyLine": 102,
+      "spreadOdds": -110.0,
+      "team": {
+       "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/19?lang=en&region=us"
+      },
+      "teamId": "19",
+      "favoriteAtOpen": false
+     },
+     "links": [
+      {
+       "language": "en-US",
+       "rel": [
+        "home",
+        "desktop",
+        "bets",
+        "draftkings"
+       ],
+       "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0ML86703512_1",
+       "text": "Home Bet",
+       "shortText": "Home Bet",
+       "isExternal": true,
+       "isPremium": false,
+       "tracking": {
+        "campaign": "betting-integrations",
+        "tags": {
+         "league": "nba",
+         "sport": "basketball",
+         "gameId": 401898403,
+         "betSide": "home",
+         "betType": "straight"
+        }
+       }
+      },
+      {
+       "language": "en-US",
+       "rel": [
+        "away",
+        "desktop",
+        "bets",
+        "draftkings"
+       ],
+       "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0ML86703512_3",
+       "text": "Away Bet",
+       "shortText": "Away Bet",
+       "isExternal": true,
+       "isPremium": false,
+       "tracking": {
+        "campaign": "betting-integrations",
+        "tags": {
+         "league": "nba",
+         "sport": "basketball",
+         "gameId": 401898403,
+         "betSide": "away",
+         "betType": "straight"
+        }
+       }
+      },
+      {
+       "language": "en-US",
+       "rel": [
+        "homeSpread",
+        "desktop",
+        "bets"
+       ],
+       "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0HC86703512P150_1",
+       "text": "Home Point Spread",
+       "shortText": "Home Point Spread",
+       "isExternal": true,
+       "isPremium": false,
+       "tracking": {
+        "campaign": "betting-integrations",
+        "tags": {
+         "league": "nba",
+         "sport": "basketball",
+         "gameId": 401898403,
+         "betSide": "none",
+         "betType": "straight",
+         "betDetails": "Spread:ORL+1.5"
+        }
+       }
+      },
+      {
+       "language": "en-US",
+       "rel": [
+        "awaySpread",
+        "desktop",
+        "bets"
+       ],
+       "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0HC86703512N150_3",
+       "text": "Away Point Spread",
+       "shortText": "Away Point Spread",
+       "isExternal": true,
+       "isPremium": false,
+       "tracking": {
+        "campaign": "betting-integrations",
+        "tags": {
+         "league": "nba",
+         "sport": "basketball",
+         "gameId": 401898403,
+         "betSide": "none",
+         "betType": "straight",
+         "betDetails": "Spread:CLE-1.5"
+        }
+       }
+      },
+      {
+       "language": "en-US",
+       "rel": [
+        "over",
+        "desktop",
+        "bets"
+       ],
+       "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0OU86703512O22850_1",
+       "text": "Over Odds",
+       "shortText": "Over Odds",
+       "isExternal": true,
+       "isPremium": false,
+       "tracking": {
+        "campaign": "betting-integrations",
+        "tags": {
+         "league": "nba",
+         "sport": "basketball",
+         "gameId": 401898403,
+         "betSide": "over",
+         "betType": "straight",
+         "betDetails": "Over:228.5"
+        }
+       }
+      },
+      {
+       "language": "en-US",
+       "rel": [
+        "under",
+        "desktop",
+        "bets"
+       ],
+       "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0OU86703512U22850_3",
+       "text": "Under Odds",
+       "shortText": "Under Odds",
+       "isExternal": true,
+       "isPremium": false,
+       "tracking": {
+        "campaign": "betting-integrations",
+        "tags": {
+         "league": "nba",
+         "sport": "basketball",
+         "gameId": 401898403,
+         "betSide": "under",
+         "betType": "straight",
+         "betDetails": "Under:228.5"
+        }
+       }
+      },
+      {
+       "language": "en-US",
+       "rel": [
+        "game",
+        "desktop",
+        "bets"
+       ],
+       "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234",
+       "text": "Game",
+       "shortText": "Game",
+       "isExternal": true,
+       "isPremium": false
+      }
+     ],
+     "moneyline": {
+      "displayName": "Moneyline",
+      "shortDisplayName": "ML",
+      "home": {
+       "close": {
+        "odds": "+102",
+        "link": {
+         "language": "en-US",
+         "rel": [
+          "home",
+          "desktop",
+          "bets",
+          "draftkings"
+         ],
+         "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0ML86703512_1",
+         "text": "Home Bet",
+         "shortText": "Home Bet",
+         "isExternal": true,
+         "isPremium": false,
+         "tracking": {
+          "campaign": "betting-integrations",
+          "tags": {
+           "league": "nba",
+           "sport": "basketball",
+           "gameId": 401898403,
+           "betSide": "home",
+           "betType": "straight"
+          }
+         }
+        }
+       },
+       "open": {
+        "odds": "-110"
+       }
+      },
+      "away": {
+       "close": {
+        "odds": "-122",
+        "link": {
+         "language": "en-US",
+         "rel": [
+          "away",
+          "desktop",
+          "bets",
+          "draftkings"
+         ],
+         "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0ML86703512_3",
+         "text": "Away Bet",
+         "shortText": "Away Bet",
+         "isExternal": true,
+         "isPremium": false,
+         "tracking": {
+          "campaign": "betting-integrations",
+          "tags": {
+           "league": "nba",
+           "sport": "basketball",
+           "gameId": 401898403,
+           "betSide": "away",
+           "betType": "straight"
+          }
+         }
+        }
+       },
+       "open": {
+        "odds": "-110"
+       }
+      }
+     },
+     "pointSpread": {
+      "displayName": "Spread",
+      "shortDisplayName": "Spread",
+      "home": {
+       "close": {
+        "line": "+1.5",
+        "odds": "-110",
+        "link": {
+         "language": "en-US",
+         "rel": [
+          "homeSpread",
+          "desktop",
+          "bets"
+         ],
+         "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0HC86703512P150_1",
+         "text": "Home Point Spread",
+         "shortText": "Home Point Spread",
+         "isExternal": true,
+         "isPremium": false,
+         "tracking": {
+          "campaign": "betting-integrations",
+          "tags": {
+           "league": "nba",
+           "sport": "basketball",
+           "gameId": 401898403,
+           "betSide": "none",
+           "betType": "straight",
+           "betDetails": "Spread:ORL+1.5"
+          }
+         }
+        }
+       },
+       "open": {
+        "line": "+1.5",
+        "odds": "-122"
+       }
+      },
+      "away": {
+       "close": {
+        "line": "-1.5",
+        "odds": "-110",
+        "link": {
+         "language": "en-US",
+         "rel": [
+          "awaySpread",
+          "desktop",
+          "bets"
+         ],
+         "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0HC86703512N150_3",
+         "text": "Away Point Spread",
+         "shortText": "Away Point Spread",
+         "isExternal": true,
+         "isPremium": false,
+         "tracking": {
+          "campaign": "betting-integrations",
+          "tags": {
+           "league": "nba",
+           "sport": "basketball",
+           "gameId": 401898403,
+           "betSide": "none",
+           "betType": "straight",
+           "betDetails": "Spread:CLE-1.5"
+          }
+         }
+        }
+       },
+       "open": {
+        "line": "-1.5",
+        "odds": "+102"
+       }
+      }
+     },
+     "total": {
+      "displayName": "Total",
+      "shortDisplayName": "Total",
+      "over": {
+       "close": {
+        "line": "o228.5",
+        "odds": "-110",
+        "link": {
+         "language": "en-US",
+         "rel": [
+          "over",
+          "desktop",
+          "bets"
+         ],
+         "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0OU86703512O22850_1",
+         "text": "Over Odds",
+         "shortText": "Over Odds",
+         "isExternal": true,
+         "isPremium": false,
+         "tracking": {
+          "campaign": "betting-integrations",
+          "tags": {
+           "league": "nba",
+           "sport": "basketball",
+           "gameId": 401898403,
+           "betSide": "over",
+           "betType": "straight",
+           "betDetails": "Over:228.5"
+          }
+         }
+        }
+       },
+       "open": {
+        "line": "o230.5",
+        "odds": "-110"
+       }
+      },
+      "under": {
+       "close": {
+        "line": "u228.5",
+        "odds": "-110",
+        "link": {
+         "language": "en-US",
+         "rel": [
+          "under",
+          "desktop",
+          "bets"
+         ],
+         "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34816234%3Foutcomes%3D0OU86703512U22850_3",
+         "text": "Under Odds",
+         "shortText": "Under Odds",
+         "isExternal": true,
+         "isPremium": false,
+         "tracking": {
+          "campaign": "betting-integrations",
+          "tags": {
+           "league": "nba",
+           "sport": "basketball",
+           "gameId": 401898403,
+           "betSide": "under",
+           "betType": "straight",
+           "betDetails": "Under:228.5"
+          }
+         }
+        }
+       },
+       "open": {
+        "line": "u230.5",
+        "odds": "-110"
+       }
+      }
+     },
+     "link": {
+      "language": "en-US",
+      "rel": [
+       "odds",
+       "desktop",
+       "event"
+      ],
+      "href": "https://www.espn.com/nba/odds/_/gameId/401898403",
+      "text": "See More Odds and Props",
+      "shortText": "Odds",
+      "isExternal": false,
+      "isPremium": false
+     },
+     "header": {
+      "logo": {
+       "dark": "https://a.espncdn.com/i/espnbet/dark/espn-bet-square-off.svg",
+       "light": "https://a.espncdn.com/i/espnbet/espn-bet-square-off.svg",
+       "exclusivesLogoDark": "https://a.espncdn.com/i/espnbet/espn-bet-square-mint.svg",
+       "exclusivesLogoLight": "https://a.espncdn.com/i/espnbet/espn-bet-square-mint.svg"
+      },
+      "text": "Game Odds"
+     },
+     "footer": {
+      "disclaimer": "GAMBLING PROBLEM? CALL 1-800-GAMBLER or 1-800-MY-RESET, (800) 327-5050 or visit gamblinghelplinema.org (MA). Call 877-8-HOPENY/text HOPENY (467369) (NY). Call 888-789-7777/visit ccpg.org (CT), or visit www.mdgamblinghelp.org (MD), 1-800-981-0023 (PR). 21+ and present in most states. (18+ DC/KY/NH/PR/WY). Void in ONT. Eligibility restrictions apply. Terms: draftkings.com/sportsbook. On behalf of Boot Hill Casino (KS). Pass-thru of per wager tax may apply in IL."
+     }
+    }
+   ],
+   "injuries_blocks": 2,
+   "predictor": null
+  },
+  {
+   "name": "core odds today event0",
+   "url": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/events/401898403/competitions/401898403/odds",
+   "params": null,
+   "status": 200,
+   "latency_s": 0.03,
+   "bytes": 5855,
+   "cache_control": "max-age=86, stale-while-revalidate=7200",
+   "age": null,
+   "count": 1,
+   "providers": [
+    [
+     "100",
+     "DraftKings",
+     "CLE -1.5",
+     228.5,
+     1.5
+    ]
+   ]
+  },
+  {
+   "name": "core propBets today event0",
+   "url": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/events/401898403/competitions/401898403/odds/100/propBets",
+   "params": {
+    "limit": 50
+   },
+   "status": 200,
+   "latency_s": 0.05,
+   "bytes": 38367,
+   "cache_control": "max-age=900, stale-while-revalidate=7200",
+   "age": null,
+   "count": 123,
+   "sample": "[{\"competition\": {\"$ref\": \"http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/events/401898403/competitions/401898403?lang=en&region=us\"}, \"team\": {\"$ref\": \"http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/teams/5?lang=en&region=us\"}, \"provider\": {\"$ref\": \"http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/casinos/100?lang=en&region=us\"}, \"type\": {\"id\": \"98\", \"name\": \"Team Total Points\"}, \"odds\": {\"american\": {\"value\": \"-115\", \"open\": \"-115\"}, \"decimal\": {\"value\": \"1.86\", \"open\": \"1.86\"}, \"fraction\": {\"value\": \"20/23\", \"open\": \"20/23\"}, \"total\": {\"value\": \"114.5\", \"open\": \"115.5\"}}, \"lastUpdated\": \"2026-10-13T16:35Z\", \"current\": {\"target\": {\"value\": 114.5, \"displayValue\": \"114.5\"}}, \"open\": {\"target\": {\"value\": 115.5, \"displayValue\": \"115.5\"}}}, {\"competition\": {\"$ref\": \"http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/events/401898403/competitions/401898403?lang=en&region=us\"}, \"team\": {\"$ref\": \"http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/seasons/2027/teams/5?lang=en&region=us\"}, \"provider\": {\"$ref\": \"http://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/casinos/100?lang=en&region=us\"}, \"type\": {\"id\": \"98\", \"name\": \"Team Total Points\"}, \"odds\": {\"american\": {\"value\": \"-115\", \"open\": \"-115\"}, \"decimal\": {\"value\": \"1.86\", \"open\": \"1.86\"}, \"fraction\": {\"value\": \"20/23\", \"open\": \"20/23\"}, \"total\": {\"value\": \"114.5\", \"open\": \"115.5\"}}, \"lastUpdated\": \"2026-10-13T16:35Z\", \"curr"
+  },
+  {
+   "name": "scoreboard 2026-03-15",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+   "params": {
+    "dates": "20260315"
+   },
+   "status": 200,
+   "latency_s": 0.09,
+   "bytes": 100008,
+   "cache_control": "max-age=1",
+   "age": null,
+   "event0": [
+    "401810831",
+    "Minnesota Timberwolves at Oklahoma City Thunder"
+   ],
+   "event0_odds_on_scoreboard": null
+  },
+  {
+   "name": "core odds 2026-03-15 event0",
+   "url": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/events/401810831/competitions/401810831/odds",
+   "params": null,
+   "status": 200,
+   "latency_s": 0.05,
+   "bytes": 6690,
+   "cache_control": "max-age=900, stale-while-revalidate=7200",
+   "age": null,
+   "count": 1,
+   "providers": [
+    [
+     "100",
+     "DraftKings",
+     "OKC -8.5",
+     227.5,
+     -8.5
+    ]
+   ],
+   "item0_keys": [
+    "$ref",
+    "provider",
+    "details",
+    "overUnder",
+    "spread",
+    "overOdds",
+    "underOdds",
+    "awayTeamOdds",
+    "homeTeamOdds",
+    "links",
+    "moneylineWinner",
+    "spreadWinner",
+    "open",
+    "close",
+    "current"
+   ],
+   "item0_open_close": {
+    "open": {
+     "over": {
+      "value": 1.9,
+      "displayValue": "10/11",
+      "alternateDisplayValue": "-110",
+      "decimal": 1.9,
+      "fraction": "10/11",
+      "american": "-110"
+     },
+     "under": {
+      "value": 1.9,
+      "displayValue": "10/11",
+      "alternateDisplayValue": "-110",
+      "decimal": 1.9,
+      "fraction": "10/11",
+      "american": "-110"
+     },
+     "total": {
+      "alternateDisplayValue": "225.5",
+      "american": "225.5"
+     }
+    },
+    "close": {
+     "over": {
+      "value": 1.86,
+      "displayValue": "20/23",
+      "alternateDisplayValue": "-115",
+      "decimal": 1.86,
+      "fraction": "20/23",
+      "american": "-115"
+     },
+     "under": {
+      "value": 1.95,
+      "displayValue": "20/21",
+      "alternateDisplayValue": "-105",
+      "decimal": 1.95,
+      "fraction": "20/21",
+      "american": "-105"
+     },
+     "total": {
+      "alternateDisplayValue": "227.5",
+      "american": "227.5"
+     }
+    },
+    "current": {
+     "over": {
+      "value": 1.86,
+      "displayValue": "20/23",
+      "alternateDisplayValue": "-115",
+      "decimal": 1.86,
+      "fraction": "20/23",
+      "american": "-115"
+     },
+     "under": {
+      "value": 1.95,
+      "displayValue": "20/21",
+      "alternateDisplayValue": "-105",
+      "decimal": 1.95,
+      "fraction": "20/21",
+      "american": "-105"
+     },
+     "total": {
+      "alternateDisplayValue": "227.5",
+      "american": "227.5"
+     }
+    }
+   }
+  },
+  {
+   "name": "scoreboard 2019-01-15",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+   "params": {
+    "dates": "20190115"
+   },
+   "status": 200,
+   "latency_s": 0.07,
+   "bytes": 86258,
+   "cache_control": "max-age=1",
+   "age": null,
+   "event0": [
+    "401071327",
+    "Phoenix Suns at Indiana Pacers"
+   ]
+  },
+  {
+   "name": "core odds 2019-01-15 event0",
+   "url": "https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/events/401071327/competitions/401071327/odds",
+   "params": null,
+   "status": 200,
+   "latency_s": 0.06,
+   "bytes": 15095,
+   "cache_control": "max-age=900, stale-while-revalidate=7200",
+   "age": null,
+   "count": 9,
+   "providers": [
+    [
+     "28",
+     "Caesar's",
+     "IND -10.5",
+     218.0
+    ],
+    [
+     "38",
+     "Caesars",
+     "IND -10.5",
+     218.0
+    ],
+    [
+     "31",
+     "Caesars Sportsbook",
+     "IND -10.5",
+     219.0
+    ],
+    [
+     "36",
+     "Unibet",
+     "IND -10.5",
+     219.5
+    ],
+    [
+     "25",
+     "Westgate",
+     "IND -10.5",
+     218.5
+    ],
+    [
+     "32",
+     "Wynn",
+     "IND -10.5",
+     219.0
+    ],
+    [
+     "1001",
+     "accuscore",
+     "IND -10.5",
+     218.5
+    ],
+    [
+     "1003",
+     "numberfire",
+     "IND -10.5",
+     219.5
+    ],
+    [
+     "1002",
+     "teamrankings",
+     "IND -10.5",
+     219.5
+    ]
+   ]
+  }
+ ],
+ "run_finished_local": "2026-10-13T16:40:45.874547"
+}

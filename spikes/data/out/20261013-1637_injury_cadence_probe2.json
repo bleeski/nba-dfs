@@ -1,0 +1,58 @@
+[
+ {
+  "slot_ET": "2025-10-21_05PM",
+  "status": 200,
+  "bytes": "71674",
+  "last_modified": "Tue, 21 Oct 2025 21:30:04 GMT",
+  "latency_s": 0.59
+ },
+ {
+  "slot_ET": "2025-10-21_05_00PM",
+  "status": 403,
+  "bytes": "1",
+  "last_modified": null,
+  "latency_s": 0.65
+ },
+ {
+  "slot_ET": "2025-10-21_06_00PM",
+  "status": 403,
+  "bytes": "1",
+  "last_modified": null,
+  "latency_s": 0.35
+ },
+ {
+  "slot_ET": "2025-11-15_05_15PM",
+  "status": 403,
+  "bytes": "1",
+  "last_modified": null,
+  "latency_s": 0.41
+ },
+ {
+  "slot_ET": "2025-12-15_05_15PM",
+  "status": 403,
+  "bytes": "1",
+  "last_modified": null,
+  "latency_s": 0.36
+ },
+ {
+  "slot_ET": "2026-01-15_05_15PM",
+  "status": 200,
+  "bytes": "88149",
+  "last_modified": "Thu, 15 Jan 2026 22:15:06 GMT",
+  "latency_s": 0.35
+ },
+ {
+  "slot_ET": "2026-10-12_05PM",
+  "status": 403,
+  "bytes": "1",
+  "last_modified": null,
+  "latency_s": 0.37
+ },
+ {
+  "slot_ET": "2026-10-13_05PM",
+  "status": 403,
+  "bytes": "1",
+  "last_modified": null,
+  "latency_s": 0.36
+ }
+]
