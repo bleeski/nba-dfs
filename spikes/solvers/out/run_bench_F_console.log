@@ -1,0 +1,9 @@
+F glpk classic seq150 150 hall 1 -> 61.576 s 
+F ortools_cbc classic seq150 150 hall 1 -> 94.377 s 
+F cpsat classic seq150 150 hall 1 -> 87.436 s 
+F glpk classic rand 500 hall 1 -> 4.532 s 
+F highs_tuned classic rand 500 hall 1 -> 60.365 s 
+F ortools_cbc classic rand 500 hall 1 -> 17.829 s 
+F cpsat classic rand 500 hall 1 -> 37.093 s 
+F scip classic rand 500 hall 1 -> 56.363 s 
+RAW C:\Users\benja\Documents\Claude\nba-dfs\spikes\solvers\out\20261013-1834_bench_F_raw.jsonl

@@ -1,0 +1,45 @@
+{
+ "note": "lineup_scenario_pairs_per_s is in billions; scoring = matrix multiply in lineup chunks",
+ "runs": [
+  {
+   "players": 22,
+   "legal_lineups": 440121,
+   "enumerate_s": 0.028,
+   "S": 10000,
+   "score_all_lineups_s": 12.01,
+   "lineup_scenario_pairs_per_s": 0.37,
+   "lineups_hitting_line_at_least_once": 237210,
+   "peak_wset_mb": 1577.6
+  },
+  {
+   "players": 26,
+   "legal_lineups": 1358534,
+   "enumerate_s": 0.073,
+   "S": 10000,
+   "score_all_lineups_s": 41.63,
+   "lineup_scenario_pairs_per_s": 0.33,
+   "lineups_hitting_line_at_least_once": 644549,
+   "peak_wset_mb": 1613.2
+  },
+  {
+   "players": 30,
+   "legal_lineups": 3500111,
+   "enumerate_s": 0.277,
+   "S": 10000,
+   "score_all_lineups_s": 99.52,
+   "lineup_scenario_pairs_per_s": 0.35,
+   "lineups_hitting_line_at_least_once": 1525847,
+   "peak_wset_mb": 1989.0
+  },
+  {
+   "players": 34,
+   "legal_lineups": 7918185,
+   "enumerate_s": 0.53,
+   "S": 10000,
+   "score_all_lineups_s": 222.58,
+   "lineup_scenario_pairs_per_s": 0.36,
+   "lineups_hitting_line_at_least_once": 3232355,
+   "peak_wset_mb": 1989.0
+  }
+ ]
+}

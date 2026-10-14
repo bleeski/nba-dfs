@@ -1,0 +1,189 @@
+{
+ "S": 10000,
+ "K_solves": 5000,
+ "field_floor": 0.85,
+ "K_unique": 4998,
+ "N_field": 100000,
+ "field_unique": 42727,
+ "field_tries": 293078,
+ "field_max_dup": 266,
+ "Ms": [
+  1,
+  3,
+  20,
+  150
+ ],
+ "cash_frac": 0.2,
+ "sharp_frac": 0.6,
+ "sharp_temp": 10.0,
+ "timings_s": {
+  "scenarios_s": 0.06,
+  "candidates_s": 21.56,
+  "field_s": 46.54,
+  "cutlines_s": 14.72,
+  "hits_s": 0.92,
+  "heldout_lines_and_hits_s": 15.66,
+  "greedy_all_s": 52.24
+ },
+ "peak_wset_mb": 1135.5,
+ "arrays_mb": {
+  "scenarios": 9.2,
+  "cand_scores": 381.3,
+  "field_incidence": 19.6,
+  "H1_bool": 47.7,
+  "H1_bitpacked": 5.96
+ },
+ "results": {
+  "M=1": {
+   "greedy_top1": {
+    "P_at_least_one_top1": 0.0435,
+    "P_no_cash": 0.6276,
+    "heldout_P_at_least_one_top1": 0.0371,
+    "heldout_P_no_cash": 0.6385,
+    "mean_field_dups_of_chosen": 1.0
+   },
+   "greedy_cash": {
+    "P_at_least_one_top1": 0.0329,
+    "P_no_cash": 0.5632,
+    "heldout_P_at_least_one_top1": 0.0327,
+    "heldout_P_no_cash": 0.5677,
+    "mean_field_dups_of_chosen": 0.0
+   },
+   "greedy_blend_w0.5": {
+    "P_at_least_one_top1": 0.0329,
+    "P_no_cash": 0.5632,
+    "heldout_P_at_least_one_top1": 0.0327,
+    "heldout_P_no_cash": 0.5677,
+    "mean_field_dups_of_chosen": 0.0
+   },
+   "greedy_blend_w2": {
+    "P_at_least_one_top1": 0.0329,
+    "P_no_cash": 0.5632,
+    "heldout_P_at_least_one_top1": 0.0327,
+    "heldout_P_no_cash": 0.5677,
+    "mean_field_dups_of_chosen": 0.0
+   },
+   "top_projection": {
+    "P_at_least_one_top1": 0.0329,
+    "P_no_cash": 0.5632,
+    "heldout_P_at_least_one_top1": 0.0327,
+    "heldout_P_no_cash": 0.5677,
+    "mean_field_dups_of_chosen": 0.0
+   }
+  },
+  "M=3": {
+   "greedy_top1": {
+    "P_at_least_one_top1": 0.1133,
+    "P_no_cash": 0.1943,
+    "heldout_P_at_least_one_top1": 0.1067,
+    "heldout_P_no_cash": 0.1954,
+    "mean_field_dups_of_chosen": 0.333
+   },
+   "greedy_cash": {
+    "P_at_least_one_top1": 0.0978,
+    "P_no_cash": 0.1479,
+    "heldout_P_at_least_one_top1": 0.0951,
+    "heldout_P_no_cash": 0.1468,
+    "mean_field_dups_of_chosen": 0.0
+   },
+   "greedy_blend_w0.5": {
+    "P_at_least_one_top1": 0.0978,
+    "P_no_cash": 0.1479,
+    "heldout_P_at_least_one_top1": 0.0951,
+    "heldout_P_no_cash": 0.1468,
+    "mean_field_dups_of_chosen": 0.0
+   },
+   "greedy_blend_w2": {
+    "P_at_least_one_top1": 0.0978,
+    "P_no_cash": 0.1479,
+    "heldout_P_at_least_one_top1": 0.0951,
+    "heldout_P_no_cash": 0.1468,
+    "mean_field_dups_of_chosen": 0.0
+   },
+   "top_projection": {
+    "P_at_least_one_top1": 0.0811,
+    "P_no_cash": 0.1798,
+    "heldout_P_at_least_one_top1": 0.0789,
+    "heldout_P_no_cash": 0.1791,
+    "mean_field_dups_of_chosen": 0.0
+   }
+  },
+  "M=20": {
+   "greedy_top1": {
+    "P_at_least_one_top1": 0.4798,
+    "P_no_cash": 0.0,
+    "heldout_P_at_least_one_top1": 0.4764,
+    "heldout_P_no_cash": 0.0001,
+    "mean_field_dups_of_chosen": 0.05
+   },
+   "greedy_cash": {
+    "P_at_least_one_top1": 0.2851,
+    "P_no_cash": 0.0,
+    "heldout_P_at_least_one_top1": 0.2846,
+    "heldout_P_no_cash": 0.0005,
+    "mean_field_dups_of_chosen": 0.0
+   },
+   "greedy_blend_w0.5": {
+    "P_at_least_one_top1": 0.4738,
+    "P_no_cash": 0.0,
+    "heldout_P_at_least_one_top1": 0.4724,
+    "heldout_P_no_cash": 0.0001,
+    "mean_field_dups_of_chosen": 0.0
+   },
+   "greedy_blend_w2": {
+    "P_at_least_one_top1": 0.4702,
+    "P_no_cash": 0.0,
+    "heldout_P_at_least_one_top1": 0.4641,
+    "heldout_P_no_cash": 0.0,
+    "mean_field_dups_of_chosen": 0.05
+   },
+   "top_projection": {
+    "P_at_least_one_top1": 0.353,
+    "P_no_cash": 0.0069,
+    "heldout_P_at_least_one_top1": 0.35,
+    "heldout_P_no_cash": 0.0051,
+    "mean_field_dups_of_chosen": 0.0
+   }
+  },
+  "M=150": {
+   "greedy_top1": {
+    "P_at_least_one_top1": 0.9879,
+    "P_no_cash": 0.0,
+    "heldout_P_at_least_one_top1": 0.9627,
+    "heldout_P_no_cash": 0.0,
+    "mean_field_dups_of_chosen": 0.413
+   },
+   "greedy_cash": {
+    "P_at_least_one_top1": 0.5092,
+    "P_no_cash": 0.0,
+    "heldout_P_at_least_one_top1": 0.512,
+    "heldout_P_no_cash": 0.0,
+    "mean_field_dups_of_chosen": 0.0
+   },
+   "greedy_blend_w0.5": {
+    "P_at_least_one_top1": 0.9886,
+    "P_no_cash": 0.0,
+    "heldout_P_at_least_one_top1": 0.9603,
+    "heldout_P_no_cash": 0.0,
+    "mean_field_dups_of_chosen": 0.413
+   },
+   "greedy_blend_w2": {
+    "P_at_least_one_top1": 0.9885,
+    "P_no_cash": 0.0,
+    "heldout_P_at_least_one_top1": 0.9593,
+    "heldout_P_no_cash": 0.0,
+    "mean_field_dups_of_chosen": 0.007
+   },
+   "top_projection": {
+    "P_at_least_one_top1": 0.9052,
+    "P_no_cash": 0.0,
+    "heldout_P_at_least_one_top1": 0.9063,
+    "heldout_P_no_cash": 0.0,
+    "mean_field_dups_of_chosen": 0.007
+   }
+  }
+ },
+ "field_dups_of_top_projection_lineup": 0,
+ "single_best_lineup_P_top1": 0.0435,
+ "note": "synthetic data; shows cost and trade-off shape only. P_* = in-sample (the scenarios used to select); heldout_P_* = independent scenario set"
+}

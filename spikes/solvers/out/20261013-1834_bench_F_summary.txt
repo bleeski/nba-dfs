@@ -1,0 +1,23 @@
+source: out/20261013-1834_bench_F_raw.jsonl
+meta: {"started": "20261013-1834", "python": "3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]", "platform": "Windows-11-10.0.26300-SP0", "cpu_count": 8, "ram_gb": 31.5, "load": {"cpu_pct": 29.2, "avail_gb": 6.93}, "phases": "F"}
+TIMINGS ARE INDICATIVE: other agents were running on this laptop. load_before = cpu% / available GB at run start.
+
+ph solver        contest  task   form        gm     n pr rep valid  uniq  total_s  med_ms  p95_ms   max_ms peakMB childMB      objsum hash             ovl       load
+F  glpk          classic  seq150 hall        12   150  1   0   150         61.576  405.55  848.85   1050.0   43.7     0.0    47202.03 146b62ab152f3e67   6  22.8/6.78
+F  ortools_cbc   classic  seq150 hall        12   150  1   0   150         94.377  654.69 1118.92  1353.69   72.0     0.0    47202.03 a788325e80bc3fda   6  23.2/7.24
+F  cpsat         classic  seq150 hall        12   150  1   0   150         87.436  585.97 1033.41  1695.88  104.2     0.0    47202.03 dc309e217017d68f   6  12.9/7.05
+F  glpk          classic  rand   hall        12   500  1   0   500   500    4.532    4.92   25.32    64.53   41.8     0.0   224815.13 ab5fc79b45206df3      18.9/7.21
+F  highs_tuned   classic  rand   hall        12   500  1   0   500   500   60.365   79.74  313.77   479.24   76.6     0.0   224815.13 ab5fc79b45206df3      15.4/7.26
+F  ortools_cbc   classic  rand   hall        12   500  1   0   500   500   17.829   36.77   60.61   143.33   59.4     0.0   224815.13 ab5fc79b45206df3      16.5/7.19
+F  cpsat         classic  rand   hall        12   500  1   0   500   500   37.093   65.12  131.34   339.79  104.0     0.0   224815.13 ab5fc79b45206df3      22.6/7.25
+F  scip          classic  rand   hall        12   500  1   0   500   500   56.363   65.67  353.34   593.42   84.5     0.0   224815.13 ab5fc79b45206df3      18.4/7.21
+
+DETERMINISM (same config, same seed, run twice: identical ordered lineup list?)
+
+CROSS-SOLVER OBJECTIVE AGREEMENT (per-solve optimal objective vs glpk, same task/contest/n/form/games)
+  F ortools_cbc   ('classic', 'seq150', 'hall', 150, 12): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  F cpsat         ('classic', 'seq150', 'hall', 150, 12): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  F highs_tuned   ('classic', 'rand', 'hall', 500, 12): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  F ortools_cbc   ('classic', 'rand', 'hall', 500, 12): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  F cpsat         ('classic', 'rand', 'hall', 500, 12): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  F scip          ('classic', 'rand', 'hall', 500, 12): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True

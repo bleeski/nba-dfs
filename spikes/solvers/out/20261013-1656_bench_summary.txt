@@ -1,0 +1,220 @@
+source: out/20261013-1656_bench_raw.jsonl
+meta: {"started": "20261013-1656", "python": "3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]", "platform": "Windows-11-10.0.26300-SP0", "cpu_count": 8, "ram_gb": 31.5, "load": {"cpu_pct": 36.1, "avail_gb": 6.2}, "phases": "A,B,C,D,E,F"}
+TIMINGS ARE INDICATIVE: other agents were running on this laptop. load_before = cpu% / available GB at run start.
+
+ph solver        contest  task   form        gm     n pr rep valid  uniq  total_s  med_ms  p95_ms   max_ms peakMB childMB      objsum hash             ovl       load
+A  highs         classic  seq150 slot         6    20  1   0    20         95.429 3984.24 9194.16   9207.4   81.1     0.0     6154.75 62c63402e2f7d224   6  44.0/6.19
+A  highs         classic  seq150 hall         6    20  1   0    20         18.511  683.25 2137.42  2141.33   60.7     0.0     6154.75 ac5aca1a332fe229   6  17.1/6.22
+A  glpk          classic  seq150 slot         6    20  1   0    20         20.042  773.16 2142.39  2226.83   43.9     0.0     6154.75 0dedf4caa5d6123f   6  36.9/6.27
+A  glpk          classic  seq150 hall         6    20  1   0    20          0.818   47.37   66.25    70.45   40.9     0.0     6154.75 3942f70271017d7f   6  24.2/6.31
+A  cpsat         classic  seq150 slot         6    20  1   0    20         68.298 2524.16 11355.24 13799.59  114.4     0.0     6154.75 6c47eca602c5615b   6  18.1/6.31
+A  cpsat         classic  seq150 hall         6    20  1   0    20           3.53  188.51   262.3   307.73  103.9     0.0     6154.75 3942f70271017d7f   6  57.1/6.54
+A  ortools_cbc   classic  seq150 slot         6    20  1   0    20         30.459 1328.01 2885.02  3543.79   61.8     0.0     6154.75 ac5aca1a332fe229   6  32.7/6.37
+A  ortools_cbc   classic  seq150 hall         6    20  1   0    20          4.492  261.49  337.04   640.47   58.1     0.0     6154.75 5f9a0c9755ae0ccd   6  50.4/6.42
+A  scip          classic  seq150 slot         6    20  1   0    20           81.8 3063.74 8791.64  9403.93  155.3     0.0     6154.75 dee1f143c20c5af6   6  26.9/6.46
+A  scip          classic  seq150 hall         6    20  1   0    20          5.725  294.44  406.58   489.76   81.2     0.0     6154.75 62c63402e2f7d224   6   5.0/6.38
+A  pulp_cbc      classic  seq150 slot         6    20  1   0    20          27.85 1180.87  2517.2   2612.0   50.4    21.3     6154.75 b073071c5b727603   6  11.2/6.25
+A  pulp_cbc      classic  seq150 hall         6    20  1   0    20          6.242  283.69  582.81    636.2   49.8    16.0     6154.75 b073071c5b727603   6  20.3/6.66
+B  highs         classic  single hall         6     1  1   0     1          0.149  132.26  132.26   132.26   52.9     0.0      310.42 91e414d56e545fd2      15.5/6.78
+B  highs         classic  single slot         6     1  1   0     1          0.341   330.5   330.5    330.5   52.6     0.0      310.42 91e414d56e545fd2       9.8/6.78
+B  highs         showdown single player-role  1     1  1   0     1          0.083   73.54   73.54    73.54   47.7     0.0      266.99 b979a081ed8a4d3b      28.3/6.65
+B  highs_tuned   classic  single hall         6     1  1   0     1          0.116   98.86   98.86    98.86   52.2     0.0      310.42 91e414d56e545fd2      13.8/6.65
+B  highs_tuned   classic  single slot         6     1  1   0     1           0.23  217.63  217.63   217.63   51.4     0.0      310.42 91e414d56e545fd2      11.4/6.65
+B  highs_tuned   showdown single player-role  1     1  1   0     1          0.049   36.54   36.54    36.54   47.4     0.0      266.99 b979a081ed8a4d3b      17.2/6.67
+B  pulp_cbc      classic  single hall         6     1  1   0     1          0.159  119.32  119.32   119.32   49.7     9.0      310.42 91e414d56e545fd2      21.8/6.65
+B  pulp_cbc      classic  single slot         6     1  1   0     1          0.222  189.14  189.14   189.14   49.5    11.7      310.42 91e414d56e545fd2       24.5/6.6
+B  pulp_cbc      showdown single player-role  1     1  1   0     1           0.07    43.6    43.6     43.6   49.7     7.1      266.99 b979a081ed8a4d3b      12.9/6.56
+B  ortools_cbc   classic  single hall         6     1  1   0     1          0.073   38.68   38.68    38.68   51.6     0.0      310.42 91e414d56e545fd2      20.5/6.55
+B  ortools_cbc   classic  single slot         6     1  1   0     1          0.282  249.35  249.35   249.35   53.4     0.0      310.42 91e414d56e545fd2      15.5/6.53
+B  ortools_cbc   showdown single player-role  1     1  1   0     1          0.052   25.31   25.31    25.31   48.5     0.0      266.99 b979a081ed8a4d3b      19.4/6.54
+B  cpsat         classic  single hall         6     1  1   0     1          0.066   36.47   36.47    36.47  104.0     0.0      310.42 91e414d56e545fd2      12.8/6.55
+B  cpsat         classic  single slot         6     1  1   0     1          0.226  218.94  218.94   218.94  105.7     0.0      310.42 91e414d56e545fd2      25.4/6.59
+B  cpsat         showdown single player-role  1     1  1   0     1          0.024    22.6    22.6     22.6  104.5     0.0      266.99 b979a081ed8a4d3b      12.4/6.58
+B  cpsat_mt      classic  single hall         6     1  1   0     1          0.066   53.82   53.82    53.82  107.3     0.0      310.42 91e414d56e545fd2      22.8/6.59
+B  cpsat_mt      classic  single slot         6     1  1   0     1          0.251  242.44  242.44   242.44  120.4     0.0      310.42 91e414d56e545fd2      13.9/6.59
+B  cpsat_mt      showdown single player-role  1     1  1   0     1          0.039    37.8    37.8     37.8  108.2     0.0      266.99 b979a081ed8a4d3b      13.0/6.63
+B  scip          classic  single hall         6     1  1   0     1          0.073   51.87   51.87    51.87   55.3     0.0      310.42 91e414d56e545fd2      14.6/6.62
+B  scip          classic  single slot         6     1  1   0     1          0.201  165.87  165.87   165.87   69.1     0.0      310.42 91e414d56e545fd2      22.3/6.62
+B  scip          showdown single player-role  1     1  1   0     1          0.043   30.61   30.61    30.61   52.4     0.0      266.99 b979a081ed8a4d3b      26.4/6.58
+B  glpk          classic  single hall         6     1  1   0     1          0.021    3.48    3.48     3.48   39.4     0.0      310.42 91e414d56e545fd2      11.0/6.52
+B  glpk          classic  single slot         6     1  1   0     1          0.059   47.45   47.45    47.45   40.5     0.0      310.42 91e414d56e545fd2      15.0/6.53
+B  glpk          showdown single player-role  1     1  1   0     1           0.01    1.05    1.05     1.05   38.8     0.0      266.99 b979a081ed8a4d3b      15.0/6.53
+C  highs         classic  seq150 hall         6   150  1   0   150         369.42 2577.72 3630.72  4504.13   83.5     0.0    45775.27 3ba385d28a680596   6  17.2/6.52
+C  highs         showdown seq150 player-role  1   150  1   0   150        159.034 1091.64 1722.42  2020.49   68.3     0.0    36226.67 d359f0e77cea5f66   4  23.3/6.59
+C  highs         showdown seq150 player-role  1   150  1   1   150        154.513 1078.42  1604.8  1877.49   75.2     0.0    36226.67 d359f0e77cea5f66   4  14.6/6.73
+C  highs_tuned   classic  seq150 hall         6   150  1   0   150        227.242 1518.87 2777.64  3018.53   93.0     0.0    45775.27 05c52f3e5e4fa521   6   17.5/6.9
+C  highs_tuned   classic  seq150 hall         6   150  1   1   150        226.818 1504.17 2724.49  3670.34   93.5     0.0    45775.27 05c52f3e5e4fa521   6  10.8/6.72
+C  highs_tuned   showdown seq150 player-role  1   150  1   0   150         50.556   333.5  646.84   872.47   66.7     0.0    36226.67 ea348a1c9b8adcc3   4  20.7/6.83
+C  highs_tuned   showdown seq150 player-role  1   150  1   1   150         49.947  343.81  629.69   714.14   66.8     0.0    36226.67 ea348a1c9b8adcc3   4  15.3/6.83
+C  pulp_cbc      classic  seq150 hall         6   150  1   0   150        108.151   768.0  951.45  1120.75   51.1    21.0    45775.27 0551f45a3d910a14   6  13.8/6.94
+C  pulp_cbc      showdown seq150 player-role  1   150  1   0   150         82.928  641.54  805.16   920.18   50.6    15.2    36226.67 8884f06c211dc47f   4  12.9/6.94
+C  pulp_cbc      showdown seq150 player-role  1   150  1   1   150         83.027  620.67  832.09   879.67   50.5    15.0    36226.67 8884f06c211dc47f   4   14.3/7.0
+C  ortools_cbc   classic  seq150 hall         6   150  1   0   150         74.444  516.19  733.69   892.65   62.6     0.0    45775.27 ea5579b002bed04a   6  14.3/6.89
+C  ortools_cbc   classic  seq150 hall         6   150  1   1   150         74.847  523.04  724.35   903.22   63.2     0.0    45775.27 ea5579b002bed04a   6  16.2/6.74
+C  ortools_cbc   showdown seq150 player-role  1   150  1   0   150          55.08  401.54  587.33   986.75   59.7     0.0    36226.67 8884f06c211dc47f   4  16.3/6.81
+C  ortools_cbc   showdown seq150 player-role  1   150  1   1   150         53.319  402.52  550.76   609.59   60.2     0.0    36226.67 8884f06c211dc47f   4  19.9/6.96
+C  cpsat         classic  seq150 hall         6   150  1   0   150         68.848   480.3  735.95  1076.47  102.9     0.0    45775.27 cb0c2d32b688c8c6   6  15.6/6.85
+C  cpsat         classic  seq150 hall         6   150  1   1   150         68.209  466.52  728.43   951.08  102.9     0.0    45775.27 cb0c2d32b688c8c6   6  21.7/7.08
+C  cpsat         showdown seq150 player-role  1   150  1   0   150         16.866  114.37  189.66   218.68  100.9     0.0    36226.67 202ea6bb58002f74   4  32.7/6.99
+C  cpsat         showdown seq150 player-role  1   150  1   1   150         16.851   117.0  187.82    227.7  101.1     0.0    36226.67 202ea6bb58002f74   4  10.4/6.97
+C  cpsat_mt      classic  seq150 hall         6   150  1   0   150         75.109  502.32  837.16   985.97  134.4     0.0    45775.27 1661f6120d93d092   6  13.6/6.94
+C  cpsat_mt      classic  seq150 hall         6   150  1   1   150         74.781  510.83  856.46   950.62  133.4     0.0    45775.27 8f6403d677cf8473   6  21.1/6.83
+C  cpsat_mt      showdown seq150 player-role  1   150  1   0   150          11.76   81.13  114.33    174.8  117.6     0.0    36226.67 2427d76d8933db89   4  13.6/6.64
+C  cpsat_mt      showdown seq150 player-role  1   150  1   1   150         12.483    82.3  124.85   225.68  117.6     0.0    36226.67 bcc605867e5c607c   4  14.5/6.72
+C  scip          classic  seq150 hall         6   150  1   0   150        228.947 1275.15 3296.07  4092.35  123.7     0.0    45775.27 4425c665b01d9e34   6  17.6/6.63
+C  scip          classic  seq150 hall         6   150  1   1   150        255.882 1372.87 3637.22  4346.92  123.6     0.0    45775.27 4425c665b01d9e34   6   40.2/6.6
+C  scip          showdown seq150 player-role  1   150  1   0   150         57.616  370.92  666.95   971.37   87.3     0.0    36226.67 3f0d41d3bd17cfec   4  71.2/6.24
+C  scip          showdown seq150 player-role  1   150  1   1   150         60.486  409.35  650.59   873.33   87.4     0.0    36226.67 3f0d41d3bd17cfec   4  41.4/6.41
+C  glpk          classic  seq150 hall         6   150  1   0   150          30.78  171.88   453.0   620.52   42.3     0.0    45775.27 b75d75cd5ce9ae16   6  33.6/6.33
+C  glpk          classic  seq150 hall         6   150  1   1   150         30.433  173.02  452.13   597.96   42.6     0.0    45775.27 b75d75cd5ce9ae16   6   19.4/6.4
+C  glpk          showdown seq150 player-role  1   150  1   0   150          9.497   63.11  133.66   160.93   41.9     0.0    36226.67 7c0f98c0728f64a6   4  25.5/6.45
+C  glpk          showdown seq150 player-role  1   150  1   1   150          9.006   57.15  123.39   147.24   41.9     0.0    36226.67 7c0f98c0728f64a6   4  17.2/6.43
+C  highs_rebuild showdown seq150 player-role  1   150  1   0   150        158.045 1077.67 1581.19  2219.34   75.4     0.0    36226.67 d359f0e77cea5f66   4    9.3/6.5
+C  highs_rebuild showdown seq150 player-role  1   150  1   1   150        155.893 1073.21 1615.83  1970.99   66.5     0.0    36226.67 d359f0e77cea5f66   4  14.6/6.58
+D  highs         classic  rand   hall         6   500  1   0   500   500   42.641    66.4  198.54   380.83   61.1     0.0   209317.36 515f9229eb5e736e       22.3/6.6
+D  highs         classic  rand   hall         6   500  1   1   500   500   44.213    66.1  209.22   466.35   61.4     0.0   209317.36 515f9229eb5e736e      15.2/6.56
+D  highs         showdown rand   player-role  1   500  1   0   500   328   15.896   27.71    73.3   152.97   48.7     0.0   154067.47 f9fb3ad96d848366      18.3/6.53
+D  highs         showdown rand   player-role  1   500  1   1   500   328   15.314   25.91   67.34    144.7   48.8     0.0   154067.47 f9fb3ad96d848366       18.2/6.5
+D  highs_tuned   classic  rand   hall         6   500  1   0   500   500   36.007   47.19  173.34   361.34   62.5     0.0   209317.36 df13435714e0c7cc      16.2/6.41
+D  highs_tuned   classic  rand   hall         6   500  1   1   500   500   35.286   45.56   174.6   380.57   60.5     0.0   209317.36 df13435714e0c7cc      15.7/6.43
+D  highs_tuned   showdown rand   player-role  1   500  1   0   500   328   10.992   19.88   38.36   137.89   48.7     0.0   154067.47 f9fb3ad96d848366      18.4/6.43
+D  highs_tuned   showdown rand   player-role  1   500  1   1   500   328   11.567   20.92   42.38   141.67   48.6     0.0   154067.47 f9fb3ad96d848366      23.4/6.41
+D  pulp_cbc      classic  rand   hall         6   500  1   0   500   500   47.861    75.6  173.39   391.72   49.7    11.2   209317.36 2530ffb26064403d      23.7/6.29
+D  pulp_cbc      showdown rand   player-role  1   500  1   0   500   328   26.653   43.05  103.11   294.88   50.0     8.6   154067.47 18f84666c70400ae      28.1/6.27
+D  ortools_cbc   classic  rand   hall         6   500  1   0   500   500   13.156   23.54   44.92    89.72   53.8     0.0   209317.36 515f9229eb5e736e      13.1/6.36
+D  ortools_cbc   classic  rand   hall         6   500  1   1   500   500    15.49   29.41   49.35   189.96   53.6     0.0   209317.36 515f9229eb5e736e      10.3/6.45
+D  ortools_cbc   showdown rand   player-role  1   500  1   0   500   328    6.981    8.74   33.42    66.11   50.0     0.0   154067.47 f9fb3ad96d848366      54.0/6.13
+D  ortools_cbc   showdown rand   player-role  1   500  1   1   500   328    7.138    8.05    39.1   121.17   49.8     0.0   154067.47 f9fb3ad96d848366      34.4/5.94
+D  cpsat         classic  rand   hall         6   500  1   0   500   500   29.912   42.37  132.32   281.02  102.8     0.0   209317.36 2530ffb26064403d      46.4/6.26
+D  cpsat         classic  rand   hall         6   500  1   1   500   500   29.503   42.89  126.86   389.55  102.6     0.0   209317.36 2530ffb26064403d      22.2/6.28
+D  cpsat         showdown rand   player-role  1   500  1   0   500   327    6.084     7.5   27.32    59.33  100.5     0.0   154067.47 0863ec92b180f679      57.0/6.05
+D  cpsat         showdown rand   player-role  1   500  1   1   500   327    5.744    7.09   26.77    35.45  100.7     0.0   154067.47 0863ec92b180f679      18.2/6.46
+D  cpsat_mt      classic  rand   hall         6   500  1   0   500   500   29.209   48.73  101.26   237.74  119.7     0.0   209317.36 2530ffb26064403d      24.5/6.36
+D  cpsat_mt      classic  rand   hall         6   500  1   1   500   500    28.13   48.47  101.02   217.81  119.3     0.0   209317.36 2530ffb26064403d      17.8/6.45
+D  cpsat_mt      showdown rand   player-role  1   500  1   0   500   328   12.144   20.96    39.2   102.24  109.4     0.0   154067.47 ad7a820e5bb50958      16.2/6.55
+D  cpsat_mt      showdown rand   player-role  1   500  1   1   500   327   11.975    20.9   38.85     53.8  107.8     0.0   154067.47 0863ec92b180f679      16.9/6.61
+D  scip          classic  rand   hall         6   500  1   0   500   500   25.829   26.66  171.19    355.0   72.1     0.0   209317.36 3200375646346903      20.9/6.54
+D  scip          classic  rand   hall         6   500  1   1   500   500   25.338   26.54  165.42   369.42   71.8     0.0   209317.36 3200375646346903      12.7/6.52
+D  scip          showdown rand   player-role  1   500  1   0   500   327    4.216    3.68   26.74   124.78   58.2     0.0   154067.47 5faa7d73684d02df      26.7/6.63
+D  scip          showdown rand   player-role  1   500  1   1   500   327    4.355    3.68    26.2    108.9   58.1     0.0   154067.47 5faa7d73684d02df      20.6/6.55
+D  glpk          classic  rand   hall         6   500  1   0   500   500    2.259     2.2   18.97    31.65   41.1     0.0   209317.36 2530ffb26064403d      11.2/6.55
+D  glpk          classic  rand   hall         6   500  1   1   500   500    2.145    2.09   17.05    31.07   41.1     0.0   209317.36 2530ffb26064403d      22.1/6.53
+D  glpk          showdown rand   player-role  1   500  1   0   500   327    0.372    0.23    1.08    18.39   40.3     0.0   154067.47 8b3424733cb2f541      22.7/6.54
+D  glpk          showdown rand   player-role  1   500  1   1   500   327    0.374    0.23    1.18    17.29   40.2     0.0   154067.47 8b3424733cb2f541      20.5/6.53
+E  glpk          classic  rand   hall         6  5000  1   0  5000  5000   21.814     2.2    9.46     61.5   43.1     0.0  2095732.77 57f714200c68d5a7      18.3/6.54
+E  ortools_cbc   classic  rand   hall         6  5000  1   0  5000  5000  131.308   23.45   45.46   147.29   56.5     0.0  2095732.77 a7e7994743b3d4e5      43.4/6.26
+E  highs_tuned   classic  rand   hall         6  5000  1   0  5000  5000  403.344   53.86  213.44   601.28   68.4     0.0  2095732.77 6ccc9f2c0f70751e      17.3/6.32
+E  cpsat         classic  rand   hall         6  5000  1   0  5000  5000  267.039   39.35  113.55   651.41  104.4     0.0  2095732.77 2e6d36efdab35b80      16.0/7.07
+E  scip          classic  rand   hall         6  5000  1   0  5000  5000  286.451   29.48  187.73   716.29   82.5     0.0  2095732.77 299f94c1f806ca2e      25.7/6.96
+E  glpk          classic  rand   hall         6  5000  4   0  5000  5000    7.597     3.8   10.99    67.23   43.1   156.8  2095732.77 57f714200c68d5a7      18.2/6.44
+E  highs_tuned   classic  rand   hall         6  5000  4   0  5000  5000  123.807   66.45  267.44   688.18   45.7   216.9  2095732.77 6ccc9f2c0f70751e      28.7/6.45
+E  cpsat         classic  rand   hall         6  5000  4   0  5000  5000   78.713   46.64   130.3   521.64   98.4   399.8  2095732.77 2e6d36efdab35b80      32.2/6.39
+E  ortools_cbc   classic  rand   hall         6  5000  4   0  5000  5000   37.723   24.93   57.67   168.92   48.0   207.4  2095732.77 a7e7994743b3d4e5      19.1/7.21
+E  glpk          showdown rand   player-role  1  5000  1   0  5000  1147    4.467    0.27    1.33    38.08   41.3     0.0  1539027.57 24a9122d7998ac4f      30.6/7.08
+E  ortools_cbc   showdown rand   player-role  1  5000  1   0  5000  1149   70.529    7.89    34.1   175.93   52.7     0.0  1539027.57 3008d089f508302b      22.9/6.87
+E  highs_tuned   showdown rand   player-role  1  5000  1   0  5000  1149  116.424   20.71   42.77   148.84   49.5     0.0  1539027.57 3008d089f508302b      22.3/6.69
+E  cpsat         showdown rand   player-role  1  5000  1   0  5000  1147   64.223     7.4   27.34   156.57  102.3     0.0  1539027.57 da309c6cea809454      53.4/5.86
+F  glpk          classic  seq150 hall        12   150  1   0   150         63.907  382.31  976.65  1190.85   43.6     0.0    47202.03 146b62ab152f3e67   6  13.0/7.28
+
+DETERMINISM (same config, same seed, run twice: identical ordered lineup list?)
+  ('C', 'highs', 'showdown', 'seq150', 'player-role', 150, 1, 1): runs=2 identical=True hashes=['d359f0e77cea5f66']
+  ('C', 'highs_tuned', 'classic', 'seq150', 'hall', 150, 1, 6): runs=2 identical=True hashes=['05c52f3e5e4fa521']
+  ('C', 'highs_tuned', 'showdown', 'seq150', 'player-role', 150, 1, 1): runs=2 identical=True hashes=['ea348a1c9b8adcc3']
+  ('C', 'pulp_cbc', 'showdown', 'seq150', 'player-role', 150, 1, 1): runs=2 identical=True hashes=['8884f06c211dc47f']
+  ('C', 'ortools_cbc', 'classic', 'seq150', 'hall', 150, 1, 6): runs=2 identical=True hashes=['ea5579b002bed04a']
+  ('C', 'ortools_cbc', 'showdown', 'seq150', 'player-role', 150, 1, 1): runs=2 identical=True hashes=['8884f06c211dc47f']
+  ('C', 'cpsat', 'classic', 'seq150', 'hall', 150, 1, 6): runs=2 identical=True hashes=['cb0c2d32b688c8c6']
+  ('C', 'cpsat', 'showdown', 'seq150', 'player-role', 150, 1, 1): runs=2 identical=True hashes=['202ea6bb58002f74']
+  ('C', 'cpsat_mt', 'classic', 'seq150', 'hall', 150, 1, 6): runs=2 identical=False hashes=['1661f6120d93d092', '8f6403d677cf8473']
+  ('C', 'cpsat_mt', 'showdown', 'seq150', 'player-role', 150, 1, 1): runs=2 identical=False hashes=['2427d76d8933db89', 'bcc605867e5c607c']
+  ('C', 'scip', 'classic', 'seq150', 'hall', 150, 1, 6): runs=2 identical=True hashes=['4425c665b01d9e34']
+  ('C', 'scip', 'showdown', 'seq150', 'player-role', 150, 1, 1): runs=2 identical=True hashes=['3f0d41d3bd17cfec']
+  ('C', 'glpk', 'classic', 'seq150', 'hall', 150, 1, 6): runs=2 identical=True hashes=['b75d75cd5ce9ae16']
+  ('C', 'glpk', 'showdown', 'seq150', 'player-role', 150, 1, 1): runs=2 identical=True hashes=['7c0f98c0728f64a6']
+  ('C', 'highs_rebuild', 'showdown', 'seq150', 'player-role', 150, 1, 1): runs=2 identical=True hashes=['d359f0e77cea5f66']
+  ('D', 'highs', 'classic', 'rand', 'hall', 500, 1, 6): runs=2 identical=True hashes=['515f9229eb5e736e']
+  ('D', 'highs', 'showdown', 'rand', 'player-role', 500, 1, 1): runs=2 identical=True hashes=['f9fb3ad96d848366']
+  ('D', 'highs_tuned', 'classic', 'rand', 'hall', 500, 1, 6): runs=2 identical=True hashes=['df13435714e0c7cc']
+  ('D', 'highs_tuned', 'showdown', 'rand', 'player-role', 500, 1, 1): runs=2 identical=True hashes=['f9fb3ad96d848366']
+  ('D', 'ortools_cbc', 'classic', 'rand', 'hall', 500, 1, 6): runs=2 identical=True hashes=['515f9229eb5e736e']
+  ('D', 'ortools_cbc', 'showdown', 'rand', 'player-role', 500, 1, 1): runs=2 identical=True hashes=['f9fb3ad96d848366']
+  ('D', 'cpsat', 'classic', 'rand', 'hall', 500, 1, 6): runs=2 identical=True hashes=['2530ffb26064403d']
+  ('D', 'cpsat', 'showdown', 'rand', 'player-role', 500, 1, 1): runs=2 identical=True hashes=['0863ec92b180f679']
+  ('D', 'cpsat_mt', 'classic', 'rand', 'hall', 500, 1, 6): runs=2 identical=True hashes=['2530ffb26064403d']
+  ('D', 'cpsat_mt', 'showdown', 'rand', 'player-role', 500, 1, 1): runs=2 identical=False hashes=['0863ec92b180f679', 'ad7a820e5bb50958']
+  ('D', 'scip', 'classic', 'rand', 'hall', 500, 1, 6): runs=2 identical=True hashes=['3200375646346903']
+  ('D', 'scip', 'showdown', 'rand', 'player-role', 500, 1, 1): runs=2 identical=True hashes=['5faa7d73684d02df']
+  ('D', 'glpk', 'classic', 'rand', 'hall', 500, 1, 6): runs=2 identical=True hashes=['2530ffb26064403d']
+  ('D', 'glpk', 'showdown', 'rand', 'player-role', 500, 1, 1): runs=2 identical=True hashes=['8b3424733cb2f541']
+
+CROSS-SOLVER OBJECTIVE AGREEMENT (per-solve optimal objective vs glpk, same task/contest/n/form/games)
+  A highs         ('classic', 'seq150', 'slot', 20, 6): compared=20 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  A highs         ('classic', 'seq150', 'hall', 20, 6): compared=20 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  A cpsat         ('classic', 'seq150', 'slot', 20, 6): compared=20 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  A cpsat         ('classic', 'seq150', 'hall', 20, 6): compared=20 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  A ortools_cbc   ('classic', 'seq150', 'slot', 20, 6): compared=20 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  A ortools_cbc   ('classic', 'seq150', 'hall', 20, 6): compared=20 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  A scip          ('classic', 'seq150', 'slot', 20, 6): compared=20 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  A scip          ('classic', 'seq150', 'hall', 20, 6): compared=20 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  A pulp_cbc      ('classic', 'seq150', 'slot', 20, 6): compared=20 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  A pulp_cbc      ('classic', 'seq150', 'hall', 20, 6): compared=20 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  B highs         ('classic', 'single', 'hall', 1, 6): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B highs         ('classic', 'single', 'slot', 1, 6): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B highs         ('showdown', 'single', 'player-role', 1, 1): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B highs_tuned   ('classic', 'single', 'hall', 1, 6): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B highs_tuned   ('classic', 'single', 'slot', 1, 6): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B highs_tuned   ('showdown', 'single', 'player-role', 1, 1): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B pulp_cbc      ('classic', 'single', 'hall', 1, 6): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B pulp_cbc      ('classic', 'single', 'slot', 1, 6): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B pulp_cbc      ('showdown', 'single', 'player-role', 1, 1): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B ortools_cbc   ('classic', 'single', 'hall', 1, 6): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B ortools_cbc   ('classic', 'single', 'slot', 1, 6): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B ortools_cbc   ('showdown', 'single', 'player-role', 1, 1): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B cpsat         ('classic', 'single', 'hall', 1, 6): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B cpsat         ('classic', 'single', 'slot', 1, 6): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B cpsat         ('showdown', 'single', 'player-role', 1, 1): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B cpsat_mt      ('classic', 'single', 'hall', 1, 6): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B cpsat_mt      ('classic', 'single', 'slot', 1, 6): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B cpsat_mt      ('showdown', 'single', 'player-role', 1, 1): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B scip          ('classic', 'single', 'hall', 1, 6): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B scip          ('classic', 'single', 'slot', 1, 6): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  B scip          ('showdown', 'single', 'player-role', 1, 1): compared=1 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  C highs         ('classic', 'seq150', 'hall', 150, 6): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  C highs         ('showdown', 'seq150', 'player-role', 150, 1): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  C highs_tuned   ('classic', 'seq150', 'hall', 150, 6): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  C highs_tuned   ('showdown', 'seq150', 'player-role', 150, 1): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  C pulp_cbc      ('classic', 'seq150', 'hall', 150, 6): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  C pulp_cbc      ('showdown', 'seq150', 'player-role', 150, 1): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  C ortools_cbc   ('classic', 'seq150', 'hall', 150, 6): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  C ortools_cbc   ('showdown', 'seq150', 'player-role', 150, 1): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  C cpsat         ('classic', 'seq150', 'hall', 150, 6): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  C cpsat         ('showdown', 'seq150', 'player-role', 150, 1): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  C cpsat_mt      ('classic', 'seq150', 'hall', 150, 6): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  C cpsat_mt      ('showdown', 'seq150', 'player-role', 150, 1): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  C scip          ('classic', 'seq150', 'hall', 150, 6): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  C scip          ('showdown', 'seq150', 'player-role', 150, 1): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  C highs_rebuild ('showdown', 'seq150', 'player-role', 150, 1): compared=150 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  D highs         ('classic', 'rand', 'hall', 500, 6): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  D highs         ('showdown', 'rand', 'player-role', 500, 1): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  D highs_tuned   ('classic', 'rand', 'hall', 500, 6): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  D highs_tuned   ('showdown', 'rand', 'player-role', 500, 1): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  D pulp_cbc      ('classic', 'rand', 'hall', 500, 6): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  D pulp_cbc      ('showdown', 'rand', 'player-role', 500, 1): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  D ortools_cbc   ('classic', 'rand', 'hall', 500, 6): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  D ortools_cbc   ('showdown', 'rand', 'player-role', 500, 1): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  D cpsat         ('classic', 'rand', 'hall', 500, 6): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  D cpsat         ('showdown', 'rand', 'player-role', 500, 1): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  D cpsat_mt      ('classic', 'rand', 'hall', 500, 6): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=True
+  D cpsat_mt      ('showdown', 'rand', 'player-role', 500, 1): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  D scip          ('classic', 'rand', 'hall', 500, 6): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  D scip          ('showdown', 'rand', 'player-role', 500, 1): compared=500 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  E ortools_cbc   ('classic', 'rand', 'hall', 5000, 6): compared=5000 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  E highs_tuned   ('classic', 'rand', 'hall', 5000, 6): compared=5000 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  E cpsat         ('classic', 'rand', 'hall', 5000, 6): compared=5000 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  E scip          ('classic', 'rand', 'hall', 5000, 6): compared=5000 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  E highs_tuned   ('classic', 'rand', 'hall', 5000, 6): compared=5000 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  E cpsat         ('classic', 'rand', 'hall', 5000, 6): compared=5000 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  E ortools_cbc   ('classic', 'rand', 'hall', 5000, 6): compared=5000 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  E ortools_cbc   ('showdown', 'rand', 'player-role', 5000, 1): compared=5000 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  E highs_tuned   ('showdown', 'rand', 'player-role', 5000, 1): compared=5000 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False
+  E cpsat         ('showdown', 'rand', 'player-role', 5000, 1): compared=5000 max_abs_diff=0.0000 first_diverging_index=None identical_lineups=False

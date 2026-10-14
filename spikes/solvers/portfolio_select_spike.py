@@ -69,7 +69,10 @@ def main():
     ap.add_argument("--S", type=int, default=10000)
     ap.add_argument("--K", type=int, default=5000)
     ap.add_argument("--N", type=int, default=20000)
-    ap.add_argument("--M", type=int, default=150)
+    ap.add_argument("--Ms", type=int, nargs="+", default=[1, 3, 20, 150])
+    ap.add_argument("--sharp_frac", type=float, default=0.6, help="share of the field built from optimizer lineups")
+    ap.add_argument("--sharp_pool", type=int, default=3000)
+    ap.add_argument("--sharp_temp", type=float, default=10.0, help="higher = flatter sampling of sharp lineups = fewer duplicates")
     ap.add_argument("--cash_frac", type=float, default=0.20)
     ap.add_argument("--seed", type=int, default=11)
     ap.add_argument("--tag", default="portfolio_select_spike")
@@ -98,35 +101,77 @@ def main():
     t = time.perf_counter()
     ad0 = B.GlpkAdapter(P, a.seed)
     _, opt = ad0.solve()
-    fl, tries = field(players, a.N, a.seed + 1, a.field_floor * opt)
+    n_sharp = int(round(a.sharp_frac * a.N))
+    # sharp part of the field: a pool of optimizer lineups built from a DIFFERENT noise seed (opponents with their own
+    # projections), sampled with replacement in proportion to exp(projection / sharp_temp), which creates duplicates
+    adf = B.GlpkAdapter(P, a.seed + 1000)
+    sharp_pool = []
+    for k in range(a.sharp_pool):
+        adf.set_obj(B.col_obj(P, players, B.perturbed(players, a.seed + 1000, k)))
+        sel, _ = adf.solve()
+        ok, key, _ = B.validate(P, players, sel)
+        sharp_pool.append(key)
+    sharp_pool = np.array(sorted(set(sharp_pool)))
+    proj = np.array([p["proj"] for p in players])
+    sp = proj[sharp_pool].sum(1)
+    w = np.exp((sp - sp.max()) / a.sharp_temp)
+    rng = np.random.default_rng(a.seed + 7)
+    sharp = sharp_pool[rng.choice(len(sharp_pool), size=n_sharp, p=w / w.sum())]
+    casual, tries = field(players, a.N - n_sharp, a.seed + 1, a.field_floor * opt)
+    fl = [tuple(r) for r in sharp] + casual
     T["field_s"] = time.perf_counter() - t
     fu, fcount = np.unique(np.array(fl), axis=0, return_counts=True)  # unique field lineups + dup counts
-    field_dup = {tuple(r): int(c) for r, c in zip(fu, fcount)}
+    field_dup = {tuple(int(x) for x in r): int(c) for r, c in zip(fu, fcount)}
 
     # per-scenario cut lines, streamed over scenario chunks; only unique field lineups scored, weighted by counts
     t = time.perf_counter()
     k1 = int(np.ceil(0.01 * a.N))
     kc = int(np.ceil(a.cash_frac * a.N))
-    line1 = np.empty(a.S, np.float32)
-    linec = np.empty(a.S, np.float32)
     order_w = fcount
-    chunk = 250
-    for s0 in range(0, a.S, chunk):
-        Xs = X[s0:s0 + chunk]
-        F = Xs[:, fu].sum(axis=2)  # chunk x unique_field
-        for r in range(F.shape[0]):
-            o = np.argsort(-F[r])
-            cw = np.cumsum(order_w[o])
-            line1[s0 + r] = F[r, o[np.searchsorted(cw, k1)]]
-            linec[s0 + r] = F[r, o[np.searchsorted(cw, kc)]]
+    chunk = 500
+    nP = len(players)
+    Af = np.zeros((nP, len(fu)), dtype=np.float32)  # player x unique-field-lineup incidence
+    for col, row in enumerate(fu):
+        Af[row, col] = 1.0
+
+    def cut_lines(Xs_all):
+        l1 = np.empty(len(Xs_all), np.float32)
+        lc = np.empty(len(Xs_all), np.float32)
+        for s0 in range(0, len(Xs_all), chunk):
+            F = Xs_all[s0:s0 + chunk] @ Af  # chunk x unique_field, one matrix multiply
+            for r in range(F.shape[0]):
+                o = np.argsort(-F[r])
+                cw = np.cumsum(order_w[o])
+                l1[s0 + r] = F[r, o[np.searchsorted(cw, k1)]]
+                lc[s0 + r] = F[r, o[np.searchsorted(cw, kc)]]
+        return l1, lc
+
+    line1, linec = cut_lines(X)
     T["cutlines_s"] = time.perf_counter() - t
 
     t = time.perf_counter()
     U = np.array(uniq)
-    CS = X[:, U].sum(axis=2)  # S x K_unique float32
-    H1 = (CS > line1[:, None]).T.copy()  # K x S bool (strict: a tie at the line is treated as a miss here)
-    HC = (CS > linec[:, None]).T.copy()
+    Ac = np.zeros((nP, len(U)), dtype=np.float32)
+    for col, row in enumerate(U):
+        Ac[row, col] = 1.0
+    CS = X @ Ac  # S x K_unique float32 (matrix multiply; avoids a S x K x 8 temporary)
+    H1 = (CS >= line1[:, None]).T.copy()  # K x S bool (a tie at the line counts as a hit; the prize would be split)
+    HC = (CS >= linec[:, None]).T.copy()
     T["hits_s"] = time.perf_counter() - t
+
+    # HELD-OUT check: a second, independent scenario set (same players, same field). Selection only ever sees X;
+    # every chosen set is re-scored on X2 so in-sample optimism is visible.
+    t = time.perf_counter()
+    X2 = scenarios(players, a.S, a.seed + 99)
+    line1b, linecb = cut_lines(X2)
+    CS2 = X2 @ Ac
+    H1b = (CS2 >= line1b[:, None]).T.copy()
+    HCb = (CS2 >= linecb[:, None]).T.copy()
+    del CS2
+    T["heldout_lines_and_hits_s"] = time.perf_counter() - t
+
+    def heldout(chosen):
+        return float(H1b[chosen].any(0).mean()), float(1 - HCb[chosen].any(0).mean())
 
     def greedy(score_fn, M):
         chosen = []
@@ -143,28 +188,33 @@ def main():
         return chosen, cov1.mean(), 1 - covc.mean()
 
     t = time.perf_counter()
+    proj_u = proj[U].sum(1)
     res = {}
-    res["greedy_top1"] = greedy(lambda c1, cc: H1[:, ~c1].sum(1).astype(float), a.M)
-    res["greedy_cash"] = greedy(lambda c1, cc: HC[:, ~cc].sum(1).astype(float), a.M)
-    # lexicographic-ish blend: top-1% coverage gain plus a weight on newly covered no-cash scenarios
-    res["greedy_blend_w0.5"] = greedy(lambda c1, cc: H1[:, ~c1].sum(1) + 0.5 * HC[:, ~cc].sum(1).astype(float), a.M)
-    proj = np.array([p["proj"] for p in players])
-    topproj = np.argsort(-proj[U].sum(1))[: a.M]
-    res["top_projection"] = (list(topproj), H1[topproj].any(0).mean(), 1 - HC[topproj].any(0).mean())
-    T["greedy_3x_s"] = time.perf_counter() - t
+    for M in a.Ms:
+        r = {}
+        r["greedy_top1"] = greedy(lambda c1, cc: H1[:, ~c1].sum(1).astype(float), M)
+        r["greedy_cash"] = greedy(lambda c1, cc: HC[:, ~cc].sum(1).astype(float), M)
+        r["greedy_blend_w0.5"] = greedy(lambda c1, cc: H1[:, ~c1].sum(1) + 0.5 * HC[:, ~cc].sum(1).astype(float), M)
+        r["greedy_blend_w2"] = greedy(lambda c1, cc: H1[:, ~c1].sum(1) + 2.0 * HC[:, ~cc].sum(1).astype(float), M)
+        topproj = list(np.argsort(-proj_u)[:M])
+        r["top_projection"] = (topproj, H1[topproj].any(0).mean(), 1 - HC[topproj].any(0).mean())
+        res[M] = r
+    T["greedy_all_s"] = time.perf_counter() - t
 
     out = dict(
         S=a.S, K_solves=a.K, field_floor=a.field_floor, K_unique=len(uniq), N_field=a.N, field_unique=len(fu), field_tries=tries,
-        field_max_dup=int(fcount.max()), M=a.M, cash_frac=a.cash_frac,
+        field_max_dup=int(fcount.max()), Ms=a.Ms, cash_frac=a.cash_frac, sharp_frac=a.sharp_frac, sharp_temp=a.sharp_temp,
         timings_s={k: round(v, 2) for k, v in T.items()},
         peak_wset_mb=round(getattr(proc.memory_info(), "peak_wset", 0) / 2**20, 1),
-        arrays_mb=dict(scenarios=round(X.nbytes / 2**20, 1), cand_scores=round(CS.nbytes / 2**20, 1),
+        arrays_mb=dict(scenarios=round(X.nbytes / 2**20, 1), cand_scores=round(CS.nbytes / 2**20, 1), field_incidence=round(Af.nbytes / 2**20, 1),
                        H1_bool=round(H1.nbytes / 2**20, 1), H1_bitpacked=round(np.packbits(H1, axis=1).nbytes / 2**20, 2)),
-        results={k: dict(P_at_least_one_top1=round(float(v[1]), 4), P_no_cash=round(float(v[2]), 4),
-                         mean_field_dups_of_chosen=round(float(np.mean([field_dup.get(tuple(U[j]), 0) for j in v[0]])), 3))
-                 for k, v in res.items()},
+        results={f"M={M}": {k: dict(P_at_least_one_top1=round(float(v[1]), 4), P_no_cash=round(float(v[2]), 4),
+                                    heldout_P_at_least_one_top1=round(heldout(list(v[0]))[0], 4), heldout_P_no_cash=round(heldout(list(v[0]))[1], 4),
+                                    mean_field_dups_of_chosen=round(float(np.mean([field_dup.get(tuple(int(x) for x in U[j]), 0) for j in v[0]])), 3))
+                             for k, v in r.items()} for M, r in res.items()},
+        field_dups_of_top_projection_lineup=int(field_dup.get(tuple(int(x) for x in U[int(np.argmax(proj_u))]), 0)),
         single_best_lineup_P_top1=round(float(H1.mean(1).max()), 4),
-        note="synthetic data; shows cost and trade-off shape only",
+        note="synthetic data; shows cost and trade-off shape only. P_* = in-sample (the scenarios used to select); heldout_P_* = independent scenario set",
     )
     stamp = dt.datetime.now().strftime("%Y%m%d-%H%M")
     path = os.path.join(HERE, "out", f"{stamp}_{a.tag}.json")

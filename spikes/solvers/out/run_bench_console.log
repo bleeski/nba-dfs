@@ -98,3 +98,15 @@ D glpk showdown rand 500 hall 1 -> 0.372 s
 D glpk showdown rand 500 hall 1 -> 0.374 s 
 E glpk classic rand 5000 hall 1 -> 21.814 s 
 E ortools_cbc classic rand 5000 hall 1 -> 131.308 s 
+E highs_tuned classic rand 5000 hall 1 -> 403.344 s 
+E cpsat classic rand 5000 hall 1 -> 267.039 s 
+E scip classic rand 5000 hall 1 -> 286.451 s 
+E glpk classic rand 5000 hall 4 -> 7.597 s 
+E highs_tuned classic rand 5000 hall 4 -> 123.807 s 
+E cpsat classic rand 5000 hall 4 -> 78.713 s 
+E ortools_cbc classic rand 5000 hall 4 -> 37.723 s 
+E glpk showdown rand 5000 None 1 -> 4.467 s 
+E ortools_cbc showdown rand 5000 None 1 -> 70.529 s 
+E highs_tuned showdown rand 5000 None 1 -> 116.424 s 
+E cpsat showdown rand 5000 None 1 -> 64.223 s 
+F glpk classic seq150 150 hall 1 -> 63.907 s 

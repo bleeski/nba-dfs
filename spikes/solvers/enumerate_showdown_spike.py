@@ -33,3 +33,35 @@ out = dict(players=n, util_sets=len(U), legal_lineups=sum(rows), legal_per_capta
 stamp = dt.datetime.now().strftime("%Y%m%d-%H%M")
 path = os.path.join(HERE, "out", f"{stamp}_enumerate_showdown.json")
 json.dump(out, open(path, "w"), indent=1); print(json.dumps(out)); print("WROTE", path)
+
+# ---- part 2: reproduce the 150-lineup overlap sequence (at most 4 shared players) by enumeration instead of a solver
+t1 = time.perf_counter()
+caps, utils, projs = [], [], []
+for c in range(n):
+    mask = ~(U == c).any(1)
+    tot = usal[mask] + 1.5 * sal[c]; tm = uteam[mask] + team[c]
+    ok = (tot <= 50000) & (tm > 0) & (tm < 6)
+    Uc = U[mask][ok]
+    caps.append(np.full(len(Uc), c, dtype=np.int16)); utils.append(Uc); projs.append(uproj[mask][ok] + cptproj[c])
+CAPS = np.concatenate(caps); UTILS = np.concatenate(utils); PROJ = np.round(np.concatenate(projs), 2)
+members = np.zeros((len(CAPS), n), dtype=bool)
+members[np.arange(len(CAPS)), CAPS] = True
+for k in range(5):
+    members[np.arange(len(CAPS)), UTILS[:, k]] = True
+order = np.argsort(-PROJ, kind="stable")
+allowed = np.ones(len(CAPS), dtype=bool)
+picked = []
+for it in range(150):
+    cand = order[allowed[order]]
+    if len(cand) == 0:
+        break
+    j = cand[0]
+    picked.append(int(j))
+    shared = members[:, members[j]].sum(1)  # players shared with the new pick
+    allowed &= shared <= 4
+t_seq = time.perf_counter() - t1
+obj_sum = round(float(PROJ[picked].sum()), 2)
+out2 = dict(seq150_by_enumeration_s=round(t_seq, 3), picked=len(picked), obj_sum=obj_sum, solver_seq150_obj_sum_from_bench=36226.67,
+            first_obj=float(PROJ[picked[0]]), last_obj=float(PROJ[picked[-1]]))
+path2 = os.path.join(HERE, "out", f"{stamp}_enumerate_showdown_seq150.json")
+json.dump(out2, open(path2, "w"), indent=1); print(json.dumps(out2)); print("WROTE", path2)

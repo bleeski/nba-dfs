@@ -21,13 +21,19 @@ Benchmark `spikes/solvers/bench_solvers.py` on a synthetic 6-game, about 120-pla
 - Determinism: repeat runs gave identical lineup hashes (for example GLPK 5,000 lineups with 1 and 4 processes both hash `57f714200c68d5a7`).
 - Showdown: all 440,121 legal lineups of a 22-player pool listed in 0.015 seconds, and the best matched the solver optimum exactly (`20261013-1700_enumerate_showdown.json`).
 
+- Ties: every solver reached the identical optimal value on every solve, but solvers often returned different lineups among equally good ones (R2, VERIFIED). Single-threaded runs were repeatable for every solver; CP-SAT with 8 workers was not (3 of 4 checks differed).
+- At 240 players, per-solve time rose 1.5x to 2.5x with the same ranking (R2 phase F).
+
 ## Options considered
 
-PuLP with CBC (the user's suggestion; PuLP 2.4 pinned by pydfs-lineup-optimizer ships an old CBC build and was among the slowest here), HiGHS, OR-Tools CBC and CP-SAT, SCIP, and GLPK.
+PuLP with CBC (the user's suggestion; PuLP 2.4 pinned by pydfs-lineup-optimizer ships a 2015 CBC build plus 35 to 50 ms of file and process overhead per solve), HiGHS, OR-Tools CBC and CP-SAT, SCIP, and GLPK.
+
+**Disagreement on record.** The R2 research memo recommends OR-Tools CBC as primary, HiGHS as fallback, and GLPK only as an optional fast path, because GLPK is GPL-3 and unchanged since 2020. This record chooses GLPK as primary anyway: the GPL does not bind a private tool that is never distributed; "unchanged since 2020" means stable for problems this small; and the roughly 10x speed difference buys headroom for 12-game slates, 240-player pools and late-news re-runs. The fallback design below covers the maintenance risk. If `swiglpk` ever lacks a wheel for the engine's Python version, OR-Tools CBC becomes primary with no other change.
 
 ## Decision
 
-- **Classic candidates:** GLPK through `swiglpk`, with a persistent model whose objective is replaced for each scenario, the Hall formulation, no wall-clock time limit, one solve per worker process, results merged in a fixed order.
+- **Classic candidates:** GLPK through `swiglpk`, with a persistent model whose objective is replaced for each scenario, the Hall formulation, no wall-clock time limit, one single-threaded solve per worker process, results merged in a fixed order.
+- **Deterministic tie-break:** each objective adds a tiny, fixed perturbation keyed by the player's stable identifier (far smaller than any real point difference), so equally good lineups resolve the same way on every solver and every run.
 - **Fallback solver:** OR-Tools CBC (Apache 2.0), behind the same small interface, used automatically if GLPK fails to load; also the reference implementation in tests (both must return the same optimum).
 - **Showdown:** full enumeration, screened, no solver.
 - **Not chosen:** PuLP (slow, old CBC), HiGHS (slowest per lineup here), sequential overlap-constrained generation (slow and unnecessary, because selection creates diversity).

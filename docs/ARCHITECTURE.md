@@ -430,7 +430,8 @@ The engine builds a wide pool of legal lineups that each win some plausible vers
 - **Measured (VERIFIED, indicative, other jobs running):** median 2.2 milliseconds per Classic lineup; 5,000 lineups in 21.8 seconds on one process and 7.6 seconds on four, with identical lineups on repeat runs (`spikes/solvers/out/20261013-1656_bench_summary.txt`). OR-Tools CBC took 37.7 seconds for the same 5,000 on four processes.
 - **Inputs:** (a) individual simulated scenarios ("the best lineup if the night goes exactly like this"), (b) mean projections minus several weights on public-view ownership, (c) structural variants such as game stacks with players from both teams, (d) lightly perturbed means. Duplicates are removed after a canonical sort.
 - **Formulation:** one yes/no variable per player plus position-feasibility rows, 5x to 25x faster than the "player in slot" model with identical lineups (R2, VERIFIED). Slot assignment is a separate later step.
-- **No wall-clock limits,** so the same inputs give the same lineups (ADR-021).
+- **No wall-clock limits, single-threaded solves, and a deterministic tie-break** (a tiny fixed perturbation keyed by each player's stable identifier), because every solver found the same optimal value but often returned different equally good lineups (R2, VERIFIED). The same inputs then give the same lineups (ADR-021).
+- **R2 recommended OR-Tools CBC as primary** for maintenance reasons; this design keeps GLPK for its roughly 10x speed and makes OR-Tools CBC the automatic fallback (disagreement recorded in ADR-006).
 - **Pool size:** about 4,000 to 20,000 per Classic slate. Runtime: TODO-R9.
 
 **Showdown** (Captain plus 5 UTIL, both teams): every legal lineup is listed (about 440,000 for a 22-player pool in 0.015 seconds, R2, VERIFIED), then screened before full scoring. No solver is needed.
@@ -442,7 +443,8 @@ The engine builds a wide pool of legal lineups that each win some plausible vers
 3. **Per contest, lazy greedy coverage:** repeatedly add the candidate that adds the most top-1% probability given the entries already chosen (raw probability in opening week; duplicate-adjusted once calibrated). Because the objective takes the best of our entries in each scenario, adding a lineup never lowers it, so greedy selection is provably at least about 63% as good as the best set from the same pool, and usually much closer (R2, VERIFIED theorems). The result is each contest's best Goal 1, `G1*_c`.
 4. **Night insurance search:** starting from step 3, single-lineup swaps in any contest that lower washout while every contest keeps at least `(1 - epsilon) x G1*_c`, checked on the reporting and validation set. Skipped, with a line in the brief, when washout at 0% is under 1%.
 5. **Local improvement:** deterministic single-player swaps (for example a near-identical player with lower public ownership) kept only if they beat simulation noise without breaking any guarantee.
-6. **Report** every number from the reporting set.
+6. **Report** every number from the reporting set. On synthetic data, greedy selection's in-sample top-1% probabilities ran 0.7 to 3 points too high, while on fresh scenarios it still beat simply taking the top projections (47% against 35% with 20 entries) (R2, VERIFIED on synthetic data), which is why selection and reporting never share scenarios.
+7. **Memory:** candidate scoring uses matrix multiplication rather than index gathers (a naive version peaked at 3.5 GB; the rewrite at 645 MB, R2), and processes scenarios in chunks.
 
 ### Guardrails (in code)
 
