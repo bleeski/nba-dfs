@@ -2,7 +2,9 @@
 
 **Every build session reads this file first and updates it last.** The plan is `docs/build/BUILD_PLAN.md`; chunk files are in `docs/build/chunks/`; interfaces are in `docs/build/CONTRACTS.md`; the protocol, including change control, is in `CLAUDE.md`; the owner's day-by-day list is `docs/build/OWNER_CHECKLIST.md`.
 
-**Changelog:** 2026-10-14 (ADJUDICATION-R2 entries R2-33 and R2-34): the owner's Oct 14 files recorded as captured; `floor` starts enabled. 2026-10-14 (design final, ADJUDICATION-R2): reset for the final design. C04 replaced by C04a and C04b, C11 by C11a and C11b (R2-1); status `deferred (after opening night)` added; milestone M1b added; capability table carries versioned rehearsals (R2-16); a change-request log added (change control in `CLAUDE.md`). 2026-10-14: created.
+**Changelog:** 2026-10-14 (owner's request): the owner's build tracker page added; every session mirrors its status there (CLAUDE.md step 12). 2026-10-14 (ADJUDICATION-R2 entries R2-33 and R2-34): the owner's Oct 14 files recorded as captured; `floor` starts enabled. 2026-10-14 (design final, ADJUDICATION-R2): reset for the final design. C04 replaced by C04a and C04b, C11 by C11a and C11b (R2-1); status `deferred (after opening night)` added; milestone M1b added; capability table carries versioned rehearsals (R2-16); a change-request log added (change control in `CLAUDE.md`). 2026-10-14: created.
+
+**Build tracker (the owner's progress page):** https://claude.ai/artifact/894yJvrf5PpRwaKXyxA4Tm. It explains each chunk in business terms and shows its status; every build session mirrors this file's status for its chunk there (CLAUDE.md step 12). This file stays the source of truth.
 
 **Owner files already captured:** the owner's real Oct 14 Classic and Showdown entries and salary files (pre-lock) are archived in `data/archive/2026-10-14/` with a hash manifest (local only; never committed). C01's `scripts/build_fixtures.py` copies them into `fixtures/dk/2026-10-14/`.
 

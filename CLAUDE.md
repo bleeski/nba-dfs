@@ -2,7 +2,7 @@
 
 NBA DFS engine for DraftKings (Classic and Showdown Captain Mode), built in chunked Claude Code sessions and run nightly on this Windows laptop. The owner is a product manager, not an engineer: write to him in plain language, lead with the answer, define jargon once, give every technical choice one sentence on what it means for results, cost or his nightly workload, and use no em dashes.
 
-**Changelog:** 2026-10-14 (ADJUDICATION-R2 entry R2-33): the repository is public, so real DraftKings files, third-party downloads and the standings salt never enter git. 2026-10-14 (design final, ADJUDICATION-R2): change-control rule added; step 3 explains `deferred`; the chunk split (C04a, C04b, C11a, C11b) and the design-final file list. 2026-10-14: created.
+**Changelog:** 2026-10-14 (owner's request, approved in chat): every build session updates the owner's build tracker page (step 12; started in step 3), renumbering the closing step to 13. 2026-10-14 (ADJUDICATION-R2 entry R2-33): the repository is public, so real DraftKings files, third-party downloads and the standings salt never enter git. 2026-10-14 (design final, ADJUDICATION-R2): change-control rule added; step 3 explains `deferred`; the chunk split (C04a, C04b, C11a, C11b) and the design-final file list. 2026-10-14: created.
 
 ## What this repo is
 
@@ -15,16 +15,17 @@ NBA DFS engine for DraftKings (Classic and Showdown Captain Mode), built in chun
 
 1. Read `docs/build/PROGRESS.md` first. If the chunk is `done`, stop and say so. If it is `in progress (checkpoint N)`, resume from the handoff notes. If it is `deferred (after opening night)` and opening night has not passed, stop and say so.
 2. Read the chunk file `docs/build/chunks/<id>-*.md` second (chunk IDs include suffixes such as `C04a`), then only the files and sections its reading list names. Do not read the whole architecture.
-3. Check that the chunk's dependencies are `done` in PROGRESS.md. A dependency that is `not started`, `in progress`, `blocked` or `deferred` is not done: stop and tell the owner which chunk to run first.
+3. Check that the chunk's dependencies are `done` in PROGRESS.md. A dependency that is `not started`, `in progress`, `blocked` or `deferred` is not done: stop and tell the owner which chunk to run first. If every dependency is done, mark the chunk `in_progress` on the build tracker (step 12).
 4. Build only this chunk's scope. Anything else you find goes in PROGRESS.md under "Things found but out of scope".
 5. Contracts first: confirm the consumed contracts exist in `src/nbadfs/schemas/`; produce this chunk's contracts as code and fixtures before behavior.
-6. Work checkpoint by checkpoint. At each checkpoint the tests pass and the engine still runs. If the session is running long or passes the chunk's usage budget, stop at the last checkpoint, write handoff notes in PROGRESS.md, commit, and tell the owner to run `/run-chunk <id>` again in a new session.
+6. Work checkpoint by checkpoint. At each checkpoint the tests pass and the engine still runs. If the session is running long or passes the chunk's usage budget, stop at the last checkpoint, write handoff notes in PROGRESS.md, commit, update the build tracker (step 12), and tell the owner to run `/run-chunk <id>` again in a new session.
 7. Consult the advisor (`/advisor`, configured as Fable; if a session does not expose the advisor tool, an independent reviewer subagent with model `fable` that reads only the chunk file and the code in question) when stuck on one problem for more than about 20 minutes, and once before declaring the chunk done, with one named question. Log each consultation in `docs/research/advisor-log.md`. Never call the advisor during a nightly run.
 8. Run the tests: `uv run pytest -m smoke` (under 60 seconds, including the docs checker) and this chunk's tests; the full suite where it exists (under 5 minutes).
 9. Do the chunk's "What I check" step yourself first, and tell the owner the plain-language check and its expected result.
 10. Update PROGRESS.md: status, finished date, commit hash, usage (ask the owner to read `/usage` and type the five-hour and weekly shares), deviations, handoff notes. After C04a, also record the M1 usage reading (C01 to C04a together) and say whether the Floor-only branch applies.
 11. Commit with the chunk ID first in the message (`C04a: Floor core, scoring, simple points`). Do not push unless the owner asks.
-12. Stop. Do not start the next chunk. End with: what was built, what the owner checks, and the one line to type next.
+12. Update the build tracker, the owner's progress page at https://claude.ai/artifact/894yJvrf5PpRwaKXyxA4Tm, with the `ArtifactData` tool (load it with ToolSearch if it is deferred). `get` collection `chunks`, doc_id the chunk ID (for example `C04a`), then `update` that document, passing the version you read as `if_version`. Set `status` to match PROGRESS.md (`done`; `in_progress` with the checkpoint in the note; `blocked` with the reason in the note; or `deferred`), `note` (one plain-language sentence for the owner: what was built, or where it stopped and why), `updatedAt` (ISO 8601 time) and `updatedBy` (`claude`), and when the chunk is done also `finished` (YYYY-MM-DD) and `commit` (the short hash from step 11). PROGRESS.md stays the source of truth: if the tool is unavailable or the write fails, say so in the closing message and carry on; never block a chunk on the tracker, and never touch it during a nightly run.
+13. Stop. Do not start the next chunk. End with: what was built, what the owner checks, and the one line to type next.
 
 ## Change control (the design is final as of 2026-10-14)
 
