@@ -104,3 +104,7 @@ espn_summary 200 {'status': 'In Progress', 'keys': ['againstTheSpread', 'boxscor
 nba_scoreboardv3 200 {'gameStatus': 2, 'text': '4th Qtr             ', 'period': 4, 'clock': 'PT07M29.00S', 'score': (94, 115)}
 nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
 espn_summary 200 {'status': 'In Progress', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'leaders', 'meta', 'news', 'odds', 
+nba_scoreboardv3 200 {'gameStatus': 3, 'text': 'Final', 'period': 4, 'clock': '', 'score': (116, 132)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_summary 200 {'status': 'Final', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'leaders', 'meta', 'news', 'odds', 'pickc
+end None {'blocked': []}
