@@ -86,6 +86,14 @@ P(f"thresholds A: {json.dumps(r['thresholds_A_summary'])}")
 P("")
 
 # ---------------- washout by entry profile, with and without belief layer
+P("## Per-entry cash rate of our entries, greedy portfolio, held-out B (paid share 22%)")
+for k, (f, D) in runs.items():
+    for pk, v in D["results"]["washout_by_profile_eps0"].items():
+        if "per_entry_cash_mean_B" in v:
+            P(f"{k} {pk}: all entries {pct(v['per_entry_cash_mean_B'], 1)}, single-entry contests {pct(v['per_entry_cash_single_entry_B'], 1)}, by contest {v['per_entry_cash_by_contest_B']}")
+    if "edge_layer" in D["results"]:
+        P(f"{k} edge layer: {D['results']['edge_layer']}")
+P("")
 P("## P(W) at eps 0 (greedy, pure goal 1), held-out B")
 P("| run | " + " | ".join(["profile entries", "P(W) hit", "SE", "washout scen", "upper95 if 0", "P(W) binomial", "P(W) on V"]) + " |")
 P("|---|---|---|---|---|---|---|---|")
@@ -103,7 +111,7 @@ P("")
 
 
 def frontier_block(lab, label):
-    if lab not in runs:
+    if lab not in runs or f"{label}_frontier_B" not in runs[lab][1]["results"]:
         return
     rr = runs[lab][1]["results"]
     t = rr[f"{label}_frontier_B"]
@@ -129,6 +137,8 @@ def frontier_block(lab, label):
 for lab in runs:
     frontier_block(lab, "spec")
     frontier_block(lab, "small")
+    frontier_block(lab, "spec_margin2")
+    frontier_block(lab, "small_margin2")
 for lab, (f, D) in runs.items():
     rr = D["results"]
     P(f"## Counterfactual clusters {lab}: {json.dumps(rr.get('counterfactual_clusters'))}")

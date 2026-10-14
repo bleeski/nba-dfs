@@ -4,7 +4,7 @@
 
 ## Context
 
-Classic needs thousands of candidate lineups per slate, each the best legal lineup for some set of point values (one simulated scenario, or leverage-adjusted means). Showdown has a small enough lineup space to list. The brief asks for a free solver chosen on merits (the user mentioned PuLP). Results must be deterministic for replay and common random numbers (ADR-021).
+Classic needs thousands of candidate lineups per slate, each the best legal lineup for some set of point values (one simulated scenario, or means adjusted down for public ownership). Showdown has a small enough lineup space to list. The brief asks for a free solver chosen on merits (the user mentioned PuLP). Results must be deterministic for replay and common random numbers (ADR-021).
 
 ## Evidence (VERIFIED, indicative timings: other agents were running on the laptop)
 

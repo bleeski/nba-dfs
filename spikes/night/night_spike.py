@@ -6,6 +6,8 @@ Synthetic data only. Nothing here is engine code and nothing should import it.
   python night_spike.py --games 8 --showdowns 3 --S 30000 --workers 8 --belief-err 0 --tag night8
   python night_spike.py --games 8 --showdowns 3 --S 30000 --workers 8 --belief-err 1 --berr-scale 2 --tag night8
   python night_spike.py --games 2 --showdowns 2 --S 30000 --workers 8 --late-news --belief-err 1 --tag night2
+  python night_spike.py --games 8 --showdowns 3 --S 30000 --workers 8 --edge-sd 0.10 --edge-sel mix --skip-simtiming --tag edge8
+  python night_spike.py --games 8 --showdowns 3 --S 10000 --workers 8 --edge-sd 0.10 --edge-sel one --skip-simtiming --tag edge8
 
 S scenarios are split into selection set A (S/2) and validation set V (S/2); an independent test set B (S) is used only for reporting.
 Writes out/<stamp>_<tag>_be<flag>_S<S>.json (rewritten after every step) and a matching .txt console log.

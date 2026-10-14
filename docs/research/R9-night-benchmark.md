@@ -356,3 +356,72 @@ The user's hunch: "the two goals conflict less than they look, since both reward
 - **Field too flat in Classic.** The top implied ownership is 22%, against real NBA chalk that often reaches 40% or more. That makes field lines lower and duplication rarer than real. BET.
 - **Swap search is local and data-hungry.** It stops as soon as V shows zero washout, so the "unconstrained" end is limited by V's size (15,000 scenarios). Per-contest G1 on V carries 1% to 5% relative noise, which the search exploits. VERIFIED.
 - **Timing and load.** Timings are for this laptop on AC power at 14% to 19% background CPU. They will vary by a few seconds between runs. VERIFIED.
+
+## Edge uncertainty (added after review, time-boxed run)
+
+**Question.** Does washout appear, and does the hunch survive, when our private disagreements with the public are only partly right, and the size of that "partly" is shared by every contest on the night?
+
+**Setup.** All values BET. Raw output: `spikes/night/out/20261013-1957_edge8_be1_edge0.1mix_S30000.json`, called EDGE-30k. 8-game night, S = 30,000 (A and V 15,000 each, test set B 30,000).
+- **Public view.** The previous projections. The field and DK salaries use it.
+- **Engine view.** Public mean x d, with d ~ lognormal(0, 0.10) per player, drawn once for the night. The realized spread of log d was 0.091, and d ranged from 0.79 to 1.22. Our mean-based and Showdown candidates use the engine view.
+- **Truth in each scenario.** Every player's points are multiplied by 1 + w x (d - 1), with w ~ Beta(2, 3) drawn once per scenario and shared by every player and contest. Outcome noise and the symmetric belief-error layer stay on top.
+- **Scenario sets.** The selection, validation and test sets all draw w this way, so the engine knows its edge is uncertain.
+- **Safety margin.** The swap search was run with and without it. With it, each contest must keep G1 at least (1 - epsilon + 2 x SE) x G1\*, where SE is that contest's relative Monte Carlo error on V.
+
+**(1) Per-entry cash rate: not a modest edge.** VERIFIED (EDGE-30k).
+- Our entries cash 35.8% of the time across all 118 entries, and 41.6% in single-entry contests, against 22% paid. Before this layer it was 31% to 44%.
+- The reason is the construction. w lies between 0 and 1 in every scenario, so the truth always sits partway toward our view. Our private deviations are never wrong-way; they are only partly right. That adds edge instead of removing it: G1 for the N = 150 single entry rose to 3.7%.
+- Reducing our disagreement would not bring the cash rate below 30%, because most of the edge comes from the weak synthetic field, not from d.
+- To get a modest edge, the next run should either let w go below 0 (for example w = 1.5 x Beta(2, 3) - 0.3, so on some nights the public was right and we were wrong), or strengthen the field. BET.
+
+**(2) Washout of the pure-G1 portfolio, test set B.** VERIFIED (EDGE-30k).
+
+| Entries | P(W) | SE | Washout scenarios of 30,000 | P(W), binomial estimator |
+|---|---|---|---|---|
+| 25 | 0.753% | 0.050 | 226 | 0.701% |
+| 50 | 0.003% | 0.003 | 1 | 0.004% |
+| 118 | 0 (below 0.010% at 95%) | | 0 | 0 |
+
+At 25 entries washout rose from 0.513% to 0.753%, about +47%. At 118 entries it stayed at 0: the 60-entry 150-max still cashed in every scenario. The shared w makes our failures move together, but not enough to sink 60 entries at this edge.
+
+**(3) Frontier, test set B.** VERIFIED (EDGE-30k).
+
+At 118 entries every row, with or without the margin, equals the greedy portfolio (P(W) = 0). At 25 entries:
+
+| Portfolio | Swaps | P(W) on V | P(W) on B (SE) | Change vs greedy (paired SE) | Mean G1 loss | Max G1 loss |
+|---|---|---|---|---|---|---|
+| Greedy, pure goal 1 | 0 | 0.673% | 0.753% (0.050) | | 0% | 0% |
+| eps 0, with 2-SE margin | 0 | 0.673% | 0.753% (0.050) | 0 | 0% | 0% |
+| eps 2%, with margin | 6 | 0.160% | 0.243% (0.028) | -0.510 pp (0.047) | 0.2% | 2.0% (150-max, 0.980 ± 0.007) |
+| eps 5%, with margin | +4 | 0.100% | 0.193% (0.025) | -0.560 pp (0.048) | 0.4% | 4.7% (150-max, 0.953 ± 0.008) |
+| Unconstrained | +5 (via eps 10% and 20%) | 0.000% | 0.113% (0.019) | -0.640 pp (0.050) | 2.5% | 16.3% (150-max) |
+| *No margin, for comparison:* eps 0 | 8 | 0.120% | 0.243% (0.028) | -0.510 pp | 0.4% | 2.2% |
+| *No margin:* eps 5% | +5 | 0.007% | 0.130% (0.021) | -0.623 pp | 2.5% | 7.7% (3-max, 0.923 ± 0.025) |
+| One thesis: games 0 to 2 all over | | | 1.113% (0.061) | +0.360 pp (0.072) | 15.3% | 36.9% |
+
+**What the margin does.**
+- It removes the guarantee leak. With it, the worst contest lost 2.0% at a 2% budget and 4.7% at 5%, both inside the budget on fresh scenarios. Without it, the worst loss at 5% was 7.7%.
+- It also correctly blocks the "free" epsilon-0 tie-break swaps.
+- The price is small. At 5%, washout is 0.193% with the margin against 0.130% without it, while the mean G1 loss falls from 2.5% to 0.4%.
+
+**(4) Does the hunch hold?** Yes, and more clearly than before.
+- With one-directional, night-wide edge uncertainty, a 2% budget with the safety margin removed 68% of the washout at 25 entries (0.753% to 0.243%) for a 0.2% mean loss of top-1% odds. A 5% budget removed 74% for 0.4%.
+- Betting every contest on one thesis raised washout by about half (0.753% to 1.113%) and cut top-1% odds by 15%.
+- At 118 entries there is still nothing to trade, because P(W) is 0 in 30,000 scenarios.
+
+**Overconfident engine (contrast run).** VERIFIED; raw output `spikes/night/out/20261013-2004_edge8_be1_edge0.1one_S10000.json` (S = 10,000).
+- Same layer, but the engine's own selection and validation scenarios assume its view is the truth (w = 1). Only the test set draws w ~ Beta(2, 3).
+- **Washout as the engine sees it vs the truth:**
+
+  | Entries | Engine believes (V) | Truth (B) |
+  |---|---|---|
+  | 25 | 0.22% | 1.91% (SE 0.14) |
+  | 50 | 0 | 0.05% (5 of 10,000) |
+  | 118 | 0 | 0 |
+
+- At 25 entries the engine underestimates washout about 9x.
+- The swap search, run on its own overconfident validation set, still halved the true washout (1.91% to 0.96%) at a 2% budget with the margin, and lost no top-1% odds on the test set.
+- Lesson for the architecture: the engine's simulation must carry its own edge uncertainty (a night-wide w), or its washout numbers will be far too low. BET for size; VERIFIED for direction in this synthetic world.
+- A third variant (disagreement SD 0.20) was stopped unfinished at the time box and is not reported.
+
+**Caveat.** This layer, as specified, gives us a real edge on every night, so it cannot produce the "we were simply wrong" nights that drive real washouts. Those need w below 0 or a stronger field. The 118-entry result therefore remains an optimistic bound. BET.
