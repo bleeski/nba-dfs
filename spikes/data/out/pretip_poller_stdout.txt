@@ -92,3 +92,15 @@ espn_summary 200 {'status': 'In Progress', 'keys': ['againstTheSpread', 'boxscor
 nba_scoreboardv3 200 {'gameStatus': 2, 'text': '2nd Qtr             ', 'period': 2, 'clock': 'PT03M000.00S', 'score': (44, 64)}
 nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
 espn_summary 200 {'status': 'Halftime', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'leaders', 'meta', 'news', 'odds', 'pi
+nba_scoreboardv3 200 {'gameStatus': 2, 'text': 'Halftime            ', 'period': 2, 'clock': 'PT00M00.00S', 'score': (52, 72)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_summary 200 {'status': 'In Progress', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'leaders', 'meta', 'news', 'odds', 
+nba_scoreboardv3 200 {'gameStatus': 2, 'text': '3rd Qtr             ', 'period': 3, 'clock': 'PT06M41.00S', 'score': (61, 87)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_summary 200 {'status': 'In Progress', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'leaders', 'meta', 'news', 'odds', 
+nba_scoreboardv3 200 {'gameStatus': 2, 'text': 'End of 3rd Qtr      ', 'period': 3, 'clock': 'PT00M00.00S', 'score': (83, 108)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_summary 200 {'status': 'In Progress', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'leaders', 'meta', 'news', 'odds', 
+nba_scoreboardv3 200 {'gameStatus': 2, 'text': '4th Qtr             ', 'period': 4, 'clock': 'PT07M29.00S', 'score': (94, 115)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_summary 200 {'status': 'In Progress', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'leaders', 'meta', 'news', 'odds', 
