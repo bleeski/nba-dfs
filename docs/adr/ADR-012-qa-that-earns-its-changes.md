@@ -1,6 +1,8 @@
 # ADR-012: QA proposals are typed, independent, and judged by code; QA starts in week 2
 
-**Status:** Accepted (design), revised after red-team round 1. **Date:** 2026-10-13.
+**Status:** Superseded by ADR-028 on 2026-10-14 (kept for history). Originally accepted 2026-10-13.
+
+**Changelog:** 2026-10-14 (ADJUDICATION entry 18): superseded. QA becomes one pre-lock coherence pass that files cited missed-news challenges and lineup-coherence flags; historical splits move to the deterministic priors module and leverage swaps stay in local improvement (ADR-028). Kept for history.
 
 ## Context
 

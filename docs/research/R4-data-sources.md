@@ -1,5 +1,7 @@
 # R4: Free NBA data sources, verified from this machine
 
+**Update, 2026-10-14 (ADJUDICATION entry 14; Decision D1 answered).** The owner chose the permissive posture plus `nba_api` for box scores and game logs only. Because the sportsdataverse file was last updated September 9, `nba_api` is the de facto current-season box-score source from opening week unless that job resumes. ESPN JSON stays off. Section 4.9's finding stands and now drives a design change: no permitted automated source gives confirmed starters before tip, so `dfs start` records them from the owner's own browser (ADR-026). The 2026-27 injury-report page still returned 404 on 2026-10-14; the 2025-26 deadlines were re-verified (ADJUDICATION V14). The Odds API serves player props on the free tier per event (ADJUDICATION V12), so props are budgeted by slate size rather than assumed unavailable.
+
 Status: research memo for design review (no engine code).
 Written: Tuesday 2026-10-13, NBA preseason, one week before opening night, on the user's Windows 11 laptop over its home internet connection.
 Evidence: every VERIFIED claim names a throwaway script in `spikes\data\` and its output in `spikes\data\out\`. Saved copies of terms pages are in `spikes\data\out\downloads\terms\`.

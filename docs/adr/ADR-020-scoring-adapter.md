@@ -2,6 +2,8 @@
 
 **Status:** Accepted (design). **Date:** 2026-10-13.
 
+**Changelog:** 2026-10-14 (ADJUDICATION entry 23): Captain totals are stored **eighth-point** exact: 1.5 x a quarter-point UTIL total ends in .125 or .875 (VERIFIED: 1.5 x 57.25 = 85.875). The phrase "quarter-point-exact" in the decision below was wrong wording and is corrected in place.
+
 ## Context
 
 Every probability the engine produces passes through DraftKings scoring. The brief asked two edge cases to be confirmed from real results, not assumed. R6 ran discriminating tests:
@@ -19,7 +21,7 @@ Every probability the engine produces passes through DraftKings scoring. The bri
 
 Option 2.
 
-- Scoring is a pure function of a box-score line and a rules version (`dk_nba_2026_v1`). Captain points are 1.5 x the full bonus-inclusive total and are stored in quarter-point-exact form (Captain totals can end in .125 or .875; DraftKings displays two decimals).
+- Scoring is a pure function of a box-score line and a rules version (`dk_nba_2026_v1`). Captain points are 1.5 x the full bonus-inclusive total and are stored in eighth-point-exact form (Captain totals can end in .125 or .875; DraftKings displays two decimals).
 - Regression tests: the five triple-doubles and three double-double controls from R6, synthetic lines at every 9/10 threshold, a quadruple-double (+4.5 total), a line where turnovers or threes would wrongly create a bonus, and Captain cases with and without bonuses.
 - Every morning, the results step recomputes each player's DraftKings points from the box score and compares them with the standings file's FPTS, and asserts Captain FPTS = 1.5 x UTIL FPTS within 0.01 for every player rostered at both. A mismatch stops learning for that night and is reported in plain language. This turns the Captain rule from SUPPORTED into VERIFIED on opening night at no extra effort.
 

@@ -2,6 +2,8 @@
 
 **Status:** Accepted (design). **Date:** 2026-10-13.
 
+**Changelog:** 2026-10-14 (ADJUDICATION entries 3, 10 and 11): stored replacements and `dfs apply` are replaced by the live re-solve and the legal repair (ADR-026). The Floor file is uploaded early on opening night, not "only if the full build looks at risk". The fallback ladder is: Optimizer; Baseline; Baseline without LLM steps; Floor; the last validated file for that slate re-validated against the newest download; the legal repair. Four states per slate are shown separately (ADR-010). Release states and the sanity check are in ADR-023.
+
 ## Context
 
 The brief says deadline beats perfection: if an advanced step fails near lock, ship a valid portfolio from what we have and say what was skipped. Your prior engines lost more to delivery than to models: 67 MLB entries locked blank in slates nobody built; a weather check that changed no number blocked two NFL slates; a convention enforced as a rule helped cause a 37-entry MLB night with no file; 12 of 13 NFL entries locked blank after a file was built; golf lost 7 entries to environment repair inside the entry window; never-passing gates were bypassed in three sports (RR1 to RR3, VERIFIED).

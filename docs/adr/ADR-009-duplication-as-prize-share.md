@@ -1,6 +1,8 @@
 # ADR-009: Duplication counts a top-1% finish at the expected share of prize it keeps, switched on after calibration
 
-**Status:** Proposed; needs the user's confirmation (Decision D2). Revised after red-team round 1. **Date:** 2026-10-13.
+**Status:** Superseded by ADR-024 on 2026-10-14 (kept for history). Originally proposed 2026-10-13.
+
+**Changelog:** 2026-10-14 (ADJUDICATION entry 5): superseded. The owner replaced Goal 1 with top-1% prize equity in dollars, so duplication and ties are inside the objective (ADR-024) and the per-format switch-on below is retired. The R9 numbers cited below were measured with the flat E[1/(1+D)] penalty that this record rejects (ADJUDICATION V3), so they do not support the method described here. Kept for history.
 
 ## Context
 

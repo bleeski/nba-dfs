@@ -2,6 +2,8 @@
 
 **Status:** Accepted (design). **Date:** 2026-10-13.
 
+**Changelog:** 2026-10-14 (ADJUDICATION entries 3 and 38): MVP run artifacts are JSON and Parquet files; DuckDB arrives with the learning chunk after the MVP; the replay command is after the MVP, but everything replay needs is recorded from day one; every raw download and pre-lock snapshot is archived from Oct 15 onward.
+
 ## Context
 
 The brief requires any night to be replayable with an LLM in the loop: inputs, data snapshots, model versions, seeds, and LLM decisions as structured records. Claude Code has no seed or temperature control, and transcripts are kept only 30 days in an internal format (R7). For 395 of 480 entries in your MLB engine nobody could tell which file was uploaded (RR1).

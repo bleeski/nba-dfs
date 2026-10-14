@@ -2,6 +2,8 @@
 
 **Status:** Accepted (design), revised after red-team round 1; budget numbers set by Phase 1 measurement. **Date:** 2026-10-13.
 
+**Changelog:** 2026-10-14 (ADJUDICATION entries 15 and 36): the advisor is used in build sessions (when a chunk is stuck, and once before it is declared done), in design and adjudication, and in the weekly results review; never inside `/night`, `/news`, `/swap` or `/results`; one call per named decision; logged in `docs/research/advisor-log.md`; the deterministic path continues if it is unavailable. The build runs as chunked sessions started with `/run-chunk <id>`, each recording its usage in `docs/build/PROGRESS.md` (ADR-023). The QA subagent follows ADR-028. `dfs apply` is removed; `dfs news`, `dfs repair`, `dfs start` and `dfs uploaded` are added (ADR-026).
+
 ## Context
 
 Claude Code is both the builder and the nightly LLM layer; there is no paid API. The user's plans are a Team standard seat (1.25x Pro per five-hour window, shared with work chat, governed by the employer) and a Pro plan; both have five-hour and weekly windows, with no published absolute limits (R7). The Consumer Terms that govern Pro bar "automated or non-human means" except via an API key (R7). Claude Code has no seed control. The red team found that a "no-LLM path" typed as Claude commands stops working exactly when Claude hits its limit, and that the build week draws on the same weekly window as opening night (RT1 rank 6).

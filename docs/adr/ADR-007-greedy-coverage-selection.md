@@ -2,6 +2,8 @@
 
 **Status:** Accepted (design), revised after red-team rounds 1 and 2 and the R9 benchmark. **Date:** 2026-10-13.
 
+**Changelog:** 2026-10-14 (ADJUDICATION entries 5 and 7): the per-contest objective is Goal 1 as defined in ADR-024 (top-1% prize equity, with duplication and ties inside it), not raw top-1% probability; greedy still applies because the objective keeps diminishing returns, and the result is reported as "best found". The concentration cap is a per-format, feasibility-tested soft preference: the selector computes the minimum feasible cap for tonight's pools and entry counts, applies the stricter of that and the setting, and reports when it relaxed; it never blocks delivery. The 63% guarantee is stated for the per-contest greedy step on a count limit only; the insurance search (ADR-025) and local improvement are heuristic refinements reported with in-sample and out-of-sample numbers. A deterministic sanity check (ADR-023) labels every portfolio.
+
 ## Context
 
 The engine must choose 1 to 150 entries per contest across about 10 contests so that each contest's top-1% probability is high and the night's washout probability is low (ADR-001). The user's prior engines tuned exposure and overlap rules by hand and showed no edge (RR1, RR2). Generating lineups in sequence with "share at most K players" constraints is slow (R2: 30.8 seconds for 150 lineups with GLPK, up to 370 seconds with other solvers) and ignores the field and the night.

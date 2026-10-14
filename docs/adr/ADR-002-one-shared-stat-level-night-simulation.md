@@ -2,6 +2,8 @@
 
 **Status:** Accepted (design). **Date:** 2026-10-13.
 
+**Changelog:** 2026-10-14 (ADJUDICATION entry 16): the simulator is calibrated against last season's box scores with targets stated in configuration, and the night spike is a mechanics benchmark only (ADR-027); the ownership shock and the edge-uncertainty layer ship after the MVP; the MVP simulator carries outcome noise plus symmetric player and team model error. The stat order is bottom-up as written below (attempts from possessions and usage share, makes from shrunk percentages); the spike's top-down order is not the design.
+
 ## Context
 
 Goal 1 needs each contest's top-1% line and Goal 2 needs the joint chance that every contest misses its cash line on the same night. Classic and Showdown share games, and NBA correlation runs mostly through the game (pace, overtime, blowouts) rather than player pairs (R3, R5). The blueprint suggested a possession-level game simulation; the main open-source NBA simulator draws fantasy points from a multivariate normal (R3, VERIFIED in code).

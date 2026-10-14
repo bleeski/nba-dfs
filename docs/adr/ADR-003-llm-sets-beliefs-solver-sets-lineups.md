@@ -2,6 +2,8 @@
 
 **Status:** Accepted (design), revised after red-team round 1. **Date:** 2026-10-13.
 
+**Changelog:** 2026-10-14 (ADJUDICATION entry 12): the researcher's output splits into **fact records** (announced starter, restriction, absence, return; each with source, publish time and quote) and **inference records** (minutes and usage percentiles). In the MVP only fact records with a verified quote and a known publish time inside 24 hours change the simulation, and fixed code rules translate each fact type into a distribution; inference records are stored and scored in shadow, and the precision-weighted blend with the 1.5 coverage factor switches on only after two weeks show stated ranges cover actuals at the stated rate. Records with unknown publish time never change availability or role. A later fact about the same player supersedes an earlier one. The researcher itself is a flagged capability that may ship off (ADR-023); `dfs out`, `dfs in` and `dfs start` are the rehearsed path.
+
 ## Context
 
 The brief asks where judgment ends and arithmetic begins: should the LLM pick players for lineups, or set theses, player pools and constraints that a solver turns into lineups? The objective is a probability over thousands of simulated nights and opponents. The LLM runs inside a Pro-sized budget, has no seed or temperature control (R7), and its contributions must be measurable. The red team added three requirements: overrides must be checked against their sources (RT1 rank 15), role changes must not be averaged into impossible values (rank 16), and public news must reach the field model (rank 4).

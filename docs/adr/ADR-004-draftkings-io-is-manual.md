@@ -2,6 +2,8 @@
 
 **Status:** Accepted (design). **Date:** 2026-10-13.
 
+**Changelog:** 2026-10-14 (ADJUDICATION entries 1 and 19): the salary export is optional because the entries file carries the player pool; rehearsal 1 records whether the 2026-27 NBA export has `Status` or `Starting`. The payout paste is recommended for every new contest in week 1 because both goals now run on money (ADR-024, ADR-025); contests are classified by type from their name with type-specific paid-share defaults, and every contest carries a `facts_status` (verified, template, default) that the brief shows. One flagship standings zip per slate is the required morning download; other contests' zips are optional. An upload is committed on the owner's read-back (ADR-026).
+
 ## Context
 
 The engine needs four things from DraftKings each night: the player pool with IDs, our entries, contest details (field size, payouts), and next-day standings. The brief already rules out automating actions on the DraftKings site. Research found DraftKings' Daily Fantasy Terms of Use (updated 06/30/2026) go further: improper conduct includes using automated means "to obtain, collect or access any information on the Website", and the penalty can include disqualification and forfeited prizes (R6, section 3.2, VERIFIED). Public JSON endpoints exist (lobby, contest detail, draftables), but reading them by script fits that wording.

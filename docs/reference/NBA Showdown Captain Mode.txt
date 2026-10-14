@@ -1,0 +1,100 @@
+NBA Showdown Captain Mode
+In salary cap contests, participants will create a lineup by selecting players listed in the Player Pool. Each player listed has an assigned salary and a valid lineup must not exceed the salary cap of $50,000.
+
+Contest results will be determined by the total points accumulated by each individual lineup entry (scoring rules summarized below).
+
+Participation in each contest must be made only as specified in the Terms of Use. Failure to comply with these Terms of Use will result in disqualification and, if applicable, prize forfeiture.
+
+Scoring
+The player you draft as your Captain will earn 1.5x the standard fantasy point value for each statistic.
+Statistic
+
+Fantasy Points
+
+*Players drafted as Captain earn 1.5x fantasy point values
+
+Point
+
++1 Pt
+
+Made 3pt Shot
+
++0.5 Pts
+
+Rebound
+
++1.25 Pts
+
+Assist
+
++1.5 Pts
+
+Steal
+
++2 Pts
+
+Block
+
++2 Pts
+
+Turnover
+
+-0.5 Pts
+
+Double-Double
+
+{Max 1 Per Player: Points, Rebounds, Assists, Blocks, Steals}
+
++1.5 Pts
+
+Triple-Double
+
+{Max 1 Per Player: Points, Rebounds, Assists, Blocks, Steals}
+
++3 Pts
+
+Lineup Requirements
+Lineups will consist of 6 players and must include players from both teams.
+
+The 6 roster positions are:
+
+1
+
+Captain
+
+(PG,SG,SF,PF,C)
+
+5
+
+Util
+
+(PG,SG,SF,PF,C)
+
+The player you select as your Captain will score 1.5x the standard fantasy point value for each statistic, but drafting a player as Captain will cost more salary than drafting them as UTIL.
+
+Any player in the player pool is eligible to be selected as Captain. However, a player cannot be added at both Captain and UTIL in the same lineup.
+
+Player Pool
+The Player Pool will consist of all NBA players expected to be on the active roster for both teams scheduled to play in the contest Game Set. Occasionally a player may be missing from the Player Pool due to trades or other unforeseen circumstances. Each player listed in the player pool has an assigned salary and a valid lineup must not exceed the salary cap of $50,000.
+
+In most circumstances, once the Player Pool is established for a Game Set, including positions and salaries, the Player Pool will not be adjusted. In the rare event that there is a mistake within the Player Pool that would significantly impact game quality, DraftKings reserves the right to correct the mistake after contests for that Game Set have become available. This may result in valid lineups becoming invalid. This would most likely occur shortly after the Player Pool becomes available, far in advance of the contest start time, and participants who have entered contests for the Game Set prior to the adjustment will be notified via email.
+
+A "Game Set" is a set of games used for contests; each contest is tied to one Game Set. Contests tied to the same Game Set can be created at different times. Therefore, game policies are based on the timing of a Game Set being made available, not each individual contest.
+
+Position Eligibility
+Player positions are determined at the sole discretion of DraftKings.
+
+Lineup Edits
+Lineups may be edited at any time leading up to games. Each individual player will become "locked" at the scheduled start time of their team's game. A locked player cannot be added or removed from a roster spot. Locked roster spots for all entries are displayed in contest GameCenters.
+
+In the rare case that a game starts before the scheduled start time, all players within that game will become locked as soon as our feed reflects that the game has begun. Additionally, any swaps that were made after the real-life start time of the game will result in those lineups being disqualified and refunded.
+
+Cancelled, Postponed, and Rescheduled Games
+In the event that a game is cancelled or postponed & rescheduled to a time outside of the original Scoring Period, DraftKings will cancel and refund all contests.
+
+The Scoring Period for NBA is defined as the timeframe between the scheduled start of the first game within the Game Set and 11:59pm ET on the day after the last scheduled game within the Game Set.
+
+DraftKings may choose to adjust the Scoring Period for a Game Set at their sole discretion to accommodate schedule changes to any time before 12:00am ET on the date the Game Set is scheduled.
+
+Suspended or Shortened Games
+DraftKings uses official NBA statistics and only includes statistics from games NBA deems to be official. If the NBA declares a game "suspended" then the statistics generated before the game is suspended will count in Game Sets containing said game. Any statistics generated on a later date when the game resumes will not be included.

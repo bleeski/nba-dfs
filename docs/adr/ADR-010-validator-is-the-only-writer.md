@@ -2,6 +2,8 @@
 
 **Status:** Accepted (design), revised after red-team round 1. **Date:** 2026-10-13.
 
+**Changelog:** 2026-10-14 (ADJUDICATION entries 11 and 19): four states per slate are tracked and shown separately (file validity against the identified input snapshot and lock time; news state; model status; confirmed upload). The promise is restated: every exported file passes the validator against its identified input snapshot and lock time; platform acceptance is confirmed separately by the owner's read-back and the re-downloads required in ADR-026. The legal repair (remove a ruled-out player, insert the cheapest legal substitute by projection) is a validator function and the rehearsed late-news fallback. Identity or lock uncertainty stops an edit rather than shipping it.
+
 ## Context
 
 The brief's hardest constraint: the engine never hands the user an invalid file. Invalid uploads come from salary math, slot eligibility, wrong player IDs (Captain versus UTIL), the Classic two-game rule, the Showdown both-teams rule, locked players, and format drift (`UTIL` versus `FLEX` labels, new columns, byte-order marks, cp1252 encodings). R6 found WNBA contests inside DraftKings' NBA lobby with reused team codes. The red team found that guarding only Claude's Edit and Write tools leaves Bash and Python open, which is how the user's prior engines ended up with hand-built upload files (RT1 rank 10).

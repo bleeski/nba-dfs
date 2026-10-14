@@ -1,6 +1,8 @@
 # ADR-005: A source layer with a data-posture switch; permissive by default
 
-**Status:** Proposed; the posture itself is the user's call (Decision D1). **Date:** 2026-10-13.
+**Status:** Accepted; Decision D1 answered by the owner on 2026-10-14. **Date:** 2026-10-13.
+
+**Changelog:** 2026-10-14 (ADJUDICATION entry 14; Decision D1 answered): the owner chose **permissive plus `nba_api` for box scores and game logs only** (about five requests a night). Because the sportsdataverse file was last updated September 9, `nba_api` is the de facto source of current-season box scores from opening week unless the volunteer job resumes. ESPN JSON stays off. No permitted automated source gives confirmed starters before tip in any posture (ADJUDICATION V7), so `dfs start` records them from the owner's own browser (ADR-026). "Verified source" means the chosen local path returned current data that parsed and passed freshness checks; documentation-only and historical probes carry separate labels; every required input names its fallback. The public view never falls back to our private baseline (ADR-008). Every raw download and pre-lock snapshot is archived from Oct 15.
 
 ## Context
 

@@ -1,6 +1,8 @@
 # ADR-022: The night benchmark spike is a reference and test oracle, not engine code
 
-**Status:** Accepted (design). **Date:** 2026-10-13.
+**Status:** Superseded by ADR-027 on 2026-10-14 (kept for history). Originally accepted 2026-10-13.
+
+**Changelog:** 2026-10-14 (ADJUDICATION entry 16): superseded. The spike draws team points top-down and back-solves makes (ADJUDICATION V4), uses an unpaired insurance margin (V1) and a flat duplication penalty (V3); it is a timing and mechanics benchmark only (ADR-027). Kept for history.
 
 ## Context
 

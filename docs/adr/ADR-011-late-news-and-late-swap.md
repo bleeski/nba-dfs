@@ -1,6 +1,8 @@
 # ADR-011: Stored replacements and `dfs apply` for late news, a ledger with pending state, and late swap that edits DraftKings' current export in place
 
-**Status:** Accepted (design), revised after red-team rounds 1 and 2. **Date:** 2026-10-13.
+**Status:** Superseded by ADR-026 on 2026-10-14 (kept for history). Originally accepted 2026-10-13.
+
+**Changelog:** 2026-10-14 (ADJUDICATION entries 10 and 17): superseded. Stored replacement sets cannot compose when two events touch the same entry (salary and player collisions), and the measured narrow re-run already fits the late-news window, so late news is a live re-solve on the joint news state with a seconds-long legal repair as the fallback, and late swap re-optimizes every open slot (ADR-026). Kept for history.
 
 ## Context
 

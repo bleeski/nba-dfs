@@ -2,6 +2,8 @@
 
 **Status:** Accepted (design). **Date:** 2026-10-13.
 
+**Changelog:** 2026-10-14 (ADJUDICATION entry 31): after the MVP, market-implied minutes back-solved from player prop ladders (The Odds API per event, largest slates first; ESPN ladders only if the posture ever widens) join the priors with a stated blend weight, and the news digest flags any player where the market disagrees with our depth chart by 4 or more minutes.
+
 ## Context
 
 Opening week brings new rosters, rookies, coaching changes, and no current-season data. DARKO, the best free projection method found, has no preseason data and restricts commercial use (R1, R4). Salaries anchor to last season and adjust slowly, while betting markets move fast (R5).

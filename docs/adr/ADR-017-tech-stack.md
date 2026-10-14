@@ -2,6 +2,8 @@
 
 **Status:** Accepted (design); solver choice in ADR-006. **Date:** 2026-10-13.
 
+**Changelog:** 2026-10-14 (ADJUDICATION entry 3): DuckDB is not an MVP dependency; MVP storage is JSON and Parquet; DuckDB arrives with the learning chunk. The solver choice (ADR-006) is unchanged.
+
 ## Context
 
 The engine runs on a Windows 11 laptop (Intel Core Ultra 7 258V, 8 cores, 32 GB RAM with about 6 GB free, Python 3.13 and uv installed, VERIFIED). Claude Code builds and operates it. Your prior engines grew large and slow to test (NHL: 18 to 35 minute test suite; MLB: about 100,000 lines) (RR1, RR3).

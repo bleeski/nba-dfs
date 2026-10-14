@@ -2,6 +2,8 @@
 
 **Status:** Accepted (design), revised after red-team round 1. **Date:** 2026-10-13.
 
+**Changelog:** 2026-10-14 (ADJUDICATION entries 6 and 14): the public view **never** falls back to the engine's private baseline; when no consensus file exists it is built from a deterministic public formula (salary-implied value blended with the market-implied team share and trailing DraftKings points per minute), so a private edge can never appear as simulated chalk. The field is treated as a family of plausible opponent behaviors and qualified by separate checks: marginal ownership, player-pair co-occurrence, salary left unspent, Captain combinations, exact duplicates, entrant portfolio clustering, realized score cutoffs. Copy-rate calibration tolerances are pre-registered in ADR-024. Goal 2 carries a shared-field sensitivity (the same simulated users entering every contest on a slate) beside the conditional-independence number. Calibration targets for the field (most-owned Classic player 40% to 60% on typical slates) are stated configuration.
+
 ## Context
 
 Goal 1 needs each contest's top-1% line and duplicate counts, which depend on how opponents combine players, not just how often they pick each one (brief problem 6). There is no free ownership feed and no past NBA standings for this user. The user's NHL engine read ownership off a simulated field and missed news-driven chalk by about 10x (50.7% actual against 4.7% predicted) because news never reached its field (RR3). The red team found two leaks in the first version: building the field from our own baseline model makes the field share our edge, and withholding all LLM overrides hides public news the real field reacts to (RT1 rank 4).

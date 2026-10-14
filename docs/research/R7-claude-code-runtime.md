@@ -1,5 +1,7 @@
 # R7. Claude Code as the runtime LLM layer: facts that constrain the design
 
+**Update, 2026-10-14 (ADJUDICATION entries 15 and 34).** The Claude Code advisor was verified from `code.claude.com/docs/en/advisor`: the advisor receives the full conversation on every call, Claude decides when to call it, subagents inherit it, each call consumes tokens at the advisor model's rates in addition to the main model's usage, and no setting caps or forces calls (ADJUDICATION V11). The engine's rule (ADR-013): advisor only in build sessions, design work and the weekly review; never in nightly runs; one call per named decision; logged in `docs/research/advisor-log.md`.
+
 **Research date:** 2026-10-13. **Method:** a `claude-code-guide` subagent read the official Claude Code docs and Anthropic help center pages listed under Sources. Its fetches went through a summarizer, so short quotes are close paraphrases of the official text. Re-check any load-bearing wording before relying on it.
 
 **Labels:** VERIFIED-IN-DOCS = stated on an official page (short quote and source key). SUPPORTED = credible but not official, or reasoning from documented behavior. UNKNOWN = not documented.
