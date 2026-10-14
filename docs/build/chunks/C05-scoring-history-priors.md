@@ -1,10 +1,10 @@
 # C05: Scoring adapter, history, priors
 
-**State:** Baseline. **Size:** M (one session, about 1 to 2 hours). **Depends on:** C01. **Parallel with:** C02, C03, C04 (it touches only `src/nbadfs/history/`, `src/nbadfs/scoring/`, `data/history/`, and their tests).
+**State:** Baseline. **Size:** M (one session, about 1 to 2 hours). **Depends on:** C01 (runs after C04 in the calendar). **Parallel with:** none (it touches `cli.py`, `config/settings.toml`, `pyproject.toml` and `PROGRESS.md` like every chunk, so it runs sequentially, Friday morning).
 
 ## Goal, and why it sits here
 
-Give the model layer its foundations: exact DraftKings scoring with tests from real results, last season's box scores loaded from the sportsdataverse file, the `nba_api` adapter for current-season box scores and game logs (the only `nba_api` use the owner approved), and per-possession rates with shrinkage, recency decay, aging and early-season variance inflation. It can run in parallel with the Floor chunks because nothing in the Floor depends on it.
+Give the model layer its foundations: exact DraftKings scoring with tests from real results, last season's box scores loaded from the sportsdataverse file, the `nba_api` adapter for current-season box scores and game logs (the only `nba_api` use the owner approved), and per-possession rates with shrinkage, recency decay, aging and early-season variance inflation. Nothing in the Floor depends on it, so it runs right after the Floor is rehearsed, Friday morning.
 
 ## Reading list (nothing else)
 

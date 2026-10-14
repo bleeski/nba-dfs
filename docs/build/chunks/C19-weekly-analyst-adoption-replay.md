@@ -1,6 +1,6 @@
 # C19: Weekly analyst, adoption workflow, replay
 
-**State:** Optimizer (milestone M5). **Size:** M (one session, about 1 to 2 hours, three checkpoints). **Depends on:** C13. **Parallel with:** C18.
+**State:** Optimizer (milestone M5). **Size:** M (one session, about 1 to 2 hours, three checkpoints). **Depends on:** C11, C13, C18 (the researcher pattern, snapshots and the QA decision records). **Parallel with:** none.
 
 ## Goal, and why it sits here
 

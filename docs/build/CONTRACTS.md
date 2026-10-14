@@ -34,6 +34,10 @@ nba-dfs/
 - **Slate key:** `classic_<draft group id>` or `sd_<AWAY>-<HOME>`; `classic_main` is an alias the night plan assigns to the largest Classic slate.
 - **Times:** stored as ISO 8601 with offset; displayed in Central. DraftKings Game Info is Eastern and is converted on parse.
 
+### 1.1 Clock and saved-night mode (owned by C03)
+
+Every command accepts `--night <YYYY-MM-DD>` and `--as-of <ISO datetime>`. `--night` points the engine at `inbox/<date>/` (or `fixtures/dk/<date>/` when `--fixtures` is given) instead of the Downloads folder and at that night's ledger and news state; `--as-of` is the clock every lock rule reads (`lock_now` in `validate`, the started-game rule, the insufficient-time rule, the "valid until" stamp) instead of the wall clock. Without them the engine uses today and now. Rule: no module reads the wall clock directly; all read `Clock.now()`. This is what makes the weekend drills on the saved Oct 16 files runnable.
+
 ## 2. DraftKings input files (consumed by chunk C02; produced by the owner)
 
 ### 2.1 Entries file (`DKEntries*.csv`)
@@ -123,7 +127,7 @@ Same header as a fact plus `minutes: {q10, q50, q90, hard_cap}`, `usage_multipli
 
 ### 4.4 Commands that write facts
 
-`dfs out "<name>"`, `dfs in "<name>"`, `dfs start "<TEAM>: <A>, <B>, <C>, <D>, <E>"` (writes five `starter_announced` facts and `bench_announced` for the previous expected starters), `dfs fact veto <fact_id>`. Each fuzzy-matches names against tonight's pools (accent folding, suffixes), asks one confirmation unless `--yes`, then runs the re-solve (section 11) unless `--no-run`.
+`dfs out "<name>"`, `dfs in "<name>"`, `dfs start "<TEAM>: <A>, <B>, <C>, <D>, <E>"` (writes five `starter_announced` facts and `bench_announced` for the previous expected starters), `dfs fact veto <fact_id>`. Each fuzzy-matches names against tonight's pools (accent folding, suffixes), asks one confirmation unless `--yes`, then, unless `--no-run`: runs the re-solve (section 11.4) when the `resolve` capability is enabled, and otherwise runs the legal repair (section 11.6) on the latest committed lineups. The flag-off path never rebuilds the Floor over an uploaded portfolio; `dfs night --floor` is the explicit way to rebuild.
 
 ### 4.5 `NewsDigest` (`runs/<run_id>/llm/news_digest.json`)
 
@@ -177,7 +181,7 @@ ScenarioSet(
 PublicView(run_id, players: {person_key: {proj_points, value, popularity, p_active_public}}, source: "dff"|"formula", facts_applied_public: [fact_id])
 FieldSample(contest_id, lineups: int32[M, slots] (dk_id indices into the pool), weights: float32[M], entrant_type: int8[M], user_id: int32[M],
             ownership: {role: {person_key: float}}, copy_rate: {lineup_hash: float}, built_from: PublicView.run_id)
-FieldScores(contest_id, set_name, cdf_grid: float32[S, Q])   # per-scenario score quantiles (Q = 400 points) of the weighted field sample; F_{c,s}(x) by interpolation
+FieldScores(contest_id, set_name, cdf_grid: float32[S, Q])   # per scenario, the field's score at Q = 400 evenly spaced probabilities from 0 to 1 (a quantile grid: index q holds the score below which a fraction q/(Q-1) of the weighted field falls); F_{c,s}(x) by interpolation of x into that row
 ```
 
 - `build_public_view(slate, lines, facts_public, dff_file|None) -> PublicView`; when `dff_file` is `None` or fails to parse, use the deterministic formula (settings `public_view.formula_weights`); never read `ProjectionTable` from the engine view.
@@ -212,6 +216,12 @@ Goal2(p_sd: float, p_sd_se: float, p_washout: float, winnings_mean: float, p_rec
 
 ```
 Candidate(lineup: tuple[dk_id, ...] in canonical slot order, lineup_hash, salary, games: set, projection_mean)
+```
+
+- **`lineup_hash` (one definition for the whole engine):** `sha1` of the sorted tuple of `f"{person_key}|{role}"` strings, where `role` is `CPT` for the Captain slot and `UTIL` for every other slot in both formats. Slot permutations of the same Classic players hash the same; the same six Showdown players with a different Captain hash differently; field lineups parsed from standings files (names, not DraftKings IDs) hash to the same value as ours. `FieldSample.copy_rate` and every duplicate check key on it.
+- **`settlement_fn`** passed to `select_contest` has the signature `settlement_fn(entry_scores: float32[S, n]) -> Settlement`, closed over the contest facts, the field scores for the set in use, the copy-rate lookup by `lineup_hash`, and the mode.
+
+```
 CandidatePool(slate_key, contest_family, candidates: list[Candidate], scores: float32[S, K] per set_name)
 Portfolio(contest_id, entries: list[(entry_id, Candidate)], G1, G1_no_dup, p_top1_any, sanity: SanityReport, frozen: bool, search_quality: {greedy_bound: "1-1/e on count limit", insurance: "best found"|"not run"})
 NightPortfolio(run_id, portfolios: list[Portfolio], goal2: Goal2, concentration: {person_key: share}, cap_applied: float, cap_relaxed_from: float|None, per_game_exposure: {game_id: share}, release_state: "floor"|"baseline"|"optimizer")
@@ -287,6 +297,15 @@ Rendered to `runs/<run_id>/brief.md` (one page per slate) and printed by `dfs ni
 | `dfs research fetch <url>` | C11 | Allowlisted fetch that saves the page |
 | `dfs unlock` | C11 | Lift the game-night code freeze (recorded) |
 | `dfs replay <run_id>` | C19 | Re-execute from snapshots |
+| `dfs history status` | C05 | Freshness of the history sources and the `nba_api` budget |
+| `dfs digest` | C06 | Print tonight's news digest |
+| `dfs sim --slate <key> --set <name>` | C07 | Write a scenario set and print per-player summaries |
+| `dfs field --slate <key>` | C08 | Print ownership, common lineups, cutoffs |
+| `dfs drill news --at <minutes>` | C10 | Replay a scripted scratch on a saved night and time the re-solve |
+| `dfs rehearsed <capability> <date>` | C11 | Record a drill in `capabilities.toml` |
+| `dfs insure [--run <run_id>]` | C12 | Re-run the insurance search on a saved run and print the trace |
+
+Global options on every command: `--night <date>`, `--as-of <datetime>`, `--fixtures`, `--json`, `--yes` (section 1.1).
 
 Exit codes: 0 ok; 2 validation failure (no file written); 3 input missing or unparseable (plain-language message names the file and the fix); 4 budget exceeded (repair ran if applicable).
 

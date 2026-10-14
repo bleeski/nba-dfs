@@ -1,6 +1,6 @@
 # C10: Live re-solve, late swap, news commands
 
-**State:** Baseline. **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C09. **Parallel with:** C11's Claude-layer half (skills, hooks, agents) but not its flags and launcher work.
+**State:** Baseline. **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C09. **Parallel with:** none (every chunk touches `cli.py`, `CONTRACTS.md` and settings; run one at a time).
 
 ## Goal, and why it sits here
 
@@ -19,7 +19,7 @@ Make late news one command and one path: `dfs out`, `dfs in` and `dfs start` run
 **Build:**
 
 - `resolve/resolve.py`: `resolve(night_inputs, news_state, ledger, scope, settings)`: re-simulate affected games on the selection and validation sets at `resolve.S` (keyed draws leave other games untouched); refresh the public view and fields for slates containing them; rebuild candidates for those slates (Showdown re-enumerated; Classic adds solves around beneficiaries and drops lineups holding an out player); `scope == "pre_lock"`: re-select affected contests on Goal 1; `scope == "post_lock"`: the swap below; validate; export a versioned file stamped "valid until"; update the ledger; `ResolveTimeout` at `resolve.budget_s` falls through to the repair; timings recorded.
-- The news commands now trigger the re-solve instead of a Floor re-run (`--floor` keeps the Floor behavior as the fallback); an official injury-report diff found by `dfs status --apply` writes facts from the report and runs the re-solve through the run lock.
+- The news commands run the re-solve when `resolve.enabled` is true and the legal repair on the latest committed lineups when it is false or when the re-solve times out (CONTRACTS 4.4); an official injury-report diff found by `dfs status --apply` writes facts from the report and runs the same path through the run lock. The flag-off path is the opening-night fallback and is rehearsed in Drill B on a Baseline file: `dfs out "Name" --no-run`, `dfs repair --slate <slate>`, upload, `dfs uploaded <file>`, `dfs status`.
 - `resolve/swap.py`: `swap(slate, downloaded_entries, projections, pool, ledger, settings)`: pin `(LOCKED)` cells and started-game players; per entry, re-optimize open slots with the candidate solver on current projections (locked games at their pre-lock distributions); rewrite only entries whose `news_state_hash` changed or whose improvement clears `swap.min_improvement_points`; re-check the concentration cap on the post-swap portfolio; produce the diff; never regenerate from the blank template; never move a locked player. `dfs swap` reads the latest re-download.
 - Insufficient-time rule and the "valid until" stamp enforced in the exporter for re-solve and swap outputs (CONTRACTS 11.7).
 - `dfs repair` wired as the automatic fallback of the re-solve and the swap.
@@ -39,7 +39,8 @@ Make late news one command and one path: `dfs out`, `dfs in` and `dfs start` run
 - The re-solve on the saved Oct 16 12-game slate (one star ruled out in a game shared by the main Classic and a Showdown) finishes inside 180 seconds at 10,000 scenarios; the time is recorded. If it does not, PROGRESS.md records it and `config/capabilities.toml` keeps `resolve.enabled = false` with the reason.
 - Swap test on `fixtures/dk/2026-10-15/post_lock_entries.csv`: locked cells byte-identical; only entries that need rewriting change; the diff lists every change; the exported file validates.
 - Determinism: the same news state twice gives byte-identical files.
-- `dfs drill news --at 30`, `--at 10`, `--at 2` run and print the window arithmetic.
+- `dfs drill news --at 30`, `--at 10`, `--at 2` run and print the window arithmetic (the drill sets `--as-of` to the tip minus the given minutes on the saved night).
+- Flag-off test: with `resolve.enabled = false`, `dfs out` writes the fact and produces a repaired file in under 10 seconds, leaving every other row of the committed portfolio unchanged.
 
 ## What I check (Drill B, on the saved Oct 16 files)
 
@@ -49,10 +50,10 @@ Run:
 uv run dfs drill news --at 30
 ```
 
-Expected: a line like "re-solve finished in 71 s; with a 3-minute upload you would have about 25 minutes to spare". Then `--at 10` and `--at 2`: the last should say "insufficient time to act for <entries>" for cells in the game about to lock and name `dfs repair`. Then:
+Expected: a line like "re-solve finished in 71 s; with a 3-minute upload you would have about 25 minutes to spare". Then `--at 10` and `--at 2`: the last should say "insufficient time to act for <entries>" for cells in the game about to lock and name `dfs repair`. Then, on the saved Oct 15 post-lock file:
 
 ```bash
-uv run dfs swap --slate classic_main
+uv run dfs swap --slate classic_main --night 2026-10-15 --as-of "2026-10-15T19:00-05:00" --fixtures
 ```
 
 Expected (on the saved post-lock file): a short diff of changed cells, every locked cell untouched, a new versioned file that passes validation.

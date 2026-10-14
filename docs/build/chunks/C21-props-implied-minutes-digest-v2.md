@@ -1,6 +1,6 @@
 # C21: Market-implied minutes from props; value-of-information digest
 
-**State:** Optimizer. **Size:** M (one session, about 1 to 2 hours, three checkpoints). **Depends on:** C06, C13. **Parallel with:** any.
+**State:** Optimizer. **Size:** M (one session, about 1 to 2 hours, three checkpoints). **Depends on:** C06, C10, C11, C13 (the re-solve and the researcher's search caps). **Parallel with:** none.
 
 ## Goal, and why it sits here
 

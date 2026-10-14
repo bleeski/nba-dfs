@@ -1,6 +1,6 @@
 # C15: Economic diagnostics, ramp-gate readout, hunch report
 
-**State:** Optimizer (milestones M4 and M5). **Size:** M (one session, about 1 to 2 hours, three checkpoints). **Depends on:** C13, C12. **Parallel with:** C17.
+**State:** Optimizer (milestones M4 and M5). **Size:** M (one session, about 1 to 2 hours, three checkpoints). **Depends on:** C13, C12. **Parallel with:** none (every chunk touches `cli.py`, `CONTRACTS.md` and settings; run one at a time).
 
 ## Goal, and why it sits here
 

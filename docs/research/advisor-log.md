@@ -31,3 +31,26 @@ One entry per consultation. Each names the decision, what was asked, what came b
 **What was taken:** every adjustment, verbatim in substance (ADJUDICATION entries 3, 8, 10, 12, 14, 17, 19, and new entries 38 and 39). The two "confirm with the owner" items (QA iterations; rehearsal-night availability) went into the owner's question batch.
 
 **Usage:** one agent run, about 141,000 tokens, 13 tool uses, under 5 minutes.
+
+---
+
+## Consultation 2: the build plan (2026-10-14)
+
+**Decision:** whether `docs/build/BUILD_PLAN.md`, `CONTRACTS.md` and chunks C01 to C22 are ready for the owner's approval.
+
+**Mechanism:** independent Fable-model agent (no advisor tool in the session). It read BUILD_PLAN.md, CONTRACTS.md, C01 to C11 in full, C12 to C22 for ordering, CLAUDE.md, the run-chunk command and PROGRESS.md, and answered eight questions.
+
+**What came back (condensed):**
+
+1. **Sizing.** Reachable at three sessions a day, but the plan must say who starts the daytime Thursday sessions and which seat runs them. C04 is the likeliest overrun (three ported parsers, the solver, the cap test, the sanity check, the Floor command, brief-lite, a timing test); cut the payout-paste parser and facts cache first, then the injury adapter. C11 is an L mislabeled M.
+2. **Reading lists.** C06 cited a 63 KB Odds API dump (about 15,700 tokens) for two endpoints and one header; replace with three lines. C01 would read the 95 KB spike to serialize the synthetic night; move that fixture to its first consumer.
+3. **Order.** "Nothing builds a way to run a past night": every weekend drill runs on saved Oct 16 files, but locks would be in the past and the started-game and insufficient-time rules would drop every row. Add a saved-night mode (`--night`, `--as-of`) to C03. The C05 parallel claim is false (shared `cli.py`, settings, `pyproject.toml`, `PROGRESS.md`); run it sequentially. One solver owner, not two ports.
+4. **M1.** Valid, yes; "sensible" and "injury-scrubbed" are weaker on Oct 15 (no preseason injury reports; last-season minutes). Unguarded: a 2-game Thursday may have no Classic slate; `dfs repair` cannot fill a reserved blank entry; a 5:00 pm parser failure leaves no fix time. Cheap guard: hand-build the test lineups in the browser so a validate-and-export round trip exists even without the Floor.
+5. **Contracts.** Sufficient; the weakest is `lineup_hash` (undefined; two chunks could hash differently and duplicate detection would silently return zero). Also `settlement_fn` has no signature and `cdf_grid` does not say what Q indexes.
+6. **Owner checks.** Most are recognizable. C06's check ruled out a real player on a live night without restoring him; C10's swap check could not point at the Oct 15 file; the launcher drill had the same gap; `dfs history status` and `dfs digest` were not stubbed.
+7. **Fallback.** The flag-off late-news path was unspecified (Floor rebuild versus repair). What the owner runs at 1:15 pm on Oct 20 if news breaks and the re-solve is off: `uv run dfs out "Name" --no-run`, `uv run dfs repair --slate <slate>`, upload in the browser, `uv run dfs uploaded <file>`, `uv run dfs status`; rehearse it in Drill B on a Baseline file and put it on the "engine is down" card; make `dfs out` run the repair whenever `resolve` is off.
+8. **Change before approval:** the saved-night mode. **Do not change:** the Floor-first rule (upload and commit the Floor every night, replace it only when the Baseline passes the sanity check and the drill bar), even to save ten minutes.
+
+**What was taken:** all eight. Saved-night mode added to CONTRACTS 1.1 and C03 and used by every drill; `lineup_hash`, `settlement_fn` and `cdf_grid` defined; C05 sequential and the whole plan declared non-parallel (the independent verifier found every chunk shares `cli.py` and `CONTRACTS.md`); C04 re-ordered with M1 first and the solver port owned there; C11 relabeled L; the Odds API facts inlined in C06; the synthetic fixture moved to C07; the flag-off path defined as the repair in CONTRACTS 4.4, ADR-026, ARCHITECTURE and C04, C06, C10; the five fallback lines on the "engine is down" card and in Drill B; the Oct 15 guards (lobby check, hand-built lineups, Wednesday-night exports) in the calendar; the Team seat for build sessions and the Pro plan for rehearsals; the missing CLI stubs added.
+
+**Usage:** one agent run, about 159,000 tokens, 18 tool uses, under 6 minutes.

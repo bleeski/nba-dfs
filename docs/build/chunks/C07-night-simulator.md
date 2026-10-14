@@ -1,6 +1,6 @@
 # C07: Night simulator
 
-**State:** Baseline. **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C05, C06 (checkpoint 1). **Parallel with:** nothing after C06 checkpoint 1.
+**State:** Baseline. **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C05, C06 (checkpoint 1). **Parallel with:** none (every chunk touches `cli.py`, `CONTRACTS.md` and settings; run one at a time).
 
 ## Goal, and why it sits here
 
@@ -14,6 +14,7 @@ Simulate the whole night tens of thousands of times, bottom-up and stat by stat,
 4. `docs/research/R3-nba-modeling.md` section 4 (the simulation structure) and the R3 spike on multivariate-normal tails.
 5. `docs/reference/NBA_DraftKings_DAG_Expanded.md` sections 3.2 and 3.3 (possessions, opportunities, conversions) as the structural reference.
 6. `docs/review/ADJUDICATION.md` entry 16 only.
+7. `spikes/night/night_spike.py`: only the night-generator function (the one that builds the synthetic players, teams, games and contests; about 150 lines near the top) so this chunk can serialize `fixtures/synthetic/night8.json`; do not read the rest of the file.
 
 ## Scope
 
@@ -26,6 +27,7 @@ Simulate the whole night tens of thousands of times, bottom-up and stat by stat,
 - `sim/night.py`: `simulate(night_inputs, set_name, settings) -> ScenarioSet` for the four named sets with their sizes; every draw keyed by `(run_seed, set_name, scenario_index, game_id, person_key, stat)` through a counter-based generator; `simulate_game` re-runs one game with changed availability and leaves every other game's columns byte-identical (the re-solve relies on this).
 - `sim/calibrate.py` and tests: run the simulator on last season's games (lines from `team_game.parquet` where present, else the season average) and compare with box scores: margin standard deviation about 13; total standard deviation about 18; overtime 5% to 6%; 20-plus-point games about 19%; starter standard deviation 0.22 to 0.25 of the mean; double-double and triple-double rates by role within 20% relative; coverage of the 80% range for points between 75% and 85%; teammate correlation near zero to slightly negative and opponent correlation slightly positive by role pair.
 - `dfs sim --slate <key> --set screening`: writes a `ScenarioSet` to `runs/<id>/scenarios/` and prints summary statistics (medians, 99th percentiles, boom and bust rates per player) so the owner can eyeball a slate.
+- `fixtures/synthetic/night8.json`: the R9 synthetic 8-game night (players, teams, base minutes, rates, games with spread and total, the contests list) serialized from the spike's generator with its default seed, with a loader test; C08 and C09 consume it for their mechanics regressions.
 
 **Out of scope:** the field, settlement, candidates, the ownership shock, edge uncertainty, rotation regimes (backlog).
 
@@ -46,10 +48,10 @@ Simulate the whole night tens of thousands of times, bottom-up and stat by stat,
 
 ## What I check
 
-Run on the saved Oct 16 files:
+Run on the saved Oct 16 files in saved-night mode:
 
 ```bash
-uv run dfs sim --slate classic_main --set screening
+uv run dfs sim --slate classic_main --set screening --night 2026-10-16 --as-of "2026-10-16T17:00-05:00"
 ```
 
 Expected: a table of tonight's players with median, 99th-percentile and boom rate; stars near the top; players ruled out at zero; no player with a 99th percentile above about 110 DraftKings points. Then:

@@ -1,6 +1,6 @@
 # C13: Results ingest, scorecards, contest flashback
 
-**State:** Optimizer (milestone M4). **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C09. **Parallel with:** C12.
+**State:** Optimizer (milestone M4). **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C09, C12 (the `InsuranceVariants` model it scores). **Parallel with:** none.
 
 ## Goal, and why it sits here
 
@@ -12,7 +12,7 @@ Close the loop with real data. Every morning the owner downloads one flagship st
 2. `docs/ARCHITECTURE.md` section 9 in full; section 11 "Scoring tests (ADR-020)" and "Calibration metrics (tracked nightly)"; section 10 "Storage, versioning and snapshots".
 3. `docs/adr/ADR-015-learning-and-model-adoption.md` (with its revision note), `docs/adr/ADR-014-reproducibility-and-storage.md` (Storage bullet, revision note), `docs/adr/ADR-020-scoring-adapter.md` (the eighth-point rule).
 4. `docs/review/ADJUDICATION.md` entries 13, 24 and 27 only.
-5. `docs/adr/ADR-013-claude-code-runtime-and-budget.md` (the Skills and Hooks bullets) and the `/night` skill file from C11 under `.claude/skills/` (the pattern for `/results`).
+5. `docs/adr/ADR-013-claude-code-runtime-and-budget.md` (the Skills and Hooks bullets) and the `/night` skill file from C11 under `.claude/commands/` (the pattern for `/results`).
 
 ## Scope
 
@@ -25,7 +25,9 @@ Close the loop with real data. Every morning the owner downloads one flagship st
 - `learn/flashback.py`: for each flagship file, remove our real entries from the standings and insert each evaluated portfolio in their place (field size unchanged), then settle with C08's `settle`: the final portfolio, the pre-QA portfolio (identical to the final until C18), the pre-fact portfolio, a simple control (maximum projection with exposure caps), a seeded random-entry benchmark, and C12's three insurance variants when `runs/<run_id>/insurance/variants.json` exists ("not available" otherwise). Twice: under the pre-lock scenario set as it stood at lock, and under hindsight-known availability and minutes with per-minute conversion re-simulated. Output per portfolio: prize equity won, winnings as a share of fees, fraction of entries cashing.
 - `learn/joint_failure.py`: projection errors grouped by game and by news event; the fraction cashing; the best entry's distance from each contest's cash line; winnings as a share of fees; each against its pre-lock prediction, bootstrapped by night (resampling whole nights); an attribution when one assumption explains the night.
 - `dfs results [--date <date>]`: run id mode `results`; prints the scoring check, the scorecard, the flashback table and the joint-failure notes; writes `runs/<run_id>/results.md`.
-- `.claude/skills/results/SKILL.md`: `/results` wraps `dfs results` with an Owns / Invokes / Does not own block and never reads the private folder.
+- `.claude/commands/results.md`: `/results` wraps `dfs results` with an Owns / Invokes / Does not own block and never reads the private folder.
+
+- `learn/scorecards.py` also carries, as separate rows with their own baselines (ADJUDICATION entries 6 and 12): "LLM inferences (shadow)" (coverage of the stated minutes and usage ranges against actuals; this is what C14's blend gate reads), player-pair co-occurrence, salary left unspent, Captain combinations, exact-duplicate counts and entrant portfolio clustering in the field scorecard.
 
 **Out of scope:** the calibration gates and template curves (C14), the economic diagnostics and readouts (C15), the weekly analyst and adoption (C19), the Showdown audit (C16).
 

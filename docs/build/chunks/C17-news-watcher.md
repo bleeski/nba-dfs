@@ -1,6 +1,6 @@
 # C17: News watcher
 
-**State:** Optimizer (milestone M4). **Size:** M (one session, about 1 to 2 hours, three checkpoints). **Depends on:** C10. **Parallel with:** C15.
+**State:** Optimizer (milestone M4). **Size:** M (one session, about 1 to 2 hours, three checkpoints). **Depends on:** C10, C11 (the posture allowlist in `llm/fetch.py` and the launcher). **Parallel with:** none.
 
 ## Goal, and why it sits here
 

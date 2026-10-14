@@ -1,6 +1,6 @@
 # C03: Validator, exporter, ledger, legal repair
 
-**State:** Floor. **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C02. **Parallel with:** C05.
+**State:** Floor. **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C02. **Parallel with:** none (every chunk touches `cli.py`, `CONTRACTS.md` and settings; run one at a time).
 
 ## Goal, and why it sits here
 
@@ -22,6 +22,7 @@ Make it impossible for an invalid file to reach the owner, and make every export
 - `export/writer.py`: `export(lineups, slate, ledger, reason) -> UploadFile`: writes `out/uploads/<slate_key>_<lock>_v<n>.csv` mirroring the download's encoding, BOM and newline; re-reads and re-validates the written file; computes its hash; records it in the manifest and the ledger as pending with `valid_until`; moves older versions to `out/uploads/stale/`; refuses to write when validation fails (exit 2) and names the failing rule and entry in plain language.
 - `export/ledger.py`: the `Ledger` per slate (CONTRACTS 11.1): committed and pending lineups per entry, file hashes, the news-state hash, the four states; `dfs uploaded <file>` commits; `reconcile(downloaded_entries)` after a re-download (the platform is the truth; differences are flagged); refusal to revert a newer change without `--force` (recorded).
 - `export/runlock.py`: one engine run at a time with a heartbeat file that clears itself after about 2 minutes.
+- `clock.py` and saved-night mode (CONTRACTS 1.1): `Clock.now()` returns `--as-of` when given, else the wall clock; `Paths` resolves `--night <date>` to `inbox/<date>/` (or `fixtures/dk/<date>/` with `--fixtures`) and that night's ledger and news state; every lock rule in this chunk (`lock_now`, the started-game rule, the insufficient-time rule, "valid until") reads the clock, never `datetime.now()`; a static test proves no module under `src/nbadfs/` calls the wall clock directly. This is what makes every weekend drill on the saved Oct 16 files runnable.
 - `export/manifest.py`: `RunManifest` written for every run, with input and output hashes.
 - `validate/repair.py`: `repair(slate, lineups, ruled_out, pool, simple_points)`: remove each ruled-out player from unlocked slots and insert the cheapest legal substitute by `simple_points` per dollar under the cap; `dfs repair` runs it on the latest file and exports with `model_status = "repair"`; must finish under 10 seconds for 150 entries.
 - `dfs status` now shows the four states per slate from the ledger.
@@ -40,18 +41,19 @@ Make it impossible for an invalid file to reach the owner, and make every export
 - Ledger tests: `dfs uploaded` commits exactly the pending lineups of that file; a reconcile after a re-download flags a changed entry and adopts the platform's lineup; a write that would revert a newer change is refused; the run lock blocks a second run and clears after a simulated crash.
 - Repair test: a 150-entry slate with two ruled-out players repaired in under 10 seconds with every lineup valid.
 - Insufficient-time test: a changed cell whose game locks in 5 minutes is dropped with the message.
+- Saved-night test: `--night 2026-10-15 --as-of "2026-10-15T17:00-05:00"` on the Oct 15 fixtures validates the pre-lock file with no started games, and `--as-of "2026-10-15T19:00-05:00"` treats the 6:30 pm game as started; the static wall-clock test passes.
 - Property test: 2,000 random lineups per pool; every invalid one rejected, every valid one accepted.
 - A test that nothing but `export/writer.py` writes under `out/uploads/` (a static check over `src/`).
 
 ## What I check
 
-Run, on your Oct 15 Classic entries file:
+Your Oct 15 entries file holds the lineups you built by hand in the DraftKings browser page (a blank cell means a reserved entry with no lineup, which the repair cannot fill). Run:
 
 ```bash
 uv run dfs repair --slate classic_main
 ```
 
-Expected: a file named like `out/uploads/classic_main_1830_v1.csv`, a line saying it passed validation, and `dfs status` showing that slate's file validity as "valid" and confirmed upload as "pending". Then upload that file to DraftKings in your browser (it is your own test entry) and run:
+Expected: a file named like `out/uploads/classic_main_1830_v1.csv` containing your own lineups with bare numeric IDs (unchanged, because nobody is ruled out), a line saying it passed validation, and `dfs status` showing that slate's file validity as "valid" and confirmed upload as "pending". This round trip of your own lineups is the minimum rehearsal even if the Floor slips. Then upload that file to DraftKings in your browser (it is your own test entry) and run:
 
 ```bash
 uv run dfs uploaded out/uploads/classic_main_1830_v1.csv

@@ -24,7 +24,7 @@ Option 3.
 - "Sensible" is a deterministic sanity check per slate: at least 95% of the cap used on average, no two identical lineups in one contest, the concentration cap honored or its relaxation reported, no lineup below the projection floor (default 85% of the slate's best single-lineup projection), and no player with `p_active` under 0.5 unless the owner asked for him. It labels; it never blocks.
 - The Floor file is uploaded early on opening night and replaced only when an improved file passes checks.
 - Every raw download and pre-lock snapshot is archived from Oct 15 onward, so week 1 is learnable before the results parser exists.
-- Usage: each build session records its Claude usage in `docs/build/PROGRESS.md`; if the first four MVP chunks use more than about 40% of a weekly window, the Floor is the opening-night release and the optimizer chunks move after Oct 20.
+- Usage: each build session records its Claude usage in `docs/build/PROGRESS.md`; if the first four MVP chunks use more than about 40% of a weekly window, the Floor is the opening-night release: C05 to C09 move after Oct 20 and C10 and C11 are built in Floor mode only (news commands, repair, hooks, launcher).
 
 ## Consequences
 

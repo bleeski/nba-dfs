@@ -1,6 +1,6 @@
 # C09: Candidates, selection, the Baseline night, the full brief
 
-**State:** Baseline (reaches milestone M2). **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C08. **Parallel with:** nothing.
+**State:** Baseline (reaches milestone M2). **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C08. **Parallel with:** none (every chunk touches `cli.py`, `CONTRACTS.md` and settings; run one at a time).
 
 ## Goal, and why it sits here
 
@@ -11,7 +11,7 @@ Turn scenarios and settlements into a portfolio: a wide candidate pool per slate
 1. `docs/build/CONTRACTS.md` sections 9 (as consumed), 10 (all), 12 (Brief), 13, 15 (`[select]`, `[concentration]`).
 2. `docs/ARCHITECTURE.md` section 6 in full except "Late news and late swap" and "The ledger and the four states"; section 2 "Goal 1" and "Economic diagnostics" subsections; section 8 "A typical night" (the Build and Brief rows); section 3 component row 18 (Brief).
 3. `docs/adr/ADR-006-solver-and-candidate-generation.md`, `docs/adr/ADR-007-greedy-coverage-selection.md` (with its revision note), `docs/adr/ADR-024-goal-1-as-top-1pct-prize-equity.md` (the selection paragraph), `docs/adr/ADR-023-release-states-and-feature-flags.md` (the sanity check).
-4. `docs/research/R2-optimization-methods.md` sections 2 (greedy, lazy greedy, the guarantee's scope) and 7.3 (the Hall formulation), and `spikes/solvers/bench_solvers.py` (the working GLPK wrapper to port).
+4. `docs/research/R2-optimization-methods.md` section 2 (greedy, lazy greedy, the guarantee's scope). The solver wrapper is already built (`select/solver.py`, C04); read its docstrings, not the spike.
 5. `docs/SLATE-BRIEF-MOCK.md` (the brief's layout).
 6. `docs/review/ADJUDICATION.md` entries 7 and 38 only.
 
@@ -19,7 +19,7 @@ Turn scenarios and settlements into a portfolio: a wide candidate pool per slate
 
 **Build:**
 
-- `select/candidates.py`: Classic candidates from GLPK (`swiglpk`, OR-Tools CBC fallback) with the Hall formulation, a persistent model whose objective is replaced per solve, no wall-clock limits, single-threaded solves in worker processes merged in a fixed order, the deterministic tie-break: (a) per-scenario optima on a sample of screening scenarios, (b) mean minus several weights on public-view ownership, (c) game-stack variants, (d) perturbed means; canonical sort and de-duplication; pool size per settings. Showdown: full enumeration of legal lineups (about 440,000 for 22 players), screened on the screening set to `showdown_keep`.
+- `select/candidates.py`: Classic candidates through `select/solver.py` (C04's wrapper: GLPK with OR-Tools CBC fallback, Hall formulation, persistent model, no wall-clock limits, deterministic tie-break), with single-threaded solves in worker processes merged in a fixed order: (a) per-scenario optima on a sample of screening scenarios, (b) mean minus several weights on public-view ownership, (c) game-stack variants, (d) perturbed means; canonical sort and de-duplication; pool size per settings. Showdown: full enumeration of legal lineups (about 440,000 for 22 players), screened on the screening set to `showdown_keep`.
 - `select/greedy.py`: `select_contest(contest_facts, pool, settlement_fn, n_entries, settings)`: lazy greedy on the marginal gain in Goal 1 using C08's settlement (exact joint for fields under the threshold, additive above), per-scenario values stored sparsely; the result's `G1`, `G1_no_dup`, `p_top1_any`, and the "best found" label.
 - `select/guardrails.py`: the concentration cap as a per-format feasibility-tested soft preference (minimum feasible cap computed from the pool and entry count; stricter of that and the setting applied; relaxation reported); no duplicate lineup within a contest; per-game exposure across formats.
 - `select/slots.py`: slot assignment placing later-game players in UTIL then G or F.
@@ -33,7 +33,7 @@ Turn scenarios and settlements into a portfolio: a wide candidate pool per slate
 
 ## Contracts
 
-- **Consumes:** `ScenarioSet` (C07), `FieldSample`, `FieldScores`, `settle`, `night_goal2` (C08), `ContestFacts` (C04), `validate`, `export`, `Ledger` (C03), the Floor (C04).
+- **Consumes:** `ScenarioSet` and `fixtures/synthetic/night8.json` (C07), `FieldSample`, `FieldScores`, `settle`, `night_goal2` (C08), `ContestFacts` and `select/solver.py` (C04), `validate`, `export`, `Ledger`, the clock (C03), the Floor (C04).
 - **Produces:** `Candidate`, `CandidatePool`, `Portfolio`, `NightPortfolio` (Baseline), `SanityReport`, the full `Brief`, `dfs night` Baseline mode.
 
 ## Definition of done
@@ -48,10 +48,10 @@ Turn scenarios and settlements into a portfolio: a wide candidate pool per slate
 
 ## What I check (Drill A, on the saved Oct 16 files)
 
-Run:
+Run in saved-night mode:
 
 ```bash
-uv run dfs night
+uv run dfs night --night 2026-10-16 --as-of "2026-10-16T17:00-05:00"
 ```
 
 Expected: a Floor file per slate first, then within 15 minutes a Baseline file per slate and a one-page brief per slate. In the brief: every contest shows a facts status word and three Goal 1 numbers; Goal 2 is a percentage labeled "model estimate, uncalibrated"; the exposures table's top players are stars or obvious value plays; the sanity line says "passed"; no capability that is off is presented as on. Open the upload file: 8 bare numeric IDs per Classic row, 6 per Showdown row.

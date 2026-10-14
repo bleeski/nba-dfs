@@ -1,10 +1,10 @@
 # C18: QA coherence audit
 
-**State:** Optimizer (milestone M5; runs from week 2). **Size:** M (one session, about 1 to 2 hours, three checkpoints). **Depends on:** C11, C13. **Parallel with:** C19.
+**State:** Optimizer (milestone M5; runs from week 2). **Size:** M (one session, about 1 to 2 hours, three checkpoints). **Depends on:** C11, C13. **Parallel with:** none (every chunk touches `cli.py`, `CONTRACTS.md` and settings; run one at a time).
 
 ## Goal, and why it sits here
 
-Give the LLM the one job it does better than code before lock: noticing. The QA audit is a single pass by a separate subagent with no web access that reads a small fact packet and files at most 8 proposals of two kinds: a missed-news challenge with a cited, fetched source, or a lineup-coherence flag naming player pairs whose on-court roles exclude each other. Code judges both. The same chunk moves the statistical splits (back-to-back, rest, home and away) the old QA design asked the LLM for into the deterministic priors module behind an evidence bar. It depends on C11 for the agent and hook pattern and on C13 because the flashback scores the pre-QA portfolio. (ADJUDICATION entry 18's Change line says C17; the plan renumbered it to C18.)
+Give the LLM the one job it does better than code before lock: noticing. The QA audit is a single pass by a separate subagent with no web access that reads a small fact packet and files at most 8 proposals of two kinds: a missed-news challenge with a cited, fetched source, or a lineup-coherence flag naming player pairs whose on-court roles exclude each other. Code judges both. The same chunk moves the statistical splits (back-to-back, rest, home and away) the old QA design asked the LLM for into the deterministic priors module behind an evidence bar. It depends on C11 for the agent and hook pattern and on C13 because the flashback scores the pre-QA portfolio. ADJUDICATION entry 18's Change line names this chunk (C18).
 
 ## Reading list (nothing else)
 

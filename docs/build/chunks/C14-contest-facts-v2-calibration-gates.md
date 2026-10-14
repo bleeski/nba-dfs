@@ -1,6 +1,6 @@
 # C14: Contest facts v2 and calibration gates
 
-**State:** Optimizer (milestone M4). **Size:** M (one session, about 1 to 2 hours, two checkpoints). **Depends on:** C13. **Parallel with:** C16.
+**State:** Optimizer (milestone M4). **Size:** M (one session, about 1 to 2 hours, two checkpoints). **Depends on:** C13. **Parallel with:** none (every chunk touches `cli.py`, `CONTRACTS.md` and settings; run one at a time).
 
 ## Goal, and why it sits here
 
@@ -24,6 +24,8 @@ Make contest facts earn their labels, and let the field model earn its trust. C0
 - `learn/calibration.py`, the copy-rate gate per format: on each standings file, take the field's 20 most common lineups and compare predicted copy count with observed; a file passes when all 20 are within a factor of 2; the gate passes when at least 4 of the first 5 files for that format pass and our entries' predicted expected copies are within 1.0 of observed on average over those files. The threshold gate: each contest's realized top-1% and min-cash cutoffs are placed inside the predicted cutoff distribution as a percentile position; the gate passes when every position over the first 5 files lies inside the predicted range and the positions are spread rather than clustered at one end (setting `calibration.cutoff_position_min_spread`, default 0.5; a judgment call). Passing the copy-rate gate flips the "unfitted" label for that format; passing both sets `Goal2.calibrated = True`. Both are re-checked weekly on a rolling window of 5 files and can flip back.
 - `dfs calibration`: prints each gate's state per format with "n of 5 files seen", the per-file results and the date it flipped; the brief reads `CalibrationStatus` for its labels.
 - The brief's labels live in their own module (`brief/calibration.py`) behind a one-line hook, so C16's brief additions do not collide.
+
+- The inference blend gate (ADJUDICATION entry 12): `llm.inference_blend_enabled` flips to true only when at least two weeks of C13's "LLM inferences (shadow)" rows show the researcher's stated 80% ranges covering actuals between 75% and 85%; recorded as a calibration status beside the copy-rate gate, and the brief says when it is off.
 
 **Out of scope:** fitting field shapes with shrinkage, which goes through C19's challenger workflow; the ownership shock and the field family (C16); any change to settlement arithmetic.
 

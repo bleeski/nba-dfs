@@ -120,7 +120,7 @@ I've set Fable as the advisor with `/advisor fable`. Consult it during architect
 
 * Research ends when it resolves the named decision or reaches its time budget. No new research memos before opening night except a spike a build chunk needs to settle a contract.
 * The build runs as chunks, one per fresh Claude Code session, from `docs/build/BUILD_PLAN.md`; the session protocol is in `CLAUDE.md`; progress lives in `docs/build/PROGRESS.md`.
-* Every session records its Claude usage at the end. If the first four MVP chunks use more than about 40% of a weekly window, the Floor is the opening-night release and the optimizer chunks move after Oct 20.
+* Every session records its Claude usage at the end. If the first four MVP chunks use more than about 40% of a weekly window, the Floor is the opening-night release: C05 to C09 move after Oct 20 and C10 and C11 are built in Floor mode only.
 * Use subagents for verification and consistency checks to keep the main context lean.
 
 ## Deliverables

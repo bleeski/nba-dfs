@@ -1,6 +1,6 @@
 # C04: Contest facts, injury report, Floor portfolio, brief-lite
 
-**State:** Floor (reaches milestone M1). **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C03. **Parallel with:** C05.
+**State:** Floor (reaches milestone M1). **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C03. **Parallel with:** none (every chunk touches `cli.py`, `CONTRACTS.md` and settings; run one at a time).
 
 ## Goal, and why it sits here
 
@@ -12,6 +12,7 @@ Produce the first real, sensible, injury-scrubbed upload file from real files: c
 2. `docs/ARCHITECTURE.md` section 3 component rows 4, 13, 14, 18, 21; section 6 "Guardrails (in code)"; section 8 "A typical night" (the Floor rows), "Fallback ladder", and "The if the engine is down card".
 3. `docs/adr/ADR-023-release-states-and-feature-flags.md` (the Floor and the sanity check), `docs/adr/ADR-006-solver-and-candidate-generation.md` (the solver), `docs/adr/ADR-019-delivery-first-only-validity-blocks.md` (with its revision note).
 4. `docs/research/R4-data-sources.md` section 4.3 (the injury report: URL patterns, cadence, parser evidence) and `spikes/data/s03g_injury_pdf_parse_v3.py` (the working parser to port).
+4a. `spikes/solvers/bench_solvers.py`: only the GLPK (`swiglpk`) wrapper and the Hall formulation functions (about 200 lines); this chunk owns the solver wrapper `select/solver.py` that C08 and C09 consume.
 5. `docs/research/R8-user-nba-history.md` (paid-share facts) and `spikes/history/nba_entry_history.py` (the parser to port, per ADR-018).
 6. `docs/review/ADJUDICATION.md` entry 1 only (contest facts status).
 
@@ -24,8 +25,9 @@ Produce the first real, sensible, injury-scrubbed upload file from real files: c
 - `facts/entry_history.py`: the ported 14-column parser with tests on the owner's real export.
 - `ingest/injury_report.py`: fetch the latest official injury report PDF trying both naming patterns (15-minute slots; hourly file by last-modified), snapshot it, parse rows (port the v3 spike parser), map statuses; `dfs status` prints the diff since the last run; the fetch is rate-limited and fails soft (the brief marks "not checked for injuries").
 - `projections/simple.py`: `simple_points` per pool player: last-season DraftKings points per minute times last-season minutes per game from `fixtures/history/player_box_2026.parquet` (loaded directly here; the full history layer is C05), salary-implied points when no history (a linear fit of points on salary from the same file); `p_active = 0` for Out, 0.25 Doubtful, 0.55 Questionable, 0.9 Probable (settings).
-- `select/floor.py`: `floor_portfolio(slate, simple_points, settings)`: one solver run per entry (GLPK via `swiglpk`, OR-Tools CBC fallback; Hall formulation; deterministic tie-break) maximizing `simple_points` with a small fixed perturbation per entry index so entries differ; players with `p_active < 0.5` excluded; the concentration cap applied as a feasibility-tested soft preference (compute the minimum feasible cap for the pool and entry count, use the stricter of that and the setting, report relaxation); `assign_slots` placing later-game players in UTIL then G/F; the sanity check (`SanityReport`); `release_state = "floor"`; Goal 1 and Goal 2 `None`.
-- `dfs night --floor`: ingest, facts, injury report, Floor portfolio, validate, export one file per slate, write the brief-lite; `dfs out`/`dfs in` in Floor mode re-run the Floor with the fact applied (the full re-solve is C10).
+- `select/solver.py`: the one solver wrapper for the whole engine (GLPK via `swiglpk`, OR-Tools CBC fallback behind the same interface; Hall formulation; persistent model with replaceable objective; no wall-clock limit; deterministic tie-break keyed by `person_key`), ported from the spike; C08 and C09 consume it and never port it again.
+- `select/floor.py`: `floor_portfolio(slate, simple_points, settings)`: one solver run per entry through `select/solver.py` maximizing `simple_points` with a small fixed perturbation per entry index so entries differ; players with `p_active < 0.5` excluded; the concentration cap applied as a feasibility-tested soft preference (compute the minimum feasible cap for the pool and entry count, use the stricter of that and the setting, report relaxation); `assign_slots` placing later-game players in UTIL then G/F; the sanity check (`SanityReport`); `release_state = "floor"`; Goal 1 and Goal 2 `None`.
+- `dfs night --floor`: ingest, facts, injury report, Floor portfolio, validate, export one file per slate, write the brief-lite. `dfs out` and `dfs in` write the fact and run the **legal repair** on the latest committed lineups (CONTRACTS 4.4: the flag-off path is always the repair, never a Floor rebuild over an uploaded file); `dfs night --floor` is the explicit rebuild. Both honor `--night` and `--as-of`.
 - `brief/lite.py`: one page per slate: the four states, the latest file and its "valid until", the Floor file, contests with `facts_status`, players removed and why, the sanity report, "Goal 2 not estimated", capabilities off, and the "if the engine is down" card (`dfs status`, `dfs out "Name"`, `dfs in "Name"`, `dfs repair`).
 
 **Out of scope:** the simulation, the field, the settlement, Goal 1 and Goal 2 numbers, the researcher, observed-entries capture (C14).
@@ -56,11 +58,13 @@ Expected: within 10 minutes, one upload file per slate named in the output, a on
 
 ## Size estimate and checkpoints
 
-About 2 to 3 hours. Checkpoint 1: contest facts, paste parser, entry-history port, with tests (commit). Checkpoint 2: injury report adapter and `simple_points` (commit). Checkpoint 3: Floor portfolio, sanity check, `dfs night --floor`, brief-lite, the Oct 15 run (commit). If time runs short, checkpoint 2 can ship without the injury adapter: the brief then says "not checked for injuries" and the rehearsal still proves the upload path.
+About 2 to 3 hours, ordered so milestone M1 comes first (advisor's review). Checkpoint 1 (the M1 core): contest facts from the name and type defaults (`facts_status = "default"`), `simple_points`, the solver wrapper, the Floor portfolio with the cap and sanity check, `dfs night --floor`, brief-lite, the Oct 15 run (commit). Checkpoint 2: the injury-report adapter (commit; without it the brief says "not checked for injuries" and the rehearsal still proves the upload path). Checkpoint 3: the payout-paste parser, the entry-history port and the facts cache (commit; if time runs short these move to the start of C08, which is their first real consumer, and PROGRESS.md says so).
 
 ## Risks
 
 - **The 2026-27 injury-report file naming is unknown until Oct 19.** The adapter tries both known patterns and a directory probe; a miss is a label, not a failure.
-- **No preseason injury reports exist** (R4). Test on the March fixtures; the first live parse is Monday Oct 19 evening, when parser fixes are allowed.
+- **No preseason injury reports exist** (R4), so the Oct 15 Floor is injury-scrubbed only by DraftKings `Status` (if the export has it) and your own `dfs out`; the brief says so. Test the adapter on the March fixtures; the first live parse is Monday Oct 19 evening, when parser fixes are allowed.
+- **Preseason minutes mislead `simple_points`.** Use last regular season's minutes and rates, never preseason box scores, for the Floor's projection; the sanity check's projection floor catches absurd lineups.
+- **DraftKings may offer no Classic slate on a 2-game Thursday.** The owner checks the lobby Wednesday night; if so, Thursday rehearses the Showdown path and Friday the Classic path, with no slack for the Classic; say so in PROGRESS.md.
 - **The Floor's projections are crude.** That is the point: valid, injury-scrubbed, sensible. The sanity check's projection floor keeps lineups from being absurd.
 - **GLPK fails to install.** OR-Tools CBC is the fallback behind the same interface (ADR-006); note it in PROGRESS.md.

@@ -1,6 +1,6 @@
 # C08: Field model and settlement
 
-**State:** Baseline. **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C04, C07. **Parallel with:** nothing.
+**State:** Baseline. **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C04, C07. **Parallel with:** none (every chunk touches `cli.py`, `CONTRACTS.md` and settings; run one at a time).
 
 ## Goal, and why it sits here
 
@@ -29,7 +29,7 @@ Build the opponents and the money. The field model simulates each contest's oppo
 
 ## Contracts
 
-- **Consumes:** `ContestFacts` (C04), `ScenarioSet` (C07), `ProjectionTable` only for *our* lineups' scores (never for the public view), the candidate solver interface from C04's Floor (`select/floor.py`'s solver wrapper) for optimizer-like entrants.
+- **Consumes:** `ContestFacts` (C04), `ScenarioSet` and `fixtures/synthetic/night8.json` (C07), `ProjectionTable` only for *our* lineups' scores (never for the public view), the solver wrapper `select/solver.py` (C04) for optimizer-like entrants. If C04 deferred the payout-paste parser and the facts cache, this chunk builds them first (checkpoint 0) because Goal 1 needs real payout curves.
 - **Produces:** `PublicView`, `FieldSample`, `FieldScores`, `Settlement`, `Goal2`, `settle`, `night_goal2`.
 
 ## Definition of done
@@ -43,10 +43,10 @@ Build the opponents and the money. The field model simulates each contest's oppo
 
 ## What I check
 
-Run on the saved Oct 16 files:
+Run on the saved Oct 16 files in saved-night mode:
 
 ```bash
-uv run dfs field --slate classic_main
+uv run dfs field --slate classic_main --night 2026-10-16 --as-of "2026-10-16T17:00-05:00"
 ```
 
 Expected: an ownership table whose top player is between about 40% and 60%, a list of the most common lineups with their copy counts, and each contest's top-1% line in DraftKings points. The numbers should look like a real slate: stars and cheap value plays at the top, nobody above 70%.

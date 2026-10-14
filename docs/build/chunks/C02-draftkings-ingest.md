@@ -1,6 +1,6 @@
 # C02: DraftKings ingest and slate state
 
-**State:** Floor. **Size:** M (one session, about 1 to 2 hours). **Depends on:** C01. **Parallel with:** C05 (no shared files).
+**State:** Floor. **Size:** M (one session, about 1 to 2 hours). **Depends on:** C01. **Parallel with:** none (every chunk touches `cli.py`, `CONTRACTS.md` and settings; run one at a time).
 
 ## Goal, and why it sits here
 

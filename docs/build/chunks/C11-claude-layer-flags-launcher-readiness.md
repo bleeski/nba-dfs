@@ -1,6 +1,6 @@
 # C11: Claude layer, capability flags, launcher, opening-night readiness
 
-**State:** Baseline (reaches milestone M3). **Size:** M (one session, about 1 to 2 hours, two checkpoints). **Depends on:** C09, C10. **Parallel with:** nothing (its skills and hooks half could start alongside C10 if a second session is available, but keep the flags and the launcher for last).
+**State:** Baseline (reaches milestone M3). **Size:** L (one session, about 2 to 3 hours, three checkpoints; the advisor's review relabeled it from M). **Depends on:** C09, C10. **Parallel with:** none (every chunk touches `cli.py`, `CONTRACTS.md` and settings; run one at a time).
 
 ## Goal, and why it sits here
 
@@ -28,7 +28,8 @@ Wrap the engine for the owner and for opening night: the nightly skills, the hoo
 - `config/capabilities.toml` enforcement: `dfs night` refuses to enable a capability without `rehearsed_on` on a game night unless `dfs unlock` (recorded in the manifest); the brief lists what is off; `dfs rehearsed <capability> <date>` records a drill.
 - `dfs night --game-day`: a capped researcher pass (at most 6 searches, 3 minutes) if the researcher is on, else nothing; a deterministic rebuild reusing every fact still current (supersession applied); fills new entries; the Tuesday 12:45 pm CT command.
 - The desktop launcher: `scripts/dfs.cmd` plus a `.lnk` note; keep-awake during night runs; the same plain-language output with Claude closed.
-- Readiness drills recorded in PROGRESS.md's drill log: the determinism test (the Oct 16 night twice under artificial CPU load, byte-identical files); the launcher drill with Claude closed (`dfs night`, `dfs out`, `dfs repair`); the full replay of the Oct 16 night end to end with the researcher on against the saved digest (if a fresh session and budget allow); the usage reading.
+- Readiness drills recorded in PROGRESS.md's drill log, all in saved-night mode on the Oct 16 files: the determinism test (the night twice under artificial CPU load, byte-identical files); the launcher drill with Claude closed (`dfs night`, `dfs out`, `dfs repair`); the opening-night fallback sequence on a Baseline file (`dfs out --no-run`, `dfs repair`, a dry upload to a file, `dfs uploaded`, `dfs status`); the full replay with the researcher on against the saved digest (if a fresh session and budget allow); the usage reading.
+- The "if the engine is down" card at the top of every brief carries the five fallback lines verbatim: `uv run dfs out "Name" --no-run`; `uv run dfs repair --slate <slate>`; upload in the browser; `uv run dfs uploaded <file>`; `uv run dfs status`.
 
 **Out of scope:** the QA audit (C18), the watcher (C17), the results skill body (C13), the replay command (C19).
 
@@ -48,7 +49,7 @@ Wrap the engine for the owner and for opening night: the nightly skills, the hoo
 
 ## What I check
 
-Close Claude Code. Double-click the desktop launcher and run `dfs night` on the saved Oct 16 files, then `dfs out "<player>" --yes`, then `dfs repair --slate classic_main`.
+Close Claude Code. Double-click the desktop launcher and run `dfs night --night 2026-10-16 --as-of "2026-10-16T17:00-05:00"`, then `dfs out "<player>" --yes --night 2026-10-16 --as-of "2026-10-16T17:30-05:00"`, then `dfs repair --slate classic_main --night 2026-10-16 --as-of "2026-10-16T17:30-05:00"`.
 
 Expected: each prints plain-language output and names a valid file; no Claude session was needed. Then open Claude Code in the repo and type `/status`.
 
@@ -56,7 +57,7 @@ Expected: a short report of each slate's four states, which capabilities are off
 
 ## Size estimate and checkpoints
 
-About 1 to 2 hours. Checkpoint 1: skills, hooks, preflight, fetch, fact validator, the researcher agent with its dry run (commit). Checkpoint 2: capability enforcement, `--game-day`, the launcher, the readiness drills logged (commit).
+About 2 to 3 hours. Checkpoint 1: skills, hooks, preflight, fetch, the fact validator and hook (commit). Checkpoint 2: the researcher agent with its dry run, capability enforcement, `--game-day` (commit). Checkpoint 3: the launcher, the readiness drills logged, the fallback card (commit). If the session runs long, checkpoint 3's drills are the part to carry into a fresh session on Monday morning.
 
 ## Risks
 

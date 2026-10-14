@@ -1,6 +1,6 @@
 # C16: Adversarial suite, field family, edge uncertainty, Showdown audit
 
-**State:** Optimizer (milestone M4). **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C13. **Parallel with:** C14.
+**State:** Optimizer (milestone M4). **Size:** L (one session, about 2 to 3 hours, three checkpoints). **Depends on:** C13. **Parallel with:** none (every chunk touches `cli.py`, `CONTRACTS.md` and settings; run one at a time).
 
 ## Goal, and why it sits here
 
