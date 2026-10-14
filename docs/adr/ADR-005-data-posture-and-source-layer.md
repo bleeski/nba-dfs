@@ -17,8 +17,8 @@ The brief requires free data only and asks that any source whose terms prohibit 
 A source layer where every adapter declares its terms status, and a `posture` setting selects which adapters may run. Default: **permissive**:
 
 - History and priors: sportsdataverse ESPN box scores and play-by-play (bulk files, no load on NBA or ESPN servers).
-- Status and starters: the official injury report every 15 minutes; DraftKings' `Status` and `Starting` columns from the user's salary re-export near lock (manual).
-- Lines and props: The Odds API free key (lines twice daily; props on about 12 nights a month, prioritizing big slates).
+- Status and starters: the official injury report (every 15 minutes, or an hourly file early in the season); DraftKings' `Status` and `Starting` columns from each salary export the user downloads (manual; BET for NBA until the first export); news the user sees first, entered with `dfs out` or `dfs in`.
+- Lines and props: The Odds API free key (lines twice daily, about 180 of 500 monthly credits; props on about 7 nights a month at about 40 credits per 10-game night, prioritizing big slates; the engine reads the remaining-credit header and keeps a reserve).
 - Public projections for the field's view: Daily Fantasy Fuel's free CSV.
 - News: Bluesky public API and the LLM researcher's web searches.
 - Never, in any posture: anything that defeats a technical block (bot protection, CAPTCHA, app keys), and anything on DraftKings.
@@ -32,7 +32,7 @@ The user accepts or rejects each (Decision D1). If either is rejected, the engin
 
 ### Other details
 
-- The researcher fetches pages only through `dfs research fetch`, which enforces an allowlist (official.nba.com, nba.com team news, team and league press releases, bsky.app reporter posts, major news outlets) and saves each page for the quote check.
+- The researcher fetches pages only through `dfs research fetch`, which enforces an allowlist by domain (official.nba.com; nba.com team and league news; Bluesky posts through the public API) and saves each page for the quote check. ESPN, RotoWire and paywalled news sites are never fetched, because their terms ban automated access.
 - DraftKings `Status` and `Starting` are BET for NBA until the user's first NBA salary export (they appear in 2026 exports for other sports).
 - `nba_api` can be approved by the user as a backup history source if sportsdataverse's daily job stalls.
 

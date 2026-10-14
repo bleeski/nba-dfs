@@ -11,8 +11,8 @@ The brief says deadline beats perfection: if an advanced step fails near lock, s
 - **Only DraftKings validity blocks a file** (ADR-010). Every other check (data freshness, concentration, QA, strategy) labels the output in the brief.
 - **Night plan in lock order:** every slate gets a validated fallback file before any slate is improved.
 - **Fallback that depends only on the entries file:** salary-implied points when nothing else is available, with players DraftKings marks OUT or the latest official report lists as Out removed; marked "not checked for injuries" when neither file is present (RT1 rank 22).
-- **Ready-made if-out files** for each questionable player (ADR-011), so acting on news needs no run.
-- **A desktop launcher** runs every night step without Claude (ADR-013), and the top of every brief carries an "if the engine is down" card listing the latest validated, if-out and fallback files.
+- **Stored replacements and `dfs apply`** for each material questionable player (ADR-011), so acting on news takes seconds and no full run, and works from the launcher without Claude.
+- **A desktop launcher** runs every night step without Claude (ADR-013), and the top of every brief carries an "if the engine is down" card listing the latest validated file and the fallback file for each slate, with "valid until" stamps, and how to enter news with `dfs out`.
 - **Fallback ladder:** full build with QA; without QA; without any LLM step; the fallback portfolio; the last validated file for that slate, re-validated against the newest download.
 - **Completeness check after every upload,** with versioned file names and the user's "uploaded N of N" read-back.
 - **No environment repair inside the entry window:** a failing 60-second preflight sends the night to the no-LLM path.

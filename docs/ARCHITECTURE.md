@@ -1,6 +1,6 @@
 # NBA DFS Engine: Architecture
 
-**Status:** version 2, revised after red-team round 1 (`docs/research/RT1-red-team-round1.md`). Design only; no engine code exists yet. **Date:** 2026-10-13. **Go-live:** NBA opening night, Tuesday 2026-10-20 (first lock 2:00 pm CT).
+**Status:** version 3, revised after red-team rounds 1 and 2 (`docs/research/RT1-red-team-round1.md`, `RT2-red-team-round2.md`) and the laptop benchmark (`R9-night-benchmark.md`). Design only; no engine code exists yet. **Date:** 2026-10-13. **Go-live:** NBA opening night, Tuesday 2026-10-20 (first lock 2:00 pm CT).
 
 **How to read this:** every section stands alone. Evidence labels: **VERIFIED** means we ran it or read it in a primary source and the evidence is cited; **SUPPORTED** means a credible source says so but we did not observe it ourselves; **BET** means our judgment, to be tested. Research memos are in `docs/research/` (R1 to R9, RR1 to RR4, S1, S2, RT1, RT2), decision records in `docs/adr/` (ADR-001 to ADR-022), your brief in `docs/brief/`.
 
@@ -10,18 +10,18 @@
 
 ### What the engine does
 
-Each night it builds lineups for every DraftKings NBA entry you hold, Classic and Showdown Captain Mode, so that each contest has the best chance of a top-1% finish and the night as a whole rarely ends with zero cashes. It simulates the whole night tens of thousands of times (every game, every player, blowouts, overtime, late scratches, and the chance that our own projections are wrong), simulates the opponents in each contest from public information, and picks the set of lineups that wins in the most different versions of the night. It hands you one validated upload file per slate, ready-made backup files for each late-news possibility, and a two-minute brief.
+Each night it builds lineups for every DraftKings NBA entry you hold, Classic and Showdown Captain Mode, so that each contest has the best chance of a top-1% finish and the night as a whole rarely ends with zero cashes. It simulates the whole night tens of thousands of times (every game, every player, blowouts, overtime, late scratches, and the chance that our own projections are wrong), simulates the opponents in each contest from public information, and picks the set of lineups that wins in the most different versions of the night. It hands you one validated upload file per slate, a two-minute brief, and stored replacements for each questionable player, so that when news breaks it can write a corrected file in seconds.
 
 ### How a night runs (typical main slate, first tip 6:00 pm CT)
 
 1. **Afternoon, about 15 minutes of your time.** Enter contests as usual. Download each slate's entries file and salary export; the engine picks them up from your Downloads folder by itself. Type `/night` in Claude Code, or run `dfs night` from the desktop launcher if Claude is unavailable.
-2. **Within about 10 minutes** a valid fallback file exists for every slate, with players already ruled out removed. You can upload it as insurance.
-3. **About 30 to 45 minutes after you start**, the full build is done: injury and role research, the simulation, the opponent model, lineup selection, and the brief. Alongside the main files it writes a ready-made "if this player is out" file for each questionable player. You upload one file per slate (about a minute each) and re-download once so the engine can confirm every entry is filled. The independent QA review joins the build in week 2, after one measured live night.
-4. **When news breaks** (a desktop alert from the news watcher, or you see it first), you upload the matching ready-made file: one upload, no engine run. If the news is something no file anticipated, `/news` re-runs the affected game in a few minutes.
+2. **Within about 10 minutes** a valid fallback file exists for every slate, with players already ruled out removed. Upload it only if the full build looks at risk.
+3. **About 45 to 60 minutes after you start**, the full build is done: injury and role research, the simulation, the opponent model, lineup selection, and the brief. Alongside the main files it stores replacement lineups for each questionable player, for both "he sits" and "he plays". You upload one file per slate (about a minute each) and re-download once so the engine can confirm every entry is filled. The independent QA review joins the build in week 2, after one measured live night.
+4. **When news breaks:** an official status change raises a desktop alert that names a file the engine has just written from the stored replacements; a reporter post on Bluesky raises a "possible" alert, and you confirm it by typing `dfs out "Player Name"` (or `dfs in`). Either way the corrected file for each slate is written in seconds, combining every change confirmed so far, and you upload it. Your own phone alerts are the main fast channel; the watcher is a backup. If the news is something no stored replacement covers, `/news` re-runs the affected game in about a minute.
 5. **After a lock**, if games remain, `/swap` edits the open slots of your current DraftKings export in place.
 6. **Next morning, about 5 minutes.** Download the standings files and type `/results`. The engine scores every layer of its own work against real fields, which is how it learns.
 
-Measured honestly, a typical 4-slate night needs about 25 to 35 minutes of your time (more in week 1, when payout tables for new contests are pasted). Rehearsal 3 measures it (section 13).
+Measured honestly, a typical 4-slate night needs about **30 to 45 minutes of your time, plus staying reachable for alerts from about 4:30 pm until the last lock** (more in week 1, when payout tables for new contests are pasted). The rehearsals time each action and project a full night from them (section 13).
 
 ### What it is built from
 
@@ -33,13 +33,18 @@ Measured honestly, a typical 4-slate night needs about 25 to 35 minutes of your 
 
 | Your step | What changed | Why, in terms of the two goals |
 |---|---|---|
-| 1. Upload the salary file and the entries file | One entries file per slate (each already contains its slate's full player list with IDs) plus the salary export (which adds DraftKings' `Status` column). The engine files them from your Downloads folder. | A night has 3 to 5 slates, each with its own player IDs; reading IDs only from that slate's file removes the most common cause of invalid uploads, and auto-filing removes the most common manual mistake. |
+| 1. Upload the salary file and the entries file | One entries file per slate (each already contains its slate's full player list with IDs) plus the salary export (which, in 2026 exports for other sports, adds `Status` and `Starting` columns; BET for NBA until your first NBA export). The engine files them from your Downloads folder. | A night has 3 to 5 slates, each with its own player IDs; reading IDs only from that slate's file removes the most common cause of invalid uploads, and auto-filing removes the most common manual mistake. |
 | 2. Project median, top-1% outcome, boom/bust, and ownership | Full distributions from a simulation of the whole night, including the chance our own projections are wrong. Ownership is read off a simulated field built from public information. | Both goals depend on the joint outcome of every contest in the same simulated night; a simulation that treats our projections as truth says washouts almost never happen, which is false. |
 | 3. The LLM removes players, overrides roles, and assigns players to lineups | The LLM files structured, evidence-checked beliefs (probability of playing, minutes range, usage shift, whether the news is public). Code assigns players to lineups. | Lineup choice is a probability over thousands of scenarios and opponents; only code can compare candidates on it, and structured beliefs can be scored. |
 | 4. Adversarial QA, up to three iterations | QA proposals are typed and judged by code: belief changes against an evidence bar computed from our own past errors, construction changes by simulation with beliefs fixed. QA starts in week 2. | QA changes that cannot show evidence or improvement are noise; opening week has no budget or measurement for them yet. |
-| 5. Present the upload file | A valid fallback before any LLM step, every slate planned in lock order, only DraftKings validity can block a file, ready-made late-news files, a per-entry ledger so two news events cannot undo each other, and a completeness check after every upload. | Lock-time failures were the largest avoidable loss in your prior engines; a blank entry has zero chance at either goal. |
+| 5. Present the upload file | A valid fallback before any LLM step, every slate planned in lock order, only DraftKings validity can block a file, stored replacements that turn confirmed news into a combined file in seconds, a per-entry ledger so two news events cannot undo each other, and a completeness check after every upload. | Lock-time failures were the largest avoidable loss in your prior engines; a blank entry has zero chance at either goal. |
 | 6. Post-contest analysis | Every layer is scored against its own baseline and against real standings (including a simple control portfolio and the insurance variants), and model changes need held-out wins plus your sign-off. | A few contests a night are noise; thousands of player and opponent observations a night are signal. |
-| New | The insurance budget control, the model-error layer, the desktop launcher, a volume ramp tied to evidence (Decision D9). | Direct levers on Goal 2, on late news, and on not scaling losses. |
+| New | The insurance budget control, the model-error and edge-uncertainty layers, the desktop launcher with `dfs out` and `dfs in`, a volume ramp tied to evidence (Decision D9). | Direct levers on Goal 2, on late news, and on not scaling losses. |
+
+**Two things to know up front:**
+
+- **At your planned volume (50 to 200 entries), Goal 2 is in practice about delivery and concentration.** On synthetic nights, portfolios of 50 or more entries almost never washed out in the model, so the insurance control usually has nothing to buy. It matters on thin nights and during the volume ramp (about 25 entries), where it removed most washout risk for a fraction of a percent of top-1% odds (R9).
+- **Opening week may not have a working insurance control.** The search is the last item in the Phase 1 build; if it is not green by Sunday Oct 18 it arrives Oct 21 or 22, and until then the brief reports washout but the control does not act (section 13).
 
 ### What we learned from your prior engines
 
@@ -77,13 +82,15 @@ So this design puts delivery first, keeps Phase 1 thin, requires every piece of 
 2. **Symmetric model error:** each scenario draws a shift in each team's and each player's expected production (sized from our own past projection errors by salary tier and role, wider in October and for rookies) and **one ownership shock per slate that every contest on that slate shares**.
 3. **Edge uncertainty (one-directional error):** in each scenario, the true expectation for every player is the public view plus a weight times (our view minus the public view), with the weight drawn once per scenario and shared by every player and contest that night. A weight of 1 means we were right; 0 means the public was right; **below 0 means we were wrong in the direction we disagreed**, which must be possible or the engine can never be worse than the field. On scenarios with a low or negative weight, every bet where we disagreed with the public fails together, in every contest at once. The weight's distribution starts wide and centered low (BET, for example mean 0.3, ranging from about -0.3 to 1.2) and is fitted from how our projections score against consensus over time.
 
-**Why all three (R9, VERIFIED on a synthetic night):** with outcome noise alone, or with symmetric model error added, a 118-entry, 11-contest night showed **zero washouts in 30,000 fresh scenarios** (under 0.01% at 95% confidence), and doubling the symmetric errors changed nothing, because symmetric errors hit us and the field alike. At 25 entries washout was about 0.5% (8-game night) to 1.0% (2-game night). The synthetic engine also had far more skill than any real one: its single entries cashed 31% to 44% of the time against 22% of the field paid, where your real NBA entries cashed 13% (R8). Real washouts come from being confidently wrong in one direction, which only the third layer represents.
+**Why all three (R9, VERIFIED on a synthetic night):** with outcome noise alone, or with symmetric model error added, a 118-entry, 11-contest night showed **zero washouts in 30,000 fresh scenarios** (under 0.01% at 95% confidence), and doubling the symmetric errors changed nothing, because symmetric errors hit us and the field alike. At 25 entries washout was about 0.5% (8-game night) to 1.0% (2-game night). The synthetic engine also had far more skill than any real one: its single entries cashed 31% to 44% of the time against 22% of the field paid, where your real NBA entries cashed 13% (R8). R9 names being confidently wrong in one direction as the most likely real cause of washouts (BET), and only the third layer represents it.
 
 **What the third layer showed (R9 "Edge uncertainty", VERIFIED on a synthetic 8-game night):**
 
 - **An engine that assumes it is right badly underestimates washout.** At 25 entries, an engine whose scenarios assumed its own view was correct estimated washout at 0.22%; on scenarios where the truth drew the weight, washout was 1.91%, about 9x higher. At 50 entries it estimated 0 against a true 0.05%.
 - With the weight drawn in the engine's own scenarios (a version limited to 0 to 1), washout at 25 entries was 0.75%; at 50 entries 1 scenario in 30,000; at 118 entries still 0.
 - That version still gave the synthetic engine too much skill (its entries cashed 36% to 42% against 22% paid), because a weight between 0 and 1 means we are never wrong in the direction we disagreed. Allowing negative weights, as specified above, is the fix; it was not run in the time box.
+
+**How the third layer is used in Phase 1 (RT2 finding 5).** A bar was written before the follow-up result arrived (RT2 section 4): washout at 25, 50 and 118 entries under three settings of the weight; single-entry cash rates near your real 13%; selection that holds up whether our view or the public view is true; an insurance gain larger than two paired standard errors; and runtime. The result met the insurance-gain test only (one setting was run, and cash rates stayed at 36% to 42%). So in Phase 1 the third layer **feeds reporting only**: the brief shows washout with and without it, and neither selection nor the insurance search uses it. Phase 2 fits the weight's distribution from two weeks of real per-entry cash rates and then decides, against the same bar, whether it feeds selection. Reason for caution: a low weight on our view pulls simulated truth toward the public view, which pulls selection toward chalkier, more duplicated lineups.
 
 Until real nights calibrate this layer, every washout number in the brief is labeled as a model estimate.
 
@@ -99,7 +106,7 @@ G1_c (raw) = average over scenarios of  max over L in E_c of  P(top 1% in c | s,
 
 - For a single-entry contest this is the probability our lineup finishes top 1%; for multi-entry contests it is the probability at least one entry does, because the best-scoring entry decides that event.
 - **Duplication:** the duplication-adjusted version replaces each term with `P(top 1% in c | s, L) x share_c(L, s)`, where `share_c` is the expected fraction of the prize kept, averaged over the distribution of the number of opponent copies (not computed at the average number of copies). DraftKings pools tied places' prizes and splits them evenly (terms, VERIFIED). A five-way tie for first in a top-heavy contest keeps about a fifth of first-place money; a tie deep in the top 1%, where neighboring prizes are nearly equal, keeps nearly all of it. Taking the maximum over our entries of probability x share keeps the "adding a lineup never hurts" property that the selection method's quality guarantee relies on (RT1 rank 8).
-- **When it switches on (Decision D2):** opening week selects on the raw probability and shows the duplication-adjusted number beside it, because duplicate rates in the simulated field are unfitted guesses until real NBA standings exist. Selection switches to the adjusted version after at least five NBA Showdown standings files have fitted the duplicate rate.
+- **When it switches on (Decision D2):** opening week selects on the raw probability and shows the duplication-adjusted number beside it, because duplicate rates in the simulated field are unfitted guesses until real NBA standings exist. Selection switches to the adjusted version per format (Showdown, and Classic slates of 3 games or fewer) once a calibration check passes: predicted copy counts, for our own entries and for the field's most common lineups, match the counts observed in standings within a stated tolerance (expected after roughly five files per format; opening night alone supplies three Showdowns and two small Classic slates).
 - **Big-field first place:** a sampled field resolves the top 1% (thousands of samples above the line) but not first place in a 35,000-entry contest. P(first) and P(top 0.1%) are reported beside Goal 1 from a fitted upper tail; your NFL engine overpriced first place 18x to 280x from a raw sample (RR2, VERIFIED).
 - **Small fields:** for fields under about 1,000, per-scenario probabilities are stored (8-bit), not just hit or miss, and Goal 1 for first-place contests is always reported with the binomial formula: the faster "did it clear the line" estimate understated first-place odds by 7% to 38% relative, while agreeing within 0.2 points for large contests and cash lines (R9, VERIFIED).
 
@@ -126,11 +133,19 @@ subject to G1_c >= (1 - epsilon) x G1*_c for every contest c.
 
 - In words: "I'll give up at most epsilon of my top-1% odds, in every contest, to lower the chance of a night with zero cashes." At 0% the engine maximizes top-1% odds and uses washout only to break ties.
 - Each contest keeps its own guarantee, so no contest is quietly sacrificed and no weighting between contests is needed. The setting means the same thing on a 3-contest night and a 12-contest night (ADR-001).
-- **How it is enforced (RT1 rank 7):** start from each contest's own best portfolio, then search single-lineup swaps in any contest, accepting a swap only if it lowers `P(W)` and every contest keeps at least `(1 - epsilon) x G1*_c` **minus a safety margin of two standard errors**, measured on a **validation scenario set** that selection never saw. Every later step (local improvement, QA, late swap) re-checks the guarantee.
-- **Why the margin:** without it the search exploits noise in the validation set. On the synthetic night a contest held to a 5% budget actually kept 0.919 of its top-1% odds on fresh scenarios (about 8% lost, four standard errors beyond the budget), and single contests lost 8% to 14% at 2% to 5% budgets. Even swaps that only break ties cost 0.2% to 3.4% out of sample (R9, VERIFIED). The brief reports each contest's realized ratio on the reporting set.
-- **Noise floor:** a budget smaller than two standard errors of a contest's Goal 1 estimate is reported as "within noise" for that contest, because it cannot be enforced honestly.
-- **When washout is not a live tradeoff:** if `P(W)` at 0% is under 1% (with the edge-uncertainty layer), the brief says "washout risk is negligible tonight" and skips the search. At your planned volume this will be the usual case until real nights say otherwise; during a volume ramp (Decision D9) the search matters more.
-- **Default (Decision D3): 2%,** enforced with the safety margin. On the synthetic 25-entry night with edge uncertainty and the margin, 2% removed 68% of washout risk for 0.2% of average top-1% odds, and 5% added only a little more (R9). You prefer large prizes (your NFL instruction was to "err on side of trying to win large prizes", RR2), so the default stays small.
+- **How it is enforced (RT1 rank 7, RT2 finding 4):** start from each contest's own best portfolio, then search single-lineup swaps in any contest. A swap is accepted only if it lowers `P(W)` and every contest still satisfies
+
+  ```
+  G1_c(new) >= (1 - epsilon) x G1*_c  +  2 x SE_paired(change in G1_c)
+  ```
+
+  with every term measured on the **validation set** (15,000 scenarios that selection never saw), and the paired standard error taken on the change against the contest's best portfolio. The margin tightens the guarantee: a swap must clear the budget by more than the noise. Every later step (local improvement, QA, late swap) re-checks it.
+- **Why the margin:** without it the search exploits noise in the validation set. On the synthetic night a contest held to a 5% budget without a margin actually kept 0.919 of its top-1% odds on fresh scenarios (about 8% lost, four standard errors beyond the budget), and single contests lost up to 14% at a 2% budget (R9, VERIFIED). With the margin, every contest stayed inside its budget on fresh scenarios (R9 "Edge uncertainty").
+- **Frozen contests:** a contest whose whole budget is smaller than two paired standard errors of its Goal 1 cannot be protected honestly, so the search does not touch it, and the brief says so. At a 2% budget this freezes most small single-entry contests; the search then works through the larger multi-entry contests.
+- **Roll-back:** after the search, each contest is checked on the reporting set; any contest more than two standard errors below its guarantee is rolled back to its best portfolio.
+- **When to run it:** the search runs whenever the validation set holds at least 50 washout scenarios (about 0.33% at 15,000), enough to measure an improvement; below that the brief says "washout too rare to measure tonight". This replaces an earlier "skip under 1%" rule, which would have skipped exactly the 25-entry nights where the search helped most.
+- **Default (Decision D3): 2%.** On the synthetic 25-entry night, with the margin in force, 2% removed 68% of washout risk (0.75% to 0.24%) for 0.2% of average top-1% odds, worst contest 2.0%; 5% removed 74% for 0.4%, worst 4.7% (R9 "Edge uncertainty", VERIFIED as measurements, BET for real nights). You prefer large prizes (your NFL instruction was to "err on side of trying to win large prizes", RR2), so the default stays small.
+- **At your planned volume the control will usually do nothing,** because there is no measurable washout to buy down. It earns its place on thin nights and during the volume ramp (Decision D9). **Opening week may not have it at all** if the search is not finished by Oct 18 (section 13).
 
 ### How the goals trade off, and the hunch test
 
@@ -144,21 +159,21 @@ On synthetic nights shaped like your volume (R9, VERIFIED as measurements, BET a
 |---|---|
 | Washout at 118 entries, 11 contests | 0 in 30,000 fresh scenarios, with or without symmetric model error, so there was nothing to trade |
 | Washout at 25 entries | 0.51% (8-game night) and 1.00% (2-game night) for the pure top-1% portfolio |
-| Price of insurance at 25 entries | a 2% budget removed 70% to 92% of washout risk for 0.4% to 3.5% of average top-1% odds; 5% removed 80% to 94% for 0.7% to 2.7% |
-| Building every contest on one thesis ("games 0 to 2 all go over") | cut average top-1% odds 6.5% to 11.7% (worst contest 19% to 28%) and, at 25 entries, raised washout from 0.51% to 1.42% |
+| Price of insurance at 25 entries, measured without the safety margin | a 2% budget removed 70% to 92% of washout risk for 0.4% to 3.5% of average top-1% odds; 5% removed 80% to 94% for 0.7% to 2.7% (some contests went beyond their budget, which is why the margin exists) |
+| Building every contest on one thesis | "Game 0 goes over" cut average top-1% odds 6.5% (worst contest 19%) at 118 entries and 7.8% at 25 entries; "games 0 to 2 all go over" cut them 11.1% to 11.7% (worst contest 27% to 28.5%) and, at 25 entries, raised washout from 0.51% to 1.42% |
 
 With the edge-uncertainty layer and the two-standard-error safety margin (R9 "Edge uncertainty", 25 entries): a 2% budget cut washout from 0.75% to 0.24% (68% less) for 0.2% of average top-1% odds (worst contest 2.0%); 5% cut it to 0.19% for 0.4% (worst 4.7%); the margin kept every contest inside its budget on fresh scenarios. Betting every contest on one thesis raised washout about 1.5x and cut top-1% odds 15%. At 118 entries there was still nothing to trade.
 
 So on these nights the hunch holds where it can be tested: covering different ways the night unfolds serves both goals, most washout risk disappears for a fraction of a percent of top-1% odds, and betting on one script everywhere hurts both. Status: BET until measured on real fields, which the nightly insurance-variant scoring does.
 
-**The test, on real fields (RT1 rank 3).** Each night the engine stores three portfolios: insurance 0%, insurance 20%, and the lowest-washout portfolio the search can find. Next morning each is scored against the real standings: top-1% finishes and whether it would have washed out. After 20 nights the brief gives a verdict with an interval. The model's own frontier is shown nightly too, but a model cannot confirm itself; real fields decide.
+**The test, on real fields (RT1 rank 3, RT2 finding 12).** Each night the engine computes three portfolios even when production skips the search (about a second): insurance 0%, insurance 20%, and the lowest-washout portfolio it can find. Next morning each is scored against the real standings on dense paired measures, contest by contest: the best entry's finishing percentile, the number of cashing entries, and top-1% finishes. After 20 nights the brief gives a verdict with an interval, and says "undecided" if the interval includes zero. Expect "undecided" at 50 or more entries a night, because the variants differ by a few lineups and washouts are rare; that is an honest answer, not a failure. The model's own frontier is shown nightly too, but a model cannot confirm itself; real fields decide.
 
 ### How each goal is estimated, and how precise it is
 
-- **Four independent scenario sets** (RT1 rank 18; R9): a **screening** set (5,000) shortlists candidates; a **selection** set (15,000) drives the greedy method; a **validation** set (15,000) drives the insurance search and its guarantees; a **reporting** set (30,000) produces every number in the brief. Picking the best of thousands of candidates on one set flatters them (greedy's in-sample top-1% probabilities ran 0.7 to 3 points high, R2), and a search checked on one set exploits that set's noise (R9), so each job gets fresh scenarios.
+- **Four independent scenario sets** (RT1 rank 18; R9): a **screening** set (5,000) shortlists candidates; a **selection** set (15,000) drives the greedy method; a **validation** set (15,000) drives the insurance search and its guarantees; a **reporting** set (30,000) produces every number in the brief and the roll-back check. These sizes and the margin rule above are the single source of truth; ADR-001 repeats them, and a test checks the two agree. Picking the best of thousands of candidates on one set flatters them (greedy's in-sample top-1% probabilities ran 0.7 to 3 points high, R2), and a search checked on one set exploits that set's noise (R9), so each job gets fresh scenarios.
 - **Precision:** with 30,000 scenarios, a 1% probability has a standard error of about 0.06 percentage points (about 6% relative) and a 5% probability about 0.13 points (VERIFIED arithmetic).
 - **Common random numbers:** every comparison uses the same scenarios, which cut comparison noise 1.6x in a toy test (R3, VERIFIED) and more when lineups overlap.
-- **Precision is not accuracy.** The learning loop checks the model against reality with dense signals: predicted cash probability per entry against realized cashes (50 to 200 entries a night), predicted top-1% and min-cash lines against the actual lines in every standings file, and how much our nightly cash rate varies compared with what the model predicts (which is what sizes the model-error layer).
+- **Precision is not accuracy.** The learning loop checks the model against reality with dense signals: predicted cash probability per entry against realized cashes (50 to 200 entries a night), predicted top-1% and min-cash lines against the actual lines in every standings file, and how much our nightly cash rate varies compared with what the model predicts (which is what sizes the model-error and edge-uncertainty layers).
 
 ---
 
@@ -172,7 +187,7 @@ Claude sets beliefs about the world (who plays, for how long, in what role, and 
 
 | # | Component (deterministic unless marked LLM) | Job | What it means for you |
 |---|---|---|---|
-| 1 | **Inbox, auto-filing and ingest** | Pick up DraftKings files from your Downloads folder and file them by content (entries, salary exports, standings, entry history); detect encodings; identify each slate from its player list; fail closed with plain-language errors. | You download; the engine files. No wrong-folder mistakes. |
+| 1 | **Inbox, auto-filing and ingest** | Pick up DraftKings files from your Downloads folder, opening only files whose names and headers match DraftKings formats; file them by content (draft group from the player IDs) and download time, never by name (repeated downloads arrive as `DKEntries (1).csv` and so on); detect encodings; identify each slate; fail closed with plain-language errors. Standings zips are moved out of Downloads to a private folder outside the project, and only hashed tables enter the project. `/status` prints which file it used for each slate. | You download; the engine files. No wrong-folder or wrong-version mistakes. |
 | 2 | **Night plan** | Order slates by lock time; track every entry's state (empty, fallback, full build, uploaded, confirmed). | No slate is forgotten; `/status` prints the one next action per slate. |
 | 3 | **Clock, identity and team map** | One lock clock from each file's Game Info; one identity rule (person plus role, per slate, because DraftKings IDs change between slates); one team-code map; reviewed name matches persist and are versioned per run. | Removes the drifted-copy bugs that were your MLB engine's top root cause. |
 | 4 | **Contest facts** | Field size, paid places and payout curve per contest: from your entry-history export (ported parser, ADR-018), a pasted table, the prize pool in the contest name, or the family default, in that order; the brief lists which contests are on defaults. | Better thresholds from week 1 with near-zero effort. |
@@ -186,14 +201,14 @@ Claude sets beliefs about the world (who plays, for how long, in what role, and 
 | 12 | **Field model** | Simulated opponents per contest family, built from a public view of the night; ownership and duplicate counts are read off it. | Thresholds reflect the field you face, without leaking our private research into it. |
 | 13 | **Candidate generator** | Classic: thousands of lineups from GLPK on simulated outcomes and ownership-adjusted means. Showdown: every legal lineup, screened. | A wide pool, each lineup winning some plausible night. |
 | 14 | **Portfolio selector** | Greedy coverage per contest; insurance search across the night; concentration cap; slot assignment for late swap; scenario labels. | Your two goals, optimized directly. |
-| 15 | **Late-news file builder** | At build time, a complete, validated "if this player is out" file for each questionable player and slate (a full alternate portfolio for Showdown; a 2- to 3-slot re-optimization for Classic). | Acting on news becomes one upload. |
+| 15 | **Replacement store and `dfs apply`** | At build time, for each material questionable player: validated replacement sets per affected Classic entry, and full alternate Showdown portfolios, for both "he sits" and "he plays". When a status is confirmed, `dfs apply` combines every confirmed change against the ledger and writes one file per slate in seconds, stamped "valid until". | Acting on news becomes one command and one upload, and two pieces of news never undo each other. |
 | 16 | **Validator, exporter and ledger** | Every DraftKings rule checked against the downloaded files; the only writer of upload files, each hashed into the run manifest; a per-entry ledger of the last exported lineup; one engine run at a time. | You never receive an invalid file, and two news events cannot undo each other. |
 | 17 | **Late swap** | Pin locked players, treat started and finished games as known, edit open slots of your current export in place. | Late scratches become pivots instead of zeros. |
-| 18 | **News watcher** (plain Python, no Claude) | Polls the official injury report every 15 minutes and Bluesky reporter mirrors every 60 seconds for players in our pool; raises a desktop alert naming the ready-made file to upload. | You hear about news fast, and know exactly what to do. |
+| 18 | **News watcher** (plain Python, no Claude) | Started by the launcher in its own window with keep-awake, from the first build to the last lock. Polls the official injury report (every 15 minutes, re-checking an hourly file by its last-modified time if October reports are hourly again), DraftKings `Status` in each new salary export, and Bluesky reporter posts every 60 seconds through the public API. **Official** alerts run `dfs apply` and name the file; **possible** alerts (Bluesky) show the post word for word and ask you to confirm with `dfs out` or `dfs in`. | You hear about news fast; a misread post can never change your lineups without your confirmation. |
 | 19 | **Brief** | Two-minute slate brief: thesis, assumptions, exposures, risks, the news that would change the build and the file for each, what was skipped, input freshness, and an "if the engine is down" card. | One page tells you what the engine believes and what to do. |
 | 20 | **Run store and replay** | Manifest per run: inputs, snapshots, configuration, identity-map version, versions, seeds, LLM decision records, fallback level reached, outputs. | Any night can be replayed exactly. |
 | 21 | **Learning** | Standings and box-score ingest, per-layer scorecards, counterfactual ranks, shadow challengers, adoption workflow. | The engine improves only on evidence, with your sign-off. |
-| 22 | **Desktop launcher** | `dfs night`, `dfs news`, `dfs swap`, `dfs status` from a desktop shortcut, with the same plain-language output, no Claude needed. | The night survives a Claude outage or usage cap. |
+| 22 | **Desktop launcher** | `dfs night`, `dfs out "<name>"`, `dfs in "<name>"`, `dfs apply`, `dfs news`, `dfs swap`, `dfs status` from a desktop shortcut, with the same plain-language output, no Claude needed. `dfs out` and `dfs in` fuzzy-match the name against tonight's slates, ask for one confirmation, and record a user override. | The night survives a Claude outage or usage cap, and you can enter news yourself. |
 | 23 | **LLM: news researcher** | Reads a deterministic news digest, searches sparingly, files override records with evidence. | News read faster and more completely than any free feed. |
 | 24 | **LLM: QA adversary** (from week 2) | Independent review; typed proposals; code judges them. | A second opinion that must earn its changes. |
 | 25 | **LLM: results analyst** (weekly, from week 3) | Reads the scorecards, writes the weekly review, drafts challenger proposals. | You approve or reject model changes once a week. |
@@ -224,10 +239,9 @@ flowchart TD
     SC --> CAND["Candidates (GLPK, Showdown enumeration)"]
     CAND --> SEL["Selector: greedy per contest, insurance search"]
     TH --> SEL
-    SEL --> LN["Late-news file builder"]
+    SEL --> LN["Replacement store: if-out and if-in sets"]
     SEL --> V2["Validator, exporter, ledger"]
-    LN --> V2
-    V2 --> UP2["Final and if-out upload files"]
+    V2 --> UP2["Final upload files"]
     SEL --> BR["Slate brief"]
 ```
 
@@ -235,12 +249,16 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    W["News watcher: injury PDF 15 min, Bluesky 60 s"] -->|alert names the file| U1["You upload the ready-made if-out file"]
+    OFF["Official status change (injury report, DraftKings Status)"] --> AP["dfs apply: combine all confirmed changes from the replacement store"]
+    BSK["Bluesky post: possible"] --> YOU["You confirm: dfs out or dfs in"]
+    PH["Your own phone alert"] --> YOU
+    YOU --> AP
+    AP --> V["Validator and ledger (file marked pending)"]
+    V --> U1["You upload the named file"]
     U1 --> RD["You re-download entries"]
-    RD --> CK["Completeness check against the ledger"]
-    W -->|news no file anticipated| NW["/news or launcher: narrow re-run of the affected game"]
-    NW --> V["Validator and ledger"]
-    V --> U1
+    RD --> CK["Completeness check confirms the upload"]
+    AP -->|news the store does not cover| NW["/news or dfs news: narrow re-run of the affected game"]
+    NW --> V
     L["A lock passes"] --> SW["/swap: edit open slots of your current export in place"]
     SW --> V
 ```
@@ -366,7 +384,7 @@ Not chosen: a possession-by-possession simulator (far more parameters to calibra
 
 **Determinism (ADR-021):** every random draw is keyed by (run seed, scenario index, game, person, stat) with a counter-based generator; no solver time limits; stable sort orders. Your NHL and golf engines gave different lineups from the same inputs (RR3).
 
-**Runtime (R9, VERIFIED on a synthetic 8-game night of 208 players):** simulating the whole night takes 1.9 seconds for 10,000 scenarios and 6.7 seconds for 30,000, on one core. Simulation is never the bottleneck. The synthetic simulator's outputs were sane: game totals within 1.4 points of the betting totals, margins around the spread with a standard deviation of 12.7 to 12.9, teammate correlation about -0.02 and opponent correlation about +0.02 without model error. Its player spreads were a little wide (a star's standard deviation was 0.30 to 0.34 of his mean, against about 0.22 to 0.25 in real data), so its tails are conservative; calibration against last season (section 11) tightens them.
+**Runtime (R9, VERIFIED on a synthetic 8-game night of 208 players):** simulating the whole night takes 1.9 seconds for 10,000 scenarios and 6.7 seconds for 30,000, on one core. Simulation is never the bottleneck. The synthetic simulator's outputs were sane: game totals within 1.4 points of the betting totals, margins around the spread with a standard deviation of 12.7 to 12.9, teammate correlation about -0.02 and opponent correlation about +0.02 without model error. Its player spreads were a little wide (a star's standard deviation was 0.30 to 0.34 of his mean, against about 0.22 to 0.25 in real data); wider tails make top-1% odds look better than they are, so its Goal 1 numbers are optimistic. Calibration against last season (section 11) tightens them.
 
 ### Correlation, and what it means for Classic and Showdown
 
@@ -470,7 +488,7 @@ The engine builds a wide pool of legal lineups that each win some plausible vers
 1. **Screen:** score every candidate on the screening scenario set (5,000); shortlist the strongest few thousand per contest.
 2. **Re-score the shortlist** on the independent selection set (15,000), storing per-scenario top-1% and cash results (bits for big fields, 8-bit probabilities for fields under about 1,000).
 3. **Per contest, lazy greedy coverage:** repeatedly add the candidate that adds the most top-1% probability given the entries already chosen (raw probability in opening week; duplicate-adjusted once calibrated). Because the objective takes the best of our entries in each scenario, adding a lineup never lowers it, so greedy selection is provably at least about 63% as good as the best set from the same pool, and usually much closer (R2, VERIFIED theorems). The result is each contest's best Goal 1, `G1*_c`.
-4. **Night insurance search:** starting from step 3, single-lineup swaps in any contest that lower washout while every contest keeps at least `(1 - epsilon) x G1*_c` minus a two-standard-error safety margin, checked on the validation set (15,000). Skipped, with a line in the brief, when washout at 0% is under 1%. The search took about 1 second on the synthetic night (R9).
+4. **Night insurance search:** starting from step 3, single-lineup swaps in any contest that lower washout while every contest keeps `G1_c(new) >= (1 - epsilon) x G1*_c + 2 x SE_paired`, checked on the validation set (15,000); contests whose budget is within noise are frozen; any contest that ends more than two standard errors below its guarantee on the reporting set is rolled back. It runs only when the validation set holds at least 50 washout scenarios; otherwise the brief says washout is too rare to measure tonight. The search took about 1 second on the synthetic night (R9).
 5. **Local improvement:** deterministic single-player swaps (for example a near-identical player with lower public ownership) kept only if they beat simulation noise without breaking any guarantee.
 6. **Report** every number from the reporting set. On synthetic data, greedy selection's in-sample top-1% probabilities ran 0.7 to 3 points too high, while on fresh scenarios it still beat simply taking the top projections (47% against 35% with 20 entries) (R2, VERIFIED on synthetic data), which is why selection and reporting never share scenarios.
 7. **Memory:** candidate scoring uses matrix multiplication rather than index gathers (a naive version peaked at 3.5 GB; the rewrite at 645 MB, R2), and processes scenarios in chunks.
@@ -491,19 +509,20 @@ The same objective covers all three; the differences come out of the math:
 - **3-max to 20-max:** a handful of lineups that win different scenario clusters (for example one for a close game with overtime, one for a blowout).
 - **150-max:** you fill only the entries you bought; greedy selection spreads them across scenarios. DraftKings caps entries per user at about the smaller of 150 and 3% of the field (R6; this pattern comes from the one lobby request R6 made before reading DraftKings' terms, which will not be repeated).
 
-### Late-swap flexibility and late-news files
+### Late-swap flexibility and stored replacements
 
 - **Slot assignment on purpose:** after players are chosen, a separate step places later-game players in the flexible slots (UTIL, then G or F) where eligibility allows, which keeps more swap options open at no cost.
-- **Ready-made "if out" files (RT1 ranks 2 and 13):** for each questionable player with a probability of playing between 10% and 90%, and each slate he is on, the engine builds and validates a complete upload file for the "out" outcome:
-  - **Showdown:** a full alternate portfolio selected from the enumerated lineups with him removed, because a star's absence changes the Captain choice, the chalk and the duplicate picture.
-  - **Classic:** a re-optimization of 2 to 3 slots per affected entry, using only players in games that have not started, preferring later games.
-  - Files are rebuilt whenever a newer upload file is exported, so they always start from the latest exported lineups (the ledger, below).
+- **Stored replacements, not finished files (RT2 findings 1 to 3).** Finished "if out" files written at build time do not combine: if two players in different games on one Classic slate are both ruled out, uploading the second file would put the first back. So the build stores, for each **material** questionable player (one who appears in a set share of our entries, or whose absence materially moves a beneficiary in our pool, so that a 12-game night does not spend 20 minutes on players we do not hold):
+  - **Showdown:** full alternate portfolios for "he sits" and for "he plays", selected from the enumerated lineups (about 1 to 2 seconds per contest, R9), because his status changes the Captain choice, the chalk and the duplicate picture, and Showdown has no late swap.
+  - **Classic:** for each affected entry, a ranked list of validated replacement sets for "he sits", and for entries built around his absence (for example holding his beneficiary), replacement sets for "he plays". Changes are limited to slots whose current and new players tip at or after his game, so they stay legal until his game locks.
+- **`dfs apply` (seconds, no LLM):** when a status is confirmed (an official alert, or you type `dfs out` or `dfs in`), it combines every confirmed change against the ledger, in any order, and writes one versioned file per slate stamped "valid until" (the earliest lock among its changed cells). Alerts and `/status` never name an expired file, and every older file moves to `out/uploads/stale/` the moment a newer one is written.
+- **Background work:** the build exports the main files first and releases the run lock; Showdown alternates for later games are computed afterward in a background queue that `/news` can interrupt.
 - **Showdown has no late swap:** every slot locks at the single tip, so Showdown files must be final before that game's lock.
 - **Flexibility is valued through the simulation,** not a fixed "keep three late spots" rule.
 
 ### The per-entry ledger
 
-The ledger records, for every entry, the last lineup exported, which file it was in, and whether you confirmed the upload. Every new file is built from whichever is newer, your latest download or the ledger, and the engine refuses (in plain language) to write a row that would revert a newer exported change unless you confirm the newer file was never uploaded. Only one engine run happens at a time; news arriving during a run is merged into the next file. This stops two news events in different games from undoing each other (RT1 rank 9).
+The ledger records, for every entry, its committed lineup (confirmed by your re-download), any **pending** lineup (exported and named to you but not yet confirmed), and which file each came from. Every new file is built on top of pending changes unless you say that upload did not happen; the engine refuses, in plain language, to write a row that would revert a newer change. Only one engine run happens at a time, using a lock file with a heartbeat that clears itself after about 2 minutes if a run crashes or the laptop sleeps, with a plain-language line in `/status`. News arriving during a run is merged into the next file. This stops two news events in different games from undoing each other (RT1 rank 9, RT2 finding 1). A test applies two outs in different games on one Classic slate in both orders and requires that no change is reverted and no ruled-out player remains.
 
 ### Scenario labels
 
@@ -537,7 +556,15 @@ Claude Code plays three roles, each a separate subagent with its own instruction
 
 **The news digest (built by code):** official status changes since the last run; questionable, doubtful and game-time-decision players; DraftKings `Status` values; players the model flags as uncertain (new team, rookie, no history, minutes volatility, returning from injury); teams with several absences; the model's own redistribution guesses; names that appear in news or the salary file but not in the engine's ratings; and minutes until each lock. The researcher reads a diff, not the whole slate.
 
-**The researcher's sources:** WebSearch results, plus pages fetched through `dfs research fetch` from an allowlist set by the data posture (Decision D1). Permissive posture allowlist: official.nba.com, nba.com team news pages, team and league press releases, `bsky.app` reporter posts, and major news outlets' articles. It does not fetch RotoWire, ESPN's data endpoints, sportsbooks, or DraftKings in any posture.
+**The researcher's sources:** WebSearch results, plus pages fetched through `dfs research fetch` from an allowlist set by the data posture (Decision D1). Permissive posture allowlist, by domain (RT2 finding 14):
+
+| Source | Terms status | How the publish time is read |
+|---|---|---|
+| official.nba.com (injury report and league notices) | No bot clause; fantasy clause is a stated bet (section 10) | Report time in the file name; page date |
+| nba.com team and league news pages | Same terms as above | The article's dateline |
+| Bluesky posts, through the public API (not the web page, which renders in a browser) | Developer guidelines target spam, not reading | The post's `createdAt` field |
+
+It never fetches ESPN, RotoWire, paywalled news sites, sportsbooks, or DraftKings in any posture; news found only on those sites can still inform the researcher through WebSearch result snippets, but cannot be quoted as evidence.
 
 **The override record** (the researcher's output, and the format for your own overrides):
 
@@ -566,7 +593,7 @@ Claude Code plays three roles, each a separate subagent with its own instruction
 
 - Omitted fields mean "no opinion". `condition` limits the override to scenarios where the condition holds. `no_history_prior` describes a player the engine has no data for (a comparable role and a minutes range). `visibility` is `public` only when the evidence is an official report, team statement or reporter post.
 - Other record types: `data_flag` (stale or conflicting input) and `pool_exclusion` (remove a player, with a reason).
-- **Checks before any override is used (RT1 rank 15):** known player and game; game not locked; percentiles in order; minutes 0 to 48; multipliers 0.5 to 2.0; not expired; **the quoted words appear in the saved page's text, and the page was published within the last 24 hours**. A failing record is dropped and listed in the brief. A `SubagentStop` hook runs these checks and sends the subagent back to fix an invalid file.
+- **Checks before any override is used (RT1 rank 15):** known player and game; game not locked; percentiles in order; minutes 0 to 48; multipliers 0.5 to 2.0; not expired; **the quoted words appear in the saved page's text, and the page was published within the last 24 hours** (when the publish time cannot be read, the record is used but labeled "time unknown"). A record whose quote is missing is dropped and listed in the brief. A `SubagentStop` hook runs these checks and sends the subagent back to fix an invalid file.
 - **Your veto:** every override is one line in the brief; `dfs override veto <id>` removes it and triggers a narrow re-run.
 
 ### The QA loop (from week 2)
@@ -605,15 +632,16 @@ Claude Code plays three roles, each a separate subagent with its own instruction
 | `CLAUDE.md` (under 200 lines) | What the engine is; the boundary (beliefs, not lineups); the commands; safety rules (never write uploads, never touch DraftKings, only validity blocks delivery, never edit `src/` during a night run); how to report to you (plain language, lead with the answer, no em dashes); the budget rules |
 | Skills (each a `/command`) | `/night`, `/news`, `/swap`, `/results`, `/weekly`, `/status`, `/replay`. Each starts with an Owns / Invokes / Does not own block (your skill library's convention) and calls `uv run dfs` commands rather than restating rules that live in code |
 | Subagents (`.claude/agents/*.md`) | `news-researcher`, `qa-adversary`, `results-analyst`, each with `model: sonnet` and a narrow tool list |
-| Hooks | `SessionStart`: preflight (account check; warns if an `ANTHROPIC_API_KEY` would silently replace your login; inbox summary; next lock; five-hour and weekly usage reminder). `PreToolUse` on `Edit,Write,NotebookEdit`: blocks `out/uploads/`, `data/snapshots/`, `config/models/`, and `src/` during a night run (liftable with `dfs unlock`, which is recorded). `PreToolUse` on `Bash` and `PowerShell`: blocks any command that mentions `out/uploads` or `draftkings.com` unless it is a `uv run dfs` command (RT1 rank 10). `SubagentStop`: validates the subagent's output |
-| Permissions | Allow `uv run dfs *` and WebSearch; deny WebFetch entirely (fetching goes through `dfs research fetch`, which enforces the allowlist and saves the page); deny Read on `inbox/standings/` |
+| Hooks | `SessionStart`: preflight (account check; warns if an `ANTHROPIC_API_KEY` would silently replace your login; inbox summary; next lock; usage). `PreToolUse` on `Edit,Write,NotebookEdit`: blocks `out/uploads/`, `data/snapshots/`, `config/models/`, and `src/` during a night run (liftable with `dfs unlock`, which is recorded). `PreToolUse` on `Bash` and `PowerShell`: blocks any command that mentions `out/uploads`, `draftkings.com`, the private standings folder, or `contest-standings`, unless it is a `uv run dfs` command (RT1 rank 10, RT2 finding 16). `SubagentStop`: validates the subagent's output |
+| Permissions | Allow `uv run dfs *` and WebSearch; deny WebFetch entirely (fetching goes through `dfs research fetch`, which enforces the allowlist and saves the page); deny Read on the private standings folder |
+| Usage reading | A status-line script writes the five-hour (and, when available, weekly) usage fields to a small file that preflight reads. Anthropic documents these fields for Pro; for Team seats and for the weekly window they may not exist (R7), in which case preflight asks you once a day to read `/usage` and type the number |
 | Upload integrity | The exporter writes each file's hash into the run manifest; `/status` and the completeness check flag any upload file whose hash is not in a manifest, which catches a file made any other way |
 
 ### Guardrails
 
 - Claude starts only when you type a command. The news watcher is plain Python. Pro is governed by the Consumer Terms, which bar automated use outside an API key (R7).
 - LLM outputs are files validated by code before anything reads them.
-- Other users' DraftKings names are replaced by hashes when standings are parsed, and Claude cannot read the raw standings files, so no other user's name reaches Anthropic (RT1 rank 28).
+- Other users' DraftKings names are replaced by hashes when standings are parsed. The raw zips are moved out of Downloads into a private folder outside the project, and Claude's Read, Bash and PowerShell access to that folder is blocked, so no other user's name reaches Anthropic (RT1 rank 28, RT2 finding 16).
 - If Claude is unavailable or over its limit, every night step runs from the desktop launcher, and the brief says which LLM steps were skipped.
 
 ### Logging
@@ -625,7 +653,7 @@ Every LLM step leaves a decision record in the run folder: input packet, output 
 - **Your plans:** a Team standard seat (1.25x Pro per five-hour window, also shared with your daytime chat use and governed by your employer's policies) and a Pro plan (1x). Both have a five-hour and a weekly window; no absolute numbers are published (R7, VERIFIED in Anthropic's help center).
 - **Planned nightly use (BET until measured):** one researcher run on the main build (at most 12 searches and 8 fetches), small researcher runs on late news only when the news needs interpretation (at most 4 searches), QA from week 2 (2 iterations on Pro). Contingency files, late swap and results use no LLM.
 - **Target:** a full night uses at most about 50% of one Pro five-hour window. Rehearsal 3 measures the real share.
-- **The weekly window (RT1 rank 6):** preflight and the brief show five-hour and weekly usage; on game days, no build or design work in Claude after noon once weekly usage passes 70%; the build week itself is budgeted (section 13).
+- **The weekly window (RT1 rank 6):** preflight and the brief show whichever usage numbers are available (above); on game days, no build or design work in Claude after noon once weekly usage passes 70%; the build week itself is budgeted (section 13).
 - **Fresh sessions** for `/news` and `/swap`, because a long session re-reads the whole conversation on every command (R7).
 
 ---
@@ -634,75 +662,80 @@ Every LLM step leaves a decision record in the run folder: input packet, output 
 
 ### The short version
 
-You download files, type one command, upload one file per slate, and confirm. When news breaks, the alert tells you which ready-made file to upload. A valid file always exists, every slate is built in lock order, only DraftKings validity can stop a file, and every step also runs from the desktop launcher without Claude. Times are Central (your laptop's zone); DraftKings lists Eastern, and the engine converts.
+You download files, type one command, upload one file per slate, and confirm. When news breaks, one command (or an official alert) writes a corrected file for every affected slate in seconds, combining every change confirmed so far, and you upload it. A valid file always exists, every slate is built in lock order, only DraftKings validity can stop a file, and every step also runs from the desktop launcher without Claude. Times are Central (your laptop's zone); DraftKings lists Eastern, and the engine converts.
 
 ### A typical night (main slate first tip 6:00 pm CT)
 
 | When | What you do | What the engine does | Compute budget | If it fails |
 |---|---|---|---|---|
-| Morning (about 5 min) | Download yesterday's standings files (and, weekly, the entry-history export); type `/results` | Files them, checks scoring, writes the scorecard and the real-field results of last night's insurance variants | Under 5 min | Learning waits a day; tonight does not depend on it |
+| Morning (about 5 min) | Download yesterday's standings files (and, weekly, the entry-history export); type `/results` | Files them (standings go to the private folder), checks scoring, writes the scorecard and the real-field results of last night's insurance variants | Under 5 min | Learning waits a day; tonight does not depend on it |
 | Any time after DraftKings posts slates | Enter contests as usual | Nothing | None | None |
-| 1:00 to 4:00 pm (about 15 min) | Download each slate's entries file and salary export; type `/night` (or `dfs night` from the launcher) | **Ingest and night plan:** files the downloads, detects slates, lists anything missing and the single next action per slate | Under 1 min | Plain-language error naming the file and the fix; never an upload from a bad file |
-| | | **Fallback:** a valid portfolio for every slate from laptop data, with players DraftKings marks OUT (salary export) or the latest official report lists as Out removed; if neither file is present, the brief marks it "not checked for injuries" (RT1 rank 22) | **Budget 5 min.** Not measured; BET that it takes well under a minute, since it is one solver run per entry at a few milliseconds each (R9 solver timings). Measured in rehearsal 1 | The salary-implied version needs only the entries file |
-| | (Optional) upload the fallback files as insurance | | | |
+| 1:00 to 4:00 pm (about 15 to 20 min) | Download each slate's entries file and salary export; type `/night` (or `dfs night` from the launcher) | **Ingest and night plan:** files the downloads, detects slates, lists anything missing and the single next action per slate; starts the news watcher in its own window with keep-awake | Under 1 min | Plain-language error naming the file and the fix; never an upload from a bad file |
+| | | **Fallback:** a valid portfolio for every slate from laptop data, with players DraftKings marks OUT (salary export) or the latest official report lists as Out removed; if neither file is present, the brief marks it "not checked for injuries" | **Budget 5 min.** Not measured; BET that it takes well under a minute (one solver run per entry at a few milliseconds each, R9). Measured in rehearsal 1 | The salary-implied version needs only the entries file |
+| | Upload the fallback only if the full build looks at risk | | | |
 | | | **Data and projections:** schedule, injuries, lines, props, news; the news digest | Target under 3 min | Missing sources are labeled real, cached, fallback or missing; the build continues |
 | | | **Research (LLM):** the news researcher files checked override records | Target under 10 min | Skipped with a label if Claude is unavailable or over budget |
-| | | **Build:** simulate, field, candidates, selection, insurance search, reporting, if-out files, validate, export | **Budget 15 min.** Measured on a synthetic 8-game night: 3.5 min for the core build at 30,000 scenarios, plus about 2.7 min for reporting on 30,000 fresh scenarios, plus about 1 to 2 min per questionable player for if-out files (R9) | The fallback ships for any slate that fails |
+| | | **Build:** simulate, field, candidates, selection, insurance search, reporting, validate, export; then stored replacements in lock order, in the background | **Budget 15 min to the main files.** Measured on a synthetic 8-game night: 3.5 min for the core build at 30,000 scenarios plus about 2.9 min for reporting on 30,000 fresh scenarios (R9). Stored replacements run after export at 10,000 scenarios, about 1 minute per material questionable player, and do not hold up the main files | The fallback ships for any slate that fails |
 | | | **QA (from week 2):** up to 2 or 3 time-boxed iterations | Target under 30 min | Stops at the time box or 45 minutes before lock; pre-QA portfolio ships |
 | | | **Brief** | Under 1 min | Marks skipped steps |
-| About 45 to 60 min after starting | Upload one file per slate; read back DraftKings' "uploaded N of N"; re-download the entries files; `/status` | **Completeness check** against the ledger: every entry filled, matching what was exported | Under 1 min | Any blank or mismatched entry is listed with its contest and the file to upload |
-| From about 4:30 pm until last lock | Nothing unless alerted | **News watcher** (plain Python): official injury report every 15 minutes, Bluesky reporter mirrors every 60 seconds, for players in your pool; desktop alert names the ready-made file for that news | Seconds | Watcher health shows in `/status`; you can always run `/news` |
-| On an alert | Upload the named if-out file; re-download; `/status` | Completeness check | Under 1 min | If no file matches the news, run `/news` (below) |
+| About 45 to 60 min after starting | Upload one file per slate; read back DraftKings' "uploaded N of N"; re-download the entries files; `/status` | **Completeness check** against the ledger: every entry filled, matching what was exported; the files become committed | Under 1 min | Any blank or mismatched entry is listed with its contest and the file to upload |
+| From about 4:30 pm until last lock | Stay reachable; watch your own news alerts | **News watcher** (plain Python): official injury report, DraftKings `Status` in each new salary export, Bluesky reporter posts every 60 seconds | Seconds | Watcher health and each source's last poll time show in `/status`; you can always type `dfs out` |
+| On news | Official alert: upload the named file. "Possible" alert or your own news: type `dfs out "Name"` (or `dfs in "Name"`), then upload the named file. Then re-download; `/status` | **`dfs apply`:** combines every confirmed change from the stored replacements against the ledger and writes one file per slate, stamped "valid until" | Seconds | If no stored replacement covers the news, `/news` runs the narrow re-run (below) |
 | After each lock, if later games remain | Re-download the entries file; `/swap` | Pins locked players exactly as downloaded; in Phase 1, swaps only players ruled out, in unlocked slots; from Phase 2, re-optimizes open slots conditioned on finished games | Target under 3 min | Swap-out-only is the floor |
 | Before last lock | Final `/status` | Completeness check | Under 1 min | Listed |
 
 ### The late-news path, end to end
 
-The fast path is a file that already exists. News that breaks 30 minutes before tip reaches you through free channels anywhere from about 1 minute (a Bluesky reporter mirror) to 15 or more minutes later (the next official report), so the response must take minutes, not a rebuild (R4; RT1 rank 2).
+The fast path is stored replacements plus `dfs apply`, which takes seconds and no LLM. Free news reaches you anywhere from about 1 minute (a reporter post) to 15 or more minutes (the next official report) after it breaks, so the response must take minutes, not a rebuild (R4; RT1 rank 2).
 
 | Minutes before tip | Step | Who |
 |---|---|---|
 | T-30 | A questionable star is ruled out; a reporter posts it | |
-| T-29 to T-28 | The watcher sees the reporter mirror (or you see the news) and alerts: "Player X OUT: upload `classic_main_1800_ifout_X_v3.csv` and `sd_BOS-DET_ifout_X_v3.csv`" | Watcher |
-| T-28 to T-24 | Upload the named files (about 1 to 2 minutes each); read back "uploaded N of N" | You |
-| T-24 to T-22 | Re-download the entries files; `/status` (or `dfs status`) runs the completeness check against the ledger | You and the engine |
-| T-22 to T-0 | Buffer; the engine warns when any changed cell's game locks within 10 minutes and never writes a player from a game that has started | Engine |
+| T-29 to T-28 | You see it on your phone, or the watcher shows the post as a "possible" alert | You or the watcher |
+| T-28 to T-27 | `dfs out "Player X"` (one confirmation); `dfs apply` writes `classic_main_1800_v5.csv` and `sd_BOS-DET_1800_v5.csv`, valid until 6:00 pm, marked pending | You (seconds) and the engine |
+| T-27 to T-23 | Upload the named files (about 1 to 2 minutes each); read back "uploaded N of N" | You |
+| T-23 to T-21 | Re-download the entries files; `/status` (or `dfs status`) confirms the upload and commits it | You and the engine |
+| T-21 to T-0 | Buffer. If the official report later confirms the same news, nothing more is needed; the engine warns when any changed cell's game locks within 10 minutes and never writes a player from a game that has started | Engine |
 
-**When no ready-made file fits** (news about a player who was not questionable, or two players out in one game), `/news` (or `dfs news`) runs the **narrow re-run**:
+**Two events close together** (for example two players ruled out in different games of the same Classic slate) are handled by the same step: `dfs apply` always combines every confirmed change, in any order, on top of committed and pending lineups, so the second file includes the first change (RT2 finding 1).
+
+**When no stored replacement covers the news** (a player who was not questionable, a role change, an injury during warmups), `/news` or `dfs news` runs the **narrow re-run**:
 
 1. Ingest the fresh entries download and reconcile it with the ledger (a salary re-export is optional).
-2. Update the affected players' availability (and roles, if the researcher has time and budget).
+2. Update the affected players' availability from your `dfs out` or the official report (and roles, if the researcher has time and budget).
 3. Re-simulate only the affected game; every other game's scenarios are reused unchanged, because draws are keyed by game.
 4. Refresh the public view and the field for slates that contain that game.
 5. Rebuild candidates for those slates (Showdown re-enumerated; Classic adds new solves around the beneficiaries and drops lineups with the out player).
 6. Before the first lock, re-select the affected contests; after it, change only unlocked slots (Phase 1: swap out ruled-out players only).
-7. Re-run the insurance search only if it was active tonight.
-8. Validate, export with a new version number, update the ledger, and rebuild the remaining if-out files.
+7. Re-run the insurance search only if it ran tonight.
+8. Validate, export with a new version number, update the ledger, release the run lock, then refresh stored replacements for later games in the background.
 
-**Budget: 3 minutes. Measured: 44 seconds at 10,000 scenarios and 103 seconds at 30,000** for a star ruled out in a game that is on both the Classic slate and a Showdown, about 33 seconds more for each further affected Showdown; the field lines for the affected contests are 71% of it (R9, VERIFIED on a synthetic 8-game night). The late-news re-run uses 10,000 scenarios. Two events close together are merged into one file per slate; the run lock and ledger stop a stale file from reverting a newer one.
+**Budget: 3 minutes. Measured: 44 seconds at 10,000 scenarios and 103 seconds at 30,000** for a star ruled out in a game on both the Classic slate and a Showdown, about 33 seconds more for each further affected Showdown; the field lines are about 71% of it (R9, VERIFIED on a synthetic 8-game night). The narrow re-run uses 10,000 scenarios.
 
 ### Questionable players before their status is known
 
-They stay random in the simulation (each scenario draws whether they play), with the probability from their official status and any checked override, so lineups are judged across both outcomes. Every one with a probability of playing between 10% and 90% gets a ready-made if-out file per slate.
+They stay random in the simulation (each scenario draws whether they play), with the probability from their official status and any checked override, so lineups are judged across both outcomes. Each material one gets stored replacements for both outcomes: "he sits" and "he plays", because part of the portfolio is deliberately built for each, and Showdown has no late swap (RT2 finding 3). The watcher alerts on upgrades ("available", "will play") as well as downgrades.
 
 ### Staggered tips
 
-The night plan orders slates by lock. Showdowns lock entirely at their single tip, so their final file is uploaded before that tip. Classic entries keep later players swappable until each game's own start; lock times come from each file's Game Info on every run, never from a typed list (your MLB engine had 7 of 16 late-swap rows rejected from a stale list, RR1).
+The night plan orders slates by lock. Showdowns lock entirely at their single tip, so their final file is uploaded before that tip. Classic entries keep later players swappable until each game's own start; lock times come from each file's Game Info on every run, never from a typed list (your MLB engine had 7 of 16 late-swap rows rejected from a stale list, RR1). Every file the engine writes carries a "valid until" stamp, and an expired file is never named.
 
 ### Opening night, Tuesday Oct 20
 
 Three games, confirmed in two independent sources: the NBA schedule (R4, VERIFIED: BOS at DET 3:00 pm ET, PHI at NYK 7:00 pm ET, OKC at SAS 9:30 pm ET) and DraftKings' lobby (R6: a 3-game main Classic slate and the BOS @ DET Showdown at 3:00 pm ET, a 2-game night Classic slate at 7:00 pm ET, Showdowns at 7:00 and 9:30 pm ET; read from the single lobby request R6 made before reading DraftKings' terms, which will not be repeated).
 
-**First lock is 2:00 pm CT on a workday, so the plan moves the heavy work to Monday evening (RT1 rank 24):**
+**First lock is 2:00 pm CT on a workday, so the heavy work moves to Monday evening (RT1 rank 24, RT2 finding 8):**
 
 | When | What |
 |---|---|
-| Monday Oct 19, evening | Enter the Oct 20 contests (DraftKings already lists them). After the day-before injury reports (due 5 pm local), download the entries and salary files and run `/night`: full build with research. Upload. Ready-made if-out files exist for every questionable player. |
+| Monday Oct 19, evening | Enter the Oct 20 contests (DraftKings already lists them). After the day-before injury reports (due 5 pm local), download the entries and salary files and run `/night`: full build with research. This is the first look at the 2026-27 injury report's file format, so injury-report parser fixes are allowed Monday evening (no games that night, so the code freeze does not apply). Upload; re-download; `/status`. |
 | Tuesday Oct 20, morning | Game-day reports for BOS and DET are due 8 to 10 am local (7 to 9 am CT), because that game tips before 5 pm (league rule, R4, VERIFIED text). |
-| Tuesday, 12:30 to 12:45 pm CT | Re-download the entries and salary files; run `dfs news` (no LLM needed), which finishes in under 15 minutes. |
+| Tuesday, 12:30 pm CT | Download the entries and salary files again (including any contests entered after Monday); run `dfs night --no-llm --reuse-overrides`: a full deterministic rebuild for all three games that reuses Monday's checked overrides and fills new entries. Its time is measured in rehearsal 3 (BET: under 10 minutes for a 3-game night). |
 | Tuesday, by 1:30 pm CT | Upload; re-download; `/status`. |
 | Tuesday 2:00 pm CT | First lock (BOS @ DET Showdown and the main Classic slate's BOS and DET players). |
 | Tuesday evening | The usual late-news routine for PHI at NYK (6:00 pm CT) and OKC at SAS (8:30 pm CT); `/swap` on the main Classic slate after 2:00 pm. |
+
+If you cannot be at the laptop from 12:30 to 2:00 pm CT that day (Decision D7), Monday evening's upload and stored replacements stand, and the brief says so.
 
 Opening night is the riskiest night of the season: new rosters, no current-season data, and Classic and Showdown sharing the same three games, so cross-format washout risk peaks.
 
@@ -718,24 +751,25 @@ Each level ships if the one above cannot finish in time. Only DraftKings validit
 
 ### The "if the engine is down" card
 
-A one-page mock of the whole brief, in opening night's shape, is in `docs/SLATE-BRIEF-MOCK.md` (numbers invented to show the layout). The top of every brief carries four lines: the latest validated upload file for each slate (with path), the if-out file for each questionable player, the fallback file for each slate, and "run `dfs status` from the desktop launcher". If a new export will not parse at 5:40 pm, these files were validated at build time and still work for every entry they cover (RT1 walkthrough 6.3).
+A one-page mock of the whole brief, in opening night's shape, is in `docs/SLATE-BRIEF-MOCK.md` (numbers invented to show the layout). The top of every brief carries: the latest validated upload file for each slate (with path and "valid until"), the fallback file for each slate, and "run `dfs status` from the desktop launcher; to enter news yourself, `dfs out "Name"`". If a new export will not parse at 5:40 pm, the last validated files still work for every entry they cover, and `dfs apply` works from the last good download (RT1 walkthrough 6.3).
 
 ### Your time, honestly
 
 | Stage | Minutes on a typical 4-slate night |
 |---|---|
-| Afternoon: 8 downloads, `/night`, read the brief, 4 uploads, 4 re-downloads, `/status` | 15 to 20 (plus payout pastes for new contests in week 1, about 45 seconds each) |
-| News (about 2 alerts): upload the named files, re-download, `/status` | 4 to 8 |
+| Afternoon: 8 downloads, `/night`, read the brief, 4 uploads with read-back, 4 re-downloads, `/status` | 15 to 20 (plus payout pastes for new contests in week 1, about 45 seconds each, and an occasional Daily Fantasy Fuel CSV download, about 30 seconds) |
+| News (about 2 events): `dfs out` if needed, upload the named files, re-download, `/status` | 5 to 10 |
 | One post-lock swap | 4 to 5 |
 | Next morning: standings downloads and `/results` | 4 to 5 |
-| **Total** | **About 25 to 35** |
+| **Total** | **About 30 to 45, plus staying reachable for alerts from about 4:30 pm to the last lock** |
 
-The red team counted 40 to 55 minutes for the previous version (RT1 section 6.2); auto-filing, ready-made if-out files, and alert-only re-exports cut it. Rehearsal 3 measures the real number, and it is an acceptance criterion.
+The rehearsals time each action, and the acceptance criterion is a projection of a 4-slate, 10-contest night from those per-action times (section 13), because a rehearsal with two or three $0.25 contests cannot measure a full night directly (RT2 finding 11).
 
 ### Process limits during a night
 
 - Engine code is frozen from 60 minutes before the first lock to the last lock (a hook blocks edits to `src/`). You can lift it with `dfs unlock`; the run records it.
 - No environment repair inside the entry window: a 60-second preflight runs first, and a failing preflight sends the night to the launcher's no-LLM path rather than to debugging (your golf engine lost 7 entries to environment repair inside a 90-minute window, RR3).
+- A crashed run never blocks the next one: the run lock clears itself after about 2 minutes without a heartbeat.
 
 ---
 
@@ -827,9 +861,9 @@ A complete free stack works from your laptop today, but most free sources restri
 | Confirmed starters | DraftKings `Starting` column, if the 2026 NBA export has it (BET until your first NBA export, RT1 rank 21); reporter posts found by the researcher | Starters stay uncertain in the simulation | RotoWire lineups page | RotoWire marked teams "Confirmed" between 0 and 75 minutes before tip tonight, and one team's confirmed five differed from its expected five by 3 players (R4, VERIFIED), so starters often stay uncertain until late in any posture |
 | Box-score history and priors | sportsdataverse ESPN box scores and play-by-play (CC BY 4.0 files on GitHub) | The standings files' points for scoring checks; your manual approval of `nba_api` as a backup (Decision D1) | stats.nba.com via `nba_api` | A full season loads in seconds with no load on NBA or ESPN servers; it depends on a volunteer daily job, so the brief shows its lag |
 | Game lines (spread, total) | The Odds API free key (you create it on Oct 14), about 3 credits per pull | Your manual entry of totals in a pinch | ESPN scoreboard odds | Team totals twice a day, well inside 500 credits a month |
-| Player props | The Odds API on about 12 nights a month (big slates first) | Model without props | ESPN prop ladders nightly | Market-anchored medians on the biggest nights |
+| Player props | The Odds API on about 7 nights a month (big slates first): lines twice a day use about 180 of the 500 monthly credits and props cost about 40 credits per 10-game night, and the engine reads the remaining-credit header and keeps a reserve for late-news line refreshes (RT2 finding 17) | Model without props | ESPN prop ladders nightly | Market-anchored medians on the biggest nights |
 | Public projections (the field's view) | Daily Fantasy Fuel's free DraftKings projections CSV (downloaded by you if the page's table only fills in a browser: about 30 seconds) | Salary-implied value, then our baseline | nothing extra | A field that sees what casual players see |
-| Late news | Official injury report; Bluesky reporter mirrors every 60 seconds; the researcher's web search | Your own eyes and `/news` | ESPN injuries JSON, RotoWire RSS | Free news reaches you about 1 to 20 minutes after it breaks, which is why late news is handled with ready-made files |
+| Late news | Official injury report; DraftKings `Status`; Bluesky reporter posts every 60 seconds (as "possible" alerts); the researcher's web search | Your own phone alerts, entered with `dfs out` and `dfs in` | ESPN injuries JSON, RotoWire RSS | Free news reaches you about 1 to 20 minutes after it breaks, which is why late news is handled with stored replacements and `dfs apply` (seconds) |
 
 ### The two terms bets inside the permissive posture
 
@@ -846,7 +880,7 @@ Neither is legal advice. If you reject either, the engine runs without it: statu
 |---|---|---|---|---|---|---|
 | Your DraftKings files | Player pool, IDs, eligibility, salaries, entries, standings, entry history; `Status` and `Starting` in 2026 salary exports of other sports | Free | Manual download | At download | Your own account; manual | Yes for structure: `python -I inspect_salary_csvs.py out/downloads/github "*.csv"` returned `('rtelmore_DKSalaries-251018.csv', ['CPT','UTIL'], 66 rows, 33 pairs, 0 pairs with same ID, {'exact': 33})`; your 2026 entries file matched its salary file on 158 of 158 IDs (R6). **BET for NBA `Status` and `Starting`** (seen only in MLB, NFL, soccer and golf exports) until your first NBA export |
 | Your DraftKings entry-history export | Field size, places paid, prize pool, place, points for every past contest | Free | Manual, weekly | After contests | Your own account | Yes: `nba_entry_history.py` read 432 NBA rows; median share of field paid 23.3% Classic, 22.5% Showdown; median rake 15.8% (R8, `spikes/history/out/20261013-1710_nba_entry_history.txt`) |
-| Official NBA injury report | Out, Doubtful, Questionable, Probable, Available, with reasons | Free | PDF at `ak-static.cms.nba.com/referee/injury/Injury-Report_<date>_<time>.pdf` | Every 15 minutes in the 2026 regular season; live about 4 seconds after its slot | No bot clause; fantasy clause is a BET (above) | Yes, archived reports (none exist in preseason; naming for 2026-27 unknown until Oct 19, so the parser tries both known patterns): `{'slot_ET': '2026-03-15_05_15PM', 'status': 200, 'bytes': '87881', 'last_modified': 'Sun, 15 Mar 2026 21:15:04 GMT'}`; parser read 151 rows with 0 unrecognized statuses |
+| Official NBA injury report | Out, Doubtful, Questionable, Probable, Available, with reasons | Free | PDF at `ak-static.cms.nba.com/referee/injury/Injury-Report_<date>_<time>.pdf` | One file per 15-minute slot from January 2026 (live about 4 seconds after its slot); one hourly file, overwritten within the hour, from October to at least December 2025, so the watcher also re-checks an hourly file by its last-modified time (R4) | No bot clause; fantasy clause is a BET (above) | Yes, archived reports (none exist in preseason; naming for 2026-27 unknown until Oct 19, so the parser tries both known patterns): `{'slot_ET': '2026-03-15_05_15PM', 'status': 200, 'bytes': '87881', 'last_modified': 'Sun, 15 Mar 2026 21:15:04 GMT'}`; parser read 151 rows with 0 unrecognized statuses |
 | sportsdataverse (GitHub) | ESPN box scores 1994 to 2026, play-by-play from 2002 | Free | Release files (parquet) | Daily in season (SUPPORTED); last updated Sep 9, 2026 | CC BY 4.0; underlying data is ESPN's (BET, above) | Yes: `player_box_2026.parquet`, 0.61 MB, 34,883 rows, Oct 21 2025 to Jun 13 2026 |
 | The Odds API | Game lines and player props | Free tier, 500 credits a month | REST with a key you create | Near real time | "Do not resell, repackage, or redistribute" raw data; use in your own app allowed (VERIFIED quote) | No: docs only, because creating the key is your step |
 | Daily Fantasy Fuel | DraftKings salaries and free projections, CSV button | Free | Page CSV | Update stamp on page | Terms silent on scraping; robots.txt blocks only `/lineup/*` | Partly: page fetched with "Updated At: Tue, Oct 13, 2026, 5:57 PM ET"; projections empty in preseason |
@@ -897,7 +931,9 @@ Every DraftKings rule has a passing and a failing test; every parser is tested o
 - Parser tests on real files: your 2026 DraftKings files from other sports (structure), public NBA salary files 2018 to 2026, the April 2026 NBA salary file from dfs-architect, and your NBA preseason and opening-night exports. Encodings: UTF-8 with byte-order mark, UTF-8, cp1252 with accented names.
 - Round trip: export, re-read, re-validate; unchanged cells byte-identical to the download.
 - Late swap: real mid-slate entries files with `(LOCKED)` cells (your 2026 MLB file has 87 locked and 63 open cells, R6); regenerating from the blank template is impossible by construction.
-- **Ledger:** a file that would revert a newer exported change is refused; two news events merge into one file per slate.
+- **Ledger and `dfs apply`:** a file that would revert a newer change is refused; two outs in different games on one Classic slate, applied in either order, never revert a change and never leave a ruled-out player in a lineup; a file past its "valid until" time is never named; a crashed run's lock clears itself.
+- **News input:** `dfs out` and `dfs in` match names with accents and suffixes (Doncic, Jokic, Jr.); a test set of reporter posts with negations ("upgraded from out to questionable", "will start with X out") never produces an official-class alert; before Oct 20, replaying recent mirror posts counts false "possible" alerts.
+- **Document consistency:** the scenario-set sizes and the insurance margin rule read the same in this document and ADR-001.
 - **Upload guard:** a file written into `out/uploads/` by anything other than the exporter is flagged by `/status`; Claude's Bash, PowerShell, Edit and Write calls that touch `out/uploads/` are blocked.
 - Property tests: thousands of random lineups per pool; every invalid one rejected, every valid one accepted.
 
@@ -916,7 +952,7 @@ Brier score and log loss for availability and cash probabilities; average error 
 
 ### Performance tests
 
-The runtime budgets in section 8 are tests: the build, the narrow re-run, if-out file generation and the swap must finish inside budget on a recorded slate.
+The runtime budgets in section 8 are tests: the build, the narrow re-run, stored-replacement generation, `dfs apply` (seconds) and the swap must finish inside budget on a recorded slate.
 
 ### Acceptance criteria
 
@@ -928,12 +964,12 @@ Each phase in section 13 lists criteria you can check yourself, such as DraftKin
 
 | Rank | Risk | Why it ranks here | Mitigations |
 |---|---|---|---|
-| 1 | **Entries lock blank, late, or rejected** | A blank entry has zero chance at both goals; the largest avoidable loss in your MLB, NFL, NHL and golf engines (RR1 to RR3) | Fallback before any LLM step; lock-order plan; only validity blocks; completeness check; ledger and run lock; versioned names; ready-made if-out files; desktop launcher; code freeze; preflight; three live rehearsals |
+| 1 | **Entries lock blank, late, or rejected** | A blank entry has zero chance at both goals; the largest avoidable loss in your MLB, NFL, NHL and golf engines (RR1 to RR3) | Fallback before any LLM step; lock-order plan; only validity blocks; completeness check; ledger and run lock; versioned names; stored replacements with `dfs apply`; desktop launcher; code freeze; preflight; three live rehearsals |
 | 2 | **Opening night is compressed and unusual** | 2:00 pm CT first lock on a workday; three games shared by Classic and Showdown; no current-season data | Heavy build Monday evening; no-LLM refresh at 12:30 pm Tuesday (section 8); widened early-season uncertainty; the 2-game rehearsal on Oct 15 |
 | 3 | **The simulation is too confident** | Understates washout and misstates top-1% odds; without model error the benchmark showed washout at zero (RT1) | Model-error layer; calibration against last season; per-entry cash calibration and nightly cash-rate spread; washout reported with and without the layer |
 | 4 | **Minutes and role errors early in the season** | Minutes decide NBA slates; October is hardest | Role-aware priors; widened uncertainty; checked researcher overrides; mixtures for role changes |
 | 5 | **Field and ownership miscalibrated, especially news-driven chalk** | Moves every threshold and duplicate estimate; your NHL engine missed late chalk by about 10x | Public view with public news and a stale share; three propagation tests; calibration from the first standings file with heavy shrinkage; duplicate-adjusted selection only after calibration |
-| 6 | **Late news arrives too late to act on** | Free channels lag 1 to 20 minutes | Ready-made if-out files; Bluesky polling every 60 seconds; narrow re-run only when no file fits |
+| 6 | **Late news arrives too late, or a misread post changes lineups** | Free channels lag 1 to 20 minutes; reporter posts are free text | Stored replacements and `dfs apply` (seconds); `dfs out` and `dfs in` for news you see first; official alerts act, Bluesky alerts only ask; narrow re-run only when no stored replacement fits |
 | 7 | **Late-swap files rejected** | Late swap is where late news pays | Edit DraftKings' current export in place; never move a locked player; $0.25 tests on Oct 14 and 15 (Decision D8); Phase 1 post-lock rule swaps only ruled-out players |
 | 8 | **Claude unavailable or over budget** (including the build week) | Loses research and QA, and the build week draws on the same weekly window as opening night | Every night step runs from the desktop launcher; usage shown in preflight; build budget rule (section 13); second account if Decision D4 allows |
 | 9 | **A data source disappears or enforces its terms** | Lost inputs degrade projections | Permissive default; history in local files; fallbacks for every source; labeled gaps |
@@ -951,74 +987,79 @@ Each phase in section 13 lists criteria you can check yourself, such as DraftKin
 
 ### The short version
 
-Phase 1 is a thin, complete night, built and rehearsed on the only NBA game nights left before opening night: Wednesday Oct 14 (7 games), Thursday Oct 15 (2 games, the same shape as opening night) and Friday Oct 16 (12 games). There are no NBA games Oct 17 to 19 (VERIFIED, NBA schedule, R4). Everything else is added after opening night, one piece at a time, each required to beat the simpler version on real standings.
+Phase 1 is a thin, complete night, built and rehearsed on the only NBA game nights left before opening night: Wednesday Oct 14 (7 games), Thursday Oct 15 (2 games, the same shape as opening night) and Friday Oct 16 (12 games). There are no NBA games Oct 17 to 19 (VERIFIED, NBA schedule, R4). The must-ship list is split into three tiers, so that if time or Claude usage runs short, the floor still ships valid files on Oct 20. Everything else is added after opening night, one piece at a time, each required to beat the simpler version on real standings.
 
 ### Process limits (part of the design)
 
 - Smoke test under 60 seconds; full test suite under 5 minutes.
 - At most 5 open decisions queued for you.
-- No engine edits from 60 minutes before first lock to last lock (hook-enforced; `dfs unlock` lifts it and is recorded).
+- No engine edits from 60 minutes before first lock to last lock on game nights (hook-enforced; `dfs unlock` lifts it and is recorded).
 - QA time-boxed at 10 minutes per iteration.
 - A new component ships only with a real-standings comparison against what it replaces, or, in Phase 1, a rehearsal that exercises it.
 - This document is rewritten whole when it changes, never extended with change logs.
-- **Build-week Claude budget:** building the engine uses the same weekly window as opening night. The build runs on the Team seat if Decision D4 allows it and nights run on Pro; otherwise non-essential building stops at noon Monday Oct 19 if weekly usage passes 70%.
+- **Build-week Claude budget:** building the engine uses the same weekly window as opening night. Usage is recorded after Wednesday's build and the week is projected from it: if Wednesday used more than about 20% of the weekly window, only tiers A and B are built before Oct 20. The build runs on the Team seat if Decision D4 allows it and nights run on Pro; otherwise non-essential building stops at noon Monday Oct 19 if weekly usage passes 70%.
 
 ### Spike code (ADR-022)
 
-The R9 night benchmark already simulates a night, builds fields and candidates, scores them in bit arrays and runs selection. It stays throwaway: Phase 1 rewrites its logic into the engine package with tests, and uses the spike as a test oracle (the same synthetic inputs must give the same numbers). This saves design time without importing untested code.
+The R9 night benchmark already simulates a night, builds fields and candidates, scores them in bit arrays and runs selection and the insurance search. It stays throwaway: Phase 1 rewrites its logic into the engine package with tests, and uses the spike as a test oracle (the same synthetic inputs must give the same numbers). This saves design time without importing untested code.
 
 ### Phase 1: the opening-week MVP (Oct 14 to Oct 19)
 
-**Must ship by Monday Oct 19 (in build order):**
+**Tier A, the floor (ships valid files on Oct 20 with nothing else):**
 
 1. Auto-filing and ingest (entries, salary exports, standings, entry history), encodings, the night plan, one clock, one identity rule, one team map.
-2. Validator, exporter, ledger, run lock, manifest hashes, completeness check, versioned names.
+2. Validator, exporter, ledger (committed and pending), run lock with heartbeat, manifest hashes, completeness check, versioned names with "valid until".
 3. Contest facts from your entry-history export (ported parser, ADR-018) plus names and defaults.
 4. Fallback portfolio (salary-implied points, last-season rates, ruled-out players removed).
-5. Desktop launcher and `dfs status`.
-6. History load; projections v0 (last-season rates x minutes, game-line anchor, questionable players random); simulator v0 with the model-error layer; scoring adapter and its tests.
-7. Classic candidates (GLPK) and Showdown enumeration; field v0 (public view, casual plus a small optimizer share, no fitting); thresholds; per-contest greedy on raw probability; concentration cap; slot assignment; washout reported with and without model error.
-8. Ready-made if-out files; the news watcher (injury report and Bluesky).
-9. Brief v0 with the "if the engine is down" card and input freshness labels.
-10. Claude layer: `CLAUDE.md`, `/night`, `/news`, `/swap`, `/status` as thin wrappers over the launcher commands; hooks (upload guard on all tools, DraftKings block, subagent output checks); preflight; the news researcher v0 (availability and minutes overrides with quote checks).
+5. Desktop launcher (`dfs night`, `dfs status`, `dfs out`, `dfs in`, `dfs apply`) and a brief-lite (files, status, the "if the engine is down" card).
 
-**Stretch (only if everything above is green by Sunday Oct 18):** the insurance search.
+**Tier B, the model (sensible portfolios):**
 
-**Out (Phase 2 or later):** QA; results scorecards beyond the scoring check; full late-swap re-optimization; P(first) tail fitting; scenario labels; field calibration; duplicate-adjusted selection; learned ownership; the weekly analyst; the replay command (everything replay needs is recorded from day one).
+6. History load; projections v0 (last-season rates x minutes, game-line anchor, questionable players random); simulator v0 with outcome noise and symmetric model error; scoring adapter and its tests.
+7. Classic candidates (GLPK) and Showdown enumeration; field v0 (public view, casual entrants first, then a small optimizer share, no fitting); thresholds; per-contest greedy on raw probability; concentration cap; slot assignment; washout reported with and without edge uncertainty (reporting only, section 2).
+
+**Tier C, the night (late news, explanation, Claude):**
+
+8. Stored replacements for material questionable players ("sits" and "plays"); `dfs apply` against the ledger; the news watcher (official report, DraftKings `Status`, Bluesky "possible" alerts) started by the launcher.
+9. Brief v0 with thesis, exposures, risks, input freshness labels, and the news that would change the build.
+10. Claude layer: `CLAUDE.md`, `/night`, `/news`, `/swap`, `/status` as thin wrappers over the launcher commands; hooks (upload guard on all tools, DraftKings and standings blocks, subagent output checks); preflight with usage reading; the news researcher v0 (availability and minutes overrides with quote checks).
+11. The insurance search with the safety margin, frozen contests and roll-back (last in tier C; if not green by Sunday Oct 18, it arrives Oct 21 or 22, and until then the brief reports washout but the control does not act).
+
+**Out (Phase 2 or later):** QA; results scorecards beyond the scoring check; full late-swap re-optimization; P(first) tail fitting; scenario labels; field calibration; duplicate-adjusted selection; edge uncertainty in selection; learned ownership; the weekly analyst; the replay command (everything replay needs is recorded from day one).
 
 **Schedule:**
 
-| Day | Build | Rehearsal |
+| Day | Build | Rehearsal and your actions |
 |---|---|---|
 | Tue Oct 13 (tonight) | Design review | You: approve or send changes; create The Odds API key; export the Oct 20 salary files |
-| Wed Oct 14 (7 games, first tip 6:30 pm CT) | Items 1 to 5 | **Rehearsal 1:** enter two or three $0.25 contests (Decision D8); export the NBA salary file (check whether `Status` and `Starting` exist and what `Starting` holds); fallback files; upload; "uploaded N of N"; re-download; completeness check. After the first lock: test both locked-cell formats and a post-lock fill of an empty later-game entry |
-| Thu Oct 15 (2 games, 6:30 and 7:30 pm CT) | Item 6 | **Rehearsal 2:** full build without LLM on the 2-game slate (Classic plus both Showdowns), opening night's shape; repeat any late-swap test that failed |
-| Fri Oct 16 (12 games) | Items 7 to 9 | **Rehearsal 3, dress rehearsal:** `dfs night` end to end; one alert drill (upload an if-out file); one `/swap` on a real post-lock file; time your minutes |
-| Sat Oct 17 to Sun Oct 18 (no games) | Item 10; fixes from rehearsals; stretch if green | Replays of saved rehearsal data; the watcher and status mapping replayed against archived March 2026 injury reports |
-| Mon Oct 19 | Fixes only until noon | Evening: opening-night build on the real Oct 20 slates (the researcher's first live run) |
-| Tue Oct 20 | Go-live | 12:30 pm CT no-LLM refresh; upload by 1:30 pm |
+| Wed Oct 14 (7 games, first tip 6:30 pm CT) | Tier A | **Rehearsal 1:** enter two or three $0.25 contests, at least one Showdown (Decision D8); export the NBA salary file (record whether `Status` and `Starting` exist and what `Starting` holds); copy the two live DraftKings NBA rules pages into `inbox/rules/` (about 2 minutes); fallback files; upload; "uploaded N of N"; re-download; completeness check. After the first lock: test both locked-cell formats and a post-lock fill of an empty later-game entry. Record Claude usage for the day |
+| Thu Oct 15 (2 games, 6:30 and 7:30 pm CT) | Item 6 and a minimal item 7 (casual-only field, candidates, greedy); slot assignment and the washout report move to Saturday | **Rehearsal 2:** full build without LLM on the 2-game slate (Classic plus both Showdowns), opening night's shape; repeat any late-swap test that failed. Morning: Wednesday's Showdown standings file confirms the Captain bonus rule on 2026 NBA data (ADR-020) and tests the standings parser |
+| Fri Oct 16 (12 games) | Items 8 and 9 | **Rehearsal 3, dress rehearsal:** `dfs night` end to end; one news drill (`dfs out`, `dfs apply`, upload, re-download, check); one `/swap` on a real post-lock file; time each of your actions |
+| Sat Oct 17 to Sun Oct 18 (no games) | Rest of item 7; item 10; item 11 if green; fixes from rehearsals | Replays of saved rehearsal data; the watcher and status mapping replayed against archived March 2026 injury reports; recent reporter posts replayed to count false alerts |
+| Mon Oct 19 | Fixes until noon; injury-report parser fixes allowed in the evening | Evening: opening-night build on the real Oct 20 slates (the researcher's first live run) |
+| Tue Oct 20 | Go-live | 12:30 pm CT `dfs night --no-llm --reuse-overrides`; upload by 1:30 pm |
 
 **Acceptance criteria you can check yourself:**
 
 1. Rehearsal 1: a valid file for every slate within 10 minutes of `dfs night`, DraftKings reports "uploaded N of N", and the completeness check passes. The locked-cell and post-lock-fill results are written into the late-swap rules.
 2. Three deliberately wrong inputs (a Showdown entries file with a Classic salary file, yesterday's file, a WNBA contest) each produce a plain-language error and no upload.
-3. Rehearsal 3: the full build finishes inside the section 8 budgets; the brief fits on one page with thesis, assumptions, exposures, risks, the news that would change the build (with its file), and what was skipped; if-out files exist for every questionable player.
-4. The alert drill, from alert to completeness check, finishes in under 10 minutes.
+3. Rehearsal 3: the full build reaches the main files inside the section 8 budget; the brief fits on one page with thesis, assumptions, exposures, risks, the news that would change the build, and what was skipped; stored replacements exist for every material questionable player.
+4. The news drill, from `dfs out` to the completeness check, finishes in under 10 minutes; a second `dfs out` in a different game produces a file that keeps the first change.
 5. `/swap` on a real post-lock file changes only open cells, and DraftKings accepts it.
-6. With Claude closed, you run `dfs night` from the desktop launcher and get valid files for every slate.
+6. With Claude closed, you run `dfs night` and `dfs out` from the desktop launcher and get valid files for every slate.
 7. Running the same night twice produces identical upload files.
-8. Your measured time on the dress rehearsal is under 35 minutes.
-9. The Monday evening build's LLM usage is recorded as a share of the five-hour and weekly windows, and is under the section 7 target or the caps are lowered.
+8. A full 4-slate, 10-contest night projected from your timed rehearsal actions comes to under 45 minutes plus the on-call window.
+9. The Monday evening build's LLM usage is recorded as a share of the five-hour window (and the weekly window, if readable), and is under the section 7 target or the caps are lowered.
 
 ### Phase 2: the first two weeks of the season (Oct 21 to Nov 3)
 
-Results ingest and scorecards for availability, minutes, points, overrides, ownership, field and the model-error layer; counterfactual ranks (final, pre-override, control, insurance variants); the QA loop, after one measured live night; full late swap conditioned on finished games; P(first) and P(top 0.1%) with a fitted tail; scenario labels; the insurance search if not already in; the replay command; the two-week readout on Nov 3 (Decision D9).
+Results ingest and scorecards for availability, minutes, points, overrides, ownership, field and the model-error layers; counterfactual ranks (final, pre-override, control, insurance variants); the insurance search if not already in; the QA loop, after one measured live night; full late swap conditioned on finished games; P(first) and P(top 0.1%) with a fitted tail; scenario labels; duplicate-adjusted selection per format once its calibration check passes; the decision on edge uncertainty in selection, against the bar in section 2; the replay command; the two-week readout on Nov 3 (Decision D9).
 
 **Acceptance:** `/results` finishes in under 5 minutes with a one-page scorecard; every QA proposal appears in the brief with evidence and its accept or reject reason; a replay of any Phase 2 night reproduces its files; the Nov 3 readout shows finishing percentile against 50 and the control, with intervals.
 
 ### Phase 3: November
 
-Field calibration from standings with shrinkage; duplicate-adjusted selection after five Showdown standings files; a learned ownership model in shadow; the weekly analyst and the adoption workflow; the hunch verdict after 20 nights; a draft-slot rookie prior if a permissive source is found.
+Field calibration from standings with shrinkage; a learned ownership model in shadow; the weekly analyst and the adoption workflow; the hunch verdict after 20 nights; a draft-slot rookie prior if a permissive source is found.
 
 **Acceptance:** the weekly review shows each challenger's held-out comparison in plain language, and `/weekly adopt` and `/weekly reject` work and are recorded.
 
@@ -1034,15 +1075,16 @@ Each has a recommendation and a default, so the build is not blocked while you d
 
 | # | Decision | Recommendation (and the default) | Why |
 |---|---|---|---|
-| D1 | **Data posture.** Permissive (sources whose terms do not prohibit this use, plus your manual DraftKings files) or wider personal-use (adds stats.nba.com, ESPN and RotoWire pages, in literal breach of their terms) | **Permissive**, accepting its two stated bets (the injury report's status under NBA.com's fantasy clause; sportsdataverse's ESPN-derived files), and **create a free The Odds API key on Oct 14**. Optionally approve `nba_api` as a backup history source only if sportsdataverse stops updating | The permissive stack covers every need; the wider posture adds nightly props and richer box scores at a terms risk only you can accept. Results cost: props on about 12 nights a month instead of every night |
-| D2 | **Duplication in Goal 1** | **Prize share, switched on after five NBA Showdown standings files** have fitted the duplicate rate; raw probability (with the prize-share number shown beside it) until then | Ties split prizes, but an unfitted duplicate estimate could push the engine toward odd lineups for no gain (unique Showdown lineups were the worst performers in your NFL data, RR2) |
+| D1 | **Data posture.** Permissive (sources whose terms do not prohibit this use, plus your manual DraftKings files) or wider personal-use (adds stats.nba.com, ESPN and RotoWire pages, in literal breach of their terms) | **Permissive**, accepting its two stated bets (the injury report's status under NBA.com's fantasy clause; sportsdataverse's ESPN-derived files), and **create a free The Odds API key on Oct 14**. Optionally approve `nba_api` as a backup history source only if sportsdataverse stops updating | The permissive stack covers every need; the wider posture adds nightly props and richer box scores at a terms risk only you can accept. Results cost: props on about 7 nights a month instead of every night |
+| D2 | **Duplication in Goal 1** | **Prize share, switched on per format (Showdown; Classic slates of 3 games or fewer) once a calibration check passes** (predicted copy counts match standings within tolerance, likely within the first week); raw probability, with the prize-share number shown beside it, until then | Ties split prizes, and on the synthetic night duplicate-aware selection changed most Showdown 20-max picks (R9); but an unfitted duplicate estimate could push the engine toward odd lineups for no gain (unique Showdown lineups were the worst performers in your NFL data, RR2) |
 | D3 | **Insurance budget default** | **2%**, enforced with a two-standard-error safety margin | On the synthetic 25-entry night with edge uncertainty, 2% removed 68% of washout risk for 0.2% of average top-1% odds, and 5% added little; at your planned volume the search usually finds nothing to buy; you prefer large prizes (R9, RR2) |
 | D4 | **Team seat for personal DFS.** Is your Team standard seat (likely your company's) allowed for this? | **Confirm with your company; until then everything runs on Pro**, with QA capped at 2 iterations and the build-week budget rule in section 13 | 1.25x Pro's allowance, but shared with your work chat and governed by your employer |
 | D5 | **Lineup reuse across contests.** Your NFL rule was every lineup distinct across the whole entries file | **No hard rule:** the optimizer may reuse a lineup when it helps each contest, the washout calculation discourages reuse, and the brief lists every reuse | Forcing distinct lineups costs top-1% odds when one lineup is best for two single-entry contests |
 | D6 | **Flat-prize contests** (double-ups, "Top N win $X", satellites) | **Maximize the chance to cash there** and flag them in the brief | Top 1% pays no more than min-cash in those contests |
-| D7 | **Opening night timing.** First lock is 2:00 pm CT Tuesday | **Full build Monday evening; 30-minute refresh Tuesday 12:30 to 1:30 pm CT** | Fits a workday; Monday evening has the day-before injury reports |
-| D8 | **About $1 to $2 of test entries** ($0.25 preseason contests, Oct 14 to 16) | **Yes** | Proves the upload path, locked-cell behavior, post-lock fills and the standings parser on 2026 NBA files before money matters |
-| D9 | **Volume ramp.** Your past NBA play was about 1 entry a night; the plan is 50 to 200 | **Start at about 25 to 50 entries a night; scale up after the Nov 3 readout if the engine finishes better than the median and better than the control portfolio, with intervals** | No prior engine showed an edge; ramping limits the cost of finding out. Fewer entries raise washout risk, which the brief will show |
+| D7 | **Opening night timing.** First lock is 2:00 pm CT Tuesday | **Full build Monday evening; a no-LLM full rebuild Tuesday at 12:30 pm CT; upload by 1:30 pm. Please confirm you can be at the laptop from 12:30 to 2:00 pm CT that day** (if not, Monday's files stand and the brief says so) | Fits a workday; Monday evening has the day-before injury reports and is the first chance to see the new injury-report format |
+| D8 | **About $1 to $2 of test entries** ($0.25 preseason contests, Oct 14 to 16, including at least one Showdown on Oct 14) | **Yes** | Proves the upload path, locked-cell behavior, post-lock fills and the standings parser on 2026 NBA files before money matters, and the Showdown standings file confirms whether the Captain 1.5x applies to bonuses, which the brief asked to confirm from real results |
+| D9 | **Volume ramp.** Your past NBA play was about 1 entry a night; the plan is 50 to 200 | **Start at about 25 to 50 entries a night; scale up after the Nov 3 readout if the engine finishes better than the median and better than the control portfolio, with intervals** | No prior engine showed an edge; ramping limits the cost of finding out. Fewer entries raise washout risk, which is exactly where the insurance control helps (R9) |
+| D10 | **Top 1% in fields of 100 to 199 entries.** Your brief says fields under 100 count first place only. With the rule "a rank counts when it is within the first 1% of the field", fields of 100 to 199 also count only first place (1% of 150 is 1.5 places) | **Keep the rule: first place only for any field under 200**; the alternative would round up and count second place in a 150-entry field as top 1% | One consistent definition; second place in a 150-entry field is not within the top 1% |
 
 **Actions for you (not decisions):**
 

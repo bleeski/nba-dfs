@@ -30,4 +30,4 @@ Option 2 stays open: if the user ever gets written permission, a contest-detail 
 
 - **Results:** field size and payout depth are estimates on nights without pastes; estimation error is small for big GPPs (rake is a steady 15 to 16%) and largest for small contests, where a paste matters most.
 - **Cost:** none.
-- **Workload:** about 2 to 8 minutes a night (download one entries file per slate, paste payouts for new contests, download standings the next morning). Recurring contests are cached by name, fee, and size, so pastes shrink after the first week.
+- **Workload:** the DraftKings file handling itself (entries and salary downloads per slate, uploads, re-downloads, payout pastes for new contests, next-morning standings) is most of the user's 30 to 45 minutes a night (ARCHITECTURE section 8); auto-filing from Downloads removes the filing step. Recurring contests are cached by name, fee, and size, so pastes shrink after the first week.

@@ -17,10 +17,10 @@ Claude Code is both the builder and the nightly LLM layer; there is no paid API.
 Option 3.
 
 - **Skills:** `/night`, `/news`, `/swap`, `/results`, `/weekly`, `/status`, `/replay`, each a thin wrapper over a `dfs` command, each with an Owns / Invokes / Does not own block.
-- **Desktop launcher:** `dfs night`, `dfs news`, `dfs swap`, `dfs status` from a desktop shortcut, with the same plain-language output. The user runs it in rehearsal (acceptance criterion 6).
+- **Desktop launcher:** `dfs night`, `dfs out "<name>"`, `dfs in "<name>"`, `dfs apply`, `dfs news`, `dfs swap`, `dfs status` from a desktop shortcut, with the same plain-language output; it also starts the news watcher in its own window with keep-awake. The user runs it in rehearsal (acceptance criterion 6).
 - **Subagents:** `news-researcher` (opening night), `qa-adversary` (week 2), `results-analyst` (week 3), all `model: sonnet`, each with a narrow tool list and one JSON output checked by a `SubagentStop` hook.
-- **Hooks:** `SessionStart` preflight (account, `ANTHROPIC_API_KEY` warning, inbox, next lock, five-hour and weekly usage); `PreToolUse` guards on Edit, Write, NotebookEdit, Bash and PowerShell for `out/uploads/`, `data/snapshots/`, `config/models/`, `draftkings.com`, and `src/` during night runs (liftable with `dfs unlock`).
-- **Permissions:** allow `uv run dfs *` and WebSearch; deny WebFetch (pages are fetched through `dfs research fetch`, which enforces the posture's allowlist and saves each page for the quote check); deny Read on raw standings.
+- **Hooks:** `SessionStart` preflight (account, `ANTHROPIC_API_KEY` warning, inbox, next lock, usage read from a file a status-line script writes, or a once-a-day prompt to read `/usage` when the weekly figure is not readable); `PreToolUse` guards on Edit, Write, NotebookEdit, Bash and PowerShell for `out/uploads/`, `data/snapshots/`, `config/models/`, `draftkings.com`, the private standings folder, `contest-standings`, and `src/` during night runs (liftable with `dfs unlock`).
+- **Permissions:** allow `uv run dfs *` and WebSearch; deny WebFetch (pages are fetched through `dfs research fetch`, which enforces the posture's allowlist and saves each page for the quote check); deny Read on the private standings folder outside the project.
 - **Budget:** search and fetch caps in configuration; QA capped at 2 iterations on Pro-only nights; fresh sessions for `/news` and `/swap`; target at most about 50% of one Pro five-hour window per night, measured on the Monday Oct 19 build; no Claude build or design work after noon on game days once weekly usage passes 70%; build-week rule in ARCHITECTURE section 13.
 - The news watcher is plain Python and never invokes Claude.
 

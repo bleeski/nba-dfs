@@ -4,7 +4,7 @@ Each record is short: context, options considered, the decision, and what it mea
 
 | ADR | Decision | Status |
 |---|---|---|
-| 001 | Both goals are computed on one simulated night that includes model error; the insurance budget trades them off | Accepted |
+| 001 | Both goals on one simulated night with model error and edge uncertainty; the insurance budget (default 2%, with a safety margin) trades them off | Accepted |
 | 002 | One shared, stat-level simulation of the whole night, with a model-error layer | Accepted |
 | 003 | The LLM sets beliefs (checked against sources, tagged public or private); code sets lineups | Accepted |
 | 004 | Every DraftKings interaction is manual | Accepted |
@@ -12,9 +12,9 @@ Each record is short: context, options considered, the decision, and what it mea
 | 006 | GLPK for Classic candidates, enumeration for Showdown, OR-Tools as fallback | Accepted |
 | 007 | Greedy scenario coverage per contest; constrained insurance search across the night | Accepted |
 | 008 | The field is simulated from a public view of the night | Accepted |
-| 009 | Duplication counts at the expected prize share, switched on after calibration | Proposed (owner decides, D2) |
+| 009 | Duplication counts at the expected prize share, switched on per format after a calibration check | Proposed (owner decides, D2) |
 | 010 | One validator; the exporter is the only path to an upload file | Accepted |
-| 011 | Ready-made if-out files, a narrow re-run, a per-entry ledger, in-place late swap | Accepted |
+| 011 | Stored replacements and `dfs apply` for late news, a ledger with pending state, in-place late swap | Accepted |
 | 012 | QA proposals are typed, independent, judged by code; QA starts in week 2 | Accepted |
 | 013 | Claude Code mapping; the desktop launcher runs every night step without Claude | Accepted |
 | 014 | Every run is replayable from a manifest, snapshots, seeds and decision records | Accepted |

@@ -19,7 +19,7 @@ Option 3, staged:
 - Each scenario's value for a contest is the **maximum over our entries of P(top 1% | s, L) x share(L, s)**, which keeps the objective's diminishing-returns property and the greedy method's guarantee.
 - `share(L, s)` is the expected fraction of the prize kept, averaged over the number of copies (drawn from the field model's copy rate for that lineup), using the contest's payout table: near 1 deep in the top 1%, much lower for ties at the top of a top-heavy payout.
 - **Phase 1:** selection uses the raw probability; the brief shows the duplicate-adjusted number beside it.
-- **Switch-on:** after at least five NBA Showdown standings files have fitted the duplicate rate, selection uses the adjusted version.
+- **Switch-on, per format:** selection uses the adjusted version for Showdown, and separately for Classic slates of 3 games or fewer, once a calibration check passes: predicted copy counts (for our entries and for the field's most common lineups) match the counts observed in standings within a stated tolerance, expected after roughly five files per format. R9 showed why it matters: on a synthetic night, duplicate-aware selection kept only 4, 1 and 0 of 10 raw picks in three Showdown 20-max contests and cut expected copies per entry from 0.5 to 2.2 down to about 0.1; on a 2-game Classic slate our lineups averaged about 1 expected copy.
 
 ## Consequences
 

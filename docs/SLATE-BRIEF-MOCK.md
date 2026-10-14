@@ -8,20 +8,20 @@
 
 ### If the engine is down
 
-| Slate | Upload this | If Player C (DET) is ruled out | Fallback |
+| Slate | Upload this | Valid until | Fallback |
 |---|---|---|---|
-| Classic main (3 games) | `out/uploads/classic_main_1400_v4.csv` | `classic_main_1400_ifout_PlayerC_v4.csv` | `classic_main_1400_fallback_v1.csv` |
-| Showdown BOS @ DET | `sd_BOS-DET_1400_v4.csv` | `sd_BOS-DET_1400_ifout_PlayerC_v4.csv` | `sd_BOS-DET_1400_fallback_v1.csv` |
-| Showdown PHI @ NYK | `sd_PHI-NYK_1800_v3.csv` | none needed | `sd_PHI-NYK_1800_fallback_v1.csv` |
-| Showdown OKC @ SAS | `sd_OKC-SAS_2030_v3.csv` | none needed | `sd_OKC-SAS_2030_fallback_v1.csv` |
+| Classic main (3 games) | `out/uploads/classic_main_1400_v4.csv` | 2:00 pm (first changed cell locks) | `classic_main_1400_fallback_v1.csv` |
+| Showdown BOS @ DET | `sd_BOS-DET_1400_v4.csv` | 2:00 pm | `sd_BOS-DET_1400_fallback_v1.csv` |
+| Showdown PHI @ NYK | `sd_PHI-NYK_1800_v3.csv` | 6:00 pm | `sd_PHI-NYK_1800_fallback_v1.csv` |
+| Showdown OKC @ SAS | `sd_OKC-SAS_2030_v3.csv` | 8:30 pm | `sd_OKC-SAS_2030_fallback_v1.csv` |
 
-Then run `dfs status` from the desktop launcher.
+Run `dfs status` from the desktop launcher. To enter news yourself: `dfs out "Name"` or `dfs in "Name"`, then upload the file it names.
 
 ### Status
 
 - **Entries:** 48 of 48 filled. 36 uploaded and confirmed; **12 Showdown BOS @ DET entries need this build's file** (next action: upload `sd_BOS-DET_1400_v4.csv`).
-- **Skipped this build:** QA (starts in week 2). Props: no (quota saved for Friday's 12-game slate).
-- **Inputs:** injury report 12:30 pm (real); DraftKings salary export 12:33 pm (real; `Status` present, `Starting` blank); lines 12:05 pm (real); box-score history through Jun 13 (real); public projections 12:20 pm (real); Bluesky watcher running.
+- **Skipped this build:** QA (starts in week 2). Props: no (quota saved for Friday's 12-game slate). Insurance control: did not act (washout too rare to measure tonight).
+- **Inputs:** injury report 12:30 pm (real); DraftKings salary export 12:33 pm (real; `Status` present, `Starting` blank); lines 12:05 pm (real); box-score history through Jun 13 (real); public projections 12:20 pm (real); watcher running (last polls: report 12:30, Bluesky 12:40).
 
 ### Thesis (one paragraph)
 
@@ -29,16 +29,15 @@ Three games, all heavily shared between Classic and Showdown, so tonight's risk 
 
 ### Goals tonight
 
-| Contest | Entries | Field | Top-1% places | Goal 1 (raw) | Goal 1 (dupe-adjusted, shown only) | Insurance cost |
-|---|---|---|---|---|---|---|
-| Classic $20 150-max | 20 | 35,294 | 352 | 9.8% (±0.3) | 9.1% | 0.0% |
-| Classic $3 single-entry | 1 | 2,000 | 20 | 1.6% | 1.6% | within noise |
-| Showdown BOS @ DET $5 20-max | 12 | 1,189 | 11 | 7.9% | 5.2% | 1.8% |
-| ... | | | | | | |
+| Contest | Entries | Field | Top-1% places | Goal 1 (raw) | Goal 1 (duplicate-adjusted, shown only) |
+|---|---|---|---|---|---|
+| Classic $20 150-max | 20 | 35,294 | 352 | 9.8% (±0.3) | 9.1% |
+| Classic $3 single-entry | 1 | 2,000 | 20 | 1.6% | 1.6% |
+| Showdown BOS @ DET $5 20-max | 12 | 1,189 | 11 | 7.9% | 5.2% |
+| ... | | | | | |
 
-- **Washout:** 3.1% with model error (0.4% if our projections were exactly right). Insurance budget 2% bought washout down from 4.0% to 3.1%.
-- **Frontier:** 0%: 4.0% · 2%: 3.1% · 5%: 2.7% · 10%: 2.4% · 20%: 2.2% · lowest possible: 1.9%.
-- Washout is concentrated in "OKC blowout plus low-scoring BOS @ DET" scenarios.
+- **Washout:** 0.4% with edge uncertainty; under 0.01% without it (model estimates). Too rare to measure an improvement, so the insurance control did not act.
+- **Where washout risk comes from tonight:** 81% of entries depend on BOS @ DET.
 
 ### Exposures
 
@@ -58,23 +57,23 @@ Close BOS @ DET with overtime: 14 lineups · OKC blowout, benches: 11 · Fast PH
 
 | ID | Player | Belief | Public? | Evidence |
 |---|---|---|---|---|
-| 0001 | Player B (DET) | Starts if C sits; minutes 28 / 31 / 34 | Public | Beat reporter post, 11:52 am: "B will start if C can't go" |
-| 0002 | Player D (OKC) | Minutes cap 24 (return from injury) | Public | Team statement, 10:15 am |
+| 0001 | Player B (DET) | Starts if C sits; minutes 28 / 31 / 34 | Public | Beat reporter post on Bluesky, 11:52 am: "B will start if C can't go" |
+| 0002 | Player D (OKC) | Minutes cap 24 (return from injury) | Public | Team statement on nba.com, 10:15 am |
 | 0003 | Player E (SAS) | Usage up 8% with F out | Private | Our inference from last season's minutes without F |
 
 Rejected: 1 (quote not found on the saved page).
 
 ### Risks
 
-1. Player C (DET) is questionable (official: Questionable, 55% to play). Ready-made files cover the "out" case.
+1. Player C (DET) is questionable (official: Questionable, 55% to play). Stored replacements cover both outcomes.
 2. 81% of entries depend on BOS @ DET; a slow, low-scoring game hurts every format at once.
 3. Opening-week minutes are uncertain for every new-team player; ranges are widened.
 
-### What news would change the build, and what to upload
+### What news would change the build, and what to do
 
-| News | Upload |
+| News | What to do |
 |---|---|
-| Player C (DET) ruled out | `classic_main_1400_ifout_PlayerC_v4.csv` and `sd_BOS-DET_1400_ifout_PlayerC_v4.csv` |
-| Player C (DET) cleared to play | Nothing; current files already favor that outcome |
-| Anything else in BOS @ DET before 2:00 pm | Run `/news` or `dfs news` (about 3 minutes) |
-| News in PHI @ NYK or OKC @ SAS | The watcher will name a file or tell you to run `/news` |
+| Player C (DET) ruled out | Official report: the alert names the new Classic and Showdown files; upload them. Seen it first yourself: `dfs out "Player C"`, then upload the files it names |
+| Player C (DET) cleared to play | Same, with `dfs in "Player C"`: entries built around his absence (for example Player B at Captain) are swapped back |
+| Anything else in BOS @ DET before 2:00 pm | `/news` or `dfs news` (about a minute) |
+| News in PHI @ NYK or OKC @ SAS | The watcher alerts; `dfs out` or `dfs in` for anything you see first |
