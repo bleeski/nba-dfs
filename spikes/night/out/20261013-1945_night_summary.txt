@@ -1,0 +1,661 @@
+sources: 8g_be1_S30k = 20261013-1904_night8_be1_S30000.json; 8g_be1_S10k = 20261013-1913_night8_be1_S10000.json; 8g_be0_S30k = 20261013-1917_night8_be0_S30000.json; 2g_be1_S30k = 20261013-1924_night2_be1_S30000.json; 2g_be0_S30k = 20261013-1932_night2_be0_S30000.json; 8g_be1x2_S30k = 20261013-1938_night8_be1x2_S30000.json
+8g_be1_S30k: load_before system_cpu=16.7% avail_gb=8.0 busy_other_python=[]; workers=8; belief={'team_sd': 0.08, 'starter_sd': 0.12, 'bench_sd': 0.18, 'own_sd': 0.25}; total_wall_s=526.1; first_full_build_s=210.6; memory={'peak_self_wset_mb': 1413.9, 'sampled_peak_self_mb': 1396.2, 'sampled_peak_children_mb': 285.4, 'sampled_peak_total_mb': 1664.1, 'note': 'total = this process + pool workers, sampled every 50 ms'}
+8g_be1_S10k: load_before system_cpu=15.3% avail_gb=8.23 busy_other_python=[]; workers=8; belief={'team_sd': 0.08, 'starter_sd': 0.12, 'bench_sd': 0.18, 'own_sd': 0.25}; total_wall_s=213.1; first_full_build_s=86.1; memory={'peak_self_wset_mb': 912.5, 'sampled_peak_self_mb': 902.6, 'sampled_peak_children_mb': 287.1, 'sampled_peak_total_mb': 1181.5, 'note': 'total = this process + pool workers, sampled every 50 ms'}
+8g_be0_S30k: load_before system_cpu=14.9% avail_gb=8.41 busy_other_python=[]; workers=8; belief=None; total_wall_s=356.2; first_full_build_s=149.9; memory={'peak_self_wset_mb': 1220.4, 'sampled_peak_self_mb': 1219.2, 'sampled_peak_children_mb': 286.4, 'sampled_peak_total_mb': 1457.8, 'note': 'total = this process + pool workers, sampled every 50 ms'}
+2g_be1_S30k: load_before system_cpu=14.4% avail_gb=8.34 busy_other_python=[{'pid': 152208, 'cpu_pct': 1.6, 'cmd': 'cal/Temp/claude/C--Users-benja-Documents-Claude-nba-dfs/547a3a0e-19d4-4772-b7e2-1e73ed37e4cd/scratchpad/loadgate.py 7000'}]; workers=8; belief={'team_sd': 0.08, 'starter_sd': 0.12, 'bench_sd': 0.18, 'own_sd': 0.25}; total_wall_s=411.2; first_full_build_s=150.1; memory={'peak_self_wset_mb': 976.7, 'sampled_peak_self_mb': 972.6, 'sampled_peak_children_mb': 281.0, 'sampled_peak_total_mb': 1218.7, 'note': 'total = this process + pool workers, sampled every 50 ms'}
+2g_be0_S30k: load_before system_cpu=14.7% avail_gb=7.74 busy_other_python=[{'pid': 152208, 'cpu_pct': 2.6, 'cmd': 'cal/Temp/claude/C--Users-benja-Documents-Claude-nba-dfs/547a3a0e-19d4-4772-b7e2-1e73ed37e4cd/scratchpad/loadgate.py 7000'}]; workers=8; belief=None; total_wall_s=202.9; first_full_build_s=103.9; memory={'peak_self_wset_mb': 834.2, 'sampled_peak_self_mb': 829.5, 'sampled_peak_children_mb': 281.1, 'sampled_peak_total_mb': 829.5, 'note': 'total = this process + pool workers, sampled every 50 ms'}
+8g_be1x2_S30k: load_before system_cpu=18.6% avail_gb=7.75 busy_other_python=[]; workers=8; belief={'team_sd': 0.16, 'starter_sd': 0.24, 'bench_sd': 0.36, 'own_sd': 0.5}; total_wall_s=401.5; first_full_build_s=221.0; memory={'peak_self_wset_mb': 1414.2, 'sampled_peak_self_mb': 1408.2, 'sampled_peak_children_mb': 286.0, 'sampled_peak_total_mb': 1408.2, 'note': 'total = this process + pool workers, sampled every 50 ms'}
+
+## Timing table, 8-game night with belief layer (wall seconds, average cores busy)
+| Step | S=10,000 | S=30,000 |
+|---|---|---|
+| setup_pool_pilot_projections | 1.1 s (1.0) | 1.1 s (0.9) |
+| sim_A_V | 1.9 s (0.9) | 7.0 s (0.8) |
+| pool_spawn | 0.6 s (3.9) | 0.6 s (4.0) |
+| field_classic_milp | 3.6 s (6.6) | 3.8 s (6.2) |
+| field_classic_sampler | 2.4 s (1.1) | 2.4 s (1.1) |
+| field_showdown | 3.1 s (1.1) | 3.3 s (1.1) |
+| thresholds_AV_classic | 19.0 s (1.6) | 53.2 s (1.7) |
+| thresholds_AV_showdown | 35.5 s (1.9) | 98.9 s (1.8) |
+| cand_classic_milp | 6.7 s (6.6) | 6.7 s (6.3) |
+| pool_close | 0.1 s (0.0) | 0.1 s (0.4) |
+| cand_showdown_screen | 1.3 s (1.1) | 1.3 s (1.2) |
+| bitsets_A | 3.9 s (2.1) | 11.4 s (2.1) |
+| select_greedy_A | 0.2 s (0.8) | 0.3 s (1.0) |
+| counterfactual_select | 0.4 s (0.8) | 1.1 s (0.9) |
+| dup_adjusted_greedy | 1.4 s (0.8) | 3.9 s (0.9) |
+| bitsets_V | 6.3 s (1.6) | 19.3 s (1.7) |
+| select_swap_eps05_from_greedy | 0.4 s (0.8) | 1.2 s (0.9) |
+| select_swap_frontier_spec | 2.5 s (0.9) | 7.4 s (0.9) |
+| select_swap_frontier_small | 0.9 s (0.8) | 8.7 s (0.9) |
+| evalB_sim | 1.9 s (0.9) | 6.6 s (0.9) |
+| evalB_thresholds | 55.9 s (1.8) | 160.7 s (1.8) |
+| evalB_score_portfolios | 3.2 s (0.9) | 6.6 s (0.9) |
+| late_resim_game | 0.4 s (0.9) | 1.0 s (0.8) |
+| late_pool_spawn | 0.6 s (4.1) | 0.6 s (3.9) |
+| late_field_classic | 6.0 s (4.3) | 6.2 s (4.0) |
+| late_field_showdown | 1.1 s (1.2) | 1.1 s (1.1) |
+| late_thresholds_AV | 25.4 s (1.8) | 73.1 s (1.8) |
+| late_cand_classic | 2.5 s (5.4) | 2.4 s (5.2) |
+| late_pool_close | 0.1 s (0.0) | 0.1 s (0.3) |
+| late_cand_showdown | 0.4 s (1.2) | 0.5 s (1.0) |
+| late_bitsets_A_greedy | 1.7 s (2.1) | 5.7 s (1.9) |
+| late_bitsets_V | 3.0 s (1.6) | 8.6 s (1.6) |
+| late_reselect_swap_eps05 | 0.4 s (0.8) | 1.2 s (0.8) |
+| first full build (production steps) | 86.1 s | 210.6 s |
+production steps: ['setup_pool_pilot_projections', 'sim_A_V', 'pool_spawn', 'field_classic_milp', 'field_classic_sampler', 'field_showdown', 'thresholds_AV_classic', 'thresholds_AV_showdown', 'cand_classic_milp', 'pool_close', 'cand_showdown_screen', 'bitsets_A', 'select_greedy_A', 'bitsets_V', 'select_swap_eps05_from_greedy']
+late news S10k: total 43.82 s; dropped 1268 added 1429; affected ['C_150max8000', 'C_20max3000', 'C_3max500', 'C_SE150', 'C_SE2000', 'SD0_20max1200', 'SD0_SE50']; swaps 0 pw_V_after 0.0; beneficiary proj {'beneficiary_before': 26.67, 'beneficiary_after': 34.53}
+   late_resim_game: 0.392 s; late_pool_spawn: 0.563 s; late_field_classic: 6.05 s; late_field_showdown: 1.077 s; late_thresholds_AV: 25.424 s; late_cand_classic: 2.455 s; late_pool_close: 0.06 s; late_cand_showdown: 0.421 s; late_bitsets_A_greedy: 1.739 s; late_bitsets_V: 2.969 s; late_reselect_swap_eps05: 0.423 s
+late news S30k: total 102.98 s; dropped 1202 added 1456; affected ['C_150max8000', 'C_20max3000', 'C_3max500', 'C_SE150', 'C_SE2000', 'SD0_20max1200', 'SD0_SE50']; swaps 0 pw_V_after 0.0; beneficiary proj {'beneficiary_before': 26.67, 'beneficiary_after': 34.53}
+   late_resim_game: 1.021 s; late_pool_spawn: 0.617 s; late_field_classic: 6.22 s; late_field_showdown: 1.125 s; late_thresholds_AV: 73.143 s; late_cand_classic: 2.445 s; late_pool_close: 0.055 s; late_cand_showdown: 0.463 s; late_bitsets_A_greedy: 5.733 s; late_bitsets_V: 8.61 s; late_reselect_swap_eps05: 1.245 s
+sim timing by S (full night, one process): {'10000': 1.94, '30000': 6.69}
+8g_be0_S30k: first full build 149.9 s; thresholds 35.389 + 63.146 s; late news 76.37 s
+2g_be1_S30k: first full build 150.1 s; thresholds 49.24 + 69.305 s; late news 89.86 s
+
+## Sim sanity (8g_be1_S30k, set A)
+star: PF/C star base_min 34.5 mean 53.05 sd 17.85 p01 17.7 p50 51.3 p99 103.7 DD 0.7202 TD 0.0578
+role_player: C starter base_min 27.2 mean 24.72 sd 9.93 p01 6.1 p50 23.5 p99 53.3 DD 0.1133 TD 0.0002
+questionable_q0: PG/SG star base_min 34.7 mean 22.26 sd 25.02 p01 0.0 p50 0.0 p99 81.8 DD 0.1243 TD 0.015
+beneficiary_all: PG/SG bench base_min 23.6 mean 26.59 sd 13.67 p01 4.7 p50 24.3 p99 67.0 DD 0.0541 TD 0.003
+beneficiary_when_q0_active: PG/SG bench base_min 23.6 mean 18.52 sd 8.49 p01 3.5 p50 17.4 p99 43.3 DD 0.0541 TD 0.003
+beneficiary_when_q0_out: PG/SG bench base_min 23.6 mean 34.57 sd 13.12 p01 11.4 p50 32.8 p99 73.8 DD 0.0541 TD 0.003
+top_big: PF/C star base_min 34.5 mean 53.05 sd 17.85 p01 17.7 p50 51.3 p99 103.7 DD 0.7202 TD 0.0578
+corr teammates rotation 0.0221 starters 0.0278 opponents 0.0195 q0-beneficiary -0.5284 OT 0.0364 maxTD 0.0578
+game 0: total line 219.0 sim mean 219.8 over-rate 0.488 | spread -10.5 sim margin -10.44 sd 12.85 | OT 0.0317 |drawn margin|>15 0.372
+game 1: total line 224.0 sim mean 224.7 over-rate 0.484 | spread -11.5 sim margin -11.65 sd 12.72 | OT 0.0295 |drawn margin|>15 0.404
+game 2: total line 235.5 sim mean 236.6 over-rate 0.503 | spread 7.5 sim margin 7.6 sd 12.8 | OT 0.0392 |drawn margin|>15 0.297
+game 3: total line 236.0 sim mean 237.0 over-rate 0.493 | spread 3.0 sim margin 2.92 sd 12.73 | OT 0.0435 |drawn margin|>15 0.223
+game 4: total line 232.0 sim mean 232.8 over-rate 0.486 | spread 9.5 sim margin 9.47 sd 12.87 | OT 0.0319 |drawn margin|>15 0.347
+game 5: total line 224.5 sim mean 225.3 over-rate 0.496 | spread -11.5 sim margin -11.48 sd 12.79 | OT 0.0266 |drawn margin|>15 0.399
+game 6: total line 227.5 sim mean 228.5 over-rate 0.501 | spread -2.0 sim margin -2.01 sd 12.81 | OT 0.0413 |drawn margin|>15 0.217
+game 7: total line 228.5 sim mean 229.9 over-rate 0.508 | spread 2.0 sim margin 2.04 sd 12.86 | OT 0.0473 |drawn margin|>15 0.222
+
+## Sim sanity (8g_be0_S30k, set A)
+star: PF/C star base_min 34.5 mean 53.17 sd 16.03 p01 18.5 p50 52.2 p99 96.0 DD 0.7202 TD 0.0578
+role_player: C starter base_min 27.2 mean 24.73 sd 9.17 p01 6.2 p50 24.0 p99 50.0 DD 0.1133 TD 0.0002
+questionable_q0: PG/SG star base_min 34.7 mean 22.24 sd 24.58 p01 0.0 p50 0.0 p99 77.0 DD 0.1243 TD 0.015
+beneficiary_all: PG/SG bench base_min 23.6 mean 26.59 sd 12.38 p01 5.0 p50 25.0 p99 59.5 DD 0.0541 TD 0.003
+beneficiary_when_q0_active: PG/SG bench base_min 23.6 mean 18.51 sd 7.56 p01 3.8 p50 17.8 p99 39.0 DD 0.0541 TD 0.003
+beneficiary_when_q0_out: PG/SG bench base_min 23.6 mean 34.57 sd 10.94 p01 13.0 p50 33.8 p99 63.8 DD 0.0541 TD 0.003
+top_big: PF/C star base_min 34.5 mean 53.17 sd 16.03 p01 18.5 p50 52.2 p99 96.0 DD 0.7202 TD 0.0578
+corr teammates rotation -0.0185 starters -0.02 opponents 0.0234 q0-beneficiary -0.6039 OT 0.0364 maxTD 0.0578
+game 0: total line 219.0 sim mean 219.8 over-rate 0.488 | spread -10.5 sim margin -10.44 sd 12.85 | OT 0.0317 |drawn margin|>15 0.372
+game 1: total line 224.0 sim mean 224.7 over-rate 0.484 | spread -11.5 sim margin -11.65 sd 12.72 | OT 0.0295 |drawn margin|>15 0.404
+game 2: total line 235.5 sim mean 236.6 over-rate 0.503 | spread 7.5 sim margin 7.6 sd 12.8 | OT 0.0392 |drawn margin|>15 0.297
+game 3: total line 236.0 sim mean 237.0 over-rate 0.493 | spread 3.0 sim margin 2.92 sd 12.73 | OT 0.0435 |drawn margin|>15 0.223
+game 4: total line 232.0 sim mean 232.8 over-rate 0.486 | spread 9.5 sim margin 9.47 sd 12.87 | OT 0.0319 |drawn margin|>15 0.347
+game 5: total line 224.5 sim mean 225.3 over-rate 0.496 | spread -11.5 sim margin -11.48 sd 12.79 | OT 0.0266 |drawn margin|>15 0.399
+game 6: total line 227.5 sim mean 228.5 over-rate 0.501 | spread -2.0 sim margin -2.01 sd 12.81 | OT 0.0413 |drawn margin|>15 0.217
+game 7: total line 228.5 sim mean 229.9 over-rate 0.508 | spread 2.0 sim margin 2.04 sd 12.86 | OT 0.0473 |drawn margin|>15 0.222
+
+## Field (main run)
+classic: {"milp_solves": 2000, "milp_invalid_or_failed": 0, "milp_wall_s": 3.793, "milp_solve_ms_median": 10.11, "milp_solve_ms_p95": 33.47, "opt_unique": 2000, "sampler_tries": 160000, "sampler_accept_rate": 0.125, "cas_unique": 20000, "pool_unique": 22000, "ownership_sum_pct": 800.0}
+classic implied ownership top 15 (150-max mix): 42 SF/PF $8500 proj 45.8 own 22.4% (SE150 22.1%); 78 PG/SG $8800 proj 47.5 own 20.8% (SE150 20.6%); 26 PG/SG $7600 proj 41.3 own 20.2% (SE150 19.8%); 147 C $9300 proj 49.8 own 19.4% (SE150 18.5%); 69 C $9500 proj 51.1 own 19.4% (SE150 18.5%); 80 SG/SF $5600 proj 30.4 own 17.0% (SE150 16.8%); 120 PF $9100 proj 47.9 own 16.3% (SE150 15.6%); 117 PG/SG $4000 proj 23.2 own 16.2% (SE150 15.6%); 0 PG/SG $3800 proj 22.2 own 16.1% (SE150 15.5%); 196 SG $8700 proj 46.3 own 16.1% (SE150 15.0%); 107 PF/C $10300 proj 51.8 own 16.1% (SE150 16.5%); 81 PF/C $5600 proj 30.0 own 15.2% (SE150 14.9%); 159 SF/PF $4300 proj 24.2 own 15.1% (SE150 14.5%); 182 PG $5100 proj 28.6 own 14.8% (SE150 13.9%); 160 PF/C $10800 proj 53.7 own 14.5% (SE150 15.1%)
+showdown game 0: legal 1360600 enum_s 0.197 pool_unique 4578 opt_unique 506 share_of_20max_field_in_lineups_with>=2_copies 0.189
+   top expected copies 20max: [15.03, 10.14, 9.27, 9.18, 7.38, 7.04, 6.17, 6.06, 5.93, 5.87]; SE50: [0.534, 0.363, 0.332, 0.328, 0.265]
+   CPT own top5 [{'player': 16, 'pct': 38.9}, {'player': 1, 'pct': 11.1}, {'player': 3, 'pct': 11.0}, {'player': 13, 'pct': 8.1}, {'player': 15, 'pct': 6.9}]; UTIL own top8 [{'player': 16, 'pct': 52.6}, {'player': 1, 'pct': 51.9}, {'player': 3, 'pct': 51.4}, {'player': 13, 'pct': 47.2}, {'player': 15, 'pct': 46.9}, {'player': 4, 'pct': 46.1}, {'player': 14, 'pct': 41.7}, {'player': 5, 'pct': 34.8}]
+showdown game 1: legal 1351856 enum_s 0.188 pool_unique 14695 opt_unique 721 share_of_20max_field_in_lineups_with>=2_copies 0.083
+   top expected copies 20max: [5.21, 5.15, 4.93, 4.9, 4.3, 3.93, 3.86, 3.68, 3.34, 3.28]; SE50: [0.186, 0.183, 0.175, 0.174, 0.153]
+   CPT own top5 [{'player': 42, 'pct': 22.2}, {'player': 27, 'pct': 17.7}, {'player': 26, 'pct': 14.8}, {'player': 41, 'pct': 12.9}, {'player': 43, 'pct': 10.1}]; UTIL own top8 [{'player': 42, 'pct': 44.5}, {'player': 27, 'pct': 44.0}, {'player': 43, 'pct': 40.9}, {'player': 26, 'pct': 40.8}, {'player': 41, 'pct': 40.4}, {'player': 44, 'pct': 33.4}, {'player': 39, 'pct': 31.7}, {'player': 28, 'pct': 31.1}]
+showdown game 2: legal 1345812 enum_s 0.198 pool_unique 16833 opt_unique 641 share_of_20max_field_in_lineups_with>=2_copies 0.138
+   top expected copies 20max: [10.74, 8.18, 6.85, 5.66, 5.08, 4.88, 4.67, 4.5, 4.46, 4.13]; SE50: [0.382, 0.291, 0.243, 0.202, 0.182]
+   CPT own top5 [{'player': 56, 'pct': 24.2}, {'player': 69, 'pct': 19.4}, {'player': 52, 'pct': 9.7}, {'player': 53, 'pct': 7.3}, {'player': 55, 'pct': 7.0}]; UTIL own top8 [{'player': 68, 'pct': 43.6}, {'player': 52, 'pct': 43.1}, {'player': 69, 'pct': 42.2}, {'player': 56, 'pct': 41.5}, {'player': 55, 'pct': 38.6}, {'player': 54, 'pct': 36.4}, {'player': 53, 'pct': 31.8}, {'player': 67, 'pct': 29.2}]
+candidates classic: {'solves': 4500, 'invalid': 0, 'unique': 4487, 'from_scenarios': 3200, 'from_mean_variants': 1287, 'solve_ms_median': 6.36, 'solve_ms_p95': 34.07, 'worker_rss_total_mb': 281.2}; bitsets V MB 510.7
+thresholds A: {"C_SE150": {"T1_mean": 347.8, "T1_p10": 319.9, "T1_p90": 377.3, "Tc_mean": 280.1, "Tc_p10": 260.8, "Tc_p90": 300.3, "max_field_score": 533.11}, "C_SE2000": {"T1_mean": 337.2, "T1_p10": 311.0, "T1_p90": 365.0, "Tc_mean": 279.4, "Tc_p10": 260.3, "Tc_p90": 299.4, "max_field_score": 533.11}, "C_3max500": {"T1_mean": 338.4, "T1_p10": 311.8, "T1_p90": 366.6, "Tc_mean": 279.9, "Tc_p10": 260.6, "Tc_p90": 300.0, "max_field_score": 533.11}, "C_20max3000": {"T1_mean": 338.1, "T1_p10": 311.4, "T1_p90": 366.2, "Tc_mean": 280.4, "Tc_p10": 260.9, "Tc_p90": 300.7, "max_field_score": 533.11}, "C_150max8000": {"T1_mean": 338.5, "T1_p10": 311.6, "T1_p90": 366.9, "Tc_mean": 281.0, "Tc_p10": 261.3, "Tc_p90": 301.5, "max_field_score": 533.11}, "SD0_SE50": {"T1_mean": 241.1, "T1_p10": 200.2, "T1_p90": 284.7, "Tc_mean": 212.0, "Tc_p10": 176.0, "Tc_p90": 249.8, "max_field_score": 493.82}, "SD0_20max1200": {"T1_mean": 243.1, "T1_p10": 201.8, "T1_p90": 287.0, "Tc_mean": 212.1, "Tc_p10": 175.8, "Tc_p90": 250.0, "max_field_score": 493.82}, "SD1_SE50": {"T1_mean": 243.0, "T1_p10": 203.8, "T1_p90": 284.7, "Tc_mean": 212.2, "Tc_p10": 178.1, "Tc_p90": 248.0, "max_field_score": 488.42}, "SD1_20max1200": {"T1_mean": 245.5, "T1_p10": 205.8, "T1_p90": 288.0, "Tc_mean": 212.4, "Tc_p10": 178.1, "Tc_p90": 248.2, "max_field_score": 488.42}, "SD2_SE50": {"T1_mean": 248.5, "T1_p10": 208.3, "T1_p90": 291.2, "Tc_mean": 218.9, "Tc_p10": 183.5, "Tc_p90": 256.0, "max_field_score": 476.92}, "SD2_20max1200": {"T1_mean": 250.9, "T1_p10": 210.2, "T1_p90": 294.3, "Tc_mean": 219.2, "Tc_p10": 183.6, "Tc_p90": 256.4, "max_field_score": 476.92}}
+
+## P(W) at eps 0 (greedy, pure goal 1), held-out B
+| run | profile entries | P(W) hit | SE | washout scen | upper95 if 0 | P(W) binomial | P(W) on V |
+|---|---|---|---|---|---|---|---|
+| 8g_be1_S30k | 25 | 0.513% | 0.041% | 154 | - | 0.508% | 0.593% |
+| 8g_be1_S30k | 50 | 0.003% | 0.003% | 1 | - | 0.001% | 0.007% |
+| 8g_be1_S30k | 118 | 0.000% | 0.000% | 0 | 0.010% | 0.000% | 0.000% |
+| 8g_be1_S30k | 200 | 0.000% | 0.000% | 0 | 0.010% | 0.000% | 0.000% |
+| 8g_be1_S10k | 25 | 0.490% | 0.070% | 49 | - | 0.430% | 0.440% |
+| 8g_be1_S10k | 50 | 0.010% | 0.010% | 1 | - | 0.005% | 0.000% |
+| 8g_be1_S10k | 118 | 0.000% | 0.000% | 0 | 0.030% | 0.000% | 0.000% |
+| 8g_be1_S10k | 200 | 0.000% | 0.000% | 0 | 0.030% | 0.000% | 0.000% |
+| 8g_be0_S30k | 25 | 0.530% | 0.042% | 159 | - | 0.497% | 0.493% |
+| 8g_be0_S30k | 50 | 0.000% | 0.000% | 0 | 0.010% | 0.000% | 0.000% |
+| 8g_be0_S30k | 118 | 0.000% | 0.000% | 0 | 0.010% | 0.000% | 0.000% |
+| 8g_be0_S30k | 200 | 0.000% | 0.000% | 0 | 0.010% | 0.000% | 0.000% |
+| 2g_be1_S30k | 25 | 0.997% | 0.057% | 299 | - | 0.979% | 1.013% |
+| 2g_be1_S30k | 49 | 0.000% | 0.000% | 0 | 0.010% | 0.000% | 0.007% |
+| 2g_be1_S30k | 107 | 0.000% | 0.000% | 0 | 0.010% | 0.000% | 0.000% |
+| 2g_be1_S30k | 200 | 0.000% | 0.000% | 0 | 0.010% | 0.000% | 0.000% |
+| 2g_be0_S30k | 25 | 0.643% | 0.046% | 193 | - | 0.645% | 0.507% |
+| 2g_be0_S30k | 49 | 0.000% | 0.000% | 0 | 0.010% | 0.000% | 0.000% |
+| 2g_be0_S30k | 107 | 0.000% | 0.000% | 0 | 0.010% | 0.000% | 0.000% |
+| 2g_be0_S30k | 200 | 0.000% | 0.000% | 0 | 0.010% | 0.000% | 0.000% |
+| 8g_be1x2_S30k | 25 | 0.493% | 0.040% | 148 | - | 0.480% | 0.487% |
+| 8g_be1x2_S30k | 50 | 0.003% | 0.003% | 1 | - | 0.004% | 0.000% |
+| 8g_be1x2_S30k | 118 | 0.000% | 0.000% | 0 | 0.010% | 0.000% | 0.000% |
+| 8g_be1x2_S30k | 200 | 0.000% | 0.000% | 0 | 0.010% | 0.000% | 0.000% |
+8g_be1_S30k caps: n25: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 1, 'C_20max3000': 3, 'C_150max8000': 10, 'SD0_SE50': 1, 'SD0_20max1200': 2, 'SD1_SE50': 1, 'SD1_20max1200': 2, 'SD2_SE50': 1, 'SD2_20max1200': 2}; n50: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 1, 'C_20max3000': 8, 'C_150max8000': 24, 'SD0_SE50': 1, 'SD0_20max1200': 4, 'SD1_SE50': 1, 'SD1_20max1200': 4, 'SD2_SE50': 1, 'SD2_20max1200': 4}; n118: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 3, 'C_20max3000': 20, 'C_150max8000': 60, 'SD0_SE50': 1, 'SD0_20max1200': 10, 'SD1_SE50': 1, 'SD1_20max1200': 10, 'SD2_SE50': 1, 'SD2_20max1200': 10}; n200: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 3, 'C_20max3000': 20, 'C_150max8000': 115, 'SD0_SE50': 1, 'SD0_20max1200': 19, 'SD1_SE50': 1, 'SD1_20max1200': 19, 'SD2_SE50': 1, 'SD2_20max1200': 19}
+8g_be1_S30k per-contest no-cash at n25: {'C_SE150': 0.5685, 'C_SE2000': 0.5564, 'C_3max500': 0.561, 'C_20max3000': 0.3006, 'C_150max8000': 0.0395, 'SD0_SE50': 0.63, 'SD0_20max1200': 0.5726, 'SD1_SE50': 0.6519, 'SD1_20max1200': 0.555, 'SD2_SE50': 0.593, 'SD2_20max1200': 0.4081}
+8g_be1_S30k per-contest no-cash at n118: {'C_SE150': 0.5685, 'C_SE2000': 0.5564, 'C_3max500': 0.2988, 'C_20max3000': 0.0023, 'C_150max8000': 0.0, 'SD0_SE50': 0.63, 'SD0_20max1200': 0.1087, 'SD1_SE50': 0.6519, 'SD1_20max1200': 0.0208, 'SD2_SE50': 0.593, 'SD2_20max1200': 0.0109}
+8g_be1_S10k caps: n25: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 1, 'C_20max3000': 3, 'C_150max8000': 10, 'SD0_SE50': 1, 'SD0_20max1200': 2, 'SD1_SE50': 1, 'SD1_20max1200': 2, 'SD2_SE50': 1, 'SD2_20max1200': 2}; n50: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 1, 'C_20max3000': 8, 'C_150max8000': 24, 'SD0_SE50': 1, 'SD0_20max1200': 4, 'SD1_SE50': 1, 'SD1_20max1200': 4, 'SD2_SE50': 1, 'SD2_20max1200': 4}; n118: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 3, 'C_20max3000': 20, 'C_150max8000': 60, 'SD0_SE50': 1, 'SD0_20max1200': 10, 'SD1_SE50': 1, 'SD1_20max1200': 10, 'SD2_SE50': 1, 'SD2_20max1200': 10}; n200: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 3, 'C_20max3000': 20, 'C_150max8000': 115, 'SD0_SE50': 1, 'SD0_20max1200': 19, 'SD1_SE50': 1, 'SD1_20max1200': 19, 'SD2_SE50': 1, 'SD2_20max1200': 19}
+8g_be1_S10k per-contest no-cash at n25: {'C_SE150': 0.5916, 'C_SE2000': 0.5835, 'C_3max500': 0.5806, 'C_20max3000': 0.3208, 'C_150max8000': 0.0399, 'SD0_SE50': 0.6325, 'SD0_20max1200': 0.5754, 'SD1_SE50': 0.6586, 'SD1_20max1200': 0.5636, 'SD2_SE50': 0.6225, 'SD2_20max1200': 0.4231}
+8g_be1_S10k per-contest no-cash at n118: {'C_SE150': 0.5916, 'C_SE2000': 0.5835, 'C_3max500': 0.3163, 'C_20max3000': 0.0025, 'C_150max8000': 0.0, 'SD0_SE50': 0.6325, 'SD0_20max1200': 0.1015, 'SD1_SE50': 0.6586, 'SD1_20max1200': 0.0455, 'SD2_SE50': 0.6225, 'SD2_20max1200': 0.009}
+8g_be0_S30k caps: n25: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 1, 'C_20max3000': 3, 'C_150max8000': 10, 'SD0_SE50': 1, 'SD0_20max1200': 2, 'SD1_SE50': 1, 'SD1_20max1200': 2, 'SD2_SE50': 1, 'SD2_20max1200': 2}; n50: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 1, 'C_20max3000': 8, 'C_150max8000': 24, 'SD0_SE50': 1, 'SD0_20max1200': 4, 'SD1_SE50': 1, 'SD1_20max1200': 4, 'SD2_SE50': 1, 'SD2_20max1200': 4}; n118: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 3, 'C_20max3000': 20, 'C_150max8000': 60, 'SD0_SE50': 1, 'SD0_20max1200': 10, 'SD1_SE50': 1, 'SD1_20max1200': 10, 'SD2_SE50': 1, 'SD2_20max1200': 10}; n200: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 3, 'C_20max3000': 20, 'C_150max8000': 115, 'SD0_SE50': 1, 'SD0_20max1200': 19, 'SD1_SE50': 1, 'SD1_20max1200': 19, 'SD2_SE50': 1, 'SD2_20max1200': 19}
+8g_be0_S30k per-contest no-cash at n25: {'C_SE150': 0.5385, 'C_SE2000': 0.5318, 'C_3max500': 0.5368, 'C_20max3000': 0.3119, 'C_150max8000': 0.0309, 'SD0_SE50': 0.6141, 'SD0_20max1200': 0.5623, 'SD1_SE50': 0.6411, 'SD1_20max1200': 0.5514, 'SD2_SE50': 0.582, 'SD2_20max1200': 0.3101}
+8g_be0_S30k per-contest no-cash at n118: {'C_SE150': 0.5385, 'C_SE2000': 0.5318, 'C_3max500': 0.307, 'C_20max3000': 0.002, 'C_150max8000': 0.0, 'SD0_SE50': 0.6141, 'SD0_20max1200': 0.0854, 'SD1_SE50': 0.6411, 'SD1_20max1200': 0.0263, 'SD2_SE50': 0.582, 'SD2_20max1200': 0.0031}
+2g_be1_S30k caps: n25: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 1, 'C_20max3000': 4, 'C_150max8000': 12, 'SD0_SE50': 1, 'SD0_20max1200': 2, 'SD1_SE50': 1, 'SD1_20max1200': 2}; n49: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 1, 'C_20max3000': 9, 'C_150max8000': 27, 'SD0_SE50': 1, 'SD0_20max1200': 4, 'SD1_SE50': 1, 'SD1_20max1200': 4}; n107: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 3, 'C_20max3000': 20, 'C_150max8000': 60, 'SD0_SE50': 1, 'SD0_20max1200': 10, 'SD1_SE50': 1, 'SD1_20max1200': 10}; n200: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 3, 'C_20max3000': 20, 'C_150max8000': 133, 'SD0_SE50': 1, 'SD0_20max1200': 20, 'SD1_SE50': 1, 'SD1_20max1200': 20}
+2g_be1_S30k per-contest no-cash at n25: {'C_SE150': 0.6923, 'C_SE2000': 0.6878, 'C_3max500': 0.6907, 'C_20max3000': 0.2472, 'C_150max8000': 0.0156, 'SD0_SE50': 0.5702, 'SD0_20max1200': 0.5389, 'SD1_SE50': 0.6731, 'SD1_20max1200': 0.5052}
+2g_be1_S30k per-contest no-cash at n107: {'C_SE150': 0.6923, 'C_SE2000': 0.6878, 'C_3max500': 0.3516, 'C_20max3000': 0.0005, 'C_150max8000': 0.0, 'SD0_SE50': 0.5702, 'SD0_20max1200': 0.0318, 'SD1_SE50': 0.6731, 'SD1_20max1200': 0.017}
+2g_be0_S30k caps: n25: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 1, 'C_20max3000': 4, 'C_150max8000': 12, 'SD0_SE50': 1, 'SD0_20max1200': 2, 'SD1_SE50': 1, 'SD1_20max1200': 2}; n49: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 1, 'C_20max3000': 9, 'C_150max8000': 27, 'SD0_SE50': 1, 'SD0_20max1200': 4, 'SD1_SE50': 1, 'SD1_20max1200': 4}; n107: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 3, 'C_20max3000': 20, 'C_150max8000': 60, 'SD0_SE50': 1, 'SD0_20max1200': 10, 'SD1_SE50': 1, 'SD1_20max1200': 10}; n200: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 3, 'C_20max3000': 20, 'C_150max8000': 133, 'SD0_SE50': 1, 'SD0_20max1200': 20, 'SD1_SE50': 1, 'SD1_20max1200': 20}
+2g_be0_S30k per-contest no-cash at n25: {'C_SE150': 0.7125, 'C_SE2000': 0.7095, 'C_3max500': 0.7113, 'C_20max3000': 0.2351, 'C_150max8000': 0.0105, 'SD0_SE50': 0.5583, 'SD0_20max1200': 0.5345, 'SD1_SE50': 0.66, 'SD1_20max1200': 0.4906}
+2g_be0_S30k per-contest no-cash at n107: {'C_SE150': 0.7125, 'C_SE2000': 0.7095, 'C_3max500': 0.3231, 'C_20max3000': 0.0005, 'C_150max8000': 0.0, 'SD0_SE50': 0.5583, 'SD0_20max1200': 0.0209, 'SD1_SE50': 0.66, 'SD1_20max1200': 0.0175}
+8g_be1x2_S30k caps: n25: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 1, 'C_20max3000': 3, 'C_150max8000': 10, 'SD0_SE50': 1, 'SD0_20max1200': 2, 'SD1_SE50': 1, 'SD1_20max1200': 2, 'SD2_SE50': 1, 'SD2_20max1200': 2}; n50: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 1, 'C_20max3000': 8, 'C_150max8000': 24, 'SD0_SE50': 1, 'SD0_20max1200': 4, 'SD1_SE50': 1, 'SD1_20max1200': 4, 'SD2_SE50': 1, 'SD2_20max1200': 4}; n118: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 3, 'C_20max3000': 20, 'C_150max8000': 60, 'SD0_SE50': 1, 'SD0_20max1200': 10, 'SD1_SE50': 1, 'SD1_20max1200': 10, 'SD2_SE50': 1, 'SD2_20max1200': 10}; n200: {'C_SE150': 1, 'C_SE2000': 1, 'C_3max500': 3, 'C_20max3000': 20, 'C_150max8000': 115, 'SD0_SE50': 1, 'SD0_20max1200': 19, 'SD1_SE50': 1, 'SD1_20max1200': 19, 'SD2_SE50': 1, 'SD2_20max1200': 19}
+8g_be1x2_S30k per-contest no-cash at n25: {'C_SE150': 0.621, 'C_SE2000': 0.612, 'C_3max500': 0.6162, 'C_20max3000': 0.3012, 'C_150max8000': 0.039, 'SD0_SE50': 0.6614, 'SD0_20max1200': 0.5935, 'SD1_SE50': 0.6673, 'SD1_20max1200': 0.5619, 'SD2_SE50': 0.6506, 'SD2_20max1200': 0.3484}
+8g_be1x2_S30k per-contest no-cash at n118: {'C_SE150': 0.621, 'C_SE2000': 0.612, 'C_3max500': 0.2975, 'C_20max3000': 0.0036, 'C_150max8000': 0.0, 'SD0_SE50': 0.6614, 'SD0_20max1200': 0.1198, 'SD1_SE50': 0.6673, 'SD1_20max1200': 0.0194, 'SD2_SE50': 0.6506, 'SD2_20max1200': 0.012}
+
+## Frontier 8g_be1_S30k [spec]
+| Portfolio | swaps | secs | P(W) V | P(W) B | SE | washout scen B | diff vs eps0 (paired SE) | P(W) binomial | mean G1 loss | max G1 loss | C_SE150 | C_SE2000 | C_3max500 | C_20max3000 | C_150max8000 | SD0_SE50 | SD0_20max1200 | SD1_SE50 | SD1_20max1200 | SD2_SE50 | SD2_20max1200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| greedy | 0 | 0.0 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.00 | 0 | 1.18 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.02 | 0 | 1.24 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.05 | 0 | 1.24 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.10 | 0 | 1.23 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.20 | 0 | 1.24 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_1.00 | 0 | 1.24 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| one_thesis_game0_over | None | None | n/a | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 6.5% | 18.7% | 0.865 +/- 0.050 | 0.813 +/- 0.033 | 0.833 +/- 0.021 | 0.868 +/- 0.008 | 0.908 +/- 0.005 | 1.000 +/- 0.000 | 0.998 +/- 0.005 | 1.000 +/- 0.000 | 0.997 +/- 0.007 | 1.000 +/- 0.000 | 1.006 +/- 0.010 |
+| one_thesis_games0-2_all_over | None | None | n/a | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 11.1% | 27.2% | 0.865 +/- 0.050 | 0.813 +/- 0.033 | 0.728 +/- 0.020 | 0.745 +/- 0.008 | 0.798 +/- 0.005 | 1.000 +/- 0.000 | 0.986 +/- 0.007 | 0.921 +/- 0.024 | 1.001 +/- 0.004 | 1.000 +/- 0.000 | 0.923 +/- 0.013 |
+shape (overlap within 150-max / across classic contests / SD SE vs 20max; distinct classic lineups of classic entries; share of entries exposed by game):
+  greedy: 1.319 / 1.808 / 3.533; distinct 66 of 85; exposure [0.678, 0.508, 0.525, 0.415, 0.551, 0.483, 0.5, 0.39]; classic entries with >=3 from game0 0.059
+  eps_0.00: 1.319 / 1.808 / 3.533; distinct 66 of 85; exposure [0.678, 0.508, 0.525, 0.415, 0.551, 0.483, 0.5, 0.39]; classic entries with >=3 from game0 0.059
+  eps_0.02: 1.319 / 1.808 / 3.533; distinct 66 of 85; exposure [0.678, 0.508, 0.525, 0.415, 0.551, 0.483, 0.5, 0.39]; classic entries with >=3 from game0 0.059
+  eps_0.05: 1.319 / 1.808 / 3.533; distinct 66 of 85; exposure [0.678, 0.508, 0.525, 0.415, 0.551, 0.483, 0.5, 0.39]; classic entries with >=3 from game0 0.059
+  eps_0.10: 1.319 / 1.808 / 3.533; distinct 66 of 85; exposure [0.678, 0.508, 0.525, 0.415, 0.551, 0.483, 0.5, 0.39]; classic entries with >=3 from game0 0.059
+  eps_0.20: 1.319 / 1.808 / 3.533; distinct 66 of 85; exposure [0.678, 0.508, 0.525, 0.415, 0.551, 0.483, 0.5, 0.39]; classic entries with >=3 from game0 0.059
+  eps_1.00: 1.319 / 1.808 / 3.533; distinct 66 of 85; exposure [0.678, 0.508, 0.525, 0.415, 0.551, 0.483, 0.5, 0.39]; classic entries with >=3 from game0 0.059
+  one_thesis_game0_over: 1.124 / 1.46 / 3.533; distinct 60 of 85; exposure [0.763, 0.551, 0.458, 0.458, 0.5, 0.39, 0.432, 0.373]; classic entries with >=3 from game0 0.165
+  one_thesis_games0-2_all_over: 0.962 / 1.323 / 3.467; distinct 60 of 85; exposure [0.729, 0.644, 0.627, 0.39, 0.331, 0.381, 0.398, 0.381]; classic entries with >=3 from game0 0.165
+price of insurance (vs eps 0): {"eps_0.02": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.05": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.10": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.20": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_1.00": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}}
+estimators (greedy portfolio, held-out): G1 quantile-threshold vs binomial; cash quantile vs binomial; scenario agreement
+  C_SE150: n=1 G1 2.34% vs 3.02%; cash 43.1% vs 43.0%; agree 0.9986
+  C_SE2000: n=1 G1 4.73% vs 4.81%; cash 44.4% vs 44.4%; agree 0.9993
+  C_3max500: n=3 G1 11.24% vs 11.45%; cash 70.1% vs 70.0%; agree 0.9986
+  C_20max3000: n=20 G1 42.42% vs 42.41%; cash 99.8% vs 99.8%; agree 0.996
+  C_150max8000: n=60 G1 72.13% vs 72.00%; cash 100.0% vs 100.0%; agree 0.9948
+  SD0_SE50: n=1 G1 11.26% vs 12.03%; cash 37.0% vs 36.8%; agree 0.9981
+  SD0_20max1200: n=10 G1 32.94% vs 32.89%; cash 89.1% vs 89.1%; agree 0.9952
+  SD1_SE50: n=1 G1 8.06% vs 8.88%; cash 34.8% vs 34.7%; agree 0.9983
+  SD1_20max1200: n=10 G1 30.21% vs 30.39%; cash 97.9% vs 97.9%; agree 0.9924
+  SD2_SE50: n=1 G1 3.75% vs 5.16%; cash 40.7% vs 40.6%; agree 0.9966
+  SD2_20max1200: n=10 G1 21.57% vs 21.88%; cash 98.9% vs 98.9%; agree 0.9894
+
+## Frontier 8g_be1_S30k [small]
+| Portfolio | swaps | secs | P(W) V | P(W) B | SE | washout scen B | diff vs eps0 (paired SE) | P(W) binomial | mean G1 loss | max G1 loss | C_SE150 | C_SE2000 | C_3max500 | C_20max3000 | C_150max8000 | SD0_SE50 | SD0_20max1200 | SD1_SE50 | SD1_20max1200 | SD2_SE50 | SD2_20max1200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| greedy | 0 | 0.0 | 0.593% | 0.513% | 0.041% | 154 | +0.357 pp (0.042) | 0.508% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.00 | 12 | 5.83 | 0.120% | 0.157% | 0.023% | 47 | +0.000 pp (0.000) | 0.169% | 3.4% | 14.4% | 0.856 +/- 0.050 | 1.000 +/- 0.000 | 0.896 +/- 0.034 | 0.926 +/- 0.019 | 0.972 +/- 0.006 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.011 +/- 0.019 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.966 +/- 0.027 |
+| eps_0.02 | 2 | 1.06 | 0.027% | 0.087% | 0.017% | 26 | -0.070 pp (0.020) | 0.089% | 3.5% | 14.4% | 0.856 +/- 0.050 | 1.000 +/- 0.000 | 0.896 +/- 0.034 | 0.933 +/- 0.019 | 0.952 +/- 0.008 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.011 +/- 0.019 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.966 +/- 0.027 |
+| eps_0.05 | 2 | 0.91 | 0.000% | 0.063% | 0.015% | 19 | -0.093 pp (0.021) | 0.071% | 2.7% | 10.4% | 0.974 +/- 0.051 | 1.000 +/- 0.000 | 0.896 +/- 0.034 | 0.933 +/- 0.019 | 0.919 +/- 0.008 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.011 +/- 0.019 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.966 +/- 0.027 |
+| eps_0.10 | 0 | 0.3 | 0.000% | 0.063% | 0.015% | 19 | -0.093 pp (0.021) | 0.071% | 2.7% | 10.4% | 0.974 +/- 0.051 | 1.000 +/- 0.000 | 0.896 +/- 0.034 | 0.933 +/- 0.019 | 0.919 +/- 0.008 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.011 +/- 0.019 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.966 +/- 0.027 |
+| eps_0.20 | 0 | 0.29 | 0.000% | 0.063% | 0.015% | 19 | -0.093 pp (0.021) | 0.071% | 2.7% | 10.4% | 0.974 +/- 0.051 | 1.000 +/- 0.000 | 0.896 +/- 0.034 | 0.933 +/- 0.019 | 0.919 +/- 0.008 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.011 +/- 0.019 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.966 +/- 0.027 |
+| eps_1.00 | 0 | 0.29 | 0.000% | 0.063% | 0.015% | 19 | -0.093 pp (0.021) | 0.071% | 2.7% | 10.4% | 0.974 +/- 0.051 | 1.000 +/- 0.000 | 0.896 +/- 0.034 | 0.933 +/- 0.019 | 0.919 +/- 0.008 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.011 +/- 0.019 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.966 +/- 0.027 |
+| one_thesis_game0_over | None | None | n/a | 0.583% | 0.044% | 175 | +0.427 pp (0.048) | 0.585% | 7.8% | 18.8% | 0.865 +/- 0.050 | 0.813 +/- 0.033 | 0.811 +/- 0.035 | 0.818 +/- 0.020 | 0.834 +/- 0.011 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| one_thesis_games0-2_all_over | None | None | n/a | 1.417% | 0.068% | 425 | +1.260 pp (0.071) | 1.259% | 11.7% | 28.5% | 0.865 +/- 0.050 | 0.813 +/- 0.033 | 0.811 +/- 0.035 | 0.715 +/- 0.020 | 0.752 +/- 0.011 | 1.000 +/- 0.000 | 0.985 +/- 0.009 | 0.921 +/- 0.024 | 0.948 +/- 0.016 | 1.000 +/- 0.000 | 0.904 +/- 0.036 |
+shape (overlap within 150-max / across classic contests / SD SE vs 20max; distinct classic lineups of classic entries; share of entries exposed by game):
+  greedy: 2.178 / 3.444 / 4.167; distinct 10 of 16; exposure [0.76, 0.48, 0.56, 0.36, 0.56, 0.56, 0.48, 0.32]; classic entries with >=3 from game0 0.0
+  eps_0.00: 1.933 / 2.806 / 4.167; distinct 16 of 16; exposure [0.76, 0.52, 0.6, 0.36, 0.48, 0.52, 0.48, 0.36]; classic entries with >=3 from game0 0.0
+  eps_0.02: 1.689 / 2.597 / 4.167; distinct 16 of 16; exposure [0.76, 0.48, 0.56, 0.4, 0.44, 0.56, 0.44, 0.32]; classic entries with >=3 from game0 0.062
+  eps_0.05: 1.467 / 2.403 / 4.167; distinct 16 of 16; exposure [0.76, 0.48, 0.56, 0.4, 0.36, 0.56, 0.48, 0.32]; classic entries with >=3 from game0 0.125
+  eps_0.10: 1.467 / 2.403 / 4.167; distinct 16 of 16; exposure [0.76, 0.48, 0.56, 0.4, 0.36, 0.56, 0.48, 0.32]; classic entries with >=3 from game0 0.125
+  eps_0.20: 1.467 / 2.403 / 4.167; distinct 16 of 16; exposure [0.76, 0.48, 0.56, 0.4, 0.36, 0.56, 0.48, 0.32]; classic entries with >=3 from game0 0.125
+  eps_1.00: 1.467 / 2.403 / 4.167; distinct 16 of 16; exposure [0.76, 0.48, 0.56, 0.4, 0.36, 0.56, 0.48, 0.32]; classic entries with >=3 from game0 0.125
+  one_thesis_game0_over: 1.222 / 2.722 / 4.167; distinct 10 of 16; exposure [0.76, 0.6, 0.52, 0.28, 0.4, 0.28, 0.44, 0.36]; classic entries with >=3 from game0 0.125
+  one_thesis_games0-2_all_over: 1.778 / 3.167 / 4.333; distinct 10 of 16; exposure [0.76, 0.6, 0.64, 0.32, 0.16, 0.32, 0.28, 0.32]; classic entries with >=3 from game0 0.188
+price of insurance (vs eps 0): {"eps_0.02": {"rel_washout_reduction_vs_eps0_pct": 44.67, "mean_g1_given_up_vs_eps0_pct": 0.121, "reduction_per_1pct_budget": 22.34, "reduction_per_1pct_realized_loss": 369.18, "pw_diff": -0.0007, "pw_diff_se": 0.000203}, "eps_0.05": {"rel_washout_reduction_vs_eps0_pct": 59.6, "mean_g1_given_up_vs_eps0_pct": -0.648, "reduction_per_1pct_budget": 11.92, "reduction_per_1pct_realized_loss": null, "pw_diff": -0.000933, "pw_diff_se": 0.000211}, "eps_0.10": {"rel_washout_reduction_vs_eps0_pct": 59.6, "mean_g1_given_up_vs_eps0_pct": -0.648, "reduction_per_1pct_budget": 5.96, "reduction_per_1pct_realized_loss": null, "pw_diff": -0.000933, "pw_diff_se": 0.000211}, "eps_0.20": {"rel_washout_reduction_vs_eps0_pct": 59.6, "mean_g1_given_up_vs_eps0_pct": -0.648, "reduction_per_1pct_budget": 2.98, "reduction_per_1pct_realized_loss": null, "pw_diff": -0.000933, "pw_diff_se": 0.000211}, "eps_1.00": {"rel_washout_reduction_vs_eps0_pct": 59.6, "mean_g1_given_up_vs_eps0_pct": -0.648, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": -0.000933, "pw_diff_se": 0.000211}}
+estimators (greedy portfolio, held-out): G1 quantile-threshold vs binomial; cash quantile vs binomial; scenario agreement
+  C_SE150: n=1 G1 2.34% vs 3.02%; cash 43.1% vs 43.0%; agree 0.9986
+  C_SE2000: n=1 G1 4.73% vs 4.81%; cash 44.4% vs 44.4%; agree 0.9993
+  C_3max500: n=1 G1 4.40% vs 4.52%; cash 43.9% vs 43.8%; agree 0.9995
+  C_20max3000: n=3 G1 11.52% vs 11.51%; cash 69.9% vs 69.8%; agree 0.9986
+  C_150max8000: n=10 G1 27.38% vs 27.22%; cash 96.0% vs 96.0%; agree 0.9962
+  SD0_SE50: n=1 G1 11.26% vs 12.03%; cash 37.0% vs 36.8%; agree 0.9981
+  SD0_20max1200: n=2 G1 14.60% vs 14.57%; cash 42.7% vs 42.7%; agree 0.9975
+  SD1_SE50: n=1 G1 8.06% vs 8.88%; cash 34.8% vs 34.7%; agree 0.9983
+  SD1_20max1200: n=2 G1 10.48% vs 10.44%; cash 44.5% vs 44.4%; agree 0.9981
+  SD2_SE50: n=1 G1 3.75% vs 5.16%; cash 40.7% vs 40.6%; agree 0.9966
+  SD2_20max1200: n=2 G1 4.70% vs 4.79%; cash 59.2% vs 59.0%; agree 0.9976
+
+## Frontier 8g_be1_S10k [spec]
+| Portfolio | swaps | secs | P(W) V | P(W) B | SE | washout scen B | diff vs eps0 (paired SE) | P(W) binomial | mean G1 loss | max G1 loss | C_SE150 | C_SE2000 | C_3max500 | C_20max3000 | C_150max8000 | SD0_SE50 | SD0_20max1200 | SD1_SE50 | SD1_20max1200 | SD2_SE50 | SD2_20max1200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| greedy | 0 | 0.0 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.00 | 0 | 0.43 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.02 | 0 | 0.44 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.05 | 0 | 0.41 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.10 | 0 | 0.42 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.20 | 0 | 0.42 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_1.00 | 0 | 0.4 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| one_thesis_game0_over | None | None | n/a | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 8.3% | 17.0% | 0.888 +/- 0.092 | 0.832 +/- 0.055 | 0.830 +/- 0.037 | 0.882 +/- 0.015 | 0.898 +/- 0.009 | 1.000 +/- 0.000 | 0.991 +/- 0.011 | 1.000 +/- 0.000 | 0.971 +/- 0.013 | 0.914 +/- 0.073 | 0.877 +/- 0.019 |
+| one_thesis_games0-2_all_over | None | None | n/a | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 13.5% | 33.5% | 0.915 +/- 0.092 | 0.789 +/- 0.062 | 0.665 +/- 0.038 | 0.734 +/- 0.015 | 0.776 +/- 0.009 | 1.000 +/- 0.000 | 0.958 +/- 0.014 | 1.000 +/- 0.000 | 0.938 +/- 0.013 | 0.883 +/- 0.073 | 0.860 +/- 0.023 |
+shape (overlap within 150-max / across classic contests / SD SE vs 20max; distinct classic lineups of classic entries; share of entries exposed by game):
+  greedy: 1.281 / 1.691 / 3.433; distinct 66 of 85; exposure [0.703, 0.525, 0.5, 0.432, 0.492, 0.508, 0.5, 0.364]; classic entries with >=3 from game0 0.071
+  eps_0.00: 1.281 / 1.691 / 3.433; distinct 66 of 85; exposure [0.703, 0.525, 0.5, 0.432, 0.492, 0.508, 0.5, 0.364]; classic entries with >=3 from game0 0.071
+  eps_0.02: 1.281 / 1.691 / 3.433; distinct 66 of 85; exposure [0.703, 0.525, 0.5, 0.432, 0.492, 0.508, 0.5, 0.364]; classic entries with >=3 from game0 0.071
+  eps_0.05: 1.281 / 1.691 / 3.433; distinct 66 of 85; exposure [0.703, 0.525, 0.5, 0.432, 0.492, 0.508, 0.5, 0.364]; classic entries with >=3 from game0 0.071
+  eps_0.10: 1.281 / 1.691 / 3.433; distinct 66 of 85; exposure [0.703, 0.525, 0.5, 0.432, 0.492, 0.508, 0.5, 0.364]; classic entries with >=3 from game0 0.071
+  eps_0.20: 1.281 / 1.691 / 3.433; distinct 66 of 85; exposure [0.703, 0.525, 0.5, 0.432, 0.492, 0.508, 0.5, 0.364]; classic entries with >=3 from game0 0.071
+  eps_1.00: 1.281 / 1.691 / 3.433; distinct 66 of 85; exposure [0.703, 0.525, 0.5, 0.432, 0.492, 0.508, 0.5, 0.364]; classic entries with >=3 from game0 0.071
+  one_thesis_game0_over: 1.025 / 1.329 / 3.433; distinct 62 of 85; exposure [0.754, 0.568, 0.449, 0.39, 0.508, 0.407, 0.483, 0.322]; classic entries with >=3 from game0 0.247
+  one_thesis_games0-2_all_over: 0.882 / 1.134 / 3.267; distinct 67 of 85; exposure [0.669, 0.678, 0.602, 0.458, 0.534, 0.364, 0.381, 0.364]; classic entries with >=3 from game0 0.129
+price of insurance (vs eps 0): {"eps_0.02": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.05": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.10": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.20": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_1.00": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}}
+estimators (greedy portfolio, held-out): G1 quantile-threshold vs binomial; cash quantile vs binomial; scenario agreement
+  C_SE150: n=1 G1 2.23% vs 2.82%; cash 40.8% vs 40.8%; agree 0.9993
+  C_SE2000: n=1 G1 4.46% vs 4.41%; cash 41.6% vs 41.6%; agree 0.9994
+  C_3max500: n=3 G1 10.17% vs 10.47%; cash 68.4% vs 68.2%; agree 0.9987
+  C_20max3000: n=20 G1 40.09% vs 40.05%; cash 99.8% vs 99.7%; agree 0.9965
+  C_150max8000: n=60 G1 68.81% vs 68.64%; cash 100.0% vs 100.0%; agree 0.9948
+  SD0_SE50: n=1 G1 10.85% vs 11.75%; cash 36.8% vs 36.4%; agree 0.997
+  SD0_20max1200: n=10 G1 32.90% vs 32.60%; cash 89.8% vs 89.8%; agree 0.9963
+  SD1_SE50: n=1 G1 7.92% vs 8.74%; cash 34.1% vs 34.2%; agree 0.9979
+  SD1_20max1200: n=10 G1 30.68% vs 30.59%; cash 95.5% vs 95.5%; agree 0.9939
+  SD2_SE50: n=1 G1 3.50% vs 4.63%; cash 37.8% vs 37.9%; agree 0.9977
+  SD2_20max1200: n=10 G1 21.65% vs 21.96%; cash 99.1% vs 99.1%; agree 0.9897
+
+## Frontier 8g_be1_S10k [small]
+| Portfolio | swaps | secs | P(W) V | P(W) B | SE | washout scen B | diff vs eps0 (paired SE) | P(W) binomial | mean G1 loss | max G1 loss | C_SE150 | C_SE2000 | C_3max500 | C_20max3000 | C_150max8000 | SD0_SE50 | SD0_20max1200 | SD1_SE50 | SD1_20max1200 | SD2_SE50 | SD2_20max1200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| greedy | 0 | 0.0 | 0.440% | 0.490% | 0.070% | 49 | +0.420 pp (0.066) | 0.430% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.00 | 3 | 0.42 | 0.000% | 0.070% | 0.026% | 7 | +0.000 pp (0.000) | 0.088% | -0.2% | 0.5% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.995 +/- 0.009 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.029 +/- 0.073 | 1.000 +/- 0.000 |
+| eps_0.02 | 0 | 0.1 | 0.000% | 0.070% | 0.026% | 7 | +0.000 pp (0.000) | 0.088% | -0.2% | 0.5% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.995 +/- 0.009 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.029 +/- 0.073 | 1.000 +/- 0.000 |
+| eps_0.05 | 0 | 0.11 | 0.000% | 0.070% | 0.026% | 7 | +0.000 pp (0.000) | 0.088% | -0.2% | 0.5% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.995 +/- 0.009 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.029 +/- 0.073 | 1.000 +/- 0.000 |
+| eps_0.10 | 0 | 0.1 | 0.000% | 0.070% | 0.026% | 7 | +0.000 pp (0.000) | 0.088% | -0.2% | 0.5% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.995 +/- 0.009 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.029 +/- 0.073 | 1.000 +/- 0.000 |
+| eps_0.20 | 0 | 0.11 | 0.000% | 0.070% | 0.026% | 7 | +0.000 pp (0.000) | 0.088% | -0.2% | 0.5% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.995 +/- 0.009 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.029 +/- 0.073 | 1.000 +/- 0.000 |
+| eps_1.00 | 0 | 0.09 | 0.000% | 0.070% | 0.026% | 7 | +0.000 pp (0.000) | 0.088% | -0.2% | 0.5% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.995 +/- 0.009 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.029 +/- 0.073 | 1.000 +/- 0.000 |
+| one_thesis_game0_over | None | None | n/a | 0.680% | 0.082% | 68 | +0.610 pp (0.084) | 0.691% | 10.2% | 39.2% | 0.888 +/- 0.092 | 0.832 +/- 0.055 | 0.608 +/- 0.057 | 0.847 +/- 0.037 | 0.856 +/- 0.019 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.978 +/- 0.025 | 0.914 +/- 0.073 | 0.957 +/- 0.044 |
+| one_thesis_games0-2_all_over | None | None | n/a | 1.390% | 0.117% | 139 | +1.320 pp (0.120) | 1.339% | 13.7% | 33.7% | 0.915 +/- 0.092 | 0.789 +/- 0.062 | 0.794 +/- 0.064 | 0.663 +/- 0.038 | 0.725 +/- 0.021 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.902 +/- 0.024 | 0.883 +/- 0.073 | 0.816 +/- 0.061 |
+shape (overlap within 150-max / across classic contests / SD SE vs 20max; distinct classic lineups of classic entries; share of entries exposed by game):
+  greedy: 1.911 / 3.056 / 4.667; distinct 12 of 16; exposure [0.76, 0.48, 0.52, 0.24, 0.44, 0.48, 0.52, 0.2]; classic entries with >=3 from game0 0.0
+  eps_0.00: 1.822 / 2.931 / 4.5; distinct 13 of 16; exposure [0.76, 0.52, 0.52, 0.32, 0.44, 0.48, 0.48, 0.2]; classic entries with >=3 from game0 0.0
+  eps_0.02: 1.822 / 2.931 / 4.5; distinct 13 of 16; exposure [0.76, 0.52, 0.52, 0.32, 0.44, 0.48, 0.48, 0.2]; classic entries with >=3 from game0 0.0
+  eps_0.05: 1.822 / 2.931 / 4.5; distinct 13 of 16; exposure [0.76, 0.52, 0.52, 0.32, 0.44, 0.48, 0.48, 0.2]; classic entries with >=3 from game0 0.0
+  eps_0.10: 1.822 / 2.931 / 4.5; distinct 13 of 16; exposure [0.76, 0.52, 0.52, 0.32, 0.44, 0.48, 0.48, 0.2]; classic entries with >=3 from game0 0.0
+  eps_0.20: 1.822 / 2.931 / 4.5; distinct 13 of 16; exposure [0.76, 0.52, 0.52, 0.32, 0.44, 0.48, 0.48, 0.2]; classic entries with >=3 from game0 0.0
+  eps_1.00: 1.822 / 2.931 / 4.5; distinct 13 of 16; exposure [0.76, 0.52, 0.52, 0.32, 0.44, 0.48, 0.48, 0.2]; classic entries with >=3 from game0 0.0
+  one_thesis_game0_over: 1.378 / 2.194 / 4.0; distinct 11 of 16; exposure [0.76, 0.52, 0.4, 0.4, 0.48, 0.32, 0.56, 0.16]; classic entries with >=3 from game0 0.125
+  one_thesis_games0-2_all_over: 1.111 / 2.292 / 4.333; distinct 12 of 16; exposure [0.76, 0.72, 0.68, 0.48, 0.44, 0.24, 0.4, 0.16]; classic entries with >=3 from game0 0.062
+price of insurance (vs eps 0): {"eps_0.02": {"rel_washout_reduction_vs_eps0_pct": 0.0, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": 0.0, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.05": {"rel_washout_reduction_vs_eps0_pct": 0.0, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": 0.0, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.10": {"rel_washout_reduction_vs_eps0_pct": 0.0, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": 0.0, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.20": {"rel_washout_reduction_vs_eps0_pct": 0.0, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": 0.0, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_1.00": {"rel_washout_reduction_vs_eps0_pct": 0.0, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}}
+estimators (greedy portfolio, held-out): G1 quantile-threshold vs binomial; cash quantile vs binomial; scenario agreement
+  C_SE150: n=1 G1 2.23% vs 2.82%; cash 40.8% vs 40.8%; agree 0.9993
+  C_SE2000: n=1 G1 4.46% vs 4.41%; cash 41.6% vs 41.6%; agree 0.9994
+  C_3max500: n=1 G1 4.13% vs 4.26%; cash 41.9% vs 41.9%; agree 0.9995
+  C_20max3000: n=3 G1 10.31% vs 10.26%; cash 67.9% vs 67.7%; agree 0.9983
+  C_150max8000: n=10 G1 25.84% vs 25.70%; cash 96.0% vs 96.0%; agree 0.9962
+  SD0_SE50: n=1 G1 10.85% vs 11.75%; cash 36.8% vs 36.4%; agree 0.997
+  SD0_20max1200: n=2 G1 14.36% vs 14.37%; cash 42.5% vs 42.4%; agree 0.9984
+  SD1_SE50: n=1 G1 7.92% vs 8.74%; cash 34.1% vs 34.2%; agree 0.9979
+  SD1_20max1200: n=2 G1 10.93% vs 10.77%; cash 43.6% vs 43.6%; agree 0.9984
+  SD2_SE50: n=1 G1 3.50% vs 4.63%; cash 37.8% vs 37.9%; agree 0.9977
+  SD2_20max1200: n=2 G1 4.68% vs 4.81%; cash 57.7% vs 57.6%; agree 0.9973
+
+## Frontier 8g_be0_S30k [spec]
+| Portfolio | swaps | secs | P(W) V | P(W) B | SE | washout scen B | diff vs eps0 (paired SE) | P(W) binomial | mean G1 loss | max G1 loss | C_SE150 | C_SE2000 | C_3max500 | C_20max3000 | C_150max8000 | SD0_SE50 | SD0_20max1200 | SD1_SE50 | SD1_20max1200 | SD2_SE50 | SD2_20max1200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| greedy | 0 | 0.0 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.00 | 0 | 1.23 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.02 | 0 | 1.25 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.05 | 0 | 1.21 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.10 | 0 | 1.23 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.20 | 0 | 1.24 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_1.00 | 0 | 1.35 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| one_thesis_game0_over | None | None | n/a | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 6.9% | 19.4% | 0.898 +/- 0.045 | 0.814 +/- 0.030 | 0.806 +/- 0.017 | 0.873 +/- 0.007 | 0.908 +/- 0.004 | 1.000 +/- 0.000 | 1.010 +/- 0.006 | 1.000 +/- 0.000 | 0.998 +/- 0.006 | 0.949 +/- 0.040 | 0.988 +/- 0.009 |
+| one_thesis_games0-2_all_over | None | None | n/a | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 16.7% | 45.6% | 0.559 +/- 0.041 | 0.544 +/- 0.028 | 0.692 +/- 0.018 | 0.728 +/- 0.008 | 0.827 +/- 0.004 | 1.000 +/- 0.000 | 0.987 +/- 0.007 | 0.922 +/- 0.022 | 0.973 +/- 0.006 | 1.000 +/- 0.000 | 0.926 +/- 0.011 |
+shape (overlap within 150-max / across classic contests / SD SE vs 20max; distinct classic lineups of classic entries; share of entries exposed by game):
+  greedy: 1.479 / 1.92 / 3.633; distinct 68 of 85; exposure [0.712, 0.542, 0.559, 0.483, 0.517, 0.534, 0.517, 0.398]; classic entries with >=3 from game0 0.024
+  eps_0.00: 1.479 / 1.92 / 3.633; distinct 68 of 85; exposure [0.712, 0.542, 0.559, 0.483, 0.517, 0.534, 0.517, 0.398]; classic entries with >=3 from game0 0.024
+  eps_0.02: 1.479 / 1.92 / 3.633; distinct 68 of 85; exposure [0.712, 0.542, 0.559, 0.483, 0.517, 0.534, 0.517, 0.398]; classic entries with >=3 from game0 0.024
+  eps_0.05: 1.479 / 1.92 / 3.633; distinct 68 of 85; exposure [0.712, 0.542, 0.559, 0.483, 0.517, 0.534, 0.517, 0.398]; classic entries with >=3 from game0 0.024
+  eps_0.10: 1.479 / 1.92 / 3.633; distinct 68 of 85; exposure [0.712, 0.542, 0.559, 0.483, 0.517, 0.534, 0.517, 0.398]; classic entries with >=3 from game0 0.024
+  eps_0.20: 1.479 / 1.92 / 3.633; distinct 68 of 85; exposure [0.712, 0.542, 0.559, 0.483, 0.517, 0.534, 0.517, 0.398]; classic entries with >=3 from game0 0.024
+  eps_1.00: 1.479 / 1.92 / 3.633; distinct 68 of 85; exposure [0.712, 0.542, 0.559, 0.483, 0.517, 0.534, 0.517, 0.398]; classic entries with >=3 from game0 0.024
+  one_thesis_game0_over: 1.215 / 1.495 / 3.567; distinct 61 of 85; exposure [0.814, 0.644, 0.475, 0.356, 0.492, 0.449, 0.432, 0.39]; classic entries with >=3 from game0 0.306
+  one_thesis_games0-2_all_over: 1.063 / 1.373 / 3.533; distinct 62 of 85; exposure [0.78, 0.737, 0.619, 0.305, 0.347, 0.432, 0.407, 0.415]; classic entries with >=3 from game0 0.141
+price of insurance (vs eps 0): {"eps_0.02": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.05": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.10": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.20": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_1.00": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}}
+estimators (greedy portfolio, held-out): G1 quantile-threshold vs binomial; cash quantile vs binomial; scenario agreement
+  C_SE150: n=1 G1 2.92% vs 3.69%; cash 46.2% vs 46.0%; agree 0.999
+  C_SE2000: n=1 G1 5.84% vs 5.83%; cash 46.8% vs 46.8%; agree 0.9991
+  C_3max500: n=3 G1 12.81% vs 13.02%; cash 69.3% vs 69.2%; agree 0.9985
+  C_20max3000: n=20 G1 46.91% vs 46.63%; cash 99.8% vs 99.8%; agree 0.9954
+  C_150max8000: n=60 G1 76.32% vs 75.91%; cash 100.0% vs 100.0%; agree 0.9949
+  SD0_SE50: n=1 G1 12.47% vs 13.36%; cash 38.6% vs 38.3%; agree 0.998
+  SD0_20max1200: n=10 G1 35.26% vs 34.96%; cash 91.5% vs 91.4%; agree 0.9924
+  SD1_SE50: n=1 G1 9.21% vs 9.87%; cash 35.9% vs 35.7%; agree 0.9977
+  SD1_20max1200: n=10 G1 33.87% vs 33.52%; cash 97.4% vs 97.3%; agree 0.9907
+  SD2_SE50: n=1 G1 4.14% vs 5.50%; cash 41.8% vs 41.7%; agree 0.9974
+  SD2_20max1200: n=10 G1 23.38% vs 23.11%; cash 99.7% vs 99.7%; agree 0.9846
+
+## Frontier 8g_be0_S30k [small]
+| Portfolio | swaps | secs | P(W) V | P(W) B | SE | washout scen B | diff vs eps0 (paired SE) | P(W) binomial | mean G1 loss | max G1 loss | C_SE150 | C_SE2000 | C_3max500 | C_20max3000 | C_150max8000 | SD0_SE50 | SD0_20max1200 | SD1_SE50 | SD1_20max1200 | SD2_SE50 | SD2_20max1200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| greedy | 0 | 0.0 | 0.493% | 0.530% | 0.042% | 159 | +0.350 pp (0.040) | 0.497% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.00 | 10 | 4.66 | 0.093% | 0.180% | 0.025% | 54 | +0.000 pp (0.000) | 0.190% | 0.4% | 4.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.960 +/- 0.018 | 0.996 +/- 0.007 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.999 +/- 0.032 |
+| eps_0.02 | 1 | 0.74 | 0.053% | 0.157% | 0.023% | 47 | -0.023 pp (0.019) | 0.160% | 0.4% | 4.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.960 +/- 0.018 | 0.996 +/- 0.007 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.999 +/- 0.032 |
+| eps_0.05 | 2 | 0.89 | 0.007% | 0.107% | 0.019% | 32 | -0.073 pp (0.021) | 0.106% | 2.0% | 12.8% | 1.000 +/- 0.000 | 0.872 +/- 0.027 | 1.000 +/- 0.000 | 0.960 +/- 0.018 | 0.950 +/- 0.008 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.999 +/- 0.032 |
+| eps_0.10 | 1 | 0.58 | 0.000% | 0.100% | 0.018% | 30 | -0.080 pp (0.021) | 0.101% | 3.1% | 12.8% | 1.000 +/- 0.000 | 0.872 +/- 0.027 | 0.881 +/- 0.033 | 0.960 +/- 0.018 | 0.950 +/- 0.008 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.999 +/- 0.032 |
+| eps_0.20 | 0 | 0.29 | 0.000% | 0.100% | 0.018% | 30 | -0.080 pp (0.021) | 0.101% | 3.1% | 12.8% | 1.000 +/- 0.000 | 0.872 +/- 0.027 | 0.881 +/- 0.033 | 0.960 +/- 0.018 | 0.950 +/- 0.008 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.999 +/- 0.032 |
+| eps_1.00 | 0 | 0.3 | 0.000% | 0.100% | 0.018% | 30 | -0.080 pp (0.021) | 0.101% | 3.1% | 12.8% | 1.000 +/- 0.000 | 0.872 +/- 0.027 | 0.881 +/- 0.033 | 0.960 +/- 0.018 | 0.950 +/- 0.008 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.999 +/- 0.032 |
+| one_thesis_game0_over | None | None | n/a | 1.187% | 0.062% | 356 | +1.007 pp (0.066) | 1.200% | 8.9% | 19.2% | 0.898 +/- 0.045 | 0.814 +/- 0.030 | 0.822 +/- 0.032 | 0.808 +/- 0.017 | 0.834 +/- 0.010 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.949 +/- 0.040 | 0.893 +/- 0.024 |
+| one_thesis_games0-2_all_over | None | None | n/a | 0.983% | 0.057% | 295 | +0.803 pp (0.060) | 1.009% | 20.4% | 45.6% | 0.559 +/- 0.041 | 0.544 +/- 0.028 | 0.546 +/- 0.029 | 0.693 +/- 0.018 | 0.719 +/- 0.011 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.922 +/- 0.022 | 0.993 +/- 0.014 | 1.000 +/- 0.000 | 0.774 +/- 0.031 |
+shape (overlap within 150-max / across classic contests / SD SE vs 20max; distinct classic lineups of classic entries; share of entries exposed by game):
+  greedy: 2.133 / 3.403 / 4.667; distinct 11 of 16; exposure [0.76, 0.52, 0.52, 0.32, 0.4, 0.56, 0.56, 0.32]; classic entries with >=3 from game0 0.0
+  eps_0.00: 1.644 / 2.944 / 4.5; distinct 14 of 16; exposure [0.76, 0.56, 0.56, 0.4, 0.4, 0.52, 0.48, 0.28]; classic entries with >=3 from game0 0.0
+  eps_0.02: 1.6 / 2.889 / 4.5; distinct 14 of 16; exposure [0.76, 0.6, 0.56, 0.4, 0.44, 0.48, 0.48, 0.24]; classic entries with >=3 from game0 0.062
+  eps_0.05: 1.378 / 2.653 / 4.5; distinct 15 of 16; exposure [0.76, 0.6, 0.48, 0.44, 0.44, 0.44, 0.52, 0.2]; classic entries with >=3 from game0 0.062
+  eps_0.10: 1.378 / 2.514 / 4.5; distinct 16 of 16; exposure [0.76, 0.56, 0.44, 0.48, 0.44, 0.44, 0.52, 0.24]; classic entries with >=3 from game0 0.062
+  eps_0.20: 1.378 / 2.514 / 4.5; distinct 16 of 16; exposure [0.76, 0.56, 0.44, 0.48, 0.44, 0.44, 0.52, 0.24]; classic entries with >=3 from game0 0.062
+  eps_1.00: 1.378 / 2.514 / 4.5; distinct 16 of 16; exposure [0.76, 0.56, 0.44, 0.48, 0.44, 0.44, 0.52, 0.24]; classic entries with >=3 from game0 0.062
+  one_thesis_game0_over: 1.4 / 2.903 / 4.833; distinct 10 of 16; exposure [0.76, 0.72, 0.4, 0.2, 0.44, 0.44, 0.48, 0.44]; classic entries with >=3 from game0 0.125
+  one_thesis_games0-2_all_over: 1.489 / 2.736 / 4.5; distinct 10 of 16; exposure [0.76, 0.72, 0.68, 0.28, 0.12, 0.48, 0.24, 0.48]; classic entries with >=3 from game0 0.125
+price of insurance (vs eps 0): {"eps_0.02": {"rel_washout_reduction_vs_eps0_pct": 12.94, "mean_g1_given_up_vs_eps0_pct": 0.006, "reduction_per_1pct_budget": 6.47, "reduction_per_1pct_realized_loss": null, "pw_diff": -0.000233, "pw_diff_se": 0.000191}, "eps_0.05": {"rel_washout_reduction_vs_eps0_pct": 40.72, "mean_g1_given_up_vs_eps0_pct": 1.585, "reduction_per_1pct_budget": 8.14, "reduction_per_1pct_realized_loss": 25.69, "pw_diff": -0.000733, "pw_diff_se": 0.000211}, "eps_0.10": {"rel_washout_reduction_vs_eps0_pct": 44.44, "mean_g1_given_up_vs_eps0_pct": 2.663, "reduction_per_1pct_budget": 4.44, "reduction_per_1pct_realized_loss": 16.69, "pw_diff": -0.0008, "pw_diff_se": 0.000211}, "eps_0.20": {"rel_washout_reduction_vs_eps0_pct": 44.44, "mean_g1_given_up_vs_eps0_pct": 2.663, "reduction_per_1pct_budget": 2.22, "reduction_per_1pct_realized_loss": 16.69, "pw_diff": -0.0008, "pw_diff_se": 0.000211}, "eps_1.00": {"rel_washout_reduction_vs_eps0_pct": 44.44, "mean_g1_given_up_vs_eps0_pct": 2.663, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": 16.69, "pw_diff": -0.0008, "pw_diff_se": 0.000211}}
+estimators (greedy portfolio, held-out): G1 quantile-threshold vs binomial; cash quantile vs binomial; scenario agreement
+  C_SE150: n=1 G1 2.92% vs 3.69%; cash 46.2% vs 46.0%; agree 0.999
+  C_SE2000: n=1 G1 5.84% vs 5.83%; cash 46.8% vs 46.8%; agree 0.9991
+  C_3max500: n=1 G1 5.34% vs 5.47%; cash 46.3% vs 46.1%; agree 0.9991
+  C_20max3000: n=3 G1 12.84% vs 12.77%; cash 68.8% vs 68.5%; agree 0.9977
+  C_150max8000: n=10 G1 30.09% vs 29.83%; cash 96.9% vs 96.8%; agree 0.996
+  SD0_SE50: n=1 G1 12.47% vs 13.36%; cash 38.6% vs 38.3%; agree 0.998
+  SD0_20max1200: n=2 G1 16.26% vs 16.16%; cash 43.8% vs 43.7%; agree 0.9972
+  SD1_SE50: n=1 G1 9.21% vs 9.87%; cash 35.9% vs 35.7%; agree 0.9977
+  SD1_20max1200: n=2 G1 12.23% vs 12.13%; cash 44.9% vs 44.8%; agree 0.9979
+  SD2_SE50: n=1 G1 4.14% vs 5.50%; cash 41.8% vs 41.7%; agree 0.9974
+  SD2_20max1200: n=2 G1 5.38% vs 5.30%; cash 69.0% vs 68.5%; agree 0.9951
+
+## Frontier 2g_be1_S30k [spec]
+| Portfolio | swaps | secs | P(W) V | P(W) B | SE | washout scen B | diff vs eps0 (paired SE) | P(W) binomial | mean G1 loss | max G1 loss | C_SE150 | C_SE2000 | C_3max500 | C_20max3000 | C_150max8000 | SD0_SE50 | SD0_20max1200 | SD1_SE50 | SD1_20max1200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| greedy | 0 | 0.0 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.00 | 0 | 0.88 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.02 | 0 | 0.97 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.05 | 0 | 1.13 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.10 | 0 | 1.13 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.20 | 0 | 0.92 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_1.00 | 0 | 0.89 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| one_thesis_game0_over | None | None | n/a | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 7.6% | 34.7% | 0.653 +/- 0.045 | 0.878 +/- 0.030 | 0.910 +/- 0.017 | 0.942 +/- 0.007 | 0.964 +/- 0.004 | 1.000 +/- 0.000 | 1.007 +/- 0.005 | 1.000 +/- 0.000 | 0.963 +/- 0.009 |
+| one_thesis_games0-1_all_over | None | None | n/a | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 7.4% | 28.1% | 0.719 +/- 0.038 | 0.841 +/- 0.025 | 0.929 +/- 0.022 | 0.966 +/- 0.008 | 0.933 +/- 0.005 | 1.000 +/- 0.000 | 1.001 +/- 0.005 | 1.000 +/- 0.000 | 0.945 +/- 0.010 |
+shape (overlap within 150-max / across classic contests / SD SE vs 20max; distinct classic lineups of classic entries; share of entries exposed by game):
+  greedy: 3.122 / 3.308 / 3.65; distinct 65 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.8
+  eps_0.00: 3.122 / 3.308 / 3.65; distinct 65 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.8
+  eps_0.02: 3.122 / 3.308 / 3.65; distinct 65 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.8
+  eps_0.05: 3.122 / 3.308 / 3.65; distinct 65 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.8
+  eps_0.10: 3.122 / 3.308 / 3.65; distinct 65 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.8
+  eps_0.20: 3.122 / 3.308 / 3.65; distinct 65 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.8
+  eps_1.00: 3.122 / 3.308 / 3.65; distinct 65 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.8
+  one_thesis_game0_over: 3.118 / 3.283 / 3.6; distinct 63 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.965
+  one_thesis_games0-1_all_over: 3.044 / 3.276 / 3.7; distinct 63 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.859
+price of insurance (vs eps 0): {"eps_0.02": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.05": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.10": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.20": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_1.00": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}}
+estimators (greedy portfolio, held-out): G1 quantile-threshold vs binomial; cash quantile vs binomial; scenario agreement
+  C_SE150: n=1 G1 2.65% vs 2.97%; cash 30.8% vs 30.9%; agree 0.999
+  C_SE2000: n=1 G1 4.22% vs 4.25%; cash 31.2% vs 31.2%; agree 0.9997
+  C_3max500: n=3 G1 9.75% vs 9.97%; cash 64.8% vs 64.8%; agree 0.999
+  C_20max3000: n=20 G1 40.28% vs 40.29%; cash 100.0% vs 100.0%; agree 0.9962
+  C_150max8000: n=60 G1 72.21% vs 72.09%; cash 100.0% vs 100.0%; agree 0.9947
+  SD0_SE50: n=1 G1 16.75% vs 17.29%; cash 43.0% vs 42.8%; agree 0.996
+  SD0_20max1200: n=10 G1 40.48% vs 40.41%; cash 96.8% vs 96.8%; agree 0.9902
+  SD1_SE50: n=1 G1 5.57% vs 6.67%; cash 32.7% vs 32.6%; agree 0.9982
+  SD1_20max1200: n=10 G1 26.63% vs 26.97%; cash 98.3% vs 98.3%; agree 0.9879
+
+## Frontier 2g_be1_S30k [small]
+| Portfolio | swaps | secs | P(W) V | P(W) B | SE | washout scen B | diff vs eps0 (paired SE) | P(W) binomial | mean G1 loss | max G1 loss | C_SE150 | C_SE2000 | C_3max500 | C_20max3000 | C_150max8000 | SD0_SE50 | SD0_20max1200 | SD1_SE50 | SD1_20max1200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| greedy | 0 | 0.0 | 1.013% | 0.997% | 0.057% | 299 | +0.797 pp (0.056) | 0.979% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.00 | 10 | 3.71 | 0.087% | 0.200% | 0.026% | 60 | +0.000 pp (0.000) | 0.201% | 0.6% | 4.2% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.992 +/- 0.008 | 0.958 +/- 0.009 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.02 | 4 | 1.51 | 0.020% | 0.080% | 0.016% | 24 | -0.120 pp (0.023) | 0.083% | 1.0% | 5.8% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.958 +/- 0.012 | 0.942 +/- 0.010 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.011 +/- 0.019 |
+| eps_0.05 | 2 | 0.66 | 0.000% | 0.063% | 0.015% | 19 | -0.137 pp (0.026) | 0.068% | 1.2% | 8.1% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.958 +/- 0.012 | 0.919 +/- 0.010 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.011 +/- 0.019 |
+| eps_0.10 | 0 | 0.42 | 0.000% | 0.063% | 0.015% | 19 | -0.137 pp (0.026) | 0.068% | 1.2% | 8.1% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.958 +/- 0.012 | 0.919 +/- 0.010 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.011 +/- 0.019 |
+| eps_0.20 | 0 | 0.29 | 0.000% | 0.063% | 0.015% | 19 | -0.137 pp (0.026) | 0.068% | 1.2% | 8.1% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.958 +/- 0.012 | 0.919 +/- 0.010 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.011 +/- 0.019 |
+| eps_1.00 | 0 | 0.22 | 0.000% | 0.063% | 0.015% | 19 | -0.137 pp (0.026) | 0.068% | 1.2% | 8.1% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.958 +/- 0.012 | 0.919 +/- 0.010 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.011 +/- 0.019 |
+| one_thesis_game0_over | None | None | n/a | 1.047% | 0.059% | 314 | +0.847 pp (0.060) | 1.016% | 10.7% | 34.7% | 0.653 +/- 0.045 | 0.878 +/- 0.030 | 0.666 +/- 0.037 | 0.897 +/- 0.017 | 0.950 +/- 0.009 | 1.000 +/- 0.000 | 0.989 +/- 0.008 | 1.000 +/- 0.000 | 1.006 +/- 0.020 |
+| one_thesis_games0-1_all_over | None | None | n/a | 0.823% | 0.052% | 247 | +0.623 pp (0.056) | 0.819% | 8.3% | 28.1% | 0.719 +/- 0.038 | 0.841 +/- 0.025 | 0.801 +/- 0.033 | 0.945 +/- 0.018 | 0.975 +/- 0.010 | 1.000 +/- 0.000 | 0.989 +/- 0.008 | 1.000 +/- 0.000 | 0.984 +/- 0.018 |
+shape (overlap within 150-max / across classic contests / SD SE vs 20max; distinct classic lineups of classic entries; share of entries exposed by game):
+  greedy: 3.273 / 4.152 / 5.0; distinct 12 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.632
+  eps_0.00: 3.121 / 3.889 / 5.0; distinct 15 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.737
+  eps_0.02: 2.894 / 3.838 / 5.0; distinct 15 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.789
+  eps_0.05: 2.864 / 3.838 / 5.0; distinct 15 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.789
+  eps_0.10: 2.864 / 3.838 / 5.0; distinct 15 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.789
+  eps_0.20: 2.864 / 3.838 / 5.0; distinct 15 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.789
+  eps_1.00: 2.864 / 3.838 / 5.0; distinct 15 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.789
+  one_thesis_game0_over: 2.985 / 3.717 / 5.0; distinct 12 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 1.0
+  one_thesis_games0-1_all_over: 3.015 / 3.909 / 5.0; distinct 14 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.842
+price of insurance (vs eps 0): {"eps_0.02": {"rel_washout_reduction_vs_eps0_pct": 60.0, "mean_g1_given_up_vs_eps0_pct": 0.43, "reduction_per_1pct_budget": 30.0, "reduction_per_1pct_realized_loss": 139.53, "pw_diff": -0.0012, "pw_diff_se": 0.000231}, "eps_0.05": {"rel_washout_reduction_vs_eps0_pct": 68.35, "mean_g1_given_up_vs_eps0_pct": 0.686, "reduction_per_1pct_budget": 13.67, "reduction_per_1pct_realized_loss": 99.64, "pw_diff": -0.001367, "pw_diff_se": 0.000264}, "eps_0.10": {"rel_washout_reduction_vs_eps0_pct": 68.35, "mean_g1_given_up_vs_eps0_pct": 0.686, "reduction_per_1pct_budget": 6.84, "reduction_per_1pct_realized_loss": 99.64, "pw_diff": -0.001367, "pw_diff_se": 0.000264}, "eps_0.20": {"rel_washout_reduction_vs_eps0_pct": 68.35, "mean_g1_given_up_vs_eps0_pct": 0.686, "reduction_per_1pct_budget": 3.42, "reduction_per_1pct_realized_loss": 99.64, "pw_diff": -0.001367, "pw_diff_se": 0.000264}, "eps_1.00": {"rel_washout_reduction_vs_eps0_pct": 68.35, "mean_g1_given_up_vs_eps0_pct": 0.686, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": 99.64, "pw_diff": -0.001367, "pw_diff_se": 0.000264}}
+estimators (greedy portfolio, held-out): G1 quantile-threshold vs binomial; cash quantile vs binomial; scenario agreement
+  C_SE150: n=1 G1 2.65% vs 2.97%; cash 30.8% vs 30.9%; agree 0.999
+  C_SE2000: n=1 G1 4.22% vs 4.25%; cash 31.2% vs 31.2%; agree 0.9997
+  C_3max500: n=1 G1 4.07% vs 4.12%; cash 30.9% vs 30.9%; agree 0.9996
+  C_20max3000: n=4 G1 12.78% vs 12.75%; cash 75.3% vs 75.2%; agree 0.9983
+  C_150max8000: n=12 G1 28.22% vs 28.11%; cash 98.4% vs 98.4%; agree 0.9963
+  SD0_SE50: n=1 G1 16.75% vs 17.29%; cash 43.0% vs 42.8%; agree 0.996
+  SD0_20max1200: n=2 G1 19.62% vs 19.50%; cash 46.1% vs 46.1%; agree 0.9965
+  SD1_SE50: n=1 G1 5.57% vs 6.67%; cash 32.7% vs 32.6%; agree 0.9982
+  SD1_20max1200: n=2 G1 7.26% vs 7.27%; cash 49.5% vs 49.3%; agree 0.9971
+
+## Frontier 2g_be0_S30k [spec]
+| Portfolio | swaps | secs | P(W) V | P(W) B | SE | washout scen B | diff vs eps0 (paired SE) | P(W) binomial | mean G1 loss | max G1 loss | C_SE150 | C_SE2000 | C_3max500 | C_20max3000 | C_150max8000 | SD0_SE50 | SD0_20max1200 | SD1_SE50 | SD1_20max1200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| greedy | 0 | 0.0 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.00 | 0 | 0.88 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.02 | 0 | 0.88 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.05 | 0 | 0.84 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.10 | 0 | 0.85 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.20 | 0 | 0.86 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_1.00 | 0 | 0.84 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| one_thesis_game0_over | None | None | n/a | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 7.5% | 27.6% | 0.724 +/- 0.046 | 0.765 +/- 0.038 | 0.945 +/- 0.020 | 0.949 +/- 0.008 | 0.952 +/- 0.004 | 1.000 +/- 0.000 | 0.995 +/- 0.004 | 1.000 +/- 0.000 | 0.998 +/- 0.004 |
+| one_thesis_games0-1_all_over | None | None | n/a | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 4.8% | 10.1% | 0.914 +/- 0.044 | 0.936 +/- 0.035 | 0.899 +/- 0.021 | 0.922 +/- 0.008 | 0.933 +/- 0.004 | 1.000 +/- 0.000 | 0.988 +/- 0.005 | 1.000 +/- 0.000 | 0.979 +/- 0.006 |
+shape (overlap within 150-max / across classic contests / SD SE vs 20max; distinct classic lineups of classic entries; share of entries exposed by game):
+  greedy: 3.225 / 3.475 / 3.65; distinct 64 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.894
+  eps_0.00: 3.225 / 3.475 / 3.65; distinct 64 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.894
+  eps_0.02: 3.225 / 3.475 / 3.65; distinct 64 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.894
+  eps_0.05: 3.225 / 3.475 / 3.65; distinct 64 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.894
+  eps_0.10: 3.225 / 3.475 / 3.65; distinct 64 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.894
+  eps_0.20: 3.225 / 3.475 / 3.65; distinct 64 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.894
+  eps_1.00: 3.225 / 3.475 / 3.65; distinct 64 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.894
+  one_thesis_game0_over: 3.162 / 3.306 / 3.7; distinct 62 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.953
+  one_thesis_games0-1_all_over: 3.101 / 3.287 / 3.8; distinct 61 of 85; exposure [0.897, 0.897]; classic entries with >=3 from game0 0.871
+price of insurance (vs eps 0): {"eps_0.02": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.05": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.10": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.20": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_1.00": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}}
+estimators (greedy portfolio, held-out): G1 quantile-threshold vs binomial; cash quantile vs binomial; scenario agreement
+  C_SE150: n=1 G1 2.67% vs 2.93%; cash 28.7% vs 28.7%; agree 0.9993
+  C_SE2000: n=1 G1 4.09% vs 4.06%; cash 29.0% vs 29.0%; agree 0.9994
+  C_3max500: n=3 G1 10.33% vs 10.46%; cash 67.7% vs 67.5%; agree 0.9982
+  C_20max3000: n=20 G1 42.74% vs 42.26%; cash 100.0% vs 100.0%; agree 0.9918
+  C_150max8000: n=60 G1 77.06% vs 76.17%; cash 100.0% vs 100.0%; agree 0.9896
+  SD0_SE50: n=1 G1 18.58% vs 18.85%; cash 44.2% vs 43.9%; agree 0.9968
+  SD0_20max1200: n=10 G1 43.85% vs 43.47%; cash 97.9% vs 97.9%; agree 0.9889
+  SD1_SE50: n=1 G1 6.39% vs 7.42%; cash 34.0% vs 33.8%; agree 0.9985
+  SD1_20max1200: n=10 G1 30.03% vs 29.50%; cash 98.2% vs 98.2%; agree 0.9848
+
+## Frontier 2g_be0_S30k [small]
+| Portfolio | swaps | secs | P(W) V | P(W) B | SE | washout scen B | diff vs eps0 (paired SE) | P(W) binomial | mean G1 loss | max G1 loss | C_SE150 | C_SE2000 | C_3max500 | C_20max3000 | C_150max8000 | SD0_SE50 | SD0_20max1200 | SD1_SE50 | SD1_20max1200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| greedy | 0 | 0.0 | 0.507% | 0.643% | 0.046% | 193 | +0.530 pp (0.045) | 0.645% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.00 | 3 | 1.27 | 0.100% | 0.113% | 0.019% | 34 | +0.000 pp (0.000) | 0.118% | 0.2% | 1.7% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.984 +/- 0.006 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.02 | 3 | 1.06 | 0.013% | 0.070% | 0.015% | 21 | -0.043 pp (0.013) | 0.066% | 0.6% | 3.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.979 +/- 0.010 | 0.970 +/- 0.008 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.05 | 1 | 0.44 | 0.000% | 0.057% | 0.014% | 17 | -0.057 pp (0.015) | 0.055% | 0.7% | 4.7% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.979 +/- 0.010 | 0.953 +/- 0.008 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.10 | 0 | 0.24 | 0.000% | 0.057% | 0.014% | 17 | -0.057 pp (0.015) | 0.055% | 0.7% | 4.7% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.979 +/- 0.010 | 0.953 +/- 0.008 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.20 | 0 | 0.22 | 0.000% | 0.057% | 0.014% | 17 | -0.057 pp (0.015) | 0.055% | 0.7% | 4.7% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.979 +/- 0.010 | 0.953 +/- 0.008 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_1.00 | 0 | 0.22 | 0.000% | 0.057% | 0.014% | 17 | -0.057 pp (0.015) | 0.055% | 0.7% | 4.7% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.979 +/- 0.010 | 0.953 +/- 0.008 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| one_thesis_game0_over | None | None | n/a | 0.873% | 0.054% | 262 | +0.760 pp (0.056) | 0.891% | 9.5% | 27.6% | 0.724 +/- 0.046 | 0.765 +/- 0.038 | 0.773 +/- 0.039 | 0.906 +/- 0.018 | 0.973 +/- 0.010 | 1.000 +/- 0.000 | 1.006 +/- 0.006 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| one_thesis_games0-1_all_over | None | None | n/a | 1.753% | 0.076% | 526 | +1.640 pp (0.077) | 1.785% | 3.8% | 8.6% | 0.914 +/- 0.044 | 0.936 +/- 0.035 | 0.928 +/- 0.035 | 0.922 +/- 0.018 | 0.953 +/- 0.010 | 1.000 +/- 0.000 | 1.006 +/- 0.006 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+shape (overlap within 150-max / across classic contests / SD SE vs 20max; distinct classic lineups of classic entries; share of entries exposed by game):
+  greedy: 3.348 / 4.293 / 5.0; distinct 12 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.895
+  eps_0.00: 3.333 / 4.232 / 5.0; distinct 12 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.895
+  eps_0.02: 3.167 / 3.899 / 5.0; distinct 15 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.842
+  eps_0.05: 3.182 / 3.828 / 5.0; distinct 15 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.895
+  eps_0.10: 3.182 / 3.828 / 5.0; distinct 15 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.895
+  eps_0.20: 3.182 / 3.828 / 5.0; distinct 15 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.895
+  eps_1.00: 3.182 / 3.828 / 5.0; distinct 15 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.895
+  one_thesis_game0_over: 3.394 / 3.707 / 5.0; distinct 12 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.947
+  one_thesis_games0-1_all_over: 3.227 / 4.293 / 5.0; distinct 12 of 19; exposure [0.88, 0.88]; classic entries with >=3 from game0 0.632
+price of insurance (vs eps 0): {"eps_0.02": {"rel_washout_reduction_vs_eps0_pct": 38.22, "mean_g1_given_up_vs_eps0_pct": 0.384, "reduction_per_1pct_budget": 19.11, "reduction_per_1pct_realized_loss": 99.52, "pw_diff": -0.000433, "pw_diff_se": 0.000129}, "eps_0.05": {"rel_washout_reduction_vs_eps0_pct": 49.96, "mean_g1_given_up_vs_eps0_pct": 0.565, "reduction_per_1pct_budget": 9.99, "reduction_per_1pct_realized_loss": 88.42, "pw_diff": -0.000567, "pw_diff_se": 0.000145}, "eps_0.10": {"rel_washout_reduction_vs_eps0_pct": 49.96, "mean_g1_given_up_vs_eps0_pct": 0.565, "reduction_per_1pct_budget": 5.0, "reduction_per_1pct_realized_loss": 88.42, "pw_diff": -0.000567, "pw_diff_se": 0.000145}, "eps_0.20": {"rel_washout_reduction_vs_eps0_pct": 49.96, "mean_g1_given_up_vs_eps0_pct": 0.565, "reduction_per_1pct_budget": 2.5, "reduction_per_1pct_realized_loss": 88.42, "pw_diff": -0.000567, "pw_diff_se": 0.000145}, "eps_1.00": {"rel_washout_reduction_vs_eps0_pct": 49.96, "mean_g1_given_up_vs_eps0_pct": 0.565, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": 88.42, "pw_diff": -0.000567, "pw_diff_se": 0.000145}}
+estimators (greedy portfolio, held-out): G1 quantile-threshold vs binomial; cash quantile vs binomial; scenario agreement
+  C_SE150: n=1 G1 2.67% vs 2.93%; cash 28.7% vs 28.7%; agree 0.9993
+  C_SE2000: n=1 G1 4.09% vs 4.06%; cash 29.0% vs 29.0%; agree 0.9994
+  C_3max500: n=1 G1 3.92% vs 3.94%; cash 28.9% vs 28.7%; agree 0.9994
+  C_20max3000: n=4 G1 13.33% vs 13.17%; cash 76.5% vs 76.2%; agree 0.9975
+  C_150max8000: n=12 G1 29.46% vs 28.88%; cash 99.0% vs 98.9%; agree 0.9942
+  SD0_SE50: n=1 G1 18.58% vs 18.85%; cash 44.2% vs 43.9%; agree 0.9968
+  SD0_20max1200: n=2 G1 21.77% vs 21.57%; cash 46.6% vs 46.5%; agree 0.9972
+  SD1_SE50: n=1 G1 6.39% vs 7.42%; cash 34.0% vs 33.8%; agree 0.9985
+  SD1_20max1200: n=2 G1 8.88% vs 8.76%; cash 50.9% vs 50.7%; agree 0.9958
+
+## Frontier 8g_be1x2_S30k [spec]
+| Portfolio | swaps | secs | P(W) V | P(W) B | SE | washout scen B | diff vs eps0 (paired SE) | P(W) binomial | mean G1 loss | max G1 loss | C_SE150 | C_SE2000 | C_3max500 | C_20max3000 | C_150max8000 | SD0_SE50 | SD0_20max1200 | SD1_SE50 | SD1_20max1200 | SD2_SE50 | SD2_20max1200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| greedy | 0 | 0.0 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.00 | 0 | 1.28 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.02 | 0 | 1.27 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.05 | 0 | 1.45 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.10 | 0 | 1.69 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.20 | 0 | 1.62 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_1.00 | 0 | 1.5 | 0.000% | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| one_thesis_game0_over | None | None | n/a | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 10.5% | 32.9% | 0.737 +/- 0.053 | 0.754 +/- 0.034 | 0.671 +/- 0.021 | 0.833 +/- 0.009 | 0.901 +/- 0.005 | 0.952 +/- 0.017 | 1.001 +/- 0.006 | 1.000 +/- 0.000 | 1.011 +/- 0.008 | 1.000 +/- 0.000 | 0.983 +/- 0.008 |
+| one_thesis_games0-2_all_over | None | None | n/a | 0.000% | 0.000% | 0 | +0.000 pp (0.000) | 0.000% | 17.2% | 41.1% | 0.589 +/- 0.053 | 0.645 +/- 0.039 | 0.692 +/- 0.022 | 0.757 +/- 0.009 | 0.808 +/- 0.005 | 0.952 +/- 0.017 | 0.973 +/- 0.007 | 0.945 +/- 0.025 | 0.928 +/- 0.010 | 0.882 +/- 0.030 | 0.943 +/- 0.011 |
+shape (overlap within 150-max / across classic contests / SD SE vs 20max; distinct classic lineups of classic entries; share of entries exposed by game):
+  greedy: 1.102 / 1.452 / 3.167; distinct 66 of 85; exposure [0.644, 0.475, 0.475, 0.398, 0.415, 0.466, 0.415, 0.373]; classic entries with >=3 from game0 0.059
+  eps_0.00: 1.102 / 1.452 / 3.167; distinct 66 of 85; exposure [0.644, 0.475, 0.475, 0.398, 0.415, 0.466, 0.415, 0.373]; classic entries with >=3 from game0 0.059
+  eps_0.02: 1.102 / 1.452 / 3.167; distinct 66 of 85; exposure [0.644, 0.475, 0.475, 0.398, 0.415, 0.466, 0.415, 0.373]; classic entries with >=3 from game0 0.059
+  eps_0.05: 1.102 / 1.452 / 3.167; distinct 66 of 85; exposure [0.644, 0.475, 0.475, 0.398, 0.415, 0.466, 0.415, 0.373]; classic entries with >=3 from game0 0.059
+  eps_0.10: 1.102 / 1.452 / 3.167; distinct 66 of 85; exposure [0.644, 0.475, 0.475, 0.398, 0.415, 0.466, 0.415, 0.373]; classic entries with >=3 from game0 0.059
+  eps_0.20: 1.102 / 1.452 / 3.167; distinct 66 of 85; exposure [0.644, 0.475, 0.475, 0.398, 0.415, 0.466, 0.415, 0.373]; classic entries with >=3 from game0 0.059
+  eps_1.00: 1.102 / 1.452 / 3.167; distinct 66 of 85; exposure [0.644, 0.475, 0.475, 0.398, 0.415, 0.466, 0.415, 0.373]; classic entries with >=3 from game0 0.059
+  one_thesis_game0_over: 0.877 / 1.134 / 3.267; distinct 62 of 85; exposure [0.678, 0.508, 0.5, 0.381, 0.339, 0.449, 0.347, 0.322]; classic entries with >=3 from game0 0.212
+  one_thesis_games0-2_all_over: 0.771 / 1.053 / 3.367; distinct 60 of 85; exposure [0.678, 0.644, 0.559, 0.339, 0.339, 0.415, 0.322, 0.28]; classic entries with >=3 from game0 0.106
+price of insurance (vs eps 0): {"eps_0.02": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.05": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.10": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.20": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_1.00": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}}
+estimators (greedy portfolio, held-out): G1 quantile-threshold vs binomial; cash quantile vs binomial; scenario agreement
+  C_SE150: n=1 G1 1.85% vs 2.43%; cash 37.9% vs 37.9%; agree 0.9993
+  C_SE2000: n=1 G1 3.51% vs 3.53%; cash 38.8% vs 38.8%; agree 0.9994
+  C_3max500: n=3 G1 9.59% vs 9.85%; cash 70.2% vs 70.2%; agree 0.9983
+  C_20max3000: n=20 G1 39.18% vs 39.22%; cash 99.6% vs 99.6%; agree 0.9954
+  C_150max8000: n=60 G1 69.72% vs 69.60%; cash 100.0% vs 100.0%; agree 0.9947
+  SD0_SE50: n=1 G1 9.73% vs 10.41%; cash 33.9% vs 33.6%; agree 0.9982
+  SD0_20max1200: n=10 G1 31.78% vs 31.75%; cash 88.0% vs 88.0%; agree 0.9959
+  SD1_SE50: n=1 G1 6.79% vs 7.55%; cash 33.3% vs 33.3%; agree 0.9983
+  SD1_20max1200: n=10 G1 29.73% vs 29.85%; cash 98.1% vs 98.0%; agree 0.9929
+  SD2_SE50: n=1 G1 4.96% vs 6.02%; cash 34.9% vs 34.8%; agree 0.9978
+  SD2_20max1200: n=10 G1 25.80% vs 26.13%; cash 98.8% vs 98.8%; agree 0.9904
+
+## Frontier 8g_be1x2_S30k [small]
+| Portfolio | swaps | secs | P(W) V | P(W) B | SE | washout scen B | diff vs eps0 (paired SE) | P(W) binomial | mean G1 loss | max G1 loss | C_SE150 | C_SE2000 | C_3max500 | C_20max3000 | C_150max8000 | SD0_SE50 | SD0_20max1200 | SD1_SE50 | SD1_20max1200 | SD2_SE50 | SD2_20max1200 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| greedy | 0 | 0.0 | 0.487% | 0.493% | 0.040% | 148 | +0.337 pp (0.042) | 0.480% | 0.0% | 0.0% | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 |
+| eps_0.00 | 9 | 4.0 | 0.060% | 0.157% | 0.023% | 47 | +0.000 pp (0.000) | 0.158% | 0.1% | 2.7% | 1.000 +/- 0.000 | 1.012 +/- 0.037 | 1.052 +/- 0.043 | 1.000 +/- 0.000 | 0.982 +/- 0.009 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.974 +/- 0.023 | 1.000 +/- 0.000 | 0.973 +/- 0.021 |
+| eps_0.02 | 2 | 1.02 | 0.020% | 0.137% | 0.021% | 41 | -0.020 pp (0.023) | 0.138% | 0.3% | 4.5% | 1.000 +/- 0.000 | 1.012 +/- 0.037 | 1.052 +/- 0.043 | 1.000 +/- 0.000 | 0.956 +/- 0.011 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.974 +/- 0.023 | 1.000 +/- 0.000 | 0.973 +/- 0.021 |
+| eps_0.05 | 1 | 0.66 | 0.000% | 0.120% | 0.020% | 36 | -0.037 pp (0.022) | 0.120% | 0.6% | 8.1% | 1.000 +/- 0.000 | 1.012 +/- 0.037 | 1.052 +/- 0.043 | 1.000 +/- 0.000 | 0.919 +/- 0.011 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.974 +/- 0.023 | 1.000 +/- 0.000 | 0.973 +/- 0.021 |
+| eps_0.10 | 0 | 0.36 | 0.000% | 0.120% | 0.020% | 36 | -0.037 pp (0.022) | 0.120% | 0.6% | 8.1% | 1.000 +/- 0.000 | 1.012 +/- 0.037 | 1.052 +/- 0.043 | 1.000 +/- 0.000 | 0.919 +/- 0.011 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.974 +/- 0.023 | 1.000 +/- 0.000 | 0.973 +/- 0.021 |
+| eps_0.20 | 0 | 0.28 | 0.000% | 0.120% | 0.020% | 36 | -0.037 pp (0.022) | 0.120% | 0.6% | 8.1% | 1.000 +/- 0.000 | 1.012 +/- 0.037 | 1.052 +/- 0.043 | 1.000 +/- 0.000 | 0.919 +/- 0.011 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.974 +/- 0.023 | 1.000 +/- 0.000 | 0.973 +/- 0.021 |
+| eps_1.00 | 0 | 0.29 | 0.000% | 0.120% | 0.020% | 36 | -0.037 pp (0.022) | 0.120% | 0.6% | 8.1% | 1.000 +/- 0.000 | 1.012 +/- 0.037 | 1.052 +/- 0.043 | 1.000 +/- 0.000 | 0.919 +/- 0.011 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.974 +/- 0.023 | 1.000 +/- 0.000 | 0.973 +/- 0.021 |
+| one_thesis_game0_over | None | None | n/a | 0.980% | 0.057% | 294 | +0.823 pp (0.058) | 0.876% | 11.7% | 32.4% | 0.737 +/- 0.053 | 0.754 +/- 0.034 | 0.755 +/- 0.036 | 0.676 +/- 0.021 | 0.795 +/- 0.013 | 0.952 +/- 0.017 | 1.000 +/- 0.000 | 1.000 +/- 0.000 | 0.994 +/- 0.017 | 1.000 +/- 0.000 | 1.054 +/- 0.018 |
+| one_thesis_games0-2_all_over | None | None | n/a | 1.173% | 0.062% | 352 | +1.017 pp (0.066) | 1.064% | 18.3% | 41.1% | 0.589 +/- 0.053 | 0.645 +/- 0.039 | 0.641 +/- 0.040 | 0.692 +/- 0.021 | 0.718 +/- 0.013 | 0.952 +/- 0.017 | 1.000 +/- 0.000 | 0.945 +/- 0.025 | 0.952 +/- 0.023 | 0.882 +/- 0.030 | 0.968 +/- 0.029 |
+shape (overlap within 150-max / across classic contests / SD SE vs 20max; distinct classic lineups of classic entries; share of entries exposed by game):
+  greedy: 1.578 / 2.819 / 4.0; distinct 11 of 16; exposure [0.76, 0.48, 0.52, 0.44, 0.4, 0.4, 0.28, 0.24]; classic entries with >=3 from game0 0.062
+  eps_0.00: 1.378 / 2.458 / 3.5; distinct 14 of 16; exposure [0.72, 0.52, 0.48, 0.32, 0.36, 0.44, 0.2, 0.24]; classic entries with >=3 from game0 0.062
+  eps_0.02: 1.156 / 2.389 / 3.5; distinct 14 of 16; exposure [0.68, 0.48, 0.48, 0.4, 0.36, 0.4, 0.16, 0.24]; classic entries with >=3 from game0 0.062
+  eps_0.05: 1.044 / 2.292 / 3.5; distinct 14 of 16; exposure [0.68, 0.48, 0.52, 0.44, 0.32, 0.4, 0.16, 0.2]; classic entries with >=3 from game0 0.062
+  eps_0.10: 1.044 / 2.292 / 3.5; distinct 14 of 16; exposure [0.68, 0.48, 0.52, 0.44, 0.32, 0.4, 0.16, 0.2]; classic entries with >=3 from game0 0.062
+  eps_0.20: 1.044 / 2.292 / 3.5; distinct 14 of 16; exposure [0.68, 0.48, 0.52, 0.44, 0.32, 0.4, 0.16, 0.2]; classic entries with >=3 from game0 0.062
+  eps_1.00: 1.044 / 2.292 / 3.5; distinct 14 of 16; exposure [0.68, 0.48, 0.52, 0.44, 0.32, 0.4, 0.16, 0.2]; classic entries with >=3 from game0 0.062
+  one_thesis_game0_over: 1.089 / 2.25 / 4.0; distinct 10 of 16; exposure [0.76, 0.48, 0.52, 0.36, 0.2, 0.44, 0.16, 0.24]; classic entries with >=3 from game0 0.312
+  one_thesis_games0-2_all_over: 0.933 / 2.111 / 4.333; distinct 10 of 16; exposure [0.72, 0.72, 0.4, 0.24, 0.32, 0.28, 0.16, 0.16]; classic entries with >=3 from game0 0.0
+price of insurance (vs eps 0): {"eps_0.02": {"rel_washout_reduction_vs_eps0_pct": 12.76, "mean_g1_given_up_vs_eps0_pct": 0.245, "reduction_per_1pct_budget": 6.38, "reduction_per_1pct_realized_loss": 52.09, "pw_diff": -0.0002, "pw_diff_se": 0.000226}, "eps_0.05": {"rel_washout_reduction_vs_eps0_pct": 23.42, "mean_g1_given_up_vs_eps0_pct": 0.572, "reduction_per_1pct_budget": 4.68, "reduction_per_1pct_realized_loss": 40.95, "pw_diff": -0.000367, "pw_diff_se": 0.000224}, "eps_0.10": {"rel_washout_reduction_vs_eps0_pct": 23.42, "mean_g1_given_up_vs_eps0_pct": 0.572, "reduction_per_1pct_budget": 2.34, "reduction_per_1pct_realized_loss": 40.95, "pw_diff": -0.000367, "pw_diff_se": 0.000224}, "eps_0.20": {"rel_washout_reduction_vs_eps0_pct": 23.42, "mean_g1_given_up_vs_eps0_pct": 0.572, "reduction_per_1pct_budget": 1.17, "reduction_per_1pct_realized_loss": 40.95, "pw_diff": -0.000367, "pw_diff_se": 0.000224}, "eps_1.00": {"rel_washout_reduction_vs_eps0_pct": 23.42, "mean_g1_given_up_vs_eps0_pct": 0.572, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": 40.95, "pw_diff": -0.000367, "pw_diff_se": 0.000224}}
+estimators (greedy portfolio, held-out): G1 quantile-threshold vs binomial; cash quantile vs binomial; scenario agreement
+  C_SE150: n=1 G1 1.85% vs 2.43%; cash 37.9% vs 37.9%; agree 0.9993
+  C_SE2000: n=1 G1 3.51% vs 3.53%; cash 38.8% vs 38.8%; agree 0.9994
+  C_3max500: n=1 G1 3.26% vs 3.39%; cash 38.4% vs 38.3%; agree 0.9993
+  C_20max3000: n=3 G1 9.68% vs 9.71%; cash 69.9% vs 69.7%; agree 0.9984
+  C_150max8000: n=10 G1 23.87% vs 23.81%; cash 96.1% vs 96.0%; agree 0.997
+  SD0_SE50: n=1 G1 9.73% vs 10.41%; cash 33.9% vs 33.6%; agree 0.9982
+  SD0_20max1200: n=2 G1 13.34% vs 13.26%; cash 40.6% vs 40.6%; agree 0.9984
+  SD1_SE50: n=1 G1 6.79% vs 7.55%; cash 33.3% vs 33.3%; agree 0.9983
+  SD1_20max1200: n=2 G1 9.17% vs 9.14%; cash 43.8% vs 43.7%; agree 0.9984
+  SD2_SE50: n=1 G1 4.96% vs 6.02%; cash 34.9% vs 34.8%; agree 0.9978
+  SD2_20max1200: n=2 G1 6.76% vs 6.84%; cash 65.2% vs 64.9%; agree 0.9965
+
+## Counterfactual clusters 8g_be1_S30k: {"defs": [{"game": 0, "line": 219.0, "over_rate_vs_line": 0.488, "cutoff_used": 219.0}, {"game": 1, "line": 224.0, "over_rate_vs_line": 0.484, "cutoff_used": 224.0}, {"game": 2, "line": 235.5, "over_rate_vs_line": 0.503, "cutoff_used": 235.5}], "share_game0_over": 0.488, "share_all_over": 0.121}
+## Duplication-adjusted vs raw 8g_be1_S30k
+  C_SE150: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.02343 adj 0.02343 | dup-port raw 0.02343 adj 0.02343; share cand q>0 0.0004 min f 0.9871
+  C_SE2000: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.04733 adj 0.04733 | dup-port raw 0.04733 adj 0.04733; share cand q>0 0.0004 min f 0.864
+  C_3max500: n=3 same 3 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.11237 adj 0.11237 | dup-port raw 0.11237 adj 0.11237; share cand q>0 0.0004 min f 0.9577
+  C_20max3000: n=20 same 20 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.42417 adj 0.42417 | dup-port raw 0.42417 adj 0.42417; share cand q>0 0.0004 min f 0.7533
+  C_150max8000: n=60 same 60 jaccard 1.0; mean copies raw 0.03 dup 0.03; max copies raw 1.786 dup 1.786; G1 raw-port raw 0.72133 adj 0.71825 | dup-port raw 0.72133 adj 0.71825; share cand q>0 0.0004 min f 0.466
+  SD0_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.11263 adj 0.11263 | dup-port raw 0.11263 adj 0.11263; share cand q>0 0.2281 min f 0.774
+  SD0_20max1200: n=10 same 4 jaccard 0.25; mean copies raw 0.499 dup 0.085; max copies raw 2.345 dup 0.309; G1 raw-port raw 0.32943 adj 0.29307 | dup-port raw 0.3223 adj 0.31375; share cand q>0 0.2281 min f 0.0665
+  SD1_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.009 dup 0.009; max copies raw 0.009 dup 0.009; G1 raw-port raw 0.0806 adj 0.08025 | dup-port raw 0.0806 adj 0.08025; share cand q>0 0.6108 min f 0.9124
+  SD1_20max1200: n=10 same 1 jaccard 0.053; mean copies raw 1.126 dup 0.07; max copies raw 3.857 dup 0.27; G1 raw-port raw 0.3021 adj 0.21822 | dup-port raw 0.2808 adj 0.273; share cand q>0 0.6108 min f 0.1906
+  SD2_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.202 dup 0.202; max copies raw 0.202 dup 0.202; G1 raw-port raw 0.03747 adj 0.03392 | dup-port raw 0.03747 adj 0.03392; share cand q>0 0.547 min f 0.8308
+  SD2_20max1200: n=10 same 0 jaccard 0.0; mean copies raw 2.161 dup 0.104; max copies raw 5.662 dup 0.394; G1 raw-port raw 0.21567 adj 0.10632 | dup-port raw 0.1809 adj 0.17174; share cand q>0 0.547 min f 0.0931
+swap eps05 from greedy (production setting) 8g_be1_S30k: {'swaps': 0, 'pw_V': 0.0, 'min_ratio_V': 1.0}
+
+## Counterfactual clusters 8g_be1_S10k: {"defs": [{"game": 0, "line": 219.0, "over_rate_vs_line": 0.495, "cutoff_used": 219.0}, {"game": 1, "line": 224.0, "over_rate_vs_line": 0.484, "cutoff_used": 224.0}, {"game": 2, "line": 235.5, "over_rate_vs_line": 0.505, "cutoff_used": 235.5}], "share_game0_over": 0.495, "share_all_over": 0.123}
+## Duplication-adjusted vs raw 8g_be1_S10k
+  C_SE150: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.0223 adj 0.0223 | dup-port raw 0.0223 adj 0.0223; share cand q>0 0.0002 min f 0.9976
+  C_SE2000: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.0446 adj 0.0446 | dup-port raw 0.0446 adj 0.0446; share cand q>0 0.0002 min f 0.9658
+  C_3max500: n=3 same 3 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.1017 adj 0.1017 | dup-port raw 0.1017 adj 0.1017; share cand q>0 0.0002 min f 0.992
+  C_20max3000: n=20 same 20 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.4009 adj 0.4009 | dup-port raw 0.4009 adj 0.4009; share cand q>0 0.0002 min f 0.9566
+  C_150max8000: n=60 same 60 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.6881 adj 0.6881 | dup-port raw 0.6881 adj 0.6881; share cand q>0 0.0002 min f 0.8984
+  SD0_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.1085 adj 0.1085 | dup-port raw 0.1085 adj 0.1085; share cand q>0 0.2281 min f 0.774
+  SD0_20max1200: n=10 same 2 jaccard 0.111; mean copies raw 0.358 dup 0.144; max copies raw 0.872 dup 0.872; G1 raw-port raw 0.329 adj 0.29362 | dup-port raw 0.3261 adj 0.31267; share cand q>0 0.2281 min f 0.0665
+  SD1_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.009 dup 0.009; max copies raw 0.009 dup 0.009; G1 raw-port raw 0.0792 adj 0.07886 | dup-port raw 0.0792 adj 0.07886; share cand q>0 0.6108 min f 0.9124
+  SD1_20max1200: n=10 same 1 jaccard 0.053; mean copies raw 0.92 dup 0.1; max copies raw 2.638 dup 0.463; G1 raw-port raw 0.3068 adj 0.23021 | dup-port raw 0.2767 adj 0.26467; share cand q>0 0.6108 min f 0.1906
+  SD2_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.16 dup 0.16; max copies raw 0.16 dup 0.16; G1 raw-port raw 0.035 adj 0.03234 | dup-port raw 0.035 adj 0.03234; share cand q>0 0.547 min f 0.8308
+  SD2_20max1200: n=10 same 0 jaccard 0.0; mean copies raw 2.037 dup 0.113; max copies raw 4.497 dup 0.378; G1 raw-port raw 0.2165 adj 0.1037 | dup-port raw 0.1823 adj 0.17291; share cand q>0 0.547 min f 0.0931
+swap eps05 from greedy (production setting) 8g_be1_S10k: {'swaps': 0, 'pw_V': 0.0, 'min_ratio_V': 1.0}
+
+## Counterfactual clusters 8g_be0_S30k: {"defs": [{"game": 0, "line": 219.0, "over_rate_vs_line": 0.488, "cutoff_used": 219.0}, {"game": 1, "line": 224.0, "over_rate_vs_line": 0.484, "cutoff_used": 224.0}, {"game": 2, "line": 235.5, "over_rate_vs_line": 0.503, "cutoff_used": 235.5}], "share_game0_over": 0.488, "share_all_over": 0.121}
+## Duplication-adjusted vs raw 8g_be0_S30k
+  C_SE150: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.02923 adj 0.02923 | dup-port raw 0.02923 adj 0.02923; share cand q>0 0.0 min f 1.0
+  C_SE2000: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.05843 adj 0.05843 | dup-port raw 0.05843 adj 0.05843; share cand q>0 0.0 min f 1.0
+  C_3max500: n=3 same 3 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.12813 adj 0.12813 | dup-port raw 0.12813 adj 0.12813; share cand q>0 0.0 min f 1.0
+  C_20max3000: n=20 same 20 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.46907 adj 0.46907 | dup-port raw 0.46907 adj 0.46907; share cand q>0 0.0 min f 1.0
+  C_150max8000: n=60 same 60 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.76317 adj 0.76317 | dup-port raw 0.76317 adj 0.76317; share cand q>0 0.0 min f 1.0
+  SD0_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.12473 adj 0.12473 | dup-port raw 0.12473 adj 0.12473; share cand q>0 0.2127 min f 0.8125
+  SD0_20max1200: n=10 same 1 jaccard 0.053; mean copies raw 1.211 dup 0.076; max copies raw 5.369 dup 0.294; G1 raw-port raw 0.35257 adj 0.29703 | dup-port raw 0.33823 adj 0.33106; share cand q>0 0.2127 min f 0.0831
+  SD1_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.011 dup 0.011; max copies raw 0.011 dup 0.011; G1 raw-port raw 0.0921 adj 0.09161 | dup-port raw 0.0921 adj 0.09161; share cand q>0 0.6118 min f 0.9004
+  SD1_20max1200: n=10 same 4 jaccard 0.25; mean copies raw 1.632 dup 0.166; max copies raw 6.001 dup 0.671; G1 raw-port raw 0.33867 adj 0.25105 | dup-port raw 0.31437 adj 0.29601; share cand q>0 0.6118 min f 0.1661
+  SD2_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.197 dup 0.197; max copies raw 0.197 dup 0.197; G1 raw-port raw 0.04137 adj 0.03754 | dup-port raw 0.04137 adj 0.03754; share cand q>0 0.5441 min f 0.8326
+  SD2_20max1200: n=10 same 1 jaccard 0.053; mean copies raw 2.927 dup 0.208; max copies raw 5.554 dup 0.478; G1 raw-port raw 0.23377 adj 0.08789 | dup-port raw 0.19657 adj 0.17744; share cand q>0 0.5441 min f 0.0943
+swap eps05 from greedy (production setting) 8g_be0_S30k: {'swaps': 0, 'pw_V': 0.0, 'min_ratio_V': 1.0}
+
+## Counterfactual clusters 2g_be1_S30k: {"defs": [{"game": 0, "line": 219.0, "over_rate_vs_line": 0.487, "cutoff_used": 219.0}, {"game": 1, "line": 224.0, "over_rate_vs_line": 0.486, "cutoff_used": 224.0}], "share_game0_over": 0.487, "share_all_over": 0.239}
+## Duplication-adjusted vs raw 2g_be1_S30k
+  C_SE150: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.02653 adj 0.02653 | dup-port raw 0.02653 adj 0.02653; share cand q>0 0.1443 min f 0.9025
+  C_SE2000: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.0422 adj 0.0422 | dup-port raw 0.0422 adj 0.0422; share cand q>0 0.1443 min f 0.3789
+  C_3max500: n=3 same 3 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.09753 adj 0.09753 | dup-port raw 0.09753 adj 0.09753; share cand q>0 0.1443 min f 0.7204
+  C_20max3000: n=20 same 20 jaccard 1.0; mean copies raw 0.103 dup 0.103; max copies raw 0.596 dup 0.596; G1 raw-port raw 0.4028 adj 0.38924 | dup-port raw 0.4028 adj 0.38924; share cand q>0 0.1443 min f 0.2079
+  C_150max8000: n=60 same 60 jaccard 1.0; mean copies raw 0.758 dup 0.758; max copies raw 6.015 dup 6.015; G1 raw-port raw 0.72213 adj 0.64024 | dup-port raw 0.72213 adj 0.64024; share cand q>0 0.1443 min f 0.07
+  SD0_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.022 dup 0.022; max copies raw 0.022 dup 0.022; G1 raw-port raw 0.16753 adj 0.16574 | dup-port raw 0.16753 adj 0.16574; share cand q>0 0.5024 min f 0.7641
+  SD0_20max1200: n=10 same 2 jaccard 0.111; mean copies raw 1.636 dup 0.196; max copies raw 4.906 dup 0.571; G1 raw-port raw 0.40483 adj 0.28526 | dup-port raw 0.37483 adj 0.35133; share cand q>0 0.5024 min f 0.0633
+  SD1_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.003 dup 0.003; max copies raw 0.003 dup 0.003; G1 raw-port raw 0.05567 adj 0.05559 | dup-port raw 0.05567 adj 0.05559; share cand q>0 0.5347 min f 0.8702
+  SD1_20max1200: n=10 same 1 jaccard 0.053; mean copies raw 2.484 dup 0.085; max copies raw 6.287 dup 0.186; G1 raw-port raw 0.2663 adj 0.13841 | dup-port raw 0.22137 adj 0.21281; share cand q>0 0.5347 min f 0.1251
+swap eps05 from greedy (production setting) 2g_be1_S30k: {'swaps': 0, 'pw_V': 0.0, 'min_ratio_V': 1.0}
+
+## Counterfactual clusters 2g_be0_S30k: {"defs": [{"game": 0, "line": 219.0, "over_rate_vs_line": 0.487, "cutoff_used": 219.0}, {"game": 1, "line": 224.0, "over_rate_vs_line": 0.486, "cutoff_used": 224.0}], "share_game0_over": 0.487, "share_all_over": 0.239}
+## Duplication-adjusted vs raw 2g_be0_S30k
+  C_SE150: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.02673 adj 0.02673 | dup-port raw 0.02673 adj 0.02673; share cand q>0 0.1549 min f 0.9076
+  C_SE2000: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.04093 adj 0.04093 | dup-port raw 0.04093 adj 0.04093; share cand q>0 0.1549 min f 0.39
+  C_3max500: n=3 same 3 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.10327 adj 0.10327 | dup-port raw 0.10327 adj 0.10327; share cand q>0 0.1549 min f 0.7328
+  C_20max3000: n=20 same 20 jaccard 1.0; mean copies raw 0.256 dup 0.256; max copies raw 1.877 dup 1.877; G1 raw-port raw 0.42737 adj 0.40052 | dup-port raw 0.42737 adj 0.40052; share cand q>0 0.1549 min f 0.2225
+  C_150max8000: n=60 same 60 jaccard 1.0; mean copies raw 1.219 dup 1.219; max copies raw 7.146 dup 7.146; G1 raw-port raw 0.7706 adj 0.63959 | dup-port raw 0.7706 adj 0.63959; share cand q>0 0.1549 min f 0.076
+  SD0_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.02 dup 0.02; max copies raw 0.02 dup 0.02; G1 raw-port raw 0.1858 adj 0.184 | dup-port raw 0.1858 adj 0.184; share cand q>0 0.4814 min f 0.786
+  SD0_20max1200: n=10 same 2 jaccard 0.111; mean copies raw 2.176 dup 0.183; max copies raw 11.293 dup 0.525; G1 raw-port raw 0.43847 adj 0.31023 | dup-port raw 0.3935 adj 0.36663; share cand q>0 0.4814 min f 0.0711
+  SD1_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.003 dup 0.003; max copies raw 0.003 dup 0.003; G1 raw-port raw 0.06393 adj 0.06385 | dup-port raw 0.06393 adj 0.06385; share cand q>0 0.5319 min f 0.8854
+  SD1_20max1200: n=10 same 1 jaccard 0.053; mean copies raw 2.431 dup 0.158; max copies raw 6.371 dup 0.649; G1 raw-port raw 0.30033 adj 0.15735 | dup-port raw 0.24297 adj 0.22734; share cand q>0 0.5319 min f 0.1435
+swap eps05 from greedy (production setting) 2g_be0_S30k: {'swaps': 0, 'pw_V': 0.0, 'min_ratio_V': 1.0}
+
+## Counterfactual clusters 8g_be1x2_S30k: {"defs": [{"game": 0, "line": 219.0, "over_rate_vs_line": 0.488, "cutoff_used": 219.0}, {"game": 1, "line": 224.0, "over_rate_vs_line": 0.484, "cutoff_used": 224.0}, {"game": 2, "line": 235.5, "over_rate_vs_line": 0.503, "cutoff_used": 235.5}], "share_game0_over": 0.488, "share_all_over": 0.121}
+## Duplication-adjusted vs raw 8g_be1x2_S30k
+  C_SE150: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.0185 adj 0.0185 | dup-port raw 0.0185 adj 0.0185; share cand q>0 0.0002 min f 0.9871
+  C_SE2000: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.03513 adj 0.03513 | dup-port raw 0.03513 adj 0.03513; share cand q>0 0.0002 min f 0.864
+  C_3max500: n=3 same 3 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.09593 adj 0.09593 | dup-port raw 0.09593 adj 0.09593; share cand q>0 0.0002 min f 0.9577
+  C_20max3000: n=20 same 20 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.39177 adj 0.39177 | dup-port raw 0.39177 adj 0.39177; share cand q>0 0.0002 min f 0.7533
+  C_150max8000: n=60 same 60 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.69717 adj 0.69717 | dup-port raw 0.69717 adj 0.69717; share cand q>0 0.0002 min f 0.466
+  SD0_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.0 dup 0.0; max copies raw 0.0 dup 0.0; G1 raw-port raw 0.09733 adj 0.09733 | dup-port raw 0.09733 adj 0.09733; share cand q>0 0.2337 min f 0.7632
+  SD0_20max1200: n=10 same 4 jaccard 0.25; mean copies raw 0.249 dup 0.095; max copies raw 0.888 dup 0.363; G1 raw-port raw 0.31777 adj 0.29341 | dup-port raw 0.31277 adj 0.30217; share cand q>0 0.2337 min f 0.0629
+  SD1_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.017 dup 0.017; max copies raw 0.017 dup 0.017; G1 raw-port raw 0.0679 adj 0.06731 | dup-port raw 0.0679 adj 0.06731; share cand q>0 0.6191 min f 0.8854
+  SD1_20max1200: n=10 same 5 jaccard 0.333; mean copies raw 0.837 dup 0.099; max copies raw 2.993 dup 0.332; G1 raw-port raw 0.29727 adj 0.23394 | dup-port raw 0.28143 adj 0.26982; share cand q>0 0.6191 min f 0.1435
+  SD2_SE50: n=1 same 1 jaccard 1.0; mean copies raw 0.06 dup 0.06; max copies raw 0.06 dup 0.06; G1 raw-port raw 0.04957 adj 0.04812 | dup-port raw 0.04957 adj 0.04812; share cand q>0 0.5443 min f 0.8233
+  SD2_20max1200: n=10 same 2 jaccard 0.111; mean copies raw 2.6 dup 0.077; max copies raw 9.056 dup 0.27; G1 raw-port raw 0.25797 adj 0.1381 | dup-port raw 0.23193 adj 0.22337; share cand q>0 0.5443 min f 0.0884
+swap eps05 from greedy (production setting) 8g_be1x2_S30k: {'swaps': 0, 'pw_V': 0.0, 'min_ratio_V': 1.0}
+

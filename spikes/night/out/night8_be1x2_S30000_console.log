@@ -1,0 +1,51 @@
+night spike night8 S=30000 games=8 showdowns=3 workers=8 belief_err=1
+load before: {"system_cpu_pct": 18.6, "avail_gb": 7.75, "other_python": [{"pid": 13916, "cpu_pct": 0.0, "cmd": "C:\\Users\\benja\\Documents\\Claude\\nba-dfs\\spikes\\.venv\\Scripts\\python.exe s09_pretip_poller.py"}, {"pid": 75200, "cpu_pct": 0.0, "cmd": "cal/Temp/claude/C--Users-benja-Documents-Claude-nba-dfs/547a3a0e-19d4-4772-b7e2-1e73ed37e4cd/scratchpad/loadgate.py 7000"}, {"pid": 78600, "cpu_pct": 0.0, "cmd": "cal/Temp/claude/C--Users-benja-Documents-Claude-nba-dfs/547a3a0e-19d4-4772-b7e2-1e73ed37e4cd/scratchpad/loadgate.py 7000"}, {"pid": 130468, "cpu_pct": 0.0, "cmd": "cal/Temp/claude/C--Users-benja-Documents-Claude-nba-dfs/547a3a0e-19d4-4772-b7e2-1e73ed37e4cd/scratchpad/loadgate.py 7000"}, {"pid": 131588, "cpu_pct": 0.0, "cmd": "night_spike.py --games 8 --showdowns 3 --S 30000 --workers 8 --belief-err 1 --berr-scale 2 --tag night8 --skip-simtiming"}, {"pid": 133704, "cpu_pct": 0.0, "cmd": "C:\\Users\\benja\\Documents\\Claude\\nba-dfs\\spikes\\.venv\\Scripts\\python.exe s09_pretip_poller.py"}, {"pid": 152208, "cpu_pct": 0.0, "cmd": "cal/Temp/claude/C--Users-benja-Documents-Claude-nba-dfs/547a3a0e-19d4-4772-b7e2-1e73ed37e4cd/scratchpad/loadgate.py 7000"}]}
+[step] setup_pool_pilot_projections: 1.17 s wall, 1.1 s cpu, 0.95 cores busy
+[step] sim_A_V: 6.61 s wall, 6.2 s cpu, 0.94 cores busy
+sim sanity: {"star": {"player": 160, "pos": "PF/C", "tier": "star", "base_min": 34.5, "n": 15000, "mean": 52.94, "sd": 22.73, "p01": 15.1, "p50": 49.3, "p99": 123.1, "dd_rate": 0.7202, "td_rate": 0.0578}, "role_player": {"player": 17, "pos": "C", "tier": "starter", "base_min": 27.2, "n": 15000, "mean": 24.71, "sd": 11.98, "p01": 5.3, "p50": 22.5, "p99": 62.4, "dd_rate": 0.1133, "td_rate": 0.0002}, "beneficiary_when_q0_active": {"player": 5, "pos": "PG/SG", "tier": "bench", "base_min": 23.6, "n": 7456, "mean": 18.51, "sd": 10.97, "p01": 2.9, "p50": 16.3, "p99": 56.2, "dd_rate": 0.0541, "td_rate": 0.003}, "beneficiary_when_q0_out": {"player": 5, "pos": "PG/SG", "tier": "bench", "base_min": 23.6, "n": 7544, "mean": 34.55, "sd": 18.43, "p01": 8.3, "p50": 30.8, "p99": 96.4, "dd_rate": 0.0541, "td_rate": 0.003}, "top_big": {"player": 160, "pos": "PF/C", "tier": "star", "base_min": 34.5, "n": 15000, "mean": 52.94, "sd": 22.73, "p01": 15.1, "p50": 49.3, "p99": 123.1, "dd_rate": 0.7202, "td_rate": 0.0578}}
+corr teammates/opponents: 0.0869 0.0128 OT 0.0364
+sim timing {}
+[step] pool_spawn: 0.63 s wall, 2.2 s cpu, 3.50 cores busy
+[step] field_classic_milp: 3.90 s wall, 24.0 s cpu, 6.15 cores busy
+[step] field_classic_sampler: 2.41 s wall, 2.8 s cpu, 1.15 cores busy
+classic field: 2000 MILP (0 bad) median 10.0 ms; sampler accept 0.125; pool unique 22000
+[step] field_showdown: 3.12 s wall, 3.5 s cpu, 1.14 cores busy
+[step] thresholds_AV_classic: 56.46 s wall, 92.6 s cpu, 1.64 cores busy
+[step] thresholds_AV_showdown: 107.34 s wall, 204.2 s cpu, 1.90 cores busy
+[step] cand_classic_milp: 6.20 s wall, 39.9 s cpu, 6.43 cores busy
+[step] pool_close: 0.07 s wall, 0.0 s cpu, 0.22 cores busy
+classic candidates: 4500 solves -> 4487 unique, invalid 0; worker RSS 280.0 MB
+[step] cand_showdown_screen: 1.27 s wall, 1.2 s cpu, 0.99 cores busy
+profiles: {'n25': 25, 'n50': 50, 'n118': 118, 'n200': 200}
+[step] bitsets_A: 11.61 s wall, 25.0 s cpu, 2.15 cores busy
+[step] select_greedy_A: 0.31 s wall, 0.3 s cpu, 0.90 cores busy
+[step] counterfactual_select: 0.96 s wall, 1.0 s cpu, 1.03 cores busy
+[step] dup_adjusted_greedy: 3.63 s wall, 3.5 s cpu, 0.97 cores busy
+[step] bitsets_V: 18.72 s wall, 31.4 s cpu, 1.68 cores busy
+[step] select_swap_eps05_from_greedy: 1.21 s wall, 1.1 s cpu, 0.89 cores busy
+[n118] eps 0.00: swaps 0 pw_V 0.00000 min ratio_V 1.0000 (1.28 s)
+[n118] eps 0.02: swaps 0 pw_V 0.00000 min ratio_V 1.0000 (1.27 s)
+[n118] eps 0.05: swaps 0 pw_V 0.00000 min ratio_V 1.0000 (1.45 s)
+[n118] eps 0.10: swaps 0 pw_V 0.00000 min ratio_V 1.0000 (1.69 s)
+[n118] eps 0.20: swaps 0 pw_V 0.00000 min ratio_V 1.0000 (1.62 s)
+[n118] eps 1.00: swaps 0 pw_V 0.00000 min ratio_V 1.0000 (1.5 s)
+[step] select_swap_frontier_spec: 8.82 s wall, 7.7 s cpu, 0.87 cores busy
+[n25] eps 0.00: swaps 9 pw_V 0.00060 min ratio_V 1.0000 (4.0 s)
+[n25] eps 0.02: swaps 2 pw_V 0.00020 min ratio_V 0.9817 (1.02 s)
+[n25] eps 0.05: swaps 1 pw_V 0.00000 min ratio_V 0.9601 (0.66 s)
+[n25] eps 0.10: swaps 0 pw_V 0.00000 min ratio_V 0.9601 (0.36 s)
+[n25] eps 0.20: swaps 0 pw_V 0.00000 min ratio_V 0.9601 (0.28 s)
+[n25] eps 1.00: swaps 0 pw_V 0.00000 min ratio_V 0.9601 (0.29 s)
+[step] select_swap_frontier_small: 6.63 s wall, 5.6 s cpu, 0.85 cores busy
+[step] evalB_sim: 6.80 s wall, 6.4 s cpu, 0.95 cores busy
+[step] evalB_thresholds: 140.82 s wall, 214.1 s cpu, 1.52 cores busy
+washout by profile (greedy, pure goal 1): {"n25": [25, 0.004933, 148, 0.004798], "n50": [50, 3.3e-05, 1, 4e-05], "n118": [118, 0.0, 0, 0.0], "n200": [200, 0.0, 0, 0.0]}
+[spec] frontier B (pw, se, count, mean loss %, max loss %, swaps): {"greedy": [0.0, 0.0, 0, 0.0, 0.0, 0], "eps_0.00": [0.0, 0.0, 0, 0.0, 0.0, 0], "eps_0.02": [0.0, 0.0, 0, 0.0, 0.0, 0], "eps_0.05": [0.0, 0.0, 0, 0.0, 0.0, 0], "eps_0.10": [0.0, 0.0, 0, 0.0, 0.0, 0], "eps_0.20": [0.0, 0.0, 0, 0.0, 0.0, 0], "eps_1.00": [0.0, 0.0, 0, 0.0, 0.0, 0], "one_thesis_game0_over": [0.0, 0.0, 0, 10.516, 32.905, null], "one_thesis_games0-2_all_over": [0.0, 0.0, 0, 17.155, 41.081, null]}
+[spec] price: {"eps_0.02": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.05": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.10": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_0.20": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}, "eps_1.00": {"rel_washout_reduction_vs_eps0_pct": null, "mean_g1_given_up_vs_eps0_pct": 0.0, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": null, "pw_diff": 0.0, "pw_diff_se": 0.0}}
+[small] frontier B (pw, se, count, mean loss %, max loss %, swaps): {"greedy": [0.004933, 0.000405, 148, 0.0, 0.0, 0], "eps_0.00": [0.001567, 0.000228, 47, 0.057, 2.663, 9], "eps_0.02": [0.001367, 0.000213, 41, 0.302, 4.455, 2], "eps_0.05": [0.0012, 0.0002, 36, 0.629, 8.058, 1], "eps_0.10": [0.0012, 0.0002, 36, 0.629, 8.058, 0], "eps_0.20": [0.0012, 0.0002, 36, 0.629, 8.058, 0], "eps_1.00": [0.0012, 0.0002, 36, 0.629, 8.058, 0], "one_thesis_game0_over": [0.0098, 0.000569, 294, 11.661, 32.392, null], "one_thesis_games0-2_all_over": [0.011733, 0.000622, 352, 18.338, 41.081, null]}
+[small] price: {"eps_0.02": {"rel_washout_reduction_vs_eps0_pct": 12.76, "mean_g1_given_up_vs_eps0_pct": 0.245, "reduction_per_1pct_budget": 6.38, "reduction_per_1pct_realized_loss": 52.09, "pw_diff": -0.0002, "pw_diff_se": 0.000226}, "eps_0.05": {"rel_washout_reduction_vs_eps0_pct": 23.42, "mean_g1_given_up_vs_eps0_pct": 0.572, "reduction_per_1pct_budget": 4.68, "reduction_per_1pct_realized_loss": 40.95, "pw_diff": -0.000367, "pw_diff_se": 0.000224}, "eps_0.10": {"rel_washout_reduction_vs_eps0_pct": 23.42, "mean_g1_given_up_vs_eps0_pct": 0.572, "reduction_per_1pct_budget": 2.34, "reduction_per_1pct_realized_loss": 40.95, "pw_diff": -0.000367, "pw_diff_se": 0.000224}, "eps_0.20": {"rel_washout_reduction_vs_eps0_pct": 23.42, "mean_g1_given_up_vs_eps0_pct": 0.572, "reduction_per_1pct_budget": 1.17, "reduction_per_1pct_realized_loss": 40.95, "pw_diff": -0.000367, "pw_diff_se": 0.000224}, "eps_1.00": {"rel_washout_reduction_vs_eps0_pct": 23.42, "mean_g1_given_up_vs_eps0_pct": 0.572, "reduction_per_1pct_budget": null, "reduction_per_1pct_realized_loss": 40.95, "pw_diff": -0.000367, "pw_diff_se": 0.000224}}
+dup: {"C_SE150": [1, 1, 0.0, 0.0, 0.0185, 0.0185], "C_SE2000": [1, 1, 0.0, 0.0, 0.03513, 0.03513], "C_3max500": [3, 3, 0.0, 0.0, 0.09593, 0.09593], "C_20max3000": [20, 20, 0.0, 0.0, 0.39177, 0.39177], "C_150max8000": [60, 60, 0.0, 0.0, 0.69717, 0.69717], "SD0_SE50": [1, 1, 0.0, 0.0, 0.09733, 0.09733], "SD0_20max1200": [4, 10, 0.249, 0.095, 0.29341, 0.30217], "SD1_SE50": [1, 1, 0.017, 0.017, 0.06731, 0.06731], "SD1_20max1200": [5, 10, 0.837, 0.099, 0.23394, 0.26982], "SD2_SE50": [1, 1, 0.06, 0.06, 0.04812, 0.04812], "SD2_20max1200": [2, 10, 2.6, 0.077, 0.1381, 0.22337]}
+[step] evalB_score_portfolios: 5.69 s wall, 5.7 s cpu, 1.00 cores busy
+memory: {"peak_self_wset_mb": 1414.2, "sampled_peak_self_mb": 1408.2, "sampled_peak_children_mb": 286.0, "sampled_peak_total_mb": 1408.2, "note": "total = this process + pool workers, sampled every 50 ms"}
+first full build (s): 221.0 total wall: 401.5
+WROTE C:\Users\benja\Documents\Claude\nba-dfs\spikes\night\out\20261013-1938_night8_be1x2_S30000.json

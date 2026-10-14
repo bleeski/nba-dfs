@@ -71,12 +71,13 @@ So this design puts delivery first, keeps Phase 1 thin, requires every piece of 
 - `X_L(s)` is lineup `L`'s score in scenario `s`; `B_c(s)` is our best entry's score in contest `c`.
 - `F_{c,s}(x)` is the probability that one simulated opponent in contest `c` scores at most `x` in scenario `s`, estimated by scoring a large weighted sample of simulated opponent lineups.
 
-### Two kinds of uncertainty in every scenario
+### Three kinds of uncertainty in every scenario
 
 1. **Outcome noise:** how the games go (pace, margin, overtime, minutes, shooting).
-2. **Model error:** how wrong our beliefs are. Each scenario also draws a shift in each team's and each player's expected production (sized from our own past projection errors by salary tier and role, wider in October and for rookies), a slate-wide scoring-environment shift, and **one ownership shock per slate that every contest on that slate shares**.
+2. **Symmetric model error:** each scenario draws a shift in each team's and each player's expected production (sized from our own past projection errors by salary tier and role, wider in October and for rookies) and **one ownership shock per slate that every contest on that slate shares**.
+3. **Edge uncertainty (one-directional error):** in each scenario, the true expectation for every player is drawn between the public view and our view, with the weight on our view drawn once per scenario and shared by every player and contest that night. On scenarios where that weight is low, every bet where we disagreed with the public fails together, in every contest at once. The weight starts low and wide (BET) and is fitted from how our projections score against consensus over time.
 
-Why: without model error, the simulation treats our projections as the truth, and on a night of about 100 entries across 10 contests it says a washout essentially never happens. An earlier benchmark run without this layer showed exactly that (P(washout) of 0.0 on an 11-contest, 118-entry synthetic night, RT1 reading the benchmark's debug output). Real washouts come from shared errors: a game we misjudged, ownership we misjudged on every contest of a slate. Effect with the layer: TODO-R9. The layer's size is a setting fitted from the scorecards, starting from BET values.
+**Why all three (R9, VERIFIED on a synthetic night):** with outcome noise alone, or with symmetric model error added, a 118-entry, 11-contest night showed **zero washouts in 30,000 fresh scenarios** (under 0.01% at 95% confidence), and doubling the symmetric errors changed nothing, because symmetric errors hit us and the field alike. At 25 entries washout was about 0.5% (8-game night) to 1.0% (2-game night). The synthetic engine also had far more skill than any real one: its single entries cashed 31% to 44% of the time against 22% of the field paid, where your real NBA entries cashed 13% (R8). Real washouts come from being confidently wrong in one direction, which only the third layer represents. Its measured effect: TODO-EDGE (a follow-up benchmark run). Until real nights calibrate it, every washout number in the brief is labeled as a model estimate.
 
 ### Goal 1: top-1% probability per contest
 
@@ -92,7 +93,7 @@ G1_c (raw) = average over scenarios of  max over L in E_c of  P(top 1% in c | s,
 - **Duplication:** the duplication-adjusted version replaces each term with `P(top 1% in c | s, L) x share_c(L, s)`, where `share_c` is the expected fraction of the prize kept, averaged over the distribution of the number of opponent copies (not computed at the average number of copies). DraftKings pools tied places' prizes and splits them evenly (terms, VERIFIED). A five-way tie for first in a top-heavy contest keeps about a fifth of first-place money; a tie deep in the top 1%, where neighboring prizes are nearly equal, keeps nearly all of it. Taking the maximum over our entries of probability x share keeps the "adding a lineup never hurts" property that the selection method's quality guarantee relies on (RT1 rank 8).
 - **When it switches on (Decision D2):** opening week selects on the raw probability and shows the duplication-adjusted number beside it, because duplicate rates in the simulated field are unfitted guesses until real NBA standings exist. Selection switches to the adjusted version after at least five NBA Showdown standings files have fitted the duplicate rate.
 - **Big-field first place:** a sampled field resolves the top 1% (thousands of samples above the line) but not first place in a 35,000-entry contest. P(first) and P(top 0.1%) are reported beside Goal 1 from a fitted upper tail; your NFL engine overpriced first place 18x to 280x from a raw sample (RR2, VERIFIED).
-- **Small fields:** for fields under about 1,000, per-scenario probabilities are stored (8-bit), not just hit or miss, because a single sampled line is too noisy when one place counts.
+- **Small fields:** for fields under about 1,000, per-scenario probabilities are stored (8-bit), not just hit or miss, and Goal 1 for first-place contests is always reported with the binomial formula: the faster "did it clear the line" estimate understated first-place odds by 7% to 38% relative, while agreeing within 0.2 points for large contests and cash lines (R9, VERIFIED).
 
 ### Goal 2: probability of a total washout
 
@@ -104,7 +105,8 @@ P(W) = average over scenarios of  product over contests c of  P(no cash in c | s
 
 - Contests are treated as independent only after conditioning on the scenario, and the scenario now carries the shared errors (a misjudged game, a misjudged slate's ownership) that make contests fail together.
 - **Delivery is part of Goal 2.** A blank entry cannot cash. The brief reports unfilled entries next to `P(W)`.
-- **Reported two ways:** with and without the model-error layer, so you can see how much of the risk is "the games" and how much is "us being wrong".
+- **Reported two ways:** with and without the edge-uncertainty layer, so you can see how much of the risk is "the games" and how much is "us being wrong".
+- **At your planned volume, washout is mostly a delivery and concentration risk.** On the synthetic night, a 60-entry 150-max portfolio cashed at least one entry in every one of 30,000 scenarios (R9). Until edge uncertainty is calibrated on real nights, treat any washout estimate at 50 or more entries as a lower bound, and watch the unfilled-entry count and the concentration report first.
 
 ### The control: the insurance budget
 
@@ -116,22 +118,34 @@ subject to G1_c >= (1 - epsilon) x G1*_c for every contest c.
 
 - In words: "I'll give up at most epsilon of my top-1% odds, in every contest, to lower the chance of a night with zero cashes." At 0% the engine maximizes top-1% odds and uses washout only to break ties.
 - Each contest keeps its own guarantee, so no contest is quietly sacrificed and no weighting between contests is needed. The setting means the same thing on a 3-contest night and a 12-contest night (ADR-001).
-- **How it is enforced (RT1 rank 7):** start from each contest's own best portfolio, then search single-lineup swaps in any contest, accepting a swap only if it lowers `P(W)` and every contest still meets its guarantee, both measured on a **validation scenario set** that selection never saw. Every later step (local improvement, QA, late swap) re-checks the guarantee.
+- **How it is enforced (RT1 rank 7):** start from each contest's own best portfolio, then search single-lineup swaps in any contest, accepting a swap only if it lowers `P(W)` and every contest keeps at least `(1 - epsilon) x G1*_c` **minus a safety margin of two standard errors**, measured on a **validation scenario set** that selection never saw. Every later step (local improvement, QA, late swap) re-checks the guarantee.
+- **Why the margin:** without it the search exploits noise in the validation set. On the synthetic night a contest held to a 5% budget actually kept 0.919 of its top-1% odds on fresh scenarios (about 8% lost, four standard errors beyond the budget), and single contests lost 8% to 14% at 2% to 5% budgets. Even swaps that only break ties cost 0.2% to 3.4% out of sample (R9, VERIFIED). The brief reports each contest's realized ratio on the reporting set.
 - **Noise floor:** a budget smaller than two standard errors of a contest's Goal 1 estimate is reported as "within noise" for that contest, because it cannot be enforced honestly.
-- **When washout is not a live tradeoff:** if `P(W)` at 0% is under 1% (with the model-error layer), the brief says "washout risk is negligible tonight" and skips the search.
-- **Default (Decision D3):** TODO-R9. You prefer large prizes (your NFL instruction was to "err on side of trying to win large prizes", RR2), so the recommendation leans low.
+- **When washout is not a live tradeoff:** if `P(W)` at 0% is under 1% (with the edge-uncertainty layer), the brief says "washout risk is negligible tonight" and skips the search. At your planned volume this will be the usual case until real nights say otherwise; during a volume ramp (Decision D9) the search matters more.
+- **Default (Decision D3): 2%,** enforced with the safety margin. On the synthetic 25-entry nights, a 2% budget removed 70% to 92% of washout risk for 0.4% to 3.5% of average top-1% odds, and 5% added little more (R9). You prefer large prizes (your NFL instruction was to "err on side of trying to win large prizes", RR2), so the default stays small.
 
 ### How the goals trade off, and the hunch test
 
 Both goals depend on the same thing: which ways the night can unfold that our entries cover. Goal 1 wants each contest's best entry above that contest's top-1% line in as many scenarios as possible; Goal 2 wants, in every scenario, at least one contest above its much lower cash line. Both reward covering different scenarios, which is your hunch. They disagree in three places: target height (a ceiling build gives up some floor, directly so in single-entry contests), cross-contest concentration (Goal 1 does not care whether every contest leans on the same game; Goal 2 does), and night composition (Showdowns depend on one game each).
 
-**Evidence so far.** Between lineups, the literature agrees with the hunch: lowering the correlation among our entries raises the chance at least one is top 1% and lowers the washout chance (Hunter, Vielma and Zaman; Haugh and Singal; R2, R5). Concentration is a measured washout cause: in your NFL data, 85% or more of entries on one player raised the zero-paid rate 1.4x to 12x (RR2, VERIFIED). On a synthetic night shaped like your volume: TODO-R9. Status: BET until measured on real fields.
+**Evidence so far.** Between lineups, the literature agrees with the hunch: lowering the correlation among our entries raises the chance at least one is top 1% and lowers the washout chance (Hunter, Vielma and Zaman; Haugh and Singal; R2, R5). Concentration is a measured washout cause: in your NFL data, 85% or more of entries on one player raised the zero-paid rate 1.4x to 12x (RR2, VERIFIED).
+
+On synthetic nights shaped like your volume (R9, VERIFIED as measurements, BET as a description of real nights):
+
+| Finding | Number |
+|---|---|
+| Washout at 118 entries, 11 contests | 0 in 30,000 fresh scenarios, with or without symmetric model error, so there was nothing to trade |
+| Washout at 25 entries | 0.51% (8-game night) and 1.00% (2-game night) for the pure top-1% portfolio |
+| Price of insurance at 25 entries | a 2% budget removed 70% to 92% of washout risk for 0.4% to 3.5% of average top-1% odds; 5% removed 80% to 94% for 0.7% to 2.7% |
+| Building every contest on one thesis ("games 0 to 2 all go over") | cut average top-1% odds 6.5% to 11.7% (worst contest 19% to 28%) and, at 25 entries, raised washout from 0.51% to 1.42% |
+
+So on these nights the hunch holds where it can be tested: covering different ways the night unfolds serves both goals, most washout risk disappears for a few percent of top-1% odds, and betting on one script everywhere hurts both. With edge uncertainty included: TODO-EDGE. Status: BET until measured on real fields.
 
 **The test, on real fields (RT1 rank 3).** Each night the engine stores three portfolios: insurance 0%, insurance 20%, and the lowest-washout portfolio the search can find. Next morning each is scored against the real standings: top-1% finishes and whether it would have washed out. After 20 nights the brief gives a verdict with an interval. The model's own frontier is shown nightly too, but a model cannot confirm itself; real fields decide.
 
 ### How each goal is estimated, and how precise it is
 
-- **Three scenario sets** (RT1 rank 18): a **screening** set (10,000) shortlists candidates; an independent **selection** set (10,000) drives the greedy method and the insurance search; an independent **reporting and validation** set (30,000) produces every number in the brief and checks the insurance guarantees. Picking the best of thousands of candidates on one set flatters them; checking on a fresh set removes the flattery.
+- **Four independent scenario sets** (RT1 rank 18; R9): a **screening** set (5,000) shortlists candidates; a **selection** set (15,000) drives the greedy method; a **validation** set (15,000) drives the insurance search and its guarantees; a **reporting** set (30,000) produces every number in the brief. Picking the best of thousands of candidates on one set flatters them (greedy's in-sample top-1% probabilities ran 0.7 to 3 points high, R2), and a search checked on one set exploits that set's noise (R9), so each job gets fresh scenarios.
 - **Precision:** with 30,000 scenarios, a 1% probability has a standard error of about 0.06 percentage points (about 6% relative) and a 5% probability about 0.13 points (VERIFIED arithmetic).
 - **Common random numbers:** every comparison uses the same scenarios, which cut comparison noise 1.6x in a toy test (R3, VERIFIED) and more when lineups overlap.
 - **Precision is not accuracy.** The learning loop checks the model against reality with dense signals: predicted cash probability per entry against realized cashes (50 to 200 entries a night), predicted top-1% and min-cash lines against the actual lines in every standings file, and how much our nightly cash rate varies compared with what the model predicts (which is what sizes the model-error layer).
@@ -342,7 +356,7 @@ Not chosen: a possession-by-possession simulator (far more parameters to calibra
 
 **Determinism (ADR-021):** every random draw is keyed by (run seed, scenario index, game, person, stat) with a counter-based generator; no solver time limits; stable sort orders. Your NHL and golf engines gave different lineups from the same inputs (RR3).
 
-**Runtime:** TODO-R9.
+**Runtime (R9, VERIFIED on a synthetic 8-game night of 208 players):** simulating the whole night takes 1.9 seconds for 10,000 scenarios and 6.7 seconds for 30,000, on one core. Simulation is never the bottleneck. The synthetic simulator's outputs were sane: game totals within 1.4 points of the betting totals, margins around the spread with a standard deviation of 12.7 to 12.9, teammate correlation about -0.02 and opponent correlation about +0.02 without model error. Its player spreads were a little wide (a star's standard deviation was 0.30 to 0.34 of his mean, against about 0.22 to 0.25 in real data), so its tails are conservative; calibration against last season (section 11) tightens them.
 
 ### Correlation, and what it means for Classic and Showdown
 
@@ -412,7 +426,12 @@ Opponents are sampled **as users**, not as independent lineups: a multi-entry us
 - Top-1% and min-cash lines follow from the binomial formulas in section 2 (beta-binomial once clustering is fitted); fields under 200 size the field sample so first place is resolved; P(first) in large fields uses a fitted upper tail.
 - Each morning, the realized top-1% and min-cash scores are placed within the predicted distribution; over many contests those positions should be spread evenly.
 
-**Runtime and memory:** TODO-R9.
+**Runtime and memory (R9, VERIFIED on a synthetic 8-game night, 8 worker processes, 14% to 19% background CPU):**
+
+- Building fields: 2,000 optimizer-like Classic opponents (GLPK) in 3.8 seconds; 20,000 casual Classic opponents in 2.4 seconds; three Showdown fields (about 1.35 million legal lineups each, enumerated) in 3.3 seconds.
+- Computing every contest's top-1% and cash lines in every scenario is the expensive step: **72% of the build** (152 of 211 seconds at 30,000 scenarios). Phase 1 keeps it chunked and limits it to slates that changed; a compiled sort or fewer field lineups are the first optimizations if needed.
+- Peak memory for the whole build: **1.66 GB** including workers, under the 3 GB budget.
+- Field realism to fix in calibration: the synthetic field's most-owned Classic player was only 22%, flatter than real NBA chalk (often 40% or more), which lowers field lines and makes duplicates rarer than real (BET).
 
 ---
 
@@ -432,16 +451,16 @@ The engine builds a wide pool of legal lineups that each win some plausible vers
 - **Formulation:** one yes/no variable per player plus position-feasibility rows, 5x to 25x faster than the "player in slot" model with identical lineups (R2, VERIFIED). Slot assignment is a separate later step.
 - **No wall-clock limits, single-threaded solves, and a deterministic tie-break** (a tiny fixed perturbation keyed by each player's stable identifier), because every solver found the same optimal value but often returned different equally good lineups (R2, VERIFIED). The same inputs then give the same lineups (ADR-021).
 - **R2 recommended OR-Tools CBC as primary** for maintenance reasons; this design keeps GLPK for its roughly 10x speed and makes OR-Tools CBC the automatic fallback (disagreement recorded in ADR-006).
-- **Pool size:** about 4,000 to 20,000 per Classic slate. Runtime: TODO-R9.
+- **Pool size:** about 4,000 to 20,000 per Classic slate. On the synthetic 208-player night, 4,500 candidate solves took 6.7 seconds on 8 workers (median 6.4 milliseconds each, 0 invalid lineups in 6,500) (R9, VERIFIED).
 
 **Showdown** (Captain plus 5 UTIL, both teams): every legal lineup is listed (about 440,000 for a 22-player pool in 0.015 seconds, R2, VERIFIED), then screened before full scoring. No solver is needed.
 
 ### Selection against the goals
 
-1. **Screen:** score every candidate on the screening scenario set; shortlist the strongest few thousand per contest.
-2. **Re-score the shortlist** on the independent selection set, storing per-scenario top-1% and cash results (bits for big fields, 8-bit probabilities for fields under about 1,000).
+1. **Screen:** score every candidate on the screening scenario set (5,000); shortlist the strongest few thousand per contest.
+2. **Re-score the shortlist** on the independent selection set (15,000), storing per-scenario top-1% and cash results (bits for big fields, 8-bit probabilities for fields under about 1,000).
 3. **Per contest, lazy greedy coverage:** repeatedly add the candidate that adds the most top-1% probability given the entries already chosen (raw probability in opening week; duplicate-adjusted once calibrated). Because the objective takes the best of our entries in each scenario, adding a lineup never lowers it, so greedy selection is provably at least about 63% as good as the best set from the same pool, and usually much closer (R2, VERIFIED theorems). The result is each contest's best Goal 1, `G1*_c`.
-4. **Night insurance search:** starting from step 3, single-lineup swaps in any contest that lower washout while every contest keeps at least `(1 - epsilon) x G1*_c`, checked on the reporting and validation set. Skipped, with a line in the brief, when washout at 0% is under 1%.
+4. **Night insurance search:** starting from step 3, single-lineup swaps in any contest that lower washout while every contest keeps at least `(1 - epsilon) x G1*_c` minus a two-standard-error safety margin, checked on the validation set (15,000). Skipped, with a line in the brief, when washout at 0% is under 1%. The search took about 1 second on the synthetic night (R9).
 5. **Local improvement:** deterministic single-player swaps (for example a near-identical player with lower public ownership) kept only if they beat simulation noise without breaking any guarantee.
 6. **Report** every number from the reporting set. On synthetic data, greedy selection's in-sample top-1% probabilities ran 0.7 to 3 points too high, while on fresh scenarios it still beat simply taking the top projections (47% against 35% with 20 entries) (R2, VERIFIED on synthetic data), which is why selection and reporting never share scenarios.
 7. **Memory:** candidate scoring uses matrix multiplication rather than index gathers (a naive version peaked at 3.5 GB; the rewrite at 645 MB, R2), and processes scenarios in chunks.
@@ -480,7 +499,14 @@ The ledger records, for every entry, the last lineup exported, which file it was
 
 Each lineup is tagged with the game script in which it wins most often (for example "BOS blowout, bench minutes" or "close game, overtime"), computed from the scenarios it covers. The brief lists the night's coverage by label, so you can see which ways the night are covered and which are not. You asked for named game theses per Showdown lineup in your NFL engine (RR2).
 
-**Runtime:** TODO-R9.
+### What the portfolio looked like on the synthetic night (R9, VERIFIED)
+
+- Two lineups in the 150-max shared on average 1.3 of 8 players; lineups in different Classic contests shared 1.8.
+- A Showdown single-entry lineup and that game's 20-max lineups shared 3.5 of 6 players.
+- Share of entries touching each game ranged from 39% to 68%; the concentration cap never bound.
+- **Duplication changed Showdown picks a lot:** selecting on duplicate-adjusted odds kept only 4, 1 and 0 of the 10 raw picks in the three Showdown 20-max contests, cut expected copies per entry from 0.5 to 2.2 down to about 0.1, and raised duplicate-adjusted odds (for example 0.106 to 0.172) for a small loss in raw odds (0.216 to 0.181). On the 2-game Classic slate our 150-max lineups averaged about 1 expected copy; on the 8-game slate duplicates were negligible. This is why Decision D2 matters most on Showdowns and small Classic slates, and why it waits for real duplicate rates.
+
+**Runtime (R9, VERIFIED on the synthetic 8-game night, 118 entries, 11 contests):** candidates in 6.7 seconds; per-scenario results for the shortlist in about 30 seconds; greedy selection for every contest in 0.3 seconds; the insurance search in about 1 second. The whole first build, including fields and lines, took 211 seconds at 30,000 scenarios and 86 seconds at 10,000.
 
 ---
 
@@ -607,11 +633,11 @@ You download files, type one command, upload one file per slate, and confirm. Wh
 | Morning (about 5 min) | Download yesterday's standings files (and, weekly, the entry-history export); type `/results` | Files them, checks scoring, writes the scorecard and the real-field results of last night's insurance variants | Under 5 min | Learning waits a day; tonight does not depend on it |
 | Any time after DraftKings posts slates | Enter contests as usual | Nothing | None | None |
 | 1:00 to 4:00 pm (about 15 min) | Download each slate's entries file and salary export; type `/night` (or `dfs night` from the launcher) | **Ingest and night plan:** files the downloads, detects slates, lists anything missing and the single next action per slate | Under 1 min | Plain-language error naming the file and the fix; never an upload from a bad file |
-| | | **Fallback:** a valid portfolio for every slate from laptop data, with players DraftKings marks OUT (salary export) or the latest official report lists as Out removed; if neither file is present, the brief marks it "not checked for injuries" (RT1 rank 22) | TODO-R9 (target under 5 min) | The salary-implied version needs only the entries file |
+| | | **Fallback:** a valid portfolio for every slate from laptop data, with players DraftKings marks OUT (salary export) or the latest official report lists as Out removed; if neither file is present, the brief marks it "not checked for injuries" (RT1 rank 22) | **Budget 5 min.** Not measured; BET that it takes well under a minute, since it is one solver run per entry at a few milliseconds each (R9 solver timings). Measured in rehearsal 1 | The salary-implied version needs only the entries file |
 | | (Optional) upload the fallback files as insurance | | | |
 | | | **Data and projections:** schedule, injuries, lines, props, news; the news digest | Target under 3 min | Missing sources are labeled real, cached, fallback or missing; the build continues |
 | | | **Research (LLM):** the news researcher files checked override records | Target under 10 min | Skipped with a label if Claude is unavailable or over budget |
-| | | **Build:** simulate, field, candidates, selection, insurance search, if-out files, validate, export | TODO-R9 (target under 15 min) | The fallback ships for any slate that fails |
+| | | **Build:** simulate, field, candidates, selection, insurance search, reporting, if-out files, validate, export | **Budget 15 min.** Measured on a synthetic 8-game night: 3.5 min for the core build at 30,000 scenarios, plus about 2.7 min for reporting on 30,000 fresh scenarios, plus about 1 to 2 min per questionable player for if-out files (R9) | The fallback ships for any slate that fails |
 | | | **QA (from week 2):** up to 2 or 3 time-boxed iterations | Target under 30 min | Stops at the time box or 45 minutes before lock; pre-QA portfolio ships |
 | | | **Brief** | Under 1 min | Marks skipped steps |
 | About 45 to 60 min after starting | Upload one file per slate; read back DraftKings' "uploaded N of N"; re-download the entries files; `/status` | **Completeness check** against the ledger: every entry filled, matching what was exported | Under 1 min | Any blank or mismatched entry is listed with its contest and the file to upload |
@@ -643,7 +669,7 @@ The fast path is a file that already exists. News that breaks 30 minutes before 
 7. Re-run the insurance search only if it was active tonight.
 8. Validate, export with a new version number, update the ledger, and rebuild the remaining if-out files.
 
-Budget: TODO-R9 (target under 3 minutes at 10,000 scenarios). Two events close together are merged into one file per slate; the run lock and ledger stop a stale file from reverting a newer one.
+**Budget: 3 minutes. Measured: 44 seconds at 10,000 scenarios and 103 seconds at 30,000** for a star ruled out in a game that is on both the Classic slate and a Showdown, about 33 seconds more for each further affected Showdown; the field lines for the affected contests are 71% of it (R9, VERIFIED on a synthetic 8-game night). The late-news re-run uses 10,000 scenarios. Two events close together are merged into one file per slate; the run lock and ledger stop a stale file from reverting a newer one.
 
 ### Questionable players before their status is known
 
@@ -1000,7 +1026,7 @@ Each has a recommendation and a default, so the build is not blocked while you d
 |---|---|---|---|
 | D1 | **Data posture.** Permissive (sources whose terms do not prohibit this use, plus your manual DraftKings files) or wider personal-use (adds stats.nba.com, ESPN and RotoWire pages, in literal breach of their terms) | **Permissive**, accepting its two stated bets (the injury report's status under NBA.com's fantasy clause; sportsdataverse's ESPN-derived files), and **create a free The Odds API key on Oct 14**. Optionally approve `nba_api` as a backup history source only if sportsdataverse stops updating | The permissive stack covers every need; the wider posture adds nightly props and richer box scores at a terms risk only you can accept. Results cost: props on about 12 nights a month instead of every night |
 | D2 | **Duplication in Goal 1** | **Prize share, switched on after five NBA Showdown standings files** have fitted the duplicate rate; raw probability (with the prize-share number shown beside it) until then | Ties split prizes, but an unfitted duplicate estimate could push the engine toward odd lineups for no gain (unique Showdown lineups were the worst performers in your NFL data, RR2) |
-| D3 | **Insurance budget default** | TODO-R9 | You prefer large prizes; the frontier and the real-field test show what each step buys |
+| D3 | **Insurance budget default** | **2%**, enforced with a two-standard-error safety margin | On synthetic 25-entry nights, 2% removed 70% to 92% of washout risk for 0.4% to 3.5% of average top-1% odds, and 5% added little; at your planned volume the search usually finds nothing to buy; you prefer large prizes (R9, RR2) |
 | D4 | **Team seat for personal DFS.** Is your Team standard seat (likely your company's) allowed for this? | **Confirm with your company; until then everything runs on Pro**, with QA capped at 2 iterations and the build-week budget rule in section 13 | 1.25x Pro's allowance, but shared with your work chat and governed by your employer |
 | D5 | **Lineup reuse across contests.** Your NFL rule was every lineup distinct across the whole entries file | **No hard rule:** the optimizer may reuse a lineup when it helps each contest, the washout calculation discourages reuse, and the brief lists every reuse | Forcing distinct lineups costs top-1% odds when one lineup is best for two single-entry contests |
 | D6 | **Flat-prize contests** (double-ups, "Top N win $X", satellites) | **Maximize the chance to cash there** and flag them in the brief | Top 1% pays no more than min-cash in those contests |
