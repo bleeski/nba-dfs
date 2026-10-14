@@ -10,7 +10,7 @@ A DraftKings NBA DFS engine (Classic and Showdown Captain Mode), designed to be 
 |---|---|
 | `docs/ARCHITECTURE.md` | The design: goals as math, system overview, projections, field, portfolio, LLM layer, runbook, learning, data, testing, risks, build plan, decisions |
 | `docs/adr/` | One decision record per significant choice (index in `docs/adr/README.md`) |
-| `docs/research/` | Research memos (R1 to R9), prior-repo reviews (RR1 to RR4), the first-principles sketch (S1), repo-review changes (S2), red-team rounds (RT1, RT2) |
+| `docs/research/` | Research memos (R1 to R9), prior-repo reviews (RR1 to RR4), the first-principles sketch (S1), repo-review changes (S2), red-team rounds (RT1, RT2) and what they changed (S3) |
 | `docs/brief/` | The owner's architecture brief |
 | `docs/SLATE-BRIEF-MOCK.md` | A layout mock of the nightly two-minute brief |
 | `spikes/` | Throwaway verification scripts and their outputs; nothing here is engine code |
