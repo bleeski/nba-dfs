@@ -2,13 +2,13 @@
 
 **Status:** Accepted (design). **Date:** 2026-10-13.
 
-**Changelog:** 2026-10-14 (ADJUDICATION entry 23): Captain totals are stored **eighth-point** exact: 1.5 x a quarter-point UTIL total ends in .125 or .875 (VERIFIED: 1.5 x 57.25 = 85.875). The phrase "quarter-point-exact" in the decision below was wrong wording and is corrected in place.
+**Changelog:** 2026-10-14 (ADJUDICATION-R2 entry R2-34, final audit): records the R2-33 edit already in the Context: the triple-double rule (+4.5) is re-verified on last season's data against DraftKings' published averages (ADJUDICATION-R2 V-R2-17). 2026-10-14 (ADJUDICATION entry 23): Captain totals are stored **eighth-point** exact: 1.5 x a quarter-point UTIL total ends in .125 or .875 (VERIFIED: 1.5 x 57.25 = 85.875). The phrase "quarter-point-exact" in the decision below was wrong wording and is corrected in place.
 
 ## Context
 
 Every probability the engine produces passes through DraftKings scoring. The brief asked two edge cases to be confirmed from real results, not assumed. R6 ran discriminating tests:
 
-- **Triple-double earns +4.5** (double-double +1.5 and triple-double +3). DraftKings' own export shows Russell Westbrook (2017-03-29: 57 points, 6 threes, 13 rebounds, 11 assists, 3 steals, 7 turnovers) at 99.75. Base is 95.25; base + 4.5 = 99.75 matches, base + 3 = 98.25 does not. Four more triple-doubles in RotoGuru's DraftKings logs match +4.5 and none match +3. VERIFIED arithmetic on a third-party copy of a DraftKings export.
+- **Triple-double earns +4.5** (re-verified 2026-10-14 against DraftKings' published 2025-26 averages: the both-bonuses rule is closer for 14 of 16 triple-double players, ADJUDICATION-R2 V-R2-17) (double-double +1.5 and triple-double +3). DraftKings' own export shows Russell Westbrook (2017-03-29: 57 points, 6 threes, 13 rebounds, 11 assists, 3 steals, 7 turnovers) at 99.75. Base is 95.25; base + 4.5 = 99.75 matches, base + 3 = 98.25 does not. Four more triple-doubles in RotoGuru's DraftKings logs match +4.5 and none match +3. VERIFIED arithmetic on a third-party copy of a DraftKings export.
 - **Captain 1.5x applies to the bonuses.** In a 2020 NBA Showdown export, Bam Adebayo (double-double) shows 89.25 = 1.5 x (58.0 + 1.5); the other rule gives 88.5. Jayson Tatum matches the same way (85.875, displayed 85.88). SUPPORTED for NBA (third-party copy, older season).
 - Overtime counts (Westbrook's 99.75 includes overtime). Inactive players score 0. Ties split prizes evenly (DraftKings terms).
 

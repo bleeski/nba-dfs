@@ -2,7 +2,9 @@
 
 **Status:** Accepted (design), revised after red-team round 1. **Date:** 2026-10-13.
 
-**Changelog:** 2026-10-14 (ADJUDICATION entries 6 and 14): the public view **never** falls back to the engine's private baseline; when no consensus file exists it is built from a deterministic public formula (salary-implied value blended with the market-implied team share and trailing DraftKings points per minute), so a private edge can never appear as simulated chalk. The field is treated as a family of plausible opponent behaviors and qualified by separate checks: marginal ownership, player-pair co-occurrence, salary left unspent, Captain combinations, exact duplicates, entrant portfolio clustering, realized score cutoffs. Copy-rate calibration tolerances are pre-registered in ADR-024. Goal 2 carries a shared-field sensitivity (the same simulated users entering every contest on a slate) beside the conditional-independence number. Calibration targets for the field (most-owned Classic player 40% to 60% on typical slates) are stated configuration.
+**Changelog:** 2026-10-14 (ADJUDICATION-R2 entry R2-33): DraftKings' `AvgPointsPerGame` (last season, playoffs included) is a public number every entrant sees, so the public formula may use it as its trailing-points input; Showdown fields are sampled by popularity (ADR-029). 2026-10-14 (ADJUDICATION-R2 entry R2-13): the Decision bullets now match the earlier changelog: when no consensus file has numbers, the public view uses the deterministic public formula, never our baseline; the baseline-change test applies whether or not consensus exists. The superseded wording is kept under "History" below and is not an instruction. Field scores follow ADR-029 (exact eighth-point scores and a fitted top tail).
+
+**Earlier changelog:** 2026-10-14 (ADJUDICATION entries 6 and 14): the public view **never** falls back to the engine's private baseline; when no consensus file exists it is built from a deterministic public formula (salary-implied value blended with the market-implied team share and trailing DraftKings points per minute), so a private edge can never appear as simulated chalk. The field is treated as a family of plausible opponent behaviors and qualified by separate checks: marginal ownership, player-pair co-occurrence, salary left unspent, Captain combinations, exact duplicates, entrant portfolio clustering, realized score cutoffs. Copy-rate calibration tolerances are pre-registered in ADR-024. Goal 2 carries a shared-field sensitivity (the same simulated users entering every contest on a slate) beside the conditional-independence number. Calibration targets for the field (most-owned Classic player 40% to 60% on typical slates) are stated configuration.
 
 ## Context
 
@@ -18,12 +20,16 @@ Goal 1 needs each contest's top-1% line and duplicate counts, which depend on ho
 
 Option 3.
 
-- **Engine view** (everything) for our lineups; **public view** for the field: free consensus projections (Daily Fantasy Fuel's CSV when it has numbers), salary-implied value, betting lines, official statuses, DraftKings `Status`, and overrides tagged `public`. Our baseline model is used only when no consensus source has numbers.
+- **Engine view** (everything) for our lineups; **public view** for the field: free consensus projections (Daily Fantasy Fuel's CSV when it has numbers), salary-implied value, betting lines, official statuses, DraftKings `Status`, and overrides tagged `public`. When no consensus source has numbers, the public view comes from the deterministic public formula (salary-implied value blended with the market-implied team share and trailing DraftKings points per minute; settings `public_view.formula_weights`). **The engine's private baseline is never a fallback.**
 - Every override carries `visibility`: `public` requires public evidence (official report, team statement, reporter post); `private` is our own inference and never reaches the field.
 - Opponents: optimizer-like entrants, casual entrants, chalk duplicators and stale entrants, weighted by contest family; sampled as users so multi-entry lineups share cores.
 - Ownership read off the field in one unit with nightly sum checks; Captain and UTIL separate; one ownership shock per slate per scenario, shared by every contest on that slate.
 - Settings start from rules of thumb and are fitted from the first standings file on, with heavy shrinkage and only stable shapes.
-- Three tests: a public scratch raises the beneficiary's simulated ownership; a private override does not; a baseline-only change does not when consensus projections exist.
+- Three tests: a public scratch raises the beneficiary's simulated ownership; a private override does not; a baseline-only change does not, **whether or not consensus projections exist**; a static test proves the public-view module never imports the engine's projection table.
+
+### History (not an instruction)
+
+The v4 bullets read "Our baseline model is used only when no consensus source has numbers" and "a baseline-only change does not when consensus projections exist". Both were reversed by round 1 entries 6 and 14 and are superseded by the bullets above (ADJUDICATION-R2 R2-13).
 
 ## Consequences
 

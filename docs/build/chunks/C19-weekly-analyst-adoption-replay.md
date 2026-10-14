@@ -1,18 +1,20 @@
 # C19: Weekly analyst, adoption workflow, replay
 
-**State:** Optimizer (milestone M5). **Size:** M (one session, about 1 to 2 hours, three checkpoints). **Depends on:** C11, C13, C18 (the researcher pattern, snapshots and the QA decision records). **Parallel with:** none.
+**State:** Optimizer (milestone M5). **Size:** M (one session, about 1 to 2 hours, three checkpoints). **Depends on:** C11b, C13, C18 (the researcher pattern, snapshots and the QA decision records). **Parallel with:** none.
+
+**Changelog:** 2026-10-14 (ADJUDICATION-R2): `dfs replay` writes only under `runs/replays/<replay_id>/`, and a test proves a replay leaves every live artifact byte-identical (R2-7, CONTRACTS 1.1); depends on C11b for the subagent pattern, snapshots and researcher records (R2-1); usage budget added. 2026-10-14: created.
 
 ## Goal, and why it sits here
 
-Turn the scorecards into decisions without chasing variance. The weekly analyst subagent reads a week of scorecards and flashback rows and proposes challengers in plain language with a pre-registered hypothesis. The adoption workflow runs each challenger in shadow for at least two weeks, compares it with the current model on held-out nights that each challenger family may use only once, and lets the owner adopt or reject with `/weekly adopt` and `/weekly reject`, versioned and reversible, with at most 5 open decisions. The same chunk ships `dfs replay <run_id>`, which re-executes a night from snapshots and decision records with no network and no LLM and checks the output hashes, so every adoption claim and surprising night is reproducible. It needs C13's store only.
+Turn the scorecards into decisions without chasing variance. The weekly analyst subagent reads a week of scorecards and flashback rows and proposes challengers in plain language with a pre-registered hypothesis. The adoption workflow runs each challenger in shadow for at least two weeks, compares it with the current model on held-out nights that each challenger family may use only once, and lets the owner adopt or reject with `/weekly adopt` and `/weekly reject`, versioned and reversible, with at most 5 open decisions. The same chunk ships `dfs replay <run_id>`, which re-executes a night from snapshots and decision records with no network and no LLM and checks the output hashes, so every adoption claim and surprising night is reproducible. The replay needs C13's store; the analyst needs C11b's subagent pattern and C18's QA records, which is why it depends on all three.
 
 ## Reading list (nothing else)
 
-1. `docs/build/CONTRACTS.md` sections 1 (run id, the `runs/` layout), 4.1, 4.3 (the blend rule), 12 (`RunManifest`), 13 (`dfs replay`), 15.
+1. `docs/build/CONTRACTS.md` sections 1 (run id, the `runs/` layout), 1.1 (drill mode and replay mode), 4.1, 4.3 (the blend rule), 12 (`RunManifest`), 13 (`dfs replay`), 15.
 2. `docs/ARCHITECTURE.md` section 9 "Guardrails against chasing variance (ADJUDICATION entry 13)", "How a model change gets adopted"; section 10 "Storage, versioning and snapshots"; section 7 "Agents, inputs and outputs" (the results-analyst row) and "Where the advisor fits (ADJUDICATION entry 15)".
 3. `docs/adr/ADR-015-learning-and-model-adoption.md` in full; `docs/adr/ADR-014-reproducibility-and-storage.md` in full; `docs/adr/ADR-021-determinism.md`; `docs/adr/ADR-013-claude-code-runtime-and-budget.md` (the Skills and Subagents bullets).
 4. `docs/review/ADJUDICATION.md` entries 13 and 15 only.
-5. `docs/build/chunks/C13-results-scorecards-flashback.md` "Contracts" and `.claude/agents/news-researcher.md` from C11 (the subagent pattern).
+5. `docs/build/chunks/C13-results-scorecards-flashback.md` "Contracts" and `.claude/agents/news-researcher.md` from C11b (the subagent pattern).
 
 ## Scope
 
@@ -22,13 +24,13 @@ Turn the scorecards into decisions without chasing variance. The weekly analyst 
 - `learn/adoption.py`: the paired test per ADR-015: the average nightly difference between challenger and current on the hypothesis's scorecard row, with a block bootstrap by night (whole nights resampled); eligible when shadow has run at least `learn.shadow_min_days` (default 14), the 95% interval excludes zero, and the effect holds in at least two of three subgroups (starters, bench, news-affected). Held-out nights: a ledger of which nights each family has consumed; a family's second challenger cannot reuse them. Every promotion claim prints its independent nights, news regimes, interval and repeated-testing policy.
 - `dfs weekly`: the review page from the store (each layer improving or not, open challengers with their status, the open-decision queue capped at `learn.max_open_decisions`, default 5; a sixth waits). `dfs weekly adopt <id>` bumps the version in `config/models/current.toml`, records the decision with its evidence, and takes effect on the next run; `dfs weekly reject <id>` archives it; `dfs weekly rollback <id>` restores the prior version in one command. `RunManifest` records the model versions used.
 - `.claude/agents/results-analyst.md`: `model: sonnet`, no web, reads a weekly export from the store; one JSON output with a plain-language summary and up to `learn.max_proposals_per_week` (setting, default 3) challenger proposals, each a configuration diff plus hypothesis; the `SubagentStop` hook checks the schema; proposals enter the queue as challengers, never as adopted changes. `/weekly`, `/weekly adopt <id>` and `/weekly reject <id>` wrap the commands with the Owns / Invokes / Does not own block. The advisor may be consulted in the weekly review per ADR-013, never inside the nightly commands.
-- `learn/replay.py` and `dfs replay <run_id>`: re-run every deterministic step in the manifest from `data/snapshots/`, `data/archive/`, the seeds and the decision records (researcher, QA, owner commands); sockets disabled; no Claude call; compare every output hash with the manifest and name the first differing step.
+- `learn/replay.py` and `dfs replay <run_id>`: re-run every deterministic step in the manifest from `data/snapshots/`, `data/archive/`, the seeds and the decision records (researcher, QA, owner commands); sockets disabled; no Claude call; compare every output hash with the manifest and name the first differing step. A replay writes only under `runs/replays/<replay_id>/` (CONTRACTS 1.1; ADJUDICATION-R2 R2-7): never to `out/uploads/`, `runs/<night>/`, `runs/<run_id>/`, `inbox/`, the live ledger, the live news state or the DuckDB store, and inputs are read-only.
 
 **Out of scope:** the QA audit (C18), the ramp gate and hunch report (C15), fitting field shapes (challengers do it through this workflow), any automatic adoption.
 
 ## Contracts
 
-- **Consumes:** the DuckDB store, `ScorecardRow`, `FlashbackRow` (C13); `RunManifest`, snapshots and the archive (C03, C11); decision records (C11, C18); `config/models/` and settings (C01).
+- **Consumes:** the DuckDB store, `ScorecardRow`, `FlashbackRow` (C13); `RunManifest`, snapshots and the archive (C03, C11b); decision records (C11b, C18); the `Paths` replay folder (C03); `config/models/` and settings (C01).
 - **Produces:** `Challenger(id, family, hypothesis, config_diff, frozen_at, shadow_start, status)`, `AdoptionDecision(challenger_id, decision, nights, interval, subgroups, held_out_nights, decided_at, version_before, version_after)`, `WeeklyReview`, `ReplayResult(run_id, steps, matched, first_mismatch)`, the agent file, `dfs weekly ...`, `dfs replay`, `/weekly`. The four models go into CONTRACTS.md as a new section 16 in the same commit.
 
 ## Definition of done
@@ -41,6 +43,7 @@ Turn the scorecards into decisions without chasing variance. The weekly analyst 
 - `adopt` bumps the version and the next `RunManifest` records it; `rollback` restores the prior version and is itself recorded.
 - Analyst JSON: a proposal without a configuration diff or a hypothesis is rejected by the hook.
 - Replay: `dfs replay` on the saved Oct 16 night run gives byte-identical output hashes with sockets disabled; a run with researcher records replays from the records; a deliberately altered snapshot makes replay name the first differing step.
+- Replay isolation (R2-7): every file a replay writes is under `runs/replays/<replay_id>/`, and a test hashes every live artifact (the uploads folder, the night's ledgers and news state, the original run folder, the DuckDB store) before and after a replay and finds them byte-identical.
 
 ## What I check
 
@@ -50,7 +53,7 @@ Pick any night's run id from `runs/`:
 uv run dfs replay 20261020-124500-night
 ```
 
-Expected: "replayed 14 steps from snapshots; every output hash matches the manifest; no network, no Claude". Then:
+Expected: "replayed 14 steps from snapshots; every output hash matches the manifest; no network, no Claude; written under runs/replays/<replay_id>/, live files unchanged". Then:
 
 ```bash
 uv run dfs weekly
@@ -60,7 +63,11 @@ Expected: one page: each layer marked improving, flat or worse with its interval
 
 ## Size estimate and checkpoints
 
-About 1 to 2 hours. Checkpoint 1: challengers, shadow predictions, the adoption test, the held-out ledger (commit). Checkpoint 2: `dfs weekly` with adopt, reject and rollback, the analyst agent, `/weekly` (commit). Checkpoint 3: `dfs replay` with the hash check (commit).
+About 1 to 2 hours. Checkpoint 1: challengers, shadow predictions, the adoption test, the held-out ledger (commit). Checkpoint 2: `dfs weekly` with adopt, reject and rollback, the analyst agent, `/weekly` (commit). Checkpoint 3: `dfs replay` with the hash check and the isolation test (commit).
+
+## Usage budget
+
+About 25% of a five-hour window and 4% of a weekly window (estimates until measured). If the session passes 40% of a five-hour window, stop at the next checkpoint and hand off.
 
 ## Risks
 

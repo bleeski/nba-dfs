@@ -1,6 +1,8 @@
 # ADR-018: Reuse from the prior engines: one parser port, a name normalizer, and lessons only
 
-**Status:** Accepted (design). **Date:** 2026-10-13.
+**Status:** Accepted (design); the name normalizer's use in matching superseded in part by ADR-031. **Date:** 2026-10-13.
+
+**Changelog:** 2026-10-14 (ADJUDICATION-R2 entry R2-9): the ported normalizer keeps a suffix as a final token of the person key instead of stripping it; suffix-stripped matching is allowed only when exactly one candidate matches; the key carries no team (ADR-031).
 
 ## Context
 

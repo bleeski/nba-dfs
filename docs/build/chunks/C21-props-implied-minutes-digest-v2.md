@@ -1,6 +1,8 @@
 # C21: Market-implied minutes from props; value-of-information digest
 
-**State:** Optimizer. **Size:** M (one session, about 1 to 2 hours, three checkpoints). **Depends on:** C06, C10, C11, C13 (the re-solve and the researcher's search caps). **Parallel with:** none.
+**State:** Optimizer. **Size:** M (one session, about 1 to 2 hours, three checkpoints). **Depends on:** C06, C10, C11b, C13 (the re-solve and the researcher's search caps). **Parallel with:** none.
+
+**Changelog:** 2026-10-14 (ADJUDICATION-R2): depends on C11b for the researcher's search caps and the posture allowlist (R2-1); an alert-only line-move flag stays in the backlog (R2-29); usage budget added. 2026-10-14: created.
 
 ## Goal, and why it sits here
 
@@ -26,11 +28,11 @@ Let the betting market tell us minutes, and spend research where it changes line
 - Value of information v2 in `llm/digest.py`: for the top `digest.voi_top_n` (setting, default 3) unresolved facts by the existing order, run a two-state re-solve (the player out, the player in) at `digest.voi_S` (setting, default 5,000) within `digest.voi_budget_s` (setting, default 120) and add `changes_materially`: true when more than `digest.voi_material_share` (setting, default 0.10) of affected entries differ between the two states, with the entry count. The late-news reserve: `llm.reserve_searches` (setting, default 3) and `llm.reserve_fetches` (setting, default 2) are held back from `max_searches` and `max_fetches` until 60 minutes before the first lock.
 - The minutes scorecard (C13) gains two rows, market-implied alone and the blend, each against the model, so C19 can propose the weight as a challenger.
 
-**Out of scope:** ESPN or any other ladder source outside the posture; props for stats other than points, rebounds and assists; auto-tuning the weight.
+**Out of scope:** ESPN or any other ladder source outside the posture; props for stats other than points, rebounds and assists; auto-tuning the weight. An alert-only line-move flag (a team whose implied total moved at least 2 points between The Odds API snapshots already taken, no change to play probabilities) stays in the backlog (ADJUDICATION-R2 R2-29).
 
 ## Contracts
 
-- **Consumes:** `Rates` (C05); `ProjectionTable`, `anchor`, the lines adapter, `NewsDigest` (C06); `resolve` (C10); `ScorecardRow` (C13); the posture allowlist (C11); `config/secrets.toml` (C01).
+- **Consumes:** `Rates` (C05); `ProjectionTable`, `anchor`, the lines adapter, `NewsDigest` (C06); `resolve` (C10); `ScorecardRow` (C13); the posture allowlist and the researcher's search caps (C11b); `config/secrets.toml` (C01).
 - **Produces:** `PropLadder`, `ImpliedMinutes(person_key, stat, expected_stat, rate_per_minute, implied_minutes, reconciled_minutes, n_lines)`, the `"blend:props"` source value, the `NewsDigest` v2 fields (`market_minutes`, `model_minutes`, `disagreement`, `changes_materially`, `entries_affected`), the `[props]` and `[digest]` settings. CONTRACTS.md sections 4.5, 6 and 15 change in the same commit.
 
 ## Definition of done
@@ -56,6 +58,10 @@ Expected: the brief's news digest gains lines like "market implies 29 minutes, o
 ## Size estimate and checkpoints
 
 About 1 to 2 hours. Checkpoint 1: the props fetch, snapshots, ladder parsing, the credit order (commit). Checkpoint 2: implied minutes, reconciliation, the blend, the flag, the scorecard rows (commit). Checkpoint 3: the two-state VOI and the reserve (commit).
+
+## Usage budget
+
+About 25% of a five-hour window and 4% of a weekly window (estimates until measured). If the session passes 40% of a five-hour window, stop at the next checkpoint and hand off.
 
 ## Risks
 

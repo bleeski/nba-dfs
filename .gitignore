@@ -11,3 +11,13 @@ spikes/**/out/downloads/
 /runs/
 /data/
 /out/
+
+# Local-only fixtures and secrets (ADJUDICATION-R2 R2-33: the repository is public).
+# Real DraftKings files and third-party downloads are rebuilt locally by scripts/build_fixtures.py.
+/fixtures/dk/20*/
+/fixtures/dk/layout/
+/fixtures/dk/public/
+/fixtures/injury/
+/fixtures/history/
+/config/secrets.toml
+/config/standings_salt.txt

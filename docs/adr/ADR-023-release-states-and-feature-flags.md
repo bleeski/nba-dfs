@@ -1,6 +1,6 @@
 # ADR-023: Three release states (Floor, Baseline, Optimizer) and a feature flag per capability
 
-**Status:** Accepted. **Date:** 2026-10-14. **Source:** ADJUDICATION entries 3, 32, 36, 38 (A-I-03, B-I-03, X-01, X-05, X-07). **Changelog:** 2026-10-14 created.
+**Status:** Accepted; the usage bullet and the bare `rehearsed_on` date superseded in part by ADR-030. **Date:** 2026-10-14. **Source:** ADJUDICATION entries 3, 32, 36, 38 (A-I-03, B-I-03, X-01, X-05, X-07). **Changelog:** 2026-10-14 (ADJUDICATION-R2 entry R2-34, final audit): the live Oct 16 rehearsal is Floor-only (the news and post-lock repair drills); the Baseline model is ready Sunday Oct 18 (M2, Drill A) and the re-solve by Sunday 10:00 pm CT (M3, Drill B); the researcher is built in C11b after opening night and stays off until rehearsed. 2026-10-14 (ADJUDICATION-R2 entries R2-1 and R2-16): the Floor-only branch is now the dependency chain C01, C02, C03, C04a, C11a, C04b, with C05 to C10 and C11b deferred after opening night, and the trigger is measured at M1 (C01 to C04a) at about 35% of a weekly window; capabilities record the commit, paths and drill artifact that passed, and a capability changed since is `stale` (ADR-030). 2026-10-14 created.
 
 ## Context
 
@@ -16,15 +16,15 @@ The v3 plan let "Tier A" launch alone while the document described a product it 
 
 Option 3.
 
-- **Floor:** parsers, validator, exporter, contest facts, injury-scrubbed lineups ranked on simple projections under the concentration cap, no simulation; brief-lite. Rehearsed with a real upload on Oct 15 and at scale with the news and swap drills on Oct 16.
-- **Baseline:** adds the night simulation, a first field model, per-contest selection on Goal 1, the live late-news re-solve, the open-slot late swap, the manual news commands (`dfs out`, `dfs in`, `dfs start`), and the one-page brief. It cannot exist by Oct 16 (chunks C05 to C09 take until about Oct 17), so it is drilled on saved Oct 16 files over Oct 17 to 19 against a written bar and runs live for the first time on Monday Oct 19 evening with the Floor already uploaded; the upload mechanics it shares with the Floor are live-rehearsed on Oct 15 and 16.
+- **Floor:** parsers, validator, exporter, contest facts, injury-scrubbed lineups ranked on simple projections under the concentration cap, no simulation; brief-lite. Rehearsed with a real upload on Oct 15 and at scale with the news and post-lock repair drills on Oct 16.
+- **Baseline:** adds the night simulation, a first field model, per-contest selection on Goal 1, the live late-news re-solve, the open-slot late swap, the manual news commands (`dfs out`, `dfs in`, `dfs start`), and the one-page brief. It cannot exist by Oct 16: the Baseline model is ready on Sunday Oct 18 (milestone M2, Drill A) and the re-solve by Sunday 10:00 pm CT (milestone M3, Drill B), both drilled on saved Oct 16 files against a written bar, and it runs live for the first time on Monday Oct 19 evening with the Floor already uploaded; the upload mechanics it shares with the Floor are live-rehearsed on Oct 15 and 16.
 - **Optimizer:** adds the insurance control, QA, the learning loop, the news watcher, and the edge-uncertainty layer, after opening night.
-- Every capability is a flag in `config/capabilities.toml` with `enabled` and `rehearsed_on`; a capability with no `rehearsed_on` date cannot be enabled on a game night without `dfs unlock`, which is recorded. The brief lists every capability that is off as "not yet available".
-- The LLM news researcher is a flagged capability that may ship off; the manual commands are the rehearsed path.
+- Every capability is a flag in `config/capabilities.toml` with `enabled`, `rehearsed_on`, `rehearsed_commit`, `rehearsed_paths` and `drill_artifact` (ADR-030); a capability whose paths changed since its drill is `stale` and counts as not rehearsed; a capability with no `rehearsed_on` date cannot be enabled on a game night without `dfs unlock`, which is recorded. The brief lists every capability that is off as "not yet available".
+- The LLM news researcher is a flagged capability that is built in C11b after opening night and stays off until rehearsed; the manual commands are the rehearsed path.
 - "Sensible" is a deterministic sanity check per slate: at least 95% of the cap used on average, no two identical lineups in one contest, the concentration cap honored or its relaxation reported, no lineup below the projection floor (default 85% of the slate's best single-lineup projection), and no player with `p_active` under 0.5 unless the owner asked for him. It labels; it never blocks.
 - The Floor file is uploaded early on opening night and replaced only when an improved file passes checks.
 - Every raw download and pre-lock snapshot is archived from Oct 15 onward, so week 1 is learnable before the results parser exists.
-- Usage: each build session records its Claude usage in `docs/build/PROGRESS.md`; if the first four MVP chunks use more than about 40% of a weekly window, the Floor is the opening-night release: C05 to C09 move after Oct 20 and C10 and C11 are built in Floor mode only (news commands, repair, hooks, launcher).
+- Usage: each build session records its Claude usage in `docs/build/PROGRESS.md`; if C01 to C04a (milestone M1) use more than about 35% of a weekly window, the Floor is the opening-night release: C04b and C11a still run (they are on the Floor path), and C05 to C10 and C11b are marked `deferred (after opening night)` (superseded wording, v4: "the first four MVP chunks use more than about 40%... C10 and C11 are built in Floor mode only"; ADR-030).
 
 ## Consequences
 

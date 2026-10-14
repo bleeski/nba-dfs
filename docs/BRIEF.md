@@ -2,6 +2,8 @@
 
 ## Changelog
 
+- **2026-10-14 (ADJUDICATION-R2 entry R2-34, final audit):** the MVP's Floor bullet names the news and post-lock repair drills on Oct 16 (the live Oct 16 rehearsal is Floor-only). The two goals and the hard constraints are unchanged.
+- **2026-10-14 (v3, design final):** round 2 adjudication (`docs/review/ADJUDICATION-R2.md`). The two goals and the hard constraints are unchanged. "How to run sessions" updated for the chunk split and the Floor-only branch (R2-1); the MVP section names the operations shell rehearsed on Oct 16 and moves the news researcher after opening night (R2-1); a change-control rule added; deliverables list the round 2 file and the owner checklist.
 - **2026-10-14 (v2):** Created as the living brief from the saved architecture brief (`docs/brief/2026-10-13-architecture-brief.md`), the goals and hard constraints restated in the adjudication prompt, and the advisor section as quoted by both critiques (the original `NBA_DFS_Architecture_Prompt.md` was never saved; ADJUDICATION X-04). Both goals rewritten by the owner's decision after adjudication (ADJUDICATION entries 5 and 9). Constraints, problems 1, 2, 6, 7, 10 and 12, the MVP definition, the advisor section, the edge hypotheses and the session rules changed per `docs/review/ADJUDICATION.md`; each change carries its entry ID.
 - **2026-10-13 (v1):** the architecture brief as given, saved in `docs/brief/`.
 
@@ -106,9 +108,9 @@ Research leads (verbatim): Hunter, Vielma and Zaman (arXiv 1604.01455); Haugh an
 
 Opening-night acceptance requires a complete, frozen workflow that I have rehearsed, including an initial confirmed upload, one late-news update, and recovery with Claude unavailable. Three release states, each a floor for the next:
 
-* **Floor:** parsers, validator, exporter, contest facts, injury-scrubbed lineups ranked on simple projections under the concentration cap, no simulation. Rehearsed with a real upload on Thursday Oct 15, and at scale with the news and swap drills on Friday Oct 16.
+* **Floor:** parsers, validator, exporter, contest facts, injury-scrubbed lineups ranked on simple projections under the concentration cap, no simulation, plus its operations shell (launcher, hooks, capability flags, the news commands and the repair). Rehearsed with a real upload on Thursday Oct 15, and at scale with the shell and the news and post-lock repair drills on Friday Oct 16 (ADJUDICATION-R2 R2-1).
 * **Baseline:** adds the night simulation, a first field model, per-contest selection on Goal 1, the live late-news re-solve, the open-slot late swap, the manual news commands, and the one-page brief. Drilled on saved Oct 16 files over the weekend; first live run Monday Oct 19 evening with the Floor already uploaded.
-* **Optimizer:** adds the insurance control, QA, the learning loop, the news watcher and the edge-uncertainty layer, after opening night.
+* **Optimizer:** adds the insurance control, QA, the learning loop, the news watcher, the news researcher and the edge-uncertainty layer, after opening night. Your `dfs out`, `dfs in` and `dfs start` are the opening-night news path (ADJUDICATION-R2 R2-1).
 
 A Floor launch defers the simulation-based selection; a Baseline launch defers the insurance control, QA and learning; each labels what is unavailable. Upload the Floor file early on opening night; replace it only after an improved file passes checks. An unrehearsed feature stays off. "Sensible" has a deterministic test: at least 95% of the cap used on average, no two identical lineups in one contest, the concentration cap honored or its relaxation reported, no lineup below the projection floor (default 85% of the slate's best single-lineup projection), and no player with a play probability under 0.5 unless I asked for him.
 
@@ -120,12 +122,13 @@ I've set Fable as the advisor with `/advisor fable`. Consult it during architect
 
 * Research ends when it resolves the named decision or reaches its time budget. No new research memos before opening night except a spike a build chunk needs to settle a contract.
 * The build runs as chunks, one per fresh Claude Code session, from `docs/build/BUILD_PLAN.md`; the session protocol is in `CLAUDE.md`; progress lives in `docs/build/PROGRESS.md`.
-* Every session records its Claude usage at the end. If the first four MVP chunks use more than about 40% of a weekly window, the Floor is the opening-night release: C05 to C09 move after Oct 20 and C10 and C11 are built in Floor mode only.
+* Every session records its Claude usage at the end. If C01 to C04a (milestone M1) use more than about 35% of a weekly window, the Floor is the opening-night release: C04b and C11a still run, and C05 to C10 and C11b are marked deferred until after Oct 20 (ADJUDICATION-R2 R2-1).
+* **The design is final (2026-10-14).** A build session that finds a design problem logs it as a change request in `docs/build/PROGRESS.md`, stops if it blocks the chunk, and asks me. Nothing in the design changes without my approval.
 * Use subagents for verification and consistency checks to keep the main context lean.
 
 ## Deliverables
 
-`docs/BRIEF.md` (this file), `docs/ARCHITECTURE.md`, `docs/adr/`, `docs/research/` (including `advisor-log.md`), `docs/review/ADJUDICATION.md`, `docs/build/` (plan, chunks, progress), `docs/reference/` (the four reference files), `spikes/` (throwaway verification scripts), `CLAUDE.md` (session protocol).
+`docs/BRIEF.md` (this file), `docs/ARCHITECTURE.md`, `docs/adr/`, `docs/research/` (including `advisor-log.md`), `docs/review/ADJUDICATION.md` and `docs/review/ADJUDICATION-R2.md`, `docs/build/` (plan, contracts, chunks, progress, and `OWNER_CHECKLIST.md`), `docs/reference/` (the four reference files), `spikes/` (throwaway verification scripts), `CLAUDE.md` (session protocol).
 
 ## How to write for me (verbatim)
 
