@@ -16,8 +16,8 @@ The v3 plan let "Tier A" launch alone while the document described a product it 
 
 Option 3.
 
-- **Floor:** parsers, validator, exporter, contest facts, injury-scrubbed lineups ranked on simple projections under the concentration cap, no simulation; brief-lite. Rehearsed with a real upload on Oct 15.
-- **Baseline:** adds the night simulation, a first field model, per-contest selection on Goal 1, the live late-news re-solve, the open-slot late swap, the manual news commands (`dfs out`, `dfs in`, `dfs start`), and the one-page brief. Rehearsed on Oct 16.
+- **Floor:** parsers, validator, exporter, contest facts, injury-scrubbed lineups ranked on simple projections under the concentration cap, no simulation; brief-lite. Rehearsed with a real upload on Oct 15 and at scale with the news and swap drills on Oct 16.
+- **Baseline:** adds the night simulation, a first field model, per-contest selection on Goal 1, the live late-news re-solve, the open-slot late swap, the manual news commands (`dfs out`, `dfs in`, `dfs start`), and the one-page brief. It cannot exist by Oct 16 (chunks C05 to C09 take until about Oct 17), so it is drilled on saved Oct 16 files over Oct 17 to 19 against a written bar and runs live for the first time on Monday Oct 19 evening with the Floor already uploaded; the upload mechanics it shares with the Floor are live-rehearsed on Oct 15 and 16.
 - **Optimizer:** adds the insurance control, QA, the learning loop, the news watcher, and the edge-uncertainty layer, after opening night.
 - Every capability is a flag in `config/capabilities.toml` with `enabled` and `rehearsed_on`; a capability with no `rehearsed_on` date cannot be enabled on a game night without `dfs unlock`, which is recorded. The brief lists every capability that is off as "not yet available".
 - The LLM news researcher is a flagged capability that may ship off; the manual commands are the rehearsed path.

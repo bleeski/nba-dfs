@@ -25,10 +25,10 @@ Option 3.
 - `/status` and the completeness check flag any upload file whose hash is not in a manifest.
 - On failure, the last validated file for that slate ships and the brief says, in plain language, what failed.
 - After each upload the user reads back DraftKings' "uploaded N of N".
-- The locked-cell rule is settled by a $0.25 test on Oct 14 before it is relied on.
+- The locked-cell rule is settled by a $0.25 test on Oct 15 (rehearsal 1) before it is relied on.
 
 ## Consequences
 
 - **Results:** protects every entry from being void.
-- **Cost:** a few days of Phase 1 build, mostly tests (a passing and a failing fixture per rule).
+- **Cost:** chunk C03, mostly tests (a passing and a failing fixture per rule).
 - **Workload:** one glance at the upload count per file.

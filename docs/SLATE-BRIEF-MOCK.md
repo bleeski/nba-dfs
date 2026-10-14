@@ -29,17 +29,26 @@ Run `dfs status` from the desktop launcher. To enter news yourself: `dfs out "Na
 
 Three games, all heavily shared between Classic and Showdown, so tonight's risk is concentrated. The market sees BOS @ DET as the closest game (spread 2.5) and OKC @ SAS as the likeliest blowout (spread 9.5). Our largest disagreement with the public view is Player B (DET): reporters say he starts in Player C's place if C sits, and our minutes range (28 to 34) is wider and higher than consensus. The portfolio covers three scripts: a close BOS @ DET game with a big night from its stars, an OKC blowout where both benches play the fourth quarter, and a fast PHI @ NYK game.
 
+### States
+
+| Slate | File validity | News state | Model status | Confirmed upload | Not yet available |
+|---|---|---|---|---|---|
+| Classic main | valid (v3, until 2:00 pm) | 2 facts applied | baseline | committed (v2); v3 pending | insurance, QA, watcher |
+| Showdown BOS @ DET | valid (v2, until 2:00 pm) | 2 facts applied | baseline | committed | insurance, QA, watcher |
+
 ### Goals tonight
 
-| Contest | Entries | Field | Top-1% places | Goal 1 (raw) | Goal 1 (duplicate-adjusted, shown only) |
-|---|---|---|---|---|---|
-| Classic $20 150-max | 20 | 35,294 | 352 | 9.8% (±0.3) | 9.1% |
-| Classic $3 single-entry | 1 | 2,000 | 20 | 1.6% | 1.6% |
-| Showdown BOS @ DET $5 20-max | 12 | 1,189 | 11 | 7.9% | 5.2% |
-| ... | | | | | |
+| Contest | Entries | Field | Top-1% places | Facts | Goal 1 (share of top-1% pool, dollars) | Goal 1 without duplication | Raw P(top 1%) |
+|---|---|---|---|---|---|---|---|
+| Classic $20 150-max | 20 | 35,294 | 352 | verified | 4.1% ($1,230 ±$40) | 4.4% | 9.8% |
+| Classic $3 single-entry | 1 | 2,000 | 20 | template | 0.9% ($14) | 0.9% | 1.6% |
+| Showdown BOS @ DET $5 20-max | 12 | 1,189 | 11 | default | 6.2% ($91) | 8.0% | 7.9% |
+| ... | | | | | | | |
 
-- **Washout:** 0.4% with edge uncertainty; under 0.01% without it (model estimates). Too rare to measure an improvement, so the insurance control did not act.
-- **Where washout risk comes from tonight:** 81% of entries depend on BOS @ DET.
+Copy rates: unfitted (labeled until the first five standings files per format pass the calibration check).
+
+- **Goal 2 (severe drawdown: under 25% of tonight's $412 in fees recovered):** 31% (model estimate, uncalibrated; payout facts: 1 default). Literal washout 0.4%. Expected net return -$96; probability of recovering fees 22%; probability of a prize of at least 10x its fee 9%. Insurance control: not yet available.
+- **Where drawdown risk comes from tonight:** 81% of entries depend on BOS @ DET.
 
 ### Exposures
 
@@ -55,19 +64,19 @@ Per game, share of all entries depending on it: BOS @ DET 81%, OKC @ SAS 55%, PH
 
 Close BOS @ DET with overtime: 14 lineups · OKC blowout, benches: 11 · Fast PHI @ NYK: 9 · Low-scoring night, chalk holds: 6 · Not covered: a SAS upset with OKC starters sitting early.
 
-### LLM overrides (veto with `dfs override veto <id>`)
+### Facts applied (veto with `dfs fact veto <id>`)
 
-| ID | Player | Belief | Public? | Evidence |
+| ID | Player | Fact (acts) or inference (shadow) | Public? | Evidence |
 |---|---|---|---|---|
-| 0001 | Player B (DET) | Starts if C sits; minutes 28 / 31 / 34 | Public | Beat reporter post on Bluesky, 11:52 am: "B will start if C can't go" |
+| 0001 | Player B (DET) | Fact: starts if C sits (minutes from the starter prior); inference 28 / 31 / 34 recorded, shadow only | Public | Beat reporter post on Bluesky, 11:52 am: "B will start if C can't go" |
 | 0002 | Player D (OKC) | Minutes cap 24 (return from injury) | Public | Team statement on nba.com, 10:15 am |
-| 0003 | Player E (SAS) | Usage up 8% with F out | Private | Our inference from last season's minutes without F |
+| 0003 | Player E (SAS) | Inference (shadow, no effect tonight): usage up 8% with F out | Private | Our inference from last season's minutes without F |
 
-Rejected: 1 (quote not found on the saved page).
+Rejected: 1 (quote not found on the saved page). Stored but not acting: 1 (publish time unknown).
 
 ### Risks
 
-1. Player C (DET) is questionable (official: Questionable, 55% to play). Stored replacements cover both outcomes.
+1. Player C (DET) is questionable (official: Questionable, 55% to play). Either outcome: `dfs out` or `dfs in`, then the re-solve in about a minute; `dfs repair` in seconds if under 8 minutes to lock.
 2. 81% of entries depend on BOS @ DET; a slow, low-scoring game hurts every format at once.
 3. Opening-week minutes are uncertain for every new-team player; ranges are widened.
 
@@ -75,7 +84,7 @@ Rejected: 1 (quote not found on the saved page).
 
 | News | What to do |
 |---|---|
-| Player C (DET) ruled out | Official report: the alert names the new Classic and Showdown files; upload them. Seen it first yourself: `dfs out "Player C"`, then upload the files it names |
+| Player C (DET) ruled out | `dfs out "Player C"` (an official-report change is picked up the same way); upload the files it names; re-download the Showdown entries file before 2:00 pm |
 | Player C (DET) cleared to play | Same, with `dfs in "Player C"`: entries built around his absence (for example Player B at Captain) are swapped back |
-| Anything else in BOS @ DET before 2:00 pm | `/news` or `dfs news` (about a minute) |
+| Anything else in BOS @ DET before 2:00 pm | `dfs news` (about a minute), or `dfs repair` if under 8 minutes to lock |
 | News in PHI @ NYK or OKC @ SAS | The watcher alerts; `dfs out` or `dfs in` for anything you see first |

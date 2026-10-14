@@ -44,4 +44,4 @@ PuLP with CBC (the user's suggestion; PuLP 2.4 pinned by pydfs-lineup-optimizer 
 - **Results:** 20,000 Classic candidates take well under a minute on 4 processes, so candidate breadth is never the bottleneck.
 - **Cost:** free; one more pip package.
 - **Workload:** none.
-- **Re-check:** timings were taken under load; the Phase 1 performance test re-measures on a real slate.
+- **Re-check:** timings were taken under load; the chunk C09 performance test re-measures on a real slate.

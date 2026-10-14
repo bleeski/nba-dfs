@@ -41,6 +41,6 @@ The user accepts or rejects each (Decision D1). If either is rejected, the engin
 ## Consequences
 
 - **Results:** opening-night projections rest on last season's box scores, market lines, and official statuses; the permissive posture gives up nightly props on about half the nights and richer play-by-play detail.
-- **Cost:** free; the user creates a free The Odds API key (about 2 minutes, on Oct 14).
+- **Cost:** free; the user creates a free The Odds API key (about 2 minutes, before chunk C06).
 - **Workload:** none beyond the manual DraftKings downloads; occasionally a manual Daily Fantasy Fuel CSV download.
 - **Not legal advice:** both bets are judgment calls the user makes.

@@ -14,7 +14,7 @@ The original Goal 2 was the probability of zero cashing entries across the night
 - **Scenario sets.** Screening 5,000; selection 15,000; validation 15,000 (the search and its constraint); reporting 30,000 (every number in the brief). The roll-back check on the reporting set is a label; if a roll-back is applied, the final numbers are recomputed on a fresh 30,000-scenario reporting draw.
 - **Wording.** The budget is a model-based target under stated assumptions, not a real-world guarantee. "Zero washouts in N synthetic draws" never appears as a bound on real risk; synthetic tests establish speed and arithmetic only. Goal 2 is reported with a sensitivity range under three field-strength settings (no edge, stronger field, concentrated chalk) once the field model has those settings.
 - **Default epsilon:** 2% as a starting value (Decision D3), re-measured with the corrected formula on the first real nights; the R9 figures are indicative because they used the wrong margin.
-- **When it runs:** after the MVP (chunk C12). The Baseline reports Goal 2 as a labeled, uncalibrated model estimate and does not act on it; the Floor prints "not estimated".
+- **When it runs:** after the MVP (chunk C12), and only when the validation set holds at least 50 severe-drawdown scenarios (`insurance.min_sd_scenarios`); otherwise the brief says Goal 2 is too rare to trade tonight. The Baseline reports Goal 2 as a labeled, uncalibrated model estimate and does not act on it; the Floor prints "not estimated".
 - **The hunch test** (do the goals conflict less than they look) runs on real fields: the 0%, 20% and lowest-drawdown portfolios are computed nightly and scored against the next morning's standings, with a verdict after 20 nights or "undecided".
 
 ## Consequences

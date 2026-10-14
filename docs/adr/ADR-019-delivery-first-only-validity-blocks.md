@@ -13,7 +13,7 @@ The brief says deadline beats perfection: if an advanced step fails near lock, s
 - **Only DraftKings validity blocks a file** (ADR-010). Every other check (data freshness, concentration, QA, strategy) labels the output in the brief.
 - **Night plan in lock order:** every slate gets a validated fallback file before any slate is improved.
 - **Fallback that depends only on the entries file:** salary-implied points when nothing else is available, with players DraftKings marks OUT or the latest official report lists as Out removed; marked "not checked for injuries" when neither file is present (RT1 rank 22).
-- **Stored replacements and `dfs apply`** for each material questionable player (ADR-011), so acting on news takes seconds and no full run, and works from the launcher without Claude.
+- **The live re-solve and the legal repair** (ADR-026; the v3 text here read "stored replacements and `dfs apply` (ADR-011)", superseded 2026-10-14), so acting on news takes one command and about a minute, with a seconds-long repair behind it, and works from the launcher without Claude.
 - **A desktop launcher** runs every night step without Claude (ADR-013), and the top of every brief carries an "if the engine is down" card listing the latest validated file and the fallback file for each slate, with "valid until" stamps, and how to enter news with `dfs out`.
 - **Fallback ladder:** full build with QA; without QA; without any LLM step; the fallback portfolio; the last validated file for that slate, re-validated against the newest download.
 - **Completeness check after every upload,** with versioned file names and the user's "uploaded N of N" read-back.
@@ -23,5 +23,5 @@ The brief says deadline beats perfection: if an advanced step fails near lock, s
 ## Consequences
 
 - **Results:** removes the largest avoidable loss in the prior engines.
-- **Cost:** the fallback path is a small, well-tested part of Phase 1, built first.
-- **Workload:** one re-download and `/status` after each upload.
+- **Cost:** the fallback path is a small, well-tested part of the Floor (chunks C03 and C04), built first.
+- **Workload:** `dfs uploaded` after each upload; re-downloads before each Showdown lock, before the Classic first lock, and before any swap (ADR-026, revised 2026-10-14).

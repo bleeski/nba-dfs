@@ -6,7 +6,7 @@ Each record is short: context, options considered, the decision, and what it mea
 
 | ADR | Decision | Status |
 |---|---|---|
-| 001 | Both goals on one simulated night; the insurance budget | Superseded by 025 |
+| 001 | Both goals on one simulated night; the insurance budget | Superseded by 024 and 025 |
 | 002 | One shared, stat-level simulation of the whole night, with a model-error layer | Accepted (revised 2026-10-14) |
 | 003 | The LLM sets beliefs (facts act in the MVP; inferences shadow); code sets lineups | Accepted (revised 2026-10-14) |
 | 004 | Every DraftKings interaction is manual | Accepted (revised 2026-10-14) |

@@ -6,7 +6,7 @@
 
 ## Context
 
-The engine must choose 1 to 150 entries per contest across about 10 contests so that each contest's top-1% probability is high and the night's washout probability is low (ADR-001). The user's prior engines tuned exposure and overlap rules by hand and showed no edge (RR1, RR2). Generating lineups in sequence with "share at most K players" constraints is slow (R2: 30.8 seconds for 150 lineups with GLPK, up to 370 seconds with other solvers) and ignores the field and the night.
+The engine must choose 1 to 150 entries per contest across about 10 contests so that each contest's top-1% probability is high and the night's severe-drawdown probability is low (ADR-025, formerly ADR-001). The user's prior engines tuned exposure and overlap rules by hand and showed no edge (RR1, RR2). Generating lineups in sequence with "share at most K players" constraints is slow (R2: 30.8 seconds for 150 lineups with GLPK, up to 370 seconds with other solvers) and ignores the field and the night.
 
 ## Options considered
 
@@ -18,11 +18,11 @@ The engine must choose 1 to 150 entries per contest across about 10 contests so 
 
 Option 3.
 
-- **Four independent scenario sets** (ADR-001): candidates are shortlisted on screening (5,000), selected on selection (15,000), the insurance search runs on validation (15,000), and every reported number comes from reporting (30,000). On synthetic data greedy's in-sample probabilities ran 0.7 to 3 points high (R2).
-- **Per contest, lazy greedy** on the top-1% objective (raw probability in Phase 1; duplicate-adjusted per format after calibration, ADR-009), storing per-scenario results as bits for big fields and 8-bit probabilities under about 1,000 entries. Each scenario's value is the best of our entries, so adding a lineup never lowers it and greedy keeps its guarantee of at least about 63% of the best set from the same pool (R2, VERIFIED theorems). On fresh synthetic scenarios greedy beat taking the top projections (47% against 35% with 20 entries, R2).
-- **Insurance search:** single-lineup swaps that lower washout while every contest keeps `G1_c(new) >= (1 - epsilon) x G1*_c + 2 x SE_paired` on the validation set; frozen contests when the budget is within noise; roll-back on the reporting set; runs only with at least 50 washout scenarios on validation.
+- **Four independent scenario sets** (ADR-025, formerly ADR-001): candidates are shortlisted on screening (5,000), selected on selection (15,000), the insurance search runs on validation (15,000), and every reported number comes from reporting (30,000). On synthetic data greedy's in-sample probabilities ran 0.7 to 3 points high (R2).
+- **Per contest, lazy greedy** on Goal 1 as defined in ADR-024 (top-1% prize equity with duplication and ties inside it; the v3 text read "raw probability in Phase 1; duplicate-adjusted per format after calibration, ADR-009", superseded 2026-10-14), storing per-scenario settlement values sparsely for scenarios where a candidate is in the top 1%. Each scenario's value is the best of our entries, so adding a lineup never lowers it and greedy keeps its guarantee of at least about 63% of the best set from the same pool (R2, VERIFIED theorems). On fresh synthetic scenarios greedy beat taking the top projections (47% against 35% with 20 entries, R2).
+- **Insurance search:** superseded on 2026-10-14 by ADR-025 (the exact paired constraint, no pre-freeze rule, roll-back as a label, Goal 2 as severe drawdown). The v3 text read: single-lineup swaps that lower washout while every contest keeps `G1_c(new) >= (1 - epsilon) x G1*_c + 2 x SE_paired`; frozen contests when the budget is within noise.
 - **Local improvement:** deterministic single-player swaps kept only if they beat noise without breaking a guarantee.
-- **Guardrails in code:** no repeated lineup within a contest; a 60% cap on any one player's share of the night's entries.
+- **Guardrails in code:** no repeated lineup within a contest; a 60% cap on any one player's share of a format's entries, feasibility-tested and reported when relaxed (revised 2026-10-14).
 
 ## Consequences
 

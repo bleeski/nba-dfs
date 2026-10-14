@@ -1,6 +1,6 @@
 # ADR-001: Both goals are computed on one simulated night, and one setting trades them off
 
-**Status:** Superseded by ADR-025 on 2026-10-14 (kept for history). Originally accepted 2026-10-13.
+**Status:** Superseded by ADR-025 (Goal 2 and the control) and ADR-024 (Goal 1) on 2026-10-14 (kept for history). Originally accepted 2026-10-13.
 
 **Changelog:** 2026-10-14 (ADJUDICATION entries 8 and 9): superseded. Goal 1 is now top-1% prize equity (ADR-024) and Goal 2 the probability of a severe-drawdown night (ADR-025), by the owner's decision; the insurance margin specified below was implemented in the R9 spike with an unpaired level standard error (ADJUDICATION V1), so the R9 insurance numbers are indicative only; the exact paired rule is in ADR-025. Kept for history.
 

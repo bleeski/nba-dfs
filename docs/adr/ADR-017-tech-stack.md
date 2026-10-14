@@ -1,4 +1,4 @@
-# ADR-017: Python 3.13 with uv, numpy, DuckDB, and a single command-line entry point
+# ADR-017: Python 3.13 with uv, numpy, and a single command-line entry point (DuckDB after the MVP)
 
 **Status:** Accepted (design); solver choice in ADR-006. **Date:** 2026-10-13.
 
