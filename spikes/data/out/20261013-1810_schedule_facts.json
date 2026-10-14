@@ -1,0 +1,356 @@
+{
+ "fetched_utc": "2026-10-13T23:10:27+00:00",
+ "opening_night_2026_10_20": [
+  {
+   "gameId": "0022600001",
+   "gameCode": "20261020/BOSDET",
+   "gameStatusText": "3:00 pm ET",
+   "gameDateEst": "2026-10-20T00:00:00Z",
+   "gameTimeEst": "1900-01-01T15:00:00Z",
+   "gameDateTimeEst": "2026-10-20T15:00:00Z",
+   "gameDateTimeUTC": "2026-10-20T19:00:00Z",
+   "et_from_utc": "2026-10-20 03:00 PM",
+   "awayTeam_teamTricode": "BOS",
+   "homeTeam_teamTricode": "DET",
+   "arenaName": "Little Caesars Arena",
+   "arenaCity": "Detroit",
+   "gameLabel": "",
+   "gameSubLabel": "",
+   "postponedStatus": "N"
+  },
+  {
+   "gameId": "0022600002",
+   "gameCode": "20261020/PHINYK",
+   "gameStatusText": "7:00 pm ET",
+   "gameDateEst": "2026-10-20T00:00:00Z",
+   "gameTimeEst": "1900-01-01T19:00:00Z",
+   "gameDateTimeEst": "2026-10-20T19:00:00Z",
+   "gameDateTimeUTC": "2026-10-20T23:00:00Z",
+   "et_from_utc": "2026-10-20 07:00 PM",
+   "awayTeam_teamTricode": "PHI",
+   "homeTeam_teamTricode": "NYK",
+   "arenaName": "Madison Square Garden",
+   "arenaCity": "New York",
+   "gameLabel": "",
+   "gameSubLabel": "",
+   "postponedStatus": "N"
+  },
+  {
+   "gameId": "0022600003",
+   "gameCode": "20261020/OKCSAS",
+   "gameStatusText": "9:30 pm ET",
+   "gameDateEst": "2026-10-20T00:00:00Z",
+   "gameTimeEst": "1900-01-01T21:30:00Z",
+   "gameDateTimeEst": "2026-10-20T21:30:00Z",
+   "gameDateTimeUTC": "2026-10-21T01:30:00Z",
+   "et_from_utc": "2026-10-20 09:30 PM",
+   "awayTeam_teamTricode": "OKC",
+   "homeTeam_teamTricode": "SAS",
+   "arenaName": "Frost Bank Center",
+   "arenaCity": "San Antonio",
+   "gameLabel": "",
+   "gameSubLabel": "",
+   "postponedStatus": "N"
+  }
+ ],
+ "regular_season_first_10": [
+  {
+   "gameId": "0022600001",
+   "gameDateTimeUTC": "2026-10-20T19:00:00Z",
+   "et_from_utc": "2026-10-20 03:00 PM",
+   "awayTeam_teamTricode": "BOS",
+   "homeTeam_teamTricode": "DET"
+  },
+  {
+   "gameId": "0022600002",
+   "gameDateTimeUTC": "2026-10-20T23:00:00Z",
+   "et_from_utc": "2026-10-20 07:00 PM",
+   "awayTeam_teamTricode": "PHI",
+   "homeTeam_teamTricode": "NYK"
+  },
+  {
+   "gameId": "0022600003",
+   "gameDateTimeUTC": "2026-10-21T01:30:00Z",
+   "et_from_utc": "2026-10-20 09:30 PM",
+   "awayTeam_teamTricode": "OKC",
+   "homeTeam_teamTricode": "SAS"
+  },
+  {
+   "gameId": "0022600085",
+   "gameDateTimeUTC": "2026-10-21T23:00:00Z",
+   "et_from_utc": "2026-10-21 07:00 PM",
+   "awayTeam_teamTricode": "ATL",
+   "homeTeam_teamTricode": "ORL"
+  },
+  {
+   "gameId": "0022600086",
+   "gameDateTimeUTC": "2026-10-21T23:00:00Z",
+   "et_from_utc": "2026-10-21 07:00 PM",
+   "awayTeam_teamTricode": "MIL",
+   "homeTeam_teamTricode": "WAS"
+  },
+  {
+   "gameId": "0022600004",
+   "gameDateTimeUTC": "2026-10-21T23:30:00Z",
+   "et_from_utc": "2026-10-21 07:30 PM",
+   "awayTeam_teamTricode": "MIN",
+   "homeTeam_teamTricode": "MIA"
+  },
+  {
+   "gameId": "0022600087",
+   "gameDateTimeUTC": "2026-10-21T23:30:00Z",
+   "et_from_utc": "2026-10-21 07:30 PM",
+   "awayTeam_teamTricode": "CHA",
+   "homeTeam_teamTricode": "BKN"
+  },
+  {
+   "gameId": "0022600088",
+   "gameDateTimeUTC": "2026-10-21T23:30:00Z",
+   "et_from_utc": "2026-10-21 07:30 PM",
+   "awayTeam_teamTricode": "CHI",
+   "homeTeam_teamTricode": "TOR"
+  },
+  {
+   "gameId": "0022600090",
+   "gameDateTimeUTC": "2026-10-22T00:00:00Z",
+   "et_from_utc": "2026-10-21 08:00 PM",
+   "awayTeam_teamTricode": "IND",
+   "homeTeam_teamTricode": "NOP"
+  },
+  {
+   "gameId": "0022600089",
+   "gameDateTimeUTC": "2026-10-22T00:00:00Z",
+   "et_from_utc": "2026-10-21 08:00 PM",
+   "awayTeam_teamTricode": "UTA",
+   "homeTeam_teamTricode": "MEM"
+  }
+ ],
+ "preseason_counts_by_et_date_from_oct13": {
+  "2026-10-13": 5,
+  "2026-10-14": 7,
+  "2026-10-15": 2,
+  "2026-10-16": 12
+ },
+ "preseason_games_from_oct13": [
+  {
+   "gameId": "0012600045",
+   "et_from_utc": "2026-10-13 07:00 PM",
+   "gameStatusText": "7:00 pm ET",
+   "awayTeam_teamTricode": "CLE",
+   "homeTeam_teamTricode": "ORL",
+   "arenaCity": "Orlando"
+  },
+  {
+   "gameId": "0012600046",
+   "et_from_utc": "2026-10-13 07:00 PM",
+   "gameStatusText": "7:00 pm ET",
+   "awayTeam_teamTricode": "NYK",
+   "homeTeam_teamTricode": "TOR",
+   "arenaCity": "Toronto"
+  },
+  {
+   "gameId": "0012600047",
+   "et_from_utc": "2026-10-13 08:00 PM",
+   "gameStatusText": "8:00 pm ET",
+   "awayTeam_teamTricode": "IND",
+   "homeTeam_teamTricode": "OKC",
+   "arenaCity": "Oklahoma City"
+  },
+  {
+   "gameId": "0012600048",
+   "et_from_utc": "2026-10-13 10:00 PM",
+   "gameStatusText": "10:00 pm ET",
+   "awayTeam_teamTricode": "GSW",
+   "homeTeam_teamTricode": "LAL",
+   "arenaCity": "Las Vegas"
+  },
+  {
+   "gameId": "0012600049",
+   "et_from_utc": "2026-10-13 10:00 PM",
+   "gameStatusText": "10:00 pm ET",
+   "awayTeam_teamTricode": "POR",
+   "homeTeam_teamTricode": "SAC",
+   "arenaCity": "Sacramento"
+  },
+  {
+   "gameId": "0012600003",
+   "et_from_utc": "2026-10-14 07:30 PM",
+   "gameStatusText": "7:30 pm ET",
+   "awayTeam_teamTricode": "BKN",
+   "homeTeam_teamTricode": "MIA",
+   "arenaCity": "Miami"
+  },
+  {
+   "gameId": "0012600017",
+   "et_from_utc": "2026-10-14 07:30 PM",
+   "gameStatusText": "7:30 pm ET",
+   "awayTeam_teamTricode": "CHA",
+   "homeTeam_teamTricode": "BOS",
+   "arenaCity": "Boston"
+  },
+  {
+   "gameId": "0012600051",
+   "et_from_utc": "2026-10-14 08:00 PM",
+   "gameStatusText": "8:00 pm ET",
+   "awayTeam_teamTricode": "NOP",
+   "homeTeam_teamTricode": "DAL",
+   "arenaCity": "Dallas"
+  },
+  {
+   "gameId": "0012600052",
+   "et_from_utc": "2026-10-14 08:00 PM",
+   "gameStatusText": "8:00 pm ET",
+   "awayTeam_teamTricode": "CHI",
+   "homeTeam_teamTricode": "MIL",
+   "arenaCity": "Milwaukee"
+  },
+  {
+   "gameId": "0012600053",
+   "et_from_utc": "2026-10-14 08:00 PM",
+   "gameStatusText": "8:00 pm ET",
+   "awayTeam_teamTricode": "DET",
+   "homeTeam_teamTricode": "MIN",
+   "arenaCity": "Minneapolis"
+  },
+  {
+   "gameId": "0012600054",
+   "et_from_utc": "2026-10-14 08:00 PM",
+   "gameStatusText": "8:00 pm ET",
+   "awayTeam_teamTricode": "PHX",
+   "homeTeam_teamTricode": "SAS",
+   "arenaCity": "San Antonio"
+  },
+  {
+   "gameId": "0012600064",
+   "et_from_utc": "2026-10-14 10:30 PM",
+   "gameStatusText": "10:30 pm ET",
+   "awayTeam_teamTricode": "DEN",
+   "homeTeam_teamTricode": "LAC",
+   "arenaCity": "Inglewood"
+  },
+  {
+   "gameId": "0012600055",
+   "et_from_utc": "2026-10-15 07:30 PM",
+   "gameStatusText": "7:30 pm ET",
+   "awayTeam_teamTricode": "TOR",
+   "homeTeam_teamTricode": "NYK",
+   "arenaCity": "New York"
+  },
+  {
+   "gameId": "0012600020",
+   "et_from_utc": "2026-10-15 08:30 PM",
+   "gameStatusText": "8:30 pm ET",
+   "awayTeam_teamTricode": "OKC",
+   "homeTeam_teamTricode": "HOU",
+   "arenaCity": "Houston"
+  },
+  {
+   "gameId": "0012600018",
+   "et_from_utc": "2026-10-16 07:00 PM",
+   "gameStatusText": "7:00 pm ET",
+   "awayTeam_teamTricode": "BOS",
+   "homeTeam_teamTricode": "PHI",
+   "arenaCity": "Philadelphia"
+  },
+  {
+   "gameId": "0012600021",
+   "et_from_utc": "2026-10-16 07:00 PM",
+   "gameStatusText": "7:00 pm ET",
+   "awayTeam_teamTricode": "MIA",
+   "homeTeam_teamTricode": "ORL",
+   "arenaCity": "Orlando"
+  },
+  {
+   "gameId": "0012600056",
+   "et_from_utc": "2026-10-16 07:00 PM",
+   "gameStatusText": "7:00 pm ET",
+   "awayTeam_teamTricode": "TOR",
+   "homeTeam_teamTricode": "DET",
+   "arenaCity": "Detroit"
+  },
+  {
+   "gameId": "0012600057",
+   "et_from_utc": "2026-10-16 07:00 PM",
+   "gameStatusText": "7:00 pm ET",
+   "awayTeam_teamTricode": "MIL",
+   "homeTeam_teamTricode": "IND",
+   "arenaCity": "Indianapolis"
+  },
+  {
+   "gameId": "0012600008",
+   "et_from_utc": "2026-10-16 08:00 PM",
+   "gameStatusText": "8:00 pm ET",
+   "awayTeam_teamTricode": "ATL",
+   "homeTeam_teamTricode": "DAL",
+   "arenaCity": "Dallas"
+  },
+  {
+   "gameId": "0012600058",
+   "et_from_utc": "2026-10-16 08:00 PM",
+   "gameStatusText": "8:00 pm ET",
+   "awayTeam_teamTricode": "MIN",
+   "homeTeam_teamTricode": "CHI",
+   "arenaCity": "Chicago"
+  },
+  {
+   "gameId": "0012600059",
+   "et_from_utc": "2026-10-16 08:00 PM",
+   "gameStatusText": "8:00 pm ET",
+   "awayTeam_teamTricode": "CHA",
+   "homeTeam_teamTricode": "MEM",
+   "arenaCity": "Memphis"
+  },
+  {
+   "gameId": "0012600060",
+   "et_from_utc": "2026-10-16 08:00 PM",
+   "gameStatusText": "8:00 pm ET",
+   "awayTeam_teamTricode": "WAS",
+   "homeTeam_teamTricode": "NOP",
+   "arenaCity": "New Orleans"
+  },
+  {
+   "gameId": "0012600061",
+   "et_from_utc": "2026-10-16 08:00 PM",
+   "gameStatusText": "8:00 pm ET",
+   "awayTeam_teamTricode": "SAC",
+   "homeTeam_teamTricode": "SAS",
+   "arenaCity": "San Antonio"
+  },
+  {
+   "gameId": "0012600019",
+   "et_from_utc": "2026-10-16 10:00 PM",
+   "gameStatusText": "10:00 pm ET",
+   "awayTeam_teamTricode": "POR",
+   "homeTeam_teamTricode": "GSW",
+   "arenaCity": "San Francisco"
+  },
+  {
+   "gameId": "0012600062",
+   "et_from_utc": "2026-10-16 10:00 PM",
+   "gameStatusText": "10:00 pm ET",
+   "awayTeam_teamTricode": "UTA",
+   "homeTeam_teamTricode": "PHX",
+   "arenaCity": "Phoenix"
+  },
+  {
+   "gameId": "0012600063",
+   "et_from_utc": "2026-10-16 10:30 PM",
+   "gameStatusText": "10:30 pm ET",
+   "awayTeam_teamTricode": "DEN",
+   "homeTeam_teamTricode": "LAL",
+   "arenaCity": "Los Angeles"
+  }
+ ],
+ "last_preseason_game": [
+  {
+   "gameId": "0012600063",
+   "et_from_utc": "2026-10-16 10:30 PM",
+   "awayTeam_teamTricode": "DEN",
+   "homeTeam_teamTricode": "LAL"
+  }
+ ],
+ "all_preseason_first_last_et": [
+  "2026-10-03 07:00 PM",
+  "2026-10-16 10:30 PM"
+ ]
+}

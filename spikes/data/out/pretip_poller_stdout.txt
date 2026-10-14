@@ -73,3 +73,22 @@ espn_injuries 200 {'n_all': 130, 'n_tonight': 40, 'newest_date': '2026-10-13T22:
 espn_summary 200 {'status': 'Scheduled', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'lastFiveGames', 'leaders', 'meta', '
 nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
 nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_injuries 200 {'n_all': 130, 'n_tonight': 40, 'newest_date': '2026-10-13T22:56Z', 'changes': [], 'removed': []}
+espn_summary 200 {'status': 'In Progress', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'leaders', 'meta', 'news', 'odds', 
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+nba_scoreboardv3 200 {'gameStatus': 1, 'text': '7:00 pm ET', 'period': 0, 'clock': '', 'score': (0, 0)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_summary 200 {'status': 'In Progress', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'leaders', 'meta', 'news', 'odds', 
+nba_scoreboardv3 200 {'gameStatus': 2, 'text': '1st Qtr             ', 'period': 1, 'clock': 'PT03M32.00S', 'score': (15, 24)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_summary 200 {'status': 'In Progress', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'leaders', 'meta', 'news', 'odds', 
+nba_scoreboardv3 200 {'gameStatus': 2, 'text': '1st Qtr             ', 'period': 1, 'clock': 'PT00M36.00S', 'score': (26, 30)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_summary 200 {'status': 'In Progress', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'leaders', 'meta', 'news', 'odds', 
+nba_scoreboardv3 200 {'gameStatus': 2, 'text': '2nd Qtr             ', 'period': 2, 'clock': 'PT07M31.00S', 'score': (38, 49)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_summary 200 {'status': 'In Progress', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'leaders', 'meta', 'news', 'odds', 
+nba_scoreboardv3 200 {'gameStatus': 2, 'text': '2nd Qtr             ', 'period': 2, 'clock': 'PT03M000.00S', 'score': (44, 64)}
+nba_boxscore 200 {'n_players': 0, 'n_with_position(starters)': 0, 'starters': [], 'dnp_comments': [], 'minutes_sample': []}
+espn_summary 200 {'status': 'Halftime', 'keys': ['againstTheSpread', 'boxscore', 'broadcasts', 'format', 'gameInfo', 'header', 'injuries', 'leaders', 'meta', 'news', 'odds', 'pi
