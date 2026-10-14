@@ -141,7 +141,7 @@ GameRotation 0022501190: ok=False latency=30.01s ReadTimeout ...
 
 **Blocking and rate limits.** Not blocked from this laptop: every request except GameRotation succeeded, plus the scoreboard and box-score polls in 4.9. No published rate limit; I kept to one request every 1.6 seconds or slower. BET: stats.nba.com is widely reported to refuse cloud data-center addresses, a reason to keep the nightly run on this laptop.
 
-**Freshness.** Last night's preseason games were complete this afternoon. Tonight (4.9) the in-game box score stayed empty and the scoreboard still showed the game as not started at least 5 minutes after ESPN showed it live, so stats.nba.com is a history source, not a live one. The post-game lag (how soon after the final buzzer the full box score is complete) was not measured.
+**Freshness.** Last night's preseason games were complete this afternoon. Tonight (4.9) the in-game box score stayed empty and the scoreboard still showed the game as not started at least 5 minutes after ESPN showed it live, so stats.nba.com is a history source, not a live one. After the final buzzer, the full box score appeared within 15 minutes of the scoreboard showing Final (one game, 4.9). The nightly history refresh can therefore safely run about an hour after the last game ends.
 
 **Rotations.** Rebuild each player's on-court stretches from PlayByPlayV3 substitution events. This is ordinary data processing, not a workaround of any block.
 
@@ -292,7 +292,7 @@ Terms: Bluesky's developer guidelines target spam ("Generating automated or bulk
 
 ### 4.9 Tonight's timing test (one preseason game, first tips 7:00 PM ET)
 
-**Setup.** A background poller (`s09_pretip_poller.py`, log `20261013-1646_pretip_poller.jsonl`) checked, every 5 minutes from 5:47 PM to 7:15 PM ET: ESPN injuries, the ESPN summary for CLE at ORL, and stats.nba.com ScoreboardV3 and BoxScoreTraditionalV3 for the same game. It read the RotoWire lineups page every 15 minutes, then switched to every 15 minutes for stats.nba.com and ESPN only. By 7:34 PM ET it had made 84 requests, all answered with HTTP 200 and no blocks. It is set to stop by itself at 9:45 PM ET. Its later records are not analyzed here, so **the post-game box-score delay was not measured**. To read it later: in the log, compare the first `nba_scoreboardv3` record with `gameStatus` 3 (final) with the first `nba_boxscore` record whose `n_players` is above 0.
+**Setup.** A background poller (`s09_pretip_poller.py`, log `20261013-1646_pretip_poller.jsonl`) checked, every 5 minutes from 5:47 PM to 7:15 PM ET: ESPN injuries, the ESPN summary for CLE at ORL, and stats.nba.com ScoreboardV3 and BoxScoreTraditionalV3 for the same game. It read the RotoWire lineups page every 15 minutes, then switched to every 15 minutes for stats.nba.com and ESPN only. By 7:34 PM ET it had made 84 requests, all answered with HTTP 200 and no blocks. It is set to stop by itself at 9:45 PM ET. It stopped by itself at 9:49 PM ET after 108 requests, all HTTP 200, with no host blocked. The post-game check is below. It is coarse: 15-minute polls, then one follow-up request.
 
 Resolution matters when reading the table below: the RotoWire times are known only to within 15 minutes, and the ESPN and stats.nba.com times to within 5. This is one preseason night and essentially one game.
 
@@ -308,6 +308,9 @@ Resolution matters when reading the table below: the RotoWire times are known on
 | 7:08 to 7:13 PM (23:13) | ESPN summary flips to "In Progress" and lists all 10 starters |
 | 7:13 and 7:18 PM | stats.nba.com ScoreboardV3 still said "7:00 pm ET", not started, at least 5 minutes after ESPN showed the game live (the next poll was 7:33) |
 | 7:33 PM (23:33) | ScoreboardV3: 1st quarter, 3:32 left, CLE 15, ORL 24. The BoxScoreTraditionalV3 call still returned 0 players in the middle of the game. The same request and parser returned 42 players for last night's finished game, so the empty result was real, not a parsing bug (`s09c_boxscore_parser_check.py`) |
+| 7:33 to 9:19 PM | The stats.nba.com box score stayed empty all game. Its scoreboard trailed ESPN by about one poll: at 8:19 PM ESPN said "Halftime" while stats.nba.com still said 2nd quarter, 3:00 left |
+| 9:34 PM (01:34) | ScoreboardV3 and ESPN both say "Final" (CLE 116, ORL 132), but the stats.nba.com box score still returned 0 players |
+| 9:49 PM (01:49) | One follow-up request returned the full box score: 41 players (`s09d_postgame_boxscore_check.py`, `20261013-2049_postgame_boxscore_check.json`). **The box score posted within 15 minutes of the scoreboard showing Final** |
 
 **Were RotoWire's lineups right?**
 
